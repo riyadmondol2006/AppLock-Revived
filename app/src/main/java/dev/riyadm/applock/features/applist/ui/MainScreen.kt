@@ -5,144 +5,216 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.provider.Settings
 import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.LockOpen
-import androidx.compose.material.icons.outlined.Shield
-import androidx.compose.material.icons.rounded.Forum
-import androidx.compose.material.icons.rounded.Groups
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Block
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.LockOpen
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.SearchOff
+import androidx.compose.material.icons.rounded.SelectAll
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Shield
+import androidx.compose.material.icons.rounded.SwapVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.HorizontalFloatingToolbar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeFlexibleTopAppBar
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.MaterialShapes
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.broadcast.AppLockServiceStarter
 import dev.riyadm.applock.core.broadcast.DeviceAdmin
 import dev.riyadm.applock.core.navigation.Screen
+import dev.riyadm.applock.core.ui.ExpressiveEmptyState
+import dev.riyadm.applock.core.ui.InlineSearchBar
+import dev.riyadm.applock.core.ui.SectionHeader
+import dev.riyadm.applock.core.ui.rememberAppHaptics
 import dev.riyadm.applock.core.utils.appLockRepository
-import dev.riyadm.applock.core.utils.hasUsagePermission
-import dev.riyadm.applock.core.utils.isAccessibilityServiceEnabled
 import dev.riyadm.applock.core.utils.openAccessibilitySettings
 import dev.riyadm.applock.data.repository.BackendImplementation
-import dev.riyadm.applock.ui.components.DonateModalBottomSheet
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import dev.riyadm.applock.features.applist.domain.InstalledApp
+import dev.riyadm.applock.features.applist.ui.ProtectionStatus.State
+import dev.riyadm.applock.ui.components.AccessibilityServiceGuideDialog
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import rikka.shizuku.Shizuku
 
+private const val SHIZUKU_PERMISSION_REQUEST_CODE = 423
+
 @SuppressLint("LocalContextGetResourceValueCall")
-@OptIn(
-    ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalMaterial3Api::class
-)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavController,
     mainViewModel: MainViewModel = viewModel()
 ) {
     val context = LocalContext.current
+    val repository = remember(context) { context.appLockRepository() }
+    val haptics = rememberAppHaptics()
+    val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val listState = rememberLazyListState()
 
-    val isLoading by mainViewModel.isLoading.collectAsState()
-    val lockedApps by mainViewModel.lockedAppsFlow.collectAsState()
-    val unlockedApps by mainViewModel.unlockedAppsFlow.collectAsState()
+    val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
+    val searchQuery by mainViewModel.searchQuery.collectAsStateWithLifecycle()
+    val selection by mainViewModel.selection.collectAsStateWithLifecycle()
+    val selectionMode = selection.isNotEmpty()
 
-    var showAddAppsSheet by remember { mutableStateOf(false) }
+    var status by remember { mutableStateOf(context.readProtectionStatus()) }
+    var statusCheck by remember { mutableIntStateOf(0) }
+    var showAccessibilityGuide by remember { mutableStateOf(false) }
 
-    var applockEnabled by remember { mutableStateOf(true) }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-    var firstMissingPermission by remember { mutableStateOf<MissingPermission?>(null) }
-
-    LaunchedEffect(Unit) {
-        val appLockRepository = context.appLockRepository()
-        applockEnabled = appLockRepository.isProtectEnabled()
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        mainViewModel.refresh()
+        statusCheck++
     }
 
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                val appLockRepository = context.appLockRepository()
-                val backend = appLockRepository.getBackendImplementation()
-                val isAntiUninstallEnabled = appLockRepository.isAntiUninstallEnabled()
-                val dpm =
-                    context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-                val component = ComponentName(context, DeviceAdmin::class.java)
+    LaunchedEffect(statusCheck) {
+        status = context.readProtectionStatus()
+        // Services connect asynchronously right after a permission is granted
+        if (status.state == State.SERVICE_STOPPED) {
+            delay(1_500)
+            status = context.readProtectionStatus()
+        }
+    }
 
-                firstMissingPermission = when {
-                    !Settings.canDrawOverlays(context) -> MissingPermission.OVERLAY
-                    backend == BackendImplementation.ACCESSIBILITY && !context.isAccessibilityServiceEnabled() -> MissingPermission.ACCESSIBILITY
-                    backend == BackendImplementation.USAGE_STATS && !context.hasUsagePermission() -> MissingPermission.USAGE_STATS
-                    backend == BackendImplementation.SHIZUKU && (runCatching { !Shizuku.pingBinder() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_DENIED }.getOrDefault(
-                        true
-                    )) -> MissingPermission.SHIZUKU
+    DisposableEffect(Unit) {
+        val listener = Shizuku.OnRequestPermissionResultListener { _, result ->
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                AppLockServiceStarter.startAppropriateServices(context, repository)
+            }
+            statusCheck++
+        }
+        runCatching { Shizuku.addRequestPermissionResultListener(listener) }
+        onDispose { runCatching { Shizuku.removeRequestPermissionResultListener(listener) } }
+    }
 
-                    isAntiUninstallEnabled && !context.isAccessibilityServiceEnabled() -> MissingPermission.ACCESSIBILITY
-                    isAntiUninstallEnabled && !dpm.isAdminActive(component) -> MissingPermission.DEVICE_ADMIN
-                    else -> null
+    BackHandler(enabled = selectionMode) { mainViewModel.clearSelection() }
+
+    fun handlePermission(permission: MissingPermission) {
+        when (permission) {
+            MissingPermission.ACCESSIBILITY -> showAccessibilityGuide = true
+            else -> context.requestPermission(permission)
+        }
+    }
+
+    fun fixProtection() {
+        when (status.state) {
+            State.NEEDS_SETUP -> status.blockingPermission?.let(::handlePermission)
+            State.PAUSED -> {
+                repository.setProtectEnabled(true)
+                haptics.toggle(true)
+                statusCheck++
+            }
+
+            State.SERVICE_STOPPED -> {
+                if (status.backend == BackendImplementation.ACCESSIBILITY) {
+                    showAccessibilityGuide = true
+                } else {
+                    AppLockServiceStarter.startAppropriateServices(context, repository)
+                    statusCheck++
                 }
             }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
+
+            State.ACTIVE -> Unit
         }
     }
 
-    val appLockRepository = context.appLockRepository()
-
-    var showCommunityLink by remember { mutableStateOf(appLockRepository.isShowCommunityLink()) }
-
-    if (showCommunityLink) {
-        CommunityDialog(
-            onDismiss = {
-                appLockRepository.setCommunityLinkShown(true)
-                showCommunityLink = false
-            },
-            onJoin = {
-                appLockRepository.setCommunityLinkShown(true)
-                showCommunityLink = false
-                context.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        "https://discord.gg/46wCMRVAre".toUri()
-                    )
-                )
-            }
+    fun showBulkResult(changed: Set<String>, locked: Boolean) {
+        if (changed.isEmpty()) return
+        haptics.confirm()
+        val message = context.resources.getQuantityString(
+            if (locked) R.plurals.applist_bulk_locked else R.plurals.applist_bulk_unlocked,
+            changed.size,
+            changed.size
         )
-    }
-
-    var showDonateDialog by remember { mutableStateOf(appLockRepository.isShowDonateLink()) }
-    if (showDonateDialog && !showCommunityLink) {
-        DonateModalBottomSheet {
-            appLockRepository.setShowDonateLink(false); showDonateDialog = false
+        scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            val result = snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = context.getString(R.string.applist_undo),
+                duration = SnackbarDuration.Short
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                mainViewModel.setLocked(changed, !locked)
+            }
         }
     }
 
@@ -150,688 +222,516 @@ fun MainScreen(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        containerColor = MaterialTheme.colorScheme.surface,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
-            MediumFlexibleTopAppBar(
-                title = {
-                    Text(
-                        stringResource(R.string.app_name),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = FontFamily.SansSerif
-                    )
-                },
-                actions = {
-                    Surface(
-                        onClick = {
-                            appLockRepository.setProtectEnabled(!applockEnabled)
-                            applockEnabled = !applockEnabled
-                        },
-                        shape = RoundedCornerShape(16.dp),
-                        color = if (applockEnabled) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
-                        modifier = Modifier.padding(end = 8.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        ) {
-                            Icon(
-                                imageVector = if (applockEnabled) Icons.Default.Shield else Icons.Outlined.Shield,
-                                contentDescription = stringResource(R.string.main_screen_app_protection_cd),
-                                modifier = Modifier.size(18.dp),
-                                tint = if (applockEnabled) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                text = if (applockEnabled) "ON" else "OFF",
-                                style = MaterialTheme.typography.labelLarge,
-                                color = if (applockEnabled) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screen.Settings.route) {
-                                launchSingleTop = true
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.main_screen_settings_cd),
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screen.TriggerExclusions.route) {
-                                launchSingleTop = true
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Block,
-                            contentDescription = "Trigger exclusions",
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screen.AntiUninstall.route) {
-                                launchSingleTop = true
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Lock,
-                            contentDescription = "Anti-Uninstall",
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                },
+            MainTopBar(
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            )
-        },
-        floatingActionButton = {
-            if (!isLoading) {
-                FloatingActionButton(
-                    onClick = { showAddAppsSheet = true },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.main_screen_search_cd) // Update ideally
-                    )
+                onOpenSettings = {
+                    navController.navigate(Screen.Settings.route) { launchSingleTop = true }
+                },
+                onOpenTriggerExclusions = {
+                    navController.navigate(Screen.TriggerExclusions.route) { launchSingleTop = true }
+                },
+                onOpenAntiUninstall = {
+                    navController.navigate(Screen.AntiUninstall.route) { launchSingleTop = true }
                 }
-            }
+            )
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
+        val layoutDirection = LocalLayoutDirection.current
+        Box(
+            Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    end = innerPadding.calculateEndPadding(layoutDirection)
+                )
         ) {
-            firstMissingPermission?.let { missingPerm ->
-                PermissionWarningBanner(
-                    missingPermission = missingPerm,
-                    onClick = {
-                        when (missingPerm) {
-                            MissingPermission.OVERLAY -> {
-                                context.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
-                                    data = "package:${context.packageName}".toUri()
-                                })
-                            }
-
-                            MissingPermission.ACCESSIBILITY -> {
-                                openAccessibilitySettings(context)
-                            }
-
-                            MissingPermission.USAGE_STATS -> {
-                                context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-                            }
-
-                            MissingPermission.SHIZUKU -> {
-                                try {
-                                    if (Shizuku.isPreV11()) {
-                                        Toast.makeText(
-                                            context,
-                                            context.getString(R.string.main_screen_shizuku_manual_permission_toast),
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    } else {
-                                        Shizuku.requestPermission(423)
-                                    }
-                                } catch (_: Exception) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.main_screen_shizuku_not_available_toast),
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-
-                            MissingPermission.DEVICE_ADMIN -> {
-                                val component = ComponentName(context, DeviceAdmin::class.java)
-                                val intent =
-                                    Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-                                        putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, component)
-                                        putExtra(
-                                            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                                            context.getString(R.string.main_screen_device_admin_explanation)
-                                        )
-                                    }
-                                context.startActivity(intent)
-                            }
-                        }
-                    }
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(innerPadding)
+                    .imePadding(),
+                contentPadding = PaddingValues(
+                    top = innerPadding.calculateTopPadding(),
+                    bottom = innerPadding.calculateBottomPadding() + if (selectionMode) 112.dp else 24.dp
                 )
-            }
-            if (isLoading) {
-                LoadingContent(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                )
-            } else {
-                ProtectedAppsDashboard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    lockedApps = lockedApps,
-                    onUnlockApp = { appInfo ->
-                        mainViewModel.unlockApp(appInfo.packageName)
-                    }
-                )
-            }
-        }
-    }
-
-    if (showAddAppsSheet) {
-        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-        val selectedPackages = remember { mutableStateListOf<String>() }
-        var bottomSheetSearchQuery by remember { mutableStateOf("") }
-
-        ModalBottomSheet(
-            onDismissRequest = {
-                bottomSheetSearchQuery = ""
-                showAddAppsSheet = false
-            },
-            sheetState = sheetState
-        ) {
-            AddProtectedAppsSheetContent(
-                unlockedApps = unlockedApps,
-                searchQuery = bottomSheetSearchQuery,
-                onSearchQueryChanged = { bottomSheetSearchQuery = it },
-                selectedPackages = selectedPackages,
-                onToggleSelection = { packageName ->
-                    if (selectedPackages.contains(packageName)) {
-                        selectedPackages.remove(packageName)
-                    } else {
-                        selectedPackages.add(packageName)
-                    }
-                },
-                onSave = {
-                    mainViewModel.lockApps(selectedPackages)
-                    bottomSheetSearchQuery = ""
-                    showAddAppsSheet = false
-                },
-                onCancel = {
-                    bottomSheetSearchQuery = ""
-                    showAddAppsSheet = false
+            ) {
+                item(key = "status", contentType = "status") {
+                    ProtectionStatusCard(
+                        status = status,
+                        lockedCount = uiState.lockedCount,
+                        onProtectionToggle = { enabled ->
+                            repository.setProtectEnabled(enabled)
+                            haptics.toggle(enabled)
+                            statusCheck++
+                        },
+                        onFix = ::fixProtection,
+                        onFixAntiUninstall = {
+                            status.antiUninstallPermission?.let(::handlePermission)
+                        },
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
                 }
-            )
-        }
-    }
-}
 
-@Composable
-private fun LoadingContent(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(48.dp),
-                color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 4.dp
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = stringResource(R.string.main_screen_loading_applications_text),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
+                stickyHeader(key = "controls", contentType = "controls") {
+                    ListControls(
+                        query = searchQuery,
+                        onQueryChange = mainViewModel::onSearchQueryChange,
+                        filter = uiState.filter,
+                        onFilterChange = {
+                            mainViewModel.setFilter(it)
+                            scope.launch { if (listState.firstVisibleItemIndex > 1) listState.scrollToItem(1) }
+                        },
+                        sort = uiState.sort,
+                        onSortChange = mainViewModel::setSort,
+                        showSystemFilter = uiState.showSystemFilter
+                    )
+                }
 
-@Composable
-private fun ProtectedAppsDashboard(
-    modifier: Modifier = Modifier,
-    lockedApps: List<ApplicationInfo>,
-    onUnlockApp: (ApplicationInfo) -> Unit
-) {
-    if (lockedApps.isEmpty()) {
-        EmptyDashboardState(modifier = modifier)
-    } else {
-        LazyColumn(
-            modifier = modifier,
-            contentPadding = PaddingValues(bottom = 88.dp, top = 8.dp), // Extra padding for FAB
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            items(lockedApps, key = { it.packageName }) { appInfo ->
-                ProtectedAppItem(
-                    appInfo = appInfo,
-                    onUnlock = { onUnlockApp(appInfo) }
+                when {
+                    uiState.isLoading -> item(key = "loading", contentType = "loading") {
+                        LoadingState(Modifier.animateItem())
+                    }
+
+                    uiState.isEmpty -> item(key = "empty", contentType = "empty") {
+                        EmptyListState(
+                            query = uiState.query,
+                            filter = uiState.filter,
+                            modifier = Modifier.animateItem()
+                        )
+                    }
+
+                    else -> {
+                        appSection(
+                            key = "header_locked",
+                            title = context.getString(
+                                R.string.applist_section_count,
+                                context.getString(R.string.applist_section_locked),
+                                uiState.lockedApps.size
+                            ),
+                            apps = uiState.lockedApps,
+                            locked = true,
+                            selection = selection,
+                            selectionMode = selectionMode,
+                            onToggle = { app, locked ->
+                                haptics.toggle(locked)
+                                mainViewModel.setLocked(app.packageName, locked)
+                            },
+                            onSelect = mainViewModel::setSelected,
+                            onStartSelection = {
+                                haptics.longPress()
+                                mainViewModel.startSelection(it.packageName)
+                            }
+                        )
+                        appSection(
+                            key = "header_other",
+                            title = context.getString(
+                                R.string.applist_section_count,
+                                context.getString(R.string.applist_section_other),
+                                uiState.otherApps.size
+                            ),
+                            apps = uiState.otherApps,
+                            locked = false,
+                            selection = selection,
+                            selectionMode = selectionMode,
+                            onToggle = { app, locked ->
+                                haptics.toggle(locked)
+                                mainViewModel.setLocked(app.packageName, locked)
+                            },
+                            onSelect = mainViewModel::setSelected,
+                            onStartSelection = {
+                                haptics.longPress()
+                                mainViewModel.startSelection(it.packageName)
+                            }
+                        )
+                    }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = selectionMode,
+                enter = slideInVertically { it } + fadeIn(),
+                exit = slideOutVertically { it } + fadeOut(),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .padding(bottom = 16.dp)
+            ) {
+                SelectionToolbar(
+                    count = selection.size,
+                    onClose = mainViewModel::clearSelection,
+                    onSelectAll = mainViewModel::selectAllVisible,
+                    onLock = { showBulkResult(mainViewModel.lockSelected(true), true) },
+                    onUnlock = { showBulkResult(mainViewModel.lockSelected(false), false) }
                 )
             }
         }
     }
-}
 
-@Composable
-private fun EmptyDashboardState(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Shield,
-            contentDescription = null,
-            modifier = Modifier.size(80.dp),
-            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = "No Protected Apps",
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Tap the + button to selectively secure your apps.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 32.dp)
+    if (showAccessibilityGuide) {
+        AccessibilityServiceGuideDialog(
+            onOpenSettings = {
+                showAccessibilityGuide = false
+                openAccessibilitySettings(context)
+            },
+            onDismiss = { showAccessibilityGuide = false }
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AddProtectedAppsSheetContent(
-    unlockedApps: List<ApplicationInfo>,
-    searchQuery: String,
-    onSearchQueryChanged: (String) -> Unit,
-    selectedPackages: List<String>,
-    onToggleSelection: (String) -> Unit,
-    onSave: () -> Unit,
-    onCancel: () -> Unit
+private fun LazyListScope.appSection(
+    key: String,
+    title: String,
+    apps: List<InstalledApp>,
+    locked: Boolean,
+    selection: Set<String>,
+    selectionMode: Boolean,
+    onToggle: (InstalledApp, Boolean) -> Unit,
+    onSelect: (String, Boolean) -> Unit,
+    onStartSelection: (InstalledApp) -> Unit,
 ) {
-    val focusManager = LocalFocusManager.current
-    val context = LocalContext.current
+    if (apps.isEmpty()) return
+    item(key = key, contentType = "header") {
+        SectionHeader(text = title, modifier = Modifier.animateItem())
+    }
+    itemsIndexed(apps, key = { _, app -> app.packageName }, contentType = { _, _ -> "app" }) { index, app ->
+        AppSwitchListItem(
+            app = app,
+            checked = locked,
+            onCheckedChange = { onToggle(app, it) },
+            index = index,
+            count = apps.size,
+            switchContentDescription = stringResource(R.string.applist_lock_switch_cd, app.label),
+            selectionMode = selectionMode,
+            selected = app.packageName in selection,
+            onSelectedChange = { onSelect(app.packageName, it) },
+            onLongClick = { onStartSelection(app) },
+            modifier = Modifier
+                .animateItem()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = ListItemDefaults.SegmentedGap)
+        )
+    }
+}
 
-    val filteredApps by produceState(
-        initialValue = unlockedApps,
-        unlockedApps,
-        searchQuery
-    ) {
-        value = if (searchQuery.isBlank()) {
-            unlockedApps
-        } else {
-            withContext(Dispatchers.Default) {
-                val lowerQuery = searchQuery.lowercase()
-                unlockedApps.filter { appInfo ->
-                    val label = AppIconCache.getLabel(context, appInfo).lowercase()
-                    label.contains(lowerQuery) || appInfo.packageName.contains(
-                        lowerQuery,
-                        ignoreCase = true
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
+@Composable
+private fun MainTopBar(
+    scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior,
+    onOpenSettings: () -> Unit,
+    onOpenTriggerExclusions: () -> Unit,
+    onOpenAntiUninstall: () -> Unit,
+) {
+    var menuExpanded by remember { mutableStateOf(false) }
+    LargeFlexibleTopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.app_name),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        actions = {
+            IconButton(onClick = onOpenSettings) {
+                Icon(
+                    Icons.Rounded.Settings,
+                    contentDescription = stringResource(R.string.main_screen_settings_cd)
+                )
+            }
+            Box {
+                IconButton(onClick = { menuExpanded = true }) {
+                    Icon(
+                        Icons.Rounded.MoreVert,
+                        contentDescription = stringResource(R.string.applist_more_options_cd)
+                    )
+                }
+                DropdownMenu(
+                    expanded = menuExpanded,
+                    onDismissRequest = { menuExpanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.applist_menu_trigger_exclusions)) },
+                        leadingIcon = { Icon(Icons.Rounded.Block, contentDescription = null) },
+                        onClick = {
+                            menuExpanded = false
+                            onOpenTriggerExclusions()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.applist_menu_prevent_uninstall)) },
+                        leadingIcon = { Icon(Icons.Rounded.Shield, contentDescription = null) },
+                        onClick = {
+                            menuExpanded = false
+                            onOpenAntiUninstall()
+                        }
                     )
                 }
             }
-        }
-    }
+        },
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            scrolledContainerColor = MaterialTheme.colorScheme.surface
+        )
+    )
+}
 
+@Composable
+private fun ListControls(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    filter: AppFilter,
+    onFilterChange: (AppFilter) -> Unit,
+    sort: AppSort,
+    onSortChange: (AppSort) -> Unit,
+    showSystemFilter: Boolean,
+) {
     Column(
-        modifier = Modifier
+        Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.9f)
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(top = 8.dp, bottom = 4.dp)
     ) {
-        // Header
+        InlineSearchBar(
+            query = query,
+            onQueryChange = onQueryChange,
+            placeholder = stringResource(R.string.applist_search_placeholder),
+            clearContentDescription = stringResource(R.string.applist_search_clear_cd),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Select Apps",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            TextButton(
-                onClick = onSave,
-                enabled = selectedPackages.isNotEmpty()
-            ) {
-                Text("Protect (${selectedPackages.size})")
+            val filters = buildList {
+                add(AppFilter.ALL to R.string.applist_filter_all)
+                add(AppFilter.LOCKED to R.string.applist_filter_locked)
+                add(AppFilter.UNLOCKED to R.string.applist_filter_unlocked)
+                if (showSystemFilter) add(AppFilter.SYSTEM to R.string.applist_filter_system)
             }
+            filters.forEach { (value, label) ->
+                val selected = filter == value
+                FilterChip(
+                    selected = selected,
+                    onClick = { onFilterChange(value) },
+                    label = { Text(stringResource(label)) },
+                    leadingIcon = if (selected) {
+                        {
+                            Icon(
+                                Icons.Rounded.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
+                    } else null
+                )
+            }
+            Spacer(Modifier.weight(1f))
+            SortChip(sort = sort, onSortChange = onSortChange)
         }
+    }
+}
 
-        // Search Bar
-        SearchBar(
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = searchQuery,
-                    onQueryChange = onSearchQueryChanged,
-                    onSearch = { focusManager.clearFocus() },
-                    expanded = false,
-                    onExpandedChange = {},
-                    placeholder = {
-                        Text(
-                            stringResource(R.string.main_screen_search_apps_placeholder),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = stringResource(R.string.main_screen_search_cd),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    },
+@Composable
+private fun SortChip(sort: AppSort, onSortChange: (AppSort) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    val sortDescription = stringResource(R.string.applist_sort_cd)
+    Box {
+        FilterChip(
+            selected = sort != AppSort.NAME,
+            onClick = { expanded = true },
+            label = {
+                Text(
+                    stringResource(
+                        when (sort) {
+                            AppSort.NAME -> R.string.applist_sort_name
+                            AppSort.RECENT -> R.string.applist_sort_recent
+                        }
+                    )
                 )
             },
-            expanded = false,
-            onExpandedChange = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 8.dp),
-            shape = RoundedCornerShape(28.dp),
-            colors = SearchBarDefaults.colors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
-            content = {},
+            leadingIcon = {
+                Icon(
+                    Icons.Rounded.SwapVert,
+                    contentDescription = sortDescription,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
+        )
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            listOf(
+                AppSort.NAME to R.string.applist_sort_name,
+                AppSort.RECENT to R.string.applist_sort_recent
+            ).forEach { (value, label) ->
+                DropdownMenuItem(
+                    text = { Text(stringResource(label)) },
+                    trailingIcon = if (value == sort) {
+                        { Icon(Icons.Rounded.Check, contentDescription = null) }
+                    } else null,
+                    onClick = {
+                        expanded = false
+                        onSortChange(value)
+                    }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun SelectionToolbar(
+    count: Int,
+    onClose: () -> Unit,
+    onSelectAll: () -> Unit,
+    onLock: () -> Unit,
+    onUnlock: () -> Unit,
+) {
+    HorizontalFloatingToolbar(
+        expanded = true,
+        colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(),
+        leadingContent = {
+            IconButton(onClick = onClose) {
+                Icon(
+                    Icons.Rounded.Close,
+                    contentDescription = stringResource(R.string.applist_action_close_selection)
+                )
+            }
+            Text(
+                text = pluralStringResource(R.plurals.applist_selected_count, count, count),
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+        }
+    ) {
+        IconButton(onClick = onSelectAll) {
+            Icon(
+                Icons.Rounded.SelectAll,
+                contentDescription = stringResource(R.string.applist_action_select_all)
+            )
+        }
+        IconButton(onClick = onUnlock) {
+            Icon(
+                Icons.Rounded.LockOpen,
+                contentDescription = stringResource(R.string.applist_action_unlock)
+            )
+        }
+        FilledIconButton(onClick = onLock) {
+            Icon(
+                Icons.Rounded.Lock,
+                contentDescription = stringResource(R.string.applist_action_lock)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun LoadingState(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 64.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LoadingIndicator(modifier = Modifier.size(64.dp))
+        Spacer(Modifier.height(16.dp))
+        Text(
+            text = stringResource(R.string.applist_loading),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun EmptyListState(query: String, filter: AppFilter, modifier: Modifier = Modifier) {
+    when {
+        query.isNotBlank() -> ExpressiveEmptyState(
+            icon = Icons.Rounded.SearchOff,
+            title = stringResource(R.string.applist_empty_search_title, query),
+            description = stringResource(R.string.applist_empty_search_desc),
+            modifier = modifier
         )
 
-        // List
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(vertical = 8.dp)
-        ) {
-            items(filteredApps, key = { it.packageName }) { appInfo ->
-                val isSelected = selectedPackages.contains(appInfo.packageName)
-                SelectableAppItem(
-                    appInfo = appInfo,
-                    isSelected = isSelected,
-                    onClick = { onToggleSelection(appInfo.packageName) }
-                )
-            }
-        }
+        filter == AppFilter.LOCKED -> ExpressiveEmptyState(
+            icon = Icons.Rounded.Lock,
+            title = stringResource(R.string.applist_empty_locked_title),
+            description = stringResource(R.string.applist_empty_locked_desc),
+            polygon = MaterialShapes.Cookie6Sided,
+            modifier = modifier
+        )
+
+        else -> ExpressiveEmptyState(
+            icon = Icons.Rounded.SearchOff,
+            title = stringResource(R.string.applist_empty_generic_title),
+            description = stringResource(R.string.applist_empty_generic_desc),
+            modifier = modifier
+        )
     }
 }
 
-@Composable
-private fun ProtectedAppItem(
-    appInfo: ApplicationInfo,
-    onUnlock: () -> Unit
-) {
-    val context = LocalContext.current
-
-    var appName by remember(appInfo) { mutableStateOf<String?>(null) }
-    var icon by remember(appInfo) { mutableStateOf<ImageBitmap?>(null) }
-
-    LaunchedEffect(appInfo) {
-        withContext(Dispatchers.IO) {
-            appName = AppIconCache.getLabel(context, appInfo)
-            icon = AppIconCache.getIcon(context, appInfo)
-        }
-    }
-
-    ListItem(
-        headlineContent = {
-            if (appName != null) {
-                Text(
-                    text = appName!!,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        },
-        supportingContent = {
-            Text(
-                text = "Protected",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        leadingContent = {
-            Surface(
-                modifier = Modifier.size(48.dp),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (icon != null) {
-                        Image(
-                            bitmap = icon!!,
-                            contentDescription = appName,
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
+private fun Context.requestPermission(permission: MissingPermission) {
+    try {
+        when (permission) {
+            MissingPermission.OVERLAY -> startActivity(
+                Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
+                    data = "package:$packageName".toUri()
                 }
+            )
+
+            MissingPermission.ACCESSIBILITY -> openAccessibilitySettings(this)
+
+            MissingPermission.USAGE_STATS -> startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+
+            MissingPermission.SHIZUKU -> requestShizukuPermission()
+
+            MissingPermission.DEVICE_ADMIN -> {
+                val component = ComponentName(this, DeviceAdmin::class.java)
+                startActivity(Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+                    putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, component)
+                    putExtra(
+                        DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                        getString(R.string.main_screen_device_admin_explanation)
+                    )
+                })
             }
-        },
-        trailingContent = {
-            IconButton(onClick = onUnlock) {
-                Icon(
-                    imageVector = Icons.Outlined.LockOpen,
-                    contentDescription = "Unlock ${appName ?: "app"}",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        },
-        colors = ListItemDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clip(RoundedCornerShape(16.dp))
-    )
-}
-
-@Composable
-private fun SelectableAppItem(
-    appInfo: ApplicationInfo,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    val context = LocalContext.current
-
-    var appName by remember(appInfo) { mutableStateOf<String?>(null) }
-    var icon by remember(appInfo) { mutableStateOf<ImageBitmap?>(null) }
-
-    LaunchedEffect(appInfo) {
-        withContext(Dispatchers.IO) {
-            appName = AppIconCache.getLabel(context, appInfo)
-            icon = AppIconCache.getIcon(context, appInfo)
         }
+    } catch (e: Exception) {
+        android.util.Log.e("MainScreen", "Couldn't open settings for $permission", e)
     }
-
-    ListItem(
-        headlineContent = {
-            if (appName != null) {
-                Text(
-                    text = appName!!,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        },
-        supportingContent = {
-            Text(
-                text = appInfo.packageName,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        leadingContent = {
-            Surface(
-                modifier = Modifier.size(42.dp),
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (icon != null) {
-                        Image(
-                            bitmap = icon!!,
-                            contentDescription = appName,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    } else {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(16.dp),
-                            strokeWidth = 2.dp
-                        )
-                    }
-                }
-            }
-        },
-        trailingContent = {
-            Checkbox(
-                checked = isSelected,
-                onCheckedChange = null
-            )
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
-    )
 }
 
-@Composable
-private fun CommunityDialog(
-    onDismiss: () -> Unit,
-    onJoin: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false),
-        icon = {
-            Icon(
-                Icons.Rounded.Groups,
-                contentDescription = null,
-                modifier = Modifier.size(32.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-        },
-        title = {
-            Text(
-                text = stringResource(R.string.join_community),
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
-            Column(Modifier.fillMaxWidth(0.7f)) {
-                Text(
-                    text = stringResource(R.string.join_community_desc),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        },
-        confirmButton = {
-            Button(onClick = onJoin) {
-                Icon(
-                    Icons.Rounded.Forum,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.join_discord))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.maybe_later))
-            }
+private fun Context.requestShizukuPermission() {
+    try {
+        if (!Shizuku.pingBinder()) {
+            Toast.makeText(
+                this,
+                getString(R.string.main_screen_shizuku_not_available_toast),
+                Toast.LENGTH_LONG
+            ).show()
+        } else if (Shizuku.isPreV11()) {
+            Toast.makeText(
+                this,
+                getString(R.string.main_screen_shizuku_manual_permission_toast),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE)
         }
-    )
-}
-
-private enum class MissingPermission(val titleResId: Int, val descriptionResId: Int) {
-    OVERLAY(
-        titleResId = R.string.permission_warning_overlay_title,
-        descriptionResId = R.string.permission_warning_overlay_desc
-    ),
-    ACCESSIBILITY(
-        titleResId = R.string.permission_warning_accessibility_title,
-        descriptionResId = R.string.permission_warning_accessibility_desc
-    ),
-    USAGE_STATS(
-        titleResId = R.string.permission_warning_usage_stats_title,
-        descriptionResId = R.string.permission_warning_usage_stats_desc
-    ),
-    SHIZUKU(
-        titleResId = R.string.permission_warning_shizuku_title,
-        descriptionResId = R.string.permission_warning_shizuku_desc
-    ),
-    DEVICE_ADMIN(
-        titleResId = R.string.permission_warning_device_admin_title,
-        descriptionResId = R.string.permission_warning_device_admin_desc
-    )
-}
-
-@Composable
-private fun PermissionWarningBanner(
-    missingPermission: MissingPermission,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.Warning,
-                contentDescription = "Warning",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(28.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = "${stringResource(missingPermission.titleResId)} ${stringResource(R.string.permission_warning_title_suffix)}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = stringResource(missingPermission.descriptionResId),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        }
+    } catch (_: Exception) {
+        Toast.makeText(
+            this,
+            getString(R.string.main_screen_shizuku_not_available_toast),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
