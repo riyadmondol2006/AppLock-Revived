@@ -2,6 +2,7 @@ package dev.riyadm.applock.data.repository
 
 import android.content.Context
 import dev.riyadm.applock.core.tile.ProfileTileService
+import dev.riyadm.applock.core.update.UpdateCheckJobService
 import dev.riyadm.applock.data.manager.BackendServiceManager
 import dev.riyadm.applock.features.intruder.capture.IntruderCapture
 import dev.riyadm.applock.services.AppLockManager
@@ -211,12 +212,19 @@ class AppLockRepository(private val context: Context) {
 
     // Update checks
     fun isUpdateCheckEnabled(): Boolean = preferencesRepository.isUpdateCheckEnabled()
-    fun setUpdateCheckEnabled(enabled: Boolean) = preferencesRepository.setUpdateCheckEnabled(enabled)
+    fun setUpdateCheckEnabled(enabled: Boolean) {
+        preferencesRepository.setUpdateCheckEnabled(enabled)
+        UpdateCheckJobService.sync(context, enabled)
+    }
     fun getLastUpdateCheck(): Long = preferencesRepository.getLastUpdateCheck()
     fun setLastUpdateCheck(timestamp: Long) = preferencesRepository.setLastUpdateCheck(timestamp)
     fun getSkippedUpdateVersion(): String? = preferencesRepository.getSkippedUpdateVersion()
     fun setSkippedUpdateVersion(version: String?) =
         preferencesRepository.setSkippedUpdateVersion(version)
+
+    fun getLastNotifiedUpdateVersion(): String? = preferencesRepository.getLastNotifiedUpdateVersion()
+    fun setLastNotifiedUpdateVersion(version: String?) =
+        preferencesRepository.setLastNotifiedUpdateVersion(version)
 
     // Backup
     internal fun exportSettings(): Map<String, Any?> = preferencesRepository.exportSettings()

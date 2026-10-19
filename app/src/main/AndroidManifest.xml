@@ -140,6 +140,11 @@
                 android:value="accessibility" />
         </service>
 
+        <service
+            android:name=".core.update.UpdateCheckJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <receiver
             android:name=".core.broadcast.DeviceAdmin"
             android:description="@string/device_admin_description"

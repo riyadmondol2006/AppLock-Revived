@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Aucune application ne dispose de l\'autorisation d\'automatisation</string>
     <string name="followups_automation_holder_legacy">%1$s (ancienne application, bloquée)</string>
     <string name="followups_automation_outcome_legacy">refusée, une ancienne application a l\'autorisation</string>
+    <string name="followups_update_channel_name">Mises à jour de l\'appli</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s est disponible</string>
+    <string name="followups_update_notification_text">Appuyez pour voir les nouveautés et mettre à jour</string>
 </resources>

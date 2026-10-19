@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">لا يوجد تطبيق لديه إذن الأتمتة</string>
     <string name="followups_automation_holder_legacy">%1$s (تطبيق قديم، محظور)</string>
     <string name="followups_automation_outcome_legacy">تم الرفض، لدى تطبيق قديم الإذن</string>
+    <string name="followups_update_channel_name">تحديثات التطبيق</string>
+    <string name="followups_update_notification_title">يتوفر App Lock Revived %1$s</string>
+    <string name="followups_update_notification_text">انقر لمعرفة الجديد والتحديث</string>
 </resources>

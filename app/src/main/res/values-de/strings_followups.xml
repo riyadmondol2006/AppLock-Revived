@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Keine App hat die Automatisierungsberechtigung</string>
     <string name="followups_automation_holder_legacy">%1$s (alte App, blockiert)</string>
     <string name="followups_automation_outcome_legacy">abgelehnt, eine alte App hat die Berechtigung</string>
+    <string name="followups_update_channel_name">App-Updates</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s ist verfügbar</string>
+    <string name="followups_update_notification_text">Tippe, um die Neuerungen zu sehen und zu aktualisieren</string>
 </resources>

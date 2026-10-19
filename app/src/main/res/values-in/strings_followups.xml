@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Tidak ada aplikasi yang memiliki izin otomatisasi</string>
     <string name="followups_automation_holder_legacy">%1$s (aplikasi lama, diblokir)</string>
     <string name="followups_automation_outcome_legacy">ditolak, aplikasi lama memiliki izin</string>
+    <string name="followups_update_channel_name">Pembaruan aplikasi</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s tersedia</string>
+    <string name="followups_update_notification_text">Ketuk untuk melihat yang baru dan memperbarui</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import dev.riyadm.applock.core.update.UpdateCheckJobService
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.features.intruder.data.IntruderPhotoStore
@@ -25,6 +26,7 @@ class AppLockApplication : Application() {
         super.onCreate()
         initializeComponents()
         dev.riyadm.applock.features.hardening.Hardening.onAppCreate(this)
+        UpdateCheckJobService.sync(this, appLockRepository.isUpdateCheckEnabled())
 
         LogUtils.initialize(this)
         LogUtils.setLoggingEnabled(appLockRepository.isLoggingEnabled())

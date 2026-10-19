@@ -25,4 +25,7 @@
     <string name="followups_automation_holders_none">No app holds the automation permission</string>
     <string name="followups_automation_holder_legacy">%1$s (old app, blocked)</string>
     <string name="followups_automation_outcome_legacy">refused, an old app holds the permission</string>
+    <string name="followups_update_channel_name">App updates</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s is available</string>
+    <string name="followups_update_notification_text">Tap to see what\'s new and update</string>
 </resources>

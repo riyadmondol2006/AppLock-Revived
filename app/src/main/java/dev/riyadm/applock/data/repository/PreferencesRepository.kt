@@ -290,6 +290,10 @@ class PreferencesRepository(context: Context) {
     fun setSkippedUpdateVersion(version: String?) =
         settingsPrefs.edit { putString(KEY_SKIPPED_UPDATE, version) }
 
+    fun getLastNotifiedUpdateVersion(): String? = settingsPrefs.getString(KEY_NOTIFIED_UPDATE, null)
+    fun setLastNotifiedUpdateVersion(version: String?) =
+        settingsPrefs.edit { putString(KEY_NOTIFIED_UPDATE, version) }
+
     /** Raw access used by settings backup/restore. Credentials are never exported. */
     internal fun exportSettings(): Map<String, Any?> = settingsPrefs.all.filterKeys {
         it in EXPORTABLE_SETTINGS_KEYS
@@ -366,6 +370,7 @@ class PreferencesRepository(context: Context) {
         private const val KEY_UPDATE_CHECK = "update_check_enabled"
         private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
         private const val KEY_SKIPPED_UPDATE = "skipped_update_version"
+        private const val KEY_NOTIFIED_UPDATE = "notified_update_version"
 
         private val BOOLEAN_SETTINGS_KEYS = setOf(
             KEY_BIOMETRIC_AUTH_ENABLED, KEY_DISABLE_HAPTICS, KEY_USE_MAX_BRIGHTNESS,

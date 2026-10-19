@@ -54,11 +54,12 @@ object UpdateChecker {
         "https://api.github.com/repos/riyadmondol2006/AppLock-Revived/releases/latest"
     const val RELEASES_PAGE = "https://github.com/riyadmondol2006/AppLock-Revived/releases"
     private const val TIMEOUT_MS = 10_000
-    private const val AUTO_CHECK_INTERVAL_MS = 12 * 60 * 60 * 1000L
+    // Automatic checks run on every return to the app, at most once an hour.
+    private const val AUTO_CHECK_INTERVAL_MS = 60 * 60 * 1000L
 
     /**
      * Returns info about a newer release, or null when up to date, skipped, throttled, disabled or
-     * on any error. [force] bypasses the enabled flag, the 12h throttle and the skipped version.
+     * on any error. [force] bypasses the enabled flag, the hourly throttle and the skipped version.
      */
     suspend fun check(context: Context, force: Boolean = false): UpdateInfo? {
         val appContext = context.applicationContext

@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -22,6 +23,7 @@ import dev.riyadm.applock.core.navigation.NavigationManager
 import dev.riyadm.applock.core.navigation.Screen
 import dev.riyadm.applock.core.update.UpdateChecker
 import dev.riyadm.applock.core.update.UpdateInfo
+import dev.riyadm.applock.core.update.UpdateNotifier
 import dev.riyadm.applock.ui.components.UpdateDialog
 import dev.riyadm.applock.ui.theme.AppLockTheme
 
@@ -29,11 +31,16 @@ class MainActivity : FragmentActivity() {
 
     private lateinit var navigationManager: NavigationManager
     private val openProfilesRequested = mutableStateOf(false)
+    private val forceUpdateCheck = mutableStateOf(false)
+    private val resumeCount = mutableIntStateOf(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        if (savedInstanceState == null) readOpenProfilesExtra(intent)
+        if (savedInstanceState == null) {
+            readOpenProfilesExtra(intent)
+            readCheckUpdateExtra(intent)
+        }
 
         navigationManager = NavigationManager(this)
 
@@ -49,6 +56,7 @@ class MainActivity : FragmentActivity() {
 
                 LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
                     handleOnResume(navController)
+                    resumeCount.intValue++
                 }
 
                 UpdateCheckHost(navController)
@@ -61,6 +69,14 @@ class MainActivity : FragmentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         readOpenProfilesExtra(intent)
+        readCheckUpdateExtra(intent)
+    }
+
+    private fun readCheckUpdateExtra(intent: Intent?) {
+        if (intent?.getBooleanExtra(EXTRA_CHECK_UPDATE, false) == true) {
+            intent.removeExtra(EXTRA_CHECK_UPDATE)
+            forceUpdateCheck.value = true
+        }
     }
 
     private fun readOpenProfilesExtra(intent: Intent?) {
@@ -92,21 +108,31 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    /**
+     * Checks for a new release every time the app comes back to the front (the checker itself
+     * limits this to once an hour), and right away when opened from the update notification.
+     * The dialog only ever appears on the home or settings screen, never over the lock screen.
+     */
     @Composable
     private fun UpdateCheckHost(navController: NavHostController) {
         val context = LocalContext.current
         val backStackEntry by navController.currentBackStackEntryAsState()
         val canShowUpdate = backStackEntry?.destination?.route in UPDATE_DIALOG_ROUTES
+        val resumes by resumeCount
+        val forced by forceUpdateCheck
 
-        var autoCheckDone by rememberSaveable { mutableStateOf(false) }
         var pendingUpdate by rememberSaveable(stateSaver = UpdateInfo.Saver) {
             mutableStateOf<UpdateInfo?>(null)
         }
 
-        LaunchedEffect(canShowUpdate) {
-            if (canShowUpdate && !autoCheckDone) {
-                autoCheckDone = true
-                pendingUpdate = UpdateChecker.check(context)
+        LaunchedEffect(canShowUpdate, resumes, forced) {
+            if (!canShowUpdate || pendingUpdate != null) return@LaunchedEffect
+            val force = forced
+            forceUpdateCheck.value = false
+            val info = UpdateChecker.check(context, force = force)
+            if (info != null) {
+                UpdateNotifier.cancel(context)
+                pendingUpdate = info
             }
         }
 
@@ -140,6 +166,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val EXTRA_OPEN_PROFILES = "dev.riyadm.applock.extra.OPEN_PROFILES"
+        const val EXTRA_CHECK_UPDATE = "dev.riyadm.applock.extra.CHECK_UPDATE"
 
         private val INITIAL_SETUP_ROUTES = setOf(
             Screen.AppIntro.route,

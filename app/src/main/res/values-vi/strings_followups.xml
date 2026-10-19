@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Không ứng dụng nào có quyền tự động hóa</string>
     <string name="followups_automation_holder_legacy">%1$s (ứng dụng cũ, bị chặn)</string>
     <string name="followups_automation_outcome_legacy">bị từ chối, một ứng dụng cũ có quyền</string>
+    <string name="followups_update_channel_name">Bản cập nhật ứng dụng</string>
+    <string name="followups_update_notification_title">Đã có App Lock Revived %1$s</string>
+    <string name="followups_update_notification_text">Nhấn để xem điểm mới và cập nhật</string>
 </resources>

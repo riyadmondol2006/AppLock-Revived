@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Hiçbir uygulamada otomasyon izni yok</string>
     <string name="followups_automation_holder_legacy">%1$s (eski uygulama, engellendi)</string>
     <string name="followups_automation_outcome_legacy">reddedildi, eski bir uygulamada izin var</string>
+    <string name="followups_update_channel_name">Uygulama güncellemeleri</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s kullanıma sunuldu</string>
+    <string name="followups_update_notification_text">Yenilikleri görmek ve güncellemek için dokun</string>
 </resources>

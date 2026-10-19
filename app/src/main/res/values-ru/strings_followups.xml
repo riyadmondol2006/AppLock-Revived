@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Ни у одного приложения нет разрешения на автоматизацию</string>
     <string name="followups_automation_holder_legacy">%1$s (старое приложение, заблокировано)</string>
     <string name="followups_automation_outcome_legacy">отклонено, разрешение есть у старого приложения</string>
+    <string name="followups_update_channel_name">Обновления приложения</string>
+    <string name="followups_update_notification_title">Доступна версия App Lock Revived %1$s</string>
+    <string name="followups_update_notification_text">Нажмите, чтобы узнать, что нового, и обновить</string>
 </resources>

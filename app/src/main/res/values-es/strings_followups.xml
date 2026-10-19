@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">Ninguna app tiene el permiso de automatización</string>
     <string name="followups_automation_holder_legacy">%1$s (app antigua, bloqueada)</string>
     <string name="followups_automation_outcome_legacy">rechazado, una app antigua tiene el permiso</string>
+    <string name="followups_update_channel_name">Actualizaciones de la app</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s está disponible</string>
+    <string name="followups_update_notification_text">Toca para ver las novedades y actualizar</string>
 </resources>

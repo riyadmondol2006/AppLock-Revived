@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">কোনো অ্যাপের অটোমেশন অনুমতি নেই</string>
     <string name="followups_automation_holder_legacy">%1$s (পুরোনো অ্যাপ, ব্লক করা)</string>
     <string name="followups_automation_outcome_legacy">প্রত্যাখ্যাত, একটি পুরোনো অ্যাপের অনুমতি আছে</string>
+    <string name="followups_update_channel_name">অ্যাপ আপডেট</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s উপলব্ধ</string>
+    <string name="followups_update_notification_text">নতুন কী আছে দেখতে ও আপডেট করতে ট্যাপ করুন</string>
 </resources>

@@ -18,4 +18,7 @@
     <string name="followups_automation_holders_none">没有应用拥有自动化权限</string>
     <string name="followups_automation_holder_legacy">%1$s（旧应用，已阻止）</string>
     <string name="followups_automation_outcome_legacy">已拒绝，有旧应用拥有该权限</string>
+    <string name="followups_update_channel_name">应用更新</string>
+    <string name="followups_update_notification_title">App Lock Revived %1$s 现已推出</string>
+    <string name="followups_update_notification_text">点按即可查看新功能并更新</string>
 </resources>
