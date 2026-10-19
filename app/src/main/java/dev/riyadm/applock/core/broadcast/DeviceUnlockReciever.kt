@@ -6,7 +6,10 @@ import android.content.Intent
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.services.AppLockManager
 
-class DeviceUnlockReceiver(private val onDeviceUnlocked: () -> Unit) : BroadcastReceiver() {
+class DeviceUnlockReceiver(
+    private val onDeviceUnlocked: () -> Unit,
+    private val onScreenOff: () -> Unit = {}
+) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
@@ -16,8 +19,8 @@ class DeviceUnlockReceiver(private val onDeviceUnlocked: () -> Unit) : Broadcast
             }
 
             Intent.ACTION_SCREEN_OFF -> {
-                AppLockManager.clearTemporarilyUnlockedApp()
-                AppLockManager.appUnlockTimes.clear()
+                AppLockManager.onScreenOff()
+                onScreenOff()
                 LogUtils.d("DeviceUnlockReceiver", "Screen turned OFF (locked)")
             }
         }
