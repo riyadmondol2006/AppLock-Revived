@@ -4,9 +4,6 @@ import android.util.Log
 import androidx.activity.compose.LocalActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.scaleIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
@@ -20,6 +17,7 @@ import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.PreferencesRepository
 import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
+import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
 import dev.riyadm.applock.features.lockscreen.ui.AlphanumericPasswordOverlayScreen
 import dev.riyadm.applock.features.lockscreen.ui.PatternLockScreen
@@ -29,6 +27,7 @@ import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
+import dev.riyadm.applock.ui.motion.ExpressiveMotion
 
 @Composable
 fun AppNavHost(navController: NavHostController, startDestination: String) {
@@ -37,14 +36,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        enterTransition = {
-            fadeIn(animationSpec = tween(ANIMATION_DURATION)) +
-                    scaleIn(initialScale = SCALE_INITIAL, animationSpec = tween(ANIMATION_DURATION))
-        },
-        popEnterTransition = {
-            fadeIn(animationSpec = tween(ANIMATION_DURATION)) +
-                    scaleIn(initialScale = SCALE_INITIAL, animationSpec = tween(ANIMATION_DURATION))
-        },
+        enterTransition = ExpressiveMotion.enter,
+        exitTransition = ExpressiveMotion.exit,
+        popEnterTransition = ExpressiveMotion.popEnter,
+        popExitTransition = ExpressiveMotion.popExit,
     ) {
         composable(Screen.AppIntro.route) {
             AppIntroScreen(navController)
@@ -140,6 +135,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
         composable(Screen.AntiUninstall.route) {
             AntiUninstallScreen(navController)
         }
+
+        composable(Screen.UnlockHistory.route) {
+            UnlockHistoryScreen(navController)
+        }
     }
 }
 
@@ -224,8 +223,6 @@ private fun navigateToMain(navController: NavHostController) {
 }
 
 private const val TAG = "AppNavHost"
-private const val ANIMATION_DURATION = 400
-private const val SCALE_INITIAL = 0.9f
 private const val BIOMETRIC_TITLE = "Confirm password"
 private const val BIOMETRIC_SUBTITLE = "Confirm biometric to continue"
 private const val BIOMETRIC_NEGATIVE_BUTTON = "Use PIN"
