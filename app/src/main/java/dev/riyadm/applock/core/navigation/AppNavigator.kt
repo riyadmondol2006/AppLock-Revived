@@ -25,7 +25,6 @@ import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.PreferencesRepository
-import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
@@ -45,7 +44,6 @@ import dev.riyadm.applock.features.settings.ui.TrustedNetworksScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
 import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.ExpressiveMotion
-import kotlin.concurrent.thread
 
 @Composable
 fun AppNavHost(navController: NavHostController, startDestination: String) {
@@ -187,6 +185,7 @@ private fun showInAppBiometricPrompt(
     gate: PolicyUnlockGate,
     onSuccess: () -> Unit
 ) {
+    if (gate.isBiometricBlocked(repository.getRemainingLockoutMs())) return
     try {
         val biometricPrompt = BiometricPrompt(
             activity,
@@ -199,11 +198,7 @@ private fun showInAppBiometricPrompt(
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     LogUtils.d(TAG, "Biometric authentication succeeded")
-                    val pkg = activity.packageName
-                    thread(name = "unlock-attempt") {
-                        repository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
-                    }
-                    if (gate.onBiometricSucceeded()) onSuccess()
+                    if (gate.onBiometricSucceeded(repository, activity.packageName)) onSuccess()
                 }
             }
         )

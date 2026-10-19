@@ -95,7 +95,7 @@ fun AlphanumericPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier =
         },
         input = input@{
             if (!credentialVisible) {
-                BiometricFirstPanel(spec)
+                BiometricFirstPanel(spec, controller)
                 return@input
             }
             Column(

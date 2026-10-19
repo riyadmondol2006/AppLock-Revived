@@ -159,11 +159,19 @@ internal fun policyHint(spec: LockScreenSpec, credentialHint: String, nextStepHi
     }
 }
 
-/** Shown instead of the credential input while the policy asks for biometrics first. */
+/**
+ * Shown instead of the credential input while the policy asks for biometrics first. During a
+ * two-step lockout only the countdown is shown; the biometric step comes back once it ends.
+ */
 @Composable
-internal fun BiometricFirstPanel(spec: LockScreenSpec, modifier: Modifier = Modifier) {
+internal fun BiometricFirstPanel(
+    spec: LockScreenSpec,
+    controller: UnlockController,
+    modifier: Modifier = Modifier
+) {
+    val blocked = controller.isLockedOut && spec.gate?.biometricWaitsForLockout == true
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        if (spec.showBiometric) BiometricButton(onClick = spec.onBiometric, compact = false)
+        if (spec.showBiometric && !blocked) BiometricButton(onClick = spec.onBiometric, compact = false)
     }
 }
 

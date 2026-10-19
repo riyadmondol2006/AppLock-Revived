@@ -176,6 +176,15 @@ class AppLockRepository(private val context: Context) {
         }
     }
 
+    /**
+     * Records a factor that passed without completing the unlock (the biometric step of a two-step
+     * unlock). It only goes into the unlock history; the failed-attempt lockout and the intruder
+     * streak are cleared by the final unlock alone.
+     */
+    fun recordIntermediateFactor(packageName: String, method: UnlockLogRepository.Method) {
+        if (isUnlockLogEnabled()) unlockLog.add(packageName, true, method)
+    }
+
     // Per-app security level and lock profiles
     fun policyFor(packageName: String): AppLockPolicy = appPolicies.policyFor(packageName)
 

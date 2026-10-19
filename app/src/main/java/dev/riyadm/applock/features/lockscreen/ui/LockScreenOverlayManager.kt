@@ -39,7 +39,6 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dev.riyadm.applock.core.utils.appLockRepository
-import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
 import dev.riyadm.applock.features.lockscreen.domain.resolvedLockPolicy
 import dev.riyadm.applock.services.AppLockManager
@@ -265,6 +264,7 @@ class LockScreenOverlayManager(private val context: Context) :
     private fun startBiometric() {
         val current = session ?: return
         if (biometricToken != 0L || leaving || rootView == null) return
+        if (current.gate.isBiometricBlocked(repository.getRemainingLockoutMs())) return
         biometricToken = current.token
         activeManager = WeakReference(this)
         AppLockManager.reportBiometricAuthStarted()
@@ -303,12 +303,8 @@ class LockScreenOverlayManager(private val context: Context) :
         val current = session ?: return false
         if (current.token != token) return false
         if (success) {
-            val pkg = current.packageName
-            thread(name = "unlock-attempt") {
-                repository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
-            }
             // Two-step keeps the overlay up and asks for the credential next.
-            if (current.gate.onBiometricSucceeded()) unlock(token)
+            if (current.gate.onBiometricSucceeded(repository, current.packageName)) unlock(token)
         } else {
             current.gate.onBiometricError(errorCode)
         }

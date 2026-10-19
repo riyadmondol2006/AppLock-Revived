@@ -81,7 +81,7 @@ fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
         },
         input = input@{
             if (!credentialVisible) {
-                BiometricFirstPanel(spec)
+                BiometricFirstPanel(spec, controller)
                 return@input
             }
             PatternPad(

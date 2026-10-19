@@ -60,7 +60,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.concurrent.thread
 
 /**
  * Lock screen activity used by the Shizuku and Usage Stats backends.
@@ -212,10 +211,7 @@ class PasswordOverlayActivity : FragmentActivity() {
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
             isBiometricShowing = false
             val pkg = lockedPackage
-            thread(name = "unlock-attempt") {
-                appLockRepository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
-            }
-            if (gate?.onBiometricSucceeded() != true) {
+            if (gate?.onBiometricSucceeded(appLockRepository, pkg) != true) {
                 // Two-step: the credential is still required.
                 AppLockManager.reportBiometricAuthFinished()
                 return
@@ -227,6 +223,7 @@ class PasswordOverlayActivity : FragmentActivity() {
 
     private fun triggerBiometricPrompt() {
         if (isBiometricShowing || isUnlocking || isFinishing || !biometricUsable) return
+        if (gate?.isBiometricBlocked(appLockRepository.getRemainingLockoutMs()) == true) return
         isBiometricShowing = true
         AppLockManager.reportBiometricAuthStarted()
         try {
@@ -427,7 +424,7 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         },
         input = input@{
             if (!credentialVisible) {
-                BiometricFirstPanel(spec)
+                BiometricFirstPanel(spec, controller)
                 return@input
             }
             PinKeypad(

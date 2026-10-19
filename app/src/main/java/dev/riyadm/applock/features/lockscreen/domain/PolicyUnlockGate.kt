@@ -8,7 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockPolicy
+import dev.riyadm.applock.data.repository.AppLockRepository
+import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.ui.canUseBiometrics
+import kotlin.concurrent.thread
 
 /**
  * The [AppLockPolicy] for [packageName], adjusted to whether biometrics can be used right now.
@@ -66,6 +69,16 @@ class PolicyUnlockGate(val policy: AppLockPolicy) {
             (policy.allowBiometric && biometricPassed) || credentialPassed
         }
 
+    /**
+     * Two-step: while the credential is locked out the biometric step is neither offered nor
+     * started. Passing it can't unlock anything then, and the lockout countdown is shown instead.
+     */
+    val biometricWaitsForLockout: Boolean
+        get() = policy.requireBoth && !biometricPassed
+
+    fun isBiometricBlocked(remainingLockoutMs: Long): Boolean =
+        biometricWaitsForLockout && remainingLockoutMs > 0
+
     /** Returns true when the app may be unlocked now. */
     fun onBiometricSucceeded(): Boolean {
         if (!policy.allowBiometric) return false
@@ -86,6 +99,32 @@ class PolicyUnlockGate(val policy: AppLockPolicy) {
         ) {
             credentialFallback = true
         }
+    }
+
+    /**
+     * Routes a biometric success through the gate and records it. Only the factor that completes
+     * the unlock counts as a successful unlock, which clears the failed-attempt lockout. The first
+     * step of a two-step unlock is only written to the history, so a fingerprint alone can never
+     * reset the lockout that protects the credential step. Returns true when the app may be
+     * unlocked now. [record] runs the repository write, off the main thread by default.
+     */
+    fun onBiometricSucceeded(
+        repository: AppLockRepository,
+        packageName: String,
+        record: (() -> Unit) -> Unit = { block -> thread(name = "unlock-attempt") { block() } },
+    ): Boolean {
+        val unlocked = onBiometricSucceeded()
+        val passed = biometricPassed
+        if (unlocked || passed) {
+            record {
+                if (unlocked) {
+                    repository.recordUnlockAttempt(packageName, true, UnlockLogRepository.Method.BIOMETRIC)
+                } else {
+                    repository.recordIntermediateFactor(packageName, UnlockLogRepository.Method.BIOMETRIC)
+                }
+            }
+        }
+        return unlocked
     }
 
     private companion object {
