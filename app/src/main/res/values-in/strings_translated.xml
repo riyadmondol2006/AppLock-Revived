@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">Mencegah orang yang tidak berwenang mencopot aplikasi ini.</string>
+    <string name="accessibility_service_description">Memungkinkan App Lock mendeteksi saat aplikasi yang dilindungi dibuka dan menampilkan verifikasi kata sandi.</string>
+
+    <string name="unlock_to_disable_admin">Masukkan kata sandi Anda untuk menonaktifkan izin admin.</string>
+    <string name="incorrect_pin_try_again">PIN salah. Silakan coba lagi.</string>
+    <string name="incorrect_pass_try_again">Kata sandi salah. Silakan coba lagi.</string>
+    <string name="password_verified_admin">Kata sandi terverifikasi, Anda sekarang dapat menonaktifkan izin admin</string>
+    <string name="choose_app_detection">Pilih metode deteksi aplikasi</string>
+    <string name="app_detection_desc">Pilih cara App Lock Revived mendeteksi saat aplikasi yang dilindungi diluncurkan.</string>
+    <string name="notif_perm">Izin notifikasi</string>
+    <string name="notif_perm_desc">App Lock Revived memerlukan izin untuk menampilkan notifikasi agar Anda tetap mendapat informasi dan aplikasi tetap berjalan dengan baik di latar belakang. Ketuk \'Lanjut\' untuk memberikan izin.</string>
+    <string name="notif_perm_granted">Izin notifikasi otomatis diberikan pada versi Android Anda.</string>
+    <string name="welc_applock">Selamat datang di App Lock Revived</string>
+    <string name="welcome_desc">Lindungi aplikasi dan privasi Anda dengan App Lock Revived. Kami akan memandu Anda dalam penyiapan singkat.</string>
+    <string name="secure_apps">Amankan aplikasi Anda</string>
+    <string name="secure_apps_desc">Lindungi aplikasi pribadi Anda dengan mekanisme penguncian tingkat lanjut</string>
+    <string name="display_over_apps">Tampil di atas aplikasi lain</string>
+    <string name="display_over_apps_desc">App Lock Revived memerlukan izin untuk tampil di atas aplikasi lain agar dapat menampilkan layar kunci. Ketuk \'Lanjut\' lalu aktifkan izin tersebut.</string>
+
+    <string name="notification_permission_required_desc">Izin notifikasi diperlukan agar App Lock Revived dapat berfungsi dengan baik.</string>
+    <string name="shizuku_permission_granted">Izin Shizuku diberikan</string>
+    <string name="shizuku_permission_required_desc">Izin Shizuku diperlukan untuk fitur lanjutan.</string>
+    <string name="allow_display_over_other_apps">Harap izinkan App Lock Revived tampil di atas aplikasi lain.</string>
+    <string name="disable_battery_optimization_title">Nonaktifkan pengoptimalan baterai</string>
+    <string name="disable_battery_optimization_desc">Agar App Lock Revived berjalan andal di latar belakang, harap nonaktifkan pengoptimalan baterai untuk aplikasi ini. Ketuk \'Lanjut\' untuk membuka setelan.</string>
+    <string name="accessibility_service_title">Layanan aksesibilitas</string>
+    <string name="accessibility_service_card_desc">Metode standar yang berfungsi di sebagian besar perangkat. Memerlukan izin aksesibilitas. Mungkin ada sedikit jeda pada beberapa OEM.</string>
+    <string name="usage_stats_title">Statistik penggunaan</string>
+    <string name="usage_stats_card_desc">Metode eksperimental yang memanfaatkan statistik penggunaan sistem. Bekerja lebih baik pada beberapa perangkat.</string>
+    <string name="shizuku_service_title">Layanan Shizuku</string>
+    <string name="shizuku_service_card_desc">Metode lanjutan dengan performa lebih baik dan pengalaman yang lebih unggul. Memerlukan aplikasi Shizuku yang terpasang dan diaktifkan melalui ADB.</string>
+    <string name="can_change_later_in_settings">Anda dapat mengubah ini nanti di setelan</string>
+    <string name="app_intro_accessibility_desc">
+Layanan aksesibilitas diperlukan agar App Lock Revived dapat berfungsi dengan baik.
+
+Jika Anda melihat pesan \"Setelan terbatas\", buka secara manual Setelan > Aplikasi > App Lock > menu kanan atas, lalu tekan \"Izinkan setelan terbatas\".
+
+Ketuk \'Lanjut\' untuk mengaktifkannya.
+    </string>
+    <string name="app_intro_usage_stats_title">Izin statistik penggunaan</string>
+    <string name="app_intro_usage_stats_desc">
+Izin ini diperlukan untuk mendeteksi saat aplikasi yang dikunci dibuka.
+
+Jika Anda melihat pesan \"Setelan terbatas\", buka secara manual Setelan > Aplikasi > App Lock > menu kanan atas, lalu tekan \"Izinkan setelan terbatas\".
+
+Ketuk \'Lanjut\' untuk mengaktifkannya.</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku menyediakan fitur lanjutan seperti mengunci aplikasi sistem dan lainnya.
+
+Pastikan Shizuku sudah terpasang dan diaktifkan melalui ADB. Ketuk \'Lanjut\' untuk memberikan izin.
+    </string>
+    <string name="app_intro_complete_privacy_title">Privasi penuh</string>
+    <string name="app_intro_complete_privacy_desc">Data Anda tidak pernah meninggalkan perangkat Anda. App Lock Revived melindungi privasi Anda setiap saat.</string>
+    <string name="all_permissions_required">Semua izin diperlukan untuk melanjutkan.</string>
+    <string name="next_button">Lanjut</string>
+    <string name="get_started_button">Mulai</string>
+
+    <string name="default_app_name">Aplikasi</string>
+    <string name="this_app">aplikasi ini</string>
+    <string name="unlock_app_title">Buka kunci %1$s</string>
+    <string name="confirm_biometric_subtitle">Konfirmasi biometrik untuk melanjutkan</string>
+    <string name="use_pin_button">Gunakan PIN</string>
+    <string name="enter_password_to_continue">Masukkan kata sandi untuk melanjutkan</string>
+    <string name="biometric_authentication_cd">Autentikasi biometrik</string>
+
+    <string name="set_pin_to_continue_toast">Harap atur PIN untuk melanjutkan</string>
+    <string name="authenticate_to_reset_pin_title">Autentikasi untuk mengatur ulang PIN</string>
+    <string name="use_device_pin_pattern_password_subtitle">Gunakan PIN, pola, atau kata sandi perangkat Anda</string>
+    <string name="enter_current_pin_title">Masukkan PIN saat ini</string>
+    <string name="confirm_pin_title">Konfirmasi PIN</string>
+    <string name="set_new_pin_title">Atur PIN baru</string>
+    <string name="create_pin_explanation">Buat PIN untuk melindungi aplikasi yang dikunci. PIN ini akan diminta setiap kali Anda membuka aplikasi yang dikunci.</string>
+    <string name="enter_current_pin_label">Masukkan PIN Anda saat ini</string>
+    <string name="confirm_new_pin_label">Konfirmasi PIN baru Anda</string>
+    <string name="create_new_pin_label">Buat PIN baru</string>
+    <string name="tooltip_enter_current_pin">Masukkan PIN Anda saat ini untuk melanjutkan</string>
+    <string name="tooltip_confirm_pin">Masukkan PIN yang sama sekali lagi untuk mengonfirmasi</string>
+    <string name="tooltip_create_pin_min_length">Buat PIN dengan minimal 4 digit</string>
+    <string name="information_cd">Informasi</string>
+    <string name="pins_dont_match_error">PIN tidak cocok. Coba lagi.</string>
+    <string name="pin_min_length_error">PIN harus terdiri dari minimal 4 digit</string>
+    <string name="re_enter_new_pin_confirm_label">Masukkan ulang PIN baru Anda untuk mengonfirmasi</string>
+    <string name="reset_using_device_password_button">Atur ulang dengan kata sandi perangkat</string>
+    <string name="cancel_button">Batal</string>
+    <string name="start_over_button">Mulai dari awal</string>
+    <string name="password_set_successfully_toast">Kata sandi berhasil diatur</string>
+    <string name="use_pattern_button">Gunakan pola</string>
+    <string name="use_password_button">Gunakan kata sandi</string>
+    <string name="use_pin_instead">Gunakan PIN</string>
+
+    <string name="set_alphanumeric_password_title">Atur kata sandi</string>
+    <string name="create_alphanumeric_password_label">Buat kata sandi</string>
+    <string name="confirm_alphanumeric_password_label">Konfirmasi kata sandi Anda</string>
+    <string name="enter_current_password_label">Masukkan kata sandi saat ini</string>
+    <string name="password_hint">Masukkan kata sandi</string>
+    <string name="password_too_short_error">Kata sandi harus terdiri dari minimal 4 karakter</string>
+    <string name="password_too_long_error">Kata sandi maksimal 64 karakter</string>
+    <string name="passwords_dont_match_error">Kata sandi tidak cocok</string>
+    <string name="incorrect_password_try_again">Kata sandi salah. Silakan coba lagi.</string>
+
+    <string name="main_screen_anti_uninstall_log">Anti-copot diaktifkan</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku tidak tersedia. Harap pasang dan konfigurasikan Shizuku.</string>
+    <string name="main_screen_overlay_permission_dialog_title">Izin overlay diperlukan</string>
+    <string name="main_screen_overlay_permission_dialog_text">Harap berikan izin kepada aplikasi untuk menggambar overlay di setelan. Ini diperlukan agar aplikasi dapat menampilkan layar kunci.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">Buka setelan</string>
+    <string name="main_screen_shizuku_manual_permission_toast">Harap berikan izin Shizuku secara manual</string>
+    <string name="main_screen_device_admin_explanation">App Lock memerlukan izin Admin Perangkat untuk mencegah pencopotan. Ini tidak akan memengaruhi fungsi perangkat Anda.</string>
+    <string name="main_screen_join_community_dialog_title">Bergabung dengan komunitas</string>
+    <string name="main_screen_join_community_dialog_text">Bergabunglah dengan komunitas Discord kami untuk pembaruan dan dukungan.</string>
+    <string name="main_screen_join_community_join_discord_button">Gabung Discord</string>
+    <string name="main_screen_join_community_dismiss_button">Tutup</string>
+    <string name="main_screen_support_development_dialog_title">Dukung pengembangan</string>
+    <string name="main_screen_support_development_donate_button">Donasi</string>
+    <string name="main_screen_app_protection_cd">Perlindungan aplikasi</string>
+    <string name="main_screen_settings_cd">Setelan</string>
+    <string name="main_screen_loading_applications_text">Memuat aplikasi…</string>
+    <string name="main_screen_search_apps_placeholder">Cari aplikasi</string>
+    <string name="main_screen_search_cd">Cari</string>
+    <string name="main_screen_empty_search_title">Aplikasi tidak ditemukan</string>
+    <string name="main_screen_empty_search_subtitle">Coba ubah pencarian Anda</string>
+
+    <string name="settings_screen_title">Setelan</string>
+    <string name="settings_screen_back_cd">Kembali</string>
+    <string name="settings_screen_support_development_dialog_title">Dukung pengembangan</string>
+    <string name="settings_screen_support_development_donate_button">Donasi</string>
+    <string name="settings_screen_permission_required_dialog_title">Izin diperlukan</string>
+    <string name="settings_screen_permission_required_dialog_text">Untuk mengaktifkan Anti-copot, App Lock memerlukan dua izin: Administrator Perangkat dan Layanan Aksesibilitas. Keduanya diperlukan untuk mencegah pencopotan yang tidak sah dan memastikan perlindungan yang kuat. Apakah Anda ingin melanjutkan untuk memberikan izin ini?</string>
+    <string name="settings_screen_permission_required_proceed_button">Lanjutkan</string>
+    <string name="settings_screen_device_admin_dialog_title">Izin Administrator Perangkat</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock memerlukan izin Administrator Perangkat untuk mencegah pencopotan yang tidak sah. Harap berikan izin ini di layar berikutnya. Ini tidak akan memengaruhi fungsi normal perangkat Anda.</string>
+    <string name="settings_screen_device_admin_grant_button">Berikan izin</string>
+    <string name="settings_screen_accessibility_dialog_title">Izin layanan aksesibilitas</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock juga memerlukan izin Layanan Aksesibilitas untuk memantau upaya pencopotan aplikasi dan mengaktifkan kembali Administrator Perangkat jika dinonaktifkan. Ini memastikan fitur Anti-copot tetap efektif. Harap aktifkan Layanan Aksesibilitas untuk App Lock di setelan.</string>
+    <string name="settings_screen_accessibility_open_settings_button">Buka setelan</string>
+    <string name="settings_screen_lock_screen_customization_title">Kustomisasi layar kunci</string>
+    <string name="settings_screen_max_brightness_title">Kecerahan maksimum</string>
+    <string name="settings_screen_max_brightness_desc">Tampilkan layar kunci pada kecerahan maksimum agar lebih jelas</string>
+    <string name="settings_screen_biometric_auth_title">Autentikasi biometrik</string>
+    <string name="settings_screen_biometric_auth_desc">Gunakan sidik jari atau buka dengan wajah jika tersedia</string>
+    <string name="settings_screen_biometric_auth_unavailable">Autentikasi biometrik tidak tersedia di perangkat ini.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">Tampilkan biometrik otomatis</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">Otomatis tampilkan permintaan biometrik di layar kunci</string>
+    <string name="settings_screen_app_locking_behavior_title">Perilaku penguncian aplikasi</string>
+    <string name="settings_screen_unlock_behavior_title">Perilaku buka kunci</string>
+    <string name="settings_screen_unlock_behavior_desc">Nonaktifkan ini jika membuka kunci menyebabkan aplikasi dimulai ulang</string>
+    <string name="settings_screen_unlock_behavior_option_close">Tutup layar kunci</string>
+    <string name="settings_screen_unlock_behavior_option_launch">Tutup layar kunci dan buka aplikasi</string>
+    <string name="settings_screen_auto_unlock_title">Buka kunci otomatis</string>
+    <string name="settings_screen_auto_unlock_desc">Buka kunci aplikasi segera setelah PIN yang benar dimasukkan</string>
+    <string name="settings_screen_unlock_duration_title">Durasi waktu buka kunci</string>
+    <string name="settings_screen_unlock_duration_desc">Biarkan aplikasi tetap terbuka selama durasi tertentu setelah pertama kali dibuka</string>
+    <string name="settings_screen_unlock_duration_dialog_title">Atur durasi buka kunci</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">Aplikasi akan tetap terbuka selama durasi ini setelah pertama kali dibuka. Pilih 0 detik untuk menonaktifkan.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">detik</string>
+    <string name="settings_screen_security_title">Keamanan</string>
+    <string name="settings_screen_change_pin_title">Ubah PIN</string>
+    <string name="settings_screen_change_pin_desc">Perbarui PIN Anda saat ini</string>
+    <string name="settings_screen_anti_uninstall_title">Perlindungan anti-copot</string>
+    <string name="settings_screen_anti_uninstall_desc">Cegah pencopotan App Lock Revived yang tidak sah</string>
+    <string name="settings_screen_haptic_feedback_title">Umpan balik getaran</string>
+    <string name="settings_screen_haptic_feedback_desc">Nonaktifkan getaran saat menekan tombol</string>
+    <string name="settings_screen_backend_implementation_title">Implementasi backend</string>
+    <string name="settings_screen_backend_implementation_desc">Pilih metode yang digunakan App Lock Revived untuk mendeteksi aplikasi di latar depan</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">Layanan aksesibilitas</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">Metode standar, mungkin ada sedikit jeda pada beberapa OEM.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">Statistik penggunaan</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">Metode eksperimental, bekerja lebih baik pada beberapa perangkat.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">Metode lanjutan, memerlukan pengaturan Shizuku melalui ADB.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku tidak tersedia atau izin ditolak.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Fitur eksperimental Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Aktifkan fitur eksperimental untuk backend Shizuku (misalnya, mengunci aktivitas tertentu). Dapat menyebabkan ketidakstabilan.</string>
+    <string name="settings_screen_about_title">Tentang</string>
+    <string name="settings_screen_developer_title">Pengembang</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">Kode sumber</string>
+    <string name="settings_screen_source_code_desc">Lihat kode sumber di GitHub</string>
+    <string name="settings_screen_support_development_title">Dukung pengembangan</string>
+    <string name="settings_screen_support_development_desc">Bantu dukung pengembangan aplikasi ini</string>
+
+    <string name="utils_battery_ignore_toast">Harap izinkan aplikasi kami mengabaikan pengoptimalan baterai.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">Setelan khusus tidak ditemukan. Harap hapus aplikasi dari pembatasan baterai.</string>
+    <string name="utils_battery_settings_not_found_toast">Tidak dapat membuka setelan baterai apa pun.</string>
+    <string name="utils_usage_permission_error_log">Kesalahan saat memeriksa izin penggunaan: </string>
+
+    <string name="shizuku_permission_dialog_title">Berikan izin Shizuku</string>
+    <string name="shizuku_permission_dialog_text_1">Anda telah mengaktifkan mode Shizuku, tetapi aplikasi memerlukan izin tambahan agar dapat berfungsi dengan baik.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">Tekan \'Berikan izin\' untuk membuka setelan dan memberikan izin yang diperlukan.</string>
+    <string name="grant_permission_button">Berikan izin</string>
+    <string name="open_settings_button">Buka setelan</string>
+
+    <string name="device_admin_permission_dialog_title">Izin Admin Perangkat diperlukan</string>
+    <string name="device_admin_permission_dialog_text">Anda telah mengaktifkan mode anti-copot, yang memerlukan izin admin perangkat untuk melindungi aplikasi.</string>
+
+    <string name="anti_uninstall_accessibility_permission_dialog_title">Izin aksesibilitas diperlukan</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">Anda telah mengaktifkan mode anti-copot, tetapi aplikasi memerlukan izin aksesibilitas untuk menerapkannya.</string>
+
+    <string name="admin_password_verification_dialog_title">Verifikasi kata sandi diperlukan</string>
+    <string name="admin_password_verification_dialog_text">Masukkan kata sandi App Lock Anda untuk menonaktifkan izin admin</string>
+    <string name="password_label">Kata sandi</string>
+    <string name="password_empty_error">Kata sandi tidak boleh kosong</string>
+    <string name="incorrect_password_error">Kata sandi salah</string>
+    <string name="verify_button">Verifikasi</string>
+
+    <string name="accessibility_guide_dialog_title">Aktifkan layanan aksesibilitas</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock memerlukan izin aksesibilitas untuk mendeteksi saat aplikasi yang dilindungi diluncurkan.</string>
+    <string name="accessibility_guide_dialog_text_2">Ikuti langkah-langkah berikut:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. Ketuk \'Buka setelan\' di bawah\n
+2. Geser sakelar ke AKTIF\n
+3. Ketuk \'Izinkan\' pada dialog konfirmasi.
+    </string>
+    <string name="accessibility_guide_open_settings_button">Buka setelan</string>
+    <string name="settings_screen_about_and_support_title">Tentang &amp; Dukungan</string>
+    <string name="settings_screen_join_community_title">Bergabung dengan komunitas</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d menit</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">Kunci segera</string>
+    <string name="settings_screen_biometric_auth_desc_available">Gunakan sidik jari atau buka dengan wajah untuk membuka kunci aplikasi</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">Autentikasi biometrik belum diatur atau tidak tersedia.
+    </string>
+    <string name="settings_screen_shizuku_permission_granted">Izin Shizuku diberikan</string>
+    <string name="settings_screen_shizuku_permission_required_desc">Izin Shizuku diperlukan untuk fitur lanjutan.
+    </string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku tidak berjalan</string>
+    <string name="settings_screen_usage_permission_toast">Harap berikan izin akses penggunaan.
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">Pilih berapa lama aplikasi tetap terbuka setelah memasukkan PIN:
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">Kunci segera</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d menit</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 jam</string>
+    <string name="settings_screen_permission_required_dialog_text_1">Untuk mengaktifkan perlindungan Anti-copot, App Lock memerlukan dua izin:
+    </string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. Administrator Perangkat - Mencegah pencopotan\n2. Layanan Aksesibilitas - Memantau penggunaan aplikasi\n\nIzin ini membantu melindungi aplikasi dari penghapusan tanpa sepengetahuan Anda.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock memerlukan izin Administrator Perangkat untuk mencegah pencopotan.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_2">Izin ini memungkinkan aplikasi untuk:\n• Mencegah dirinya sendiri dicopot\n• Melindungi setelan kunci aplikasi Anda\n\nIzin ini tidak akan memengaruhi fungsi normal perangkat Anda.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock memerlukan izin Layanan Aksesibilitas untuk memantau penggunaan aplikasi.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_2">Izin ini memungkinkan aplikasi untuk:\n• Mendeteksi saat aplikasi dibuka\n• Menampilkan layar kunci saat diperlukan\n• Memberikan perlindungan aplikasi yang lancar
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_3">Privasi Anda terlindungi - tidak ada data yang dikumpulkan atau dibagikan.
+    </string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">Lanjutan</string>
+    <string name="settings_screen_fallback_selection_dialog_title">Pilih metode cadangan</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">Pilih metode cadangan yang digunakan saat metode utama gagal:
+    </string>
+    <string name="confirm_button">Konfirmasi</string>
+    <string name="enable_button">Aktifkan</string>
+    <string name="settings_screen_advanced_title">Lanjutan</string>
+    <string name="settings_screen_export_logs_title">Ekspor log</string>
+    <string name="settings_screen_export_logs_desc">Ekspor log aplikasi untuk debugging.</string>
+    <string name="settings_Screen_export_audit">Ekspor log keamanan</string>
+    <string name="settings_screen_export_audit_desc">Ekspor log keamanan untuk ditinjau.</string>
+    <string name="settings_screen_export_logs_success">Log berhasil diekspor</string>
+    <string name="settings_screen_export_logs_error">Gagal mengekspor log</string>
+    <string name="settings_screen_version_template">Versi %1$s</string>
+
+    <string name="enter_pattern_to_continue">Gambar pola untuk melanjutkan</string>
+    <string name="incorrect_pattern_try_again">Pola salah. Silakan coba lagi.</string>
+    <string name="permission_warning_overlay_title">Tampil di atas aplikasi lain</string>
+    <string name="permission_warning_overlay_desc">Menampilkan layar kunci di atas aplikasi yang dilindungi.</string>
+    <string name="permission_warning_accessibility_title">Layanan aksesibilitas</string>
+    <string name="permission_warning_accessibility_desc">Mendeteksi saat aplikasi yang dilindungi diluncurkan.</string>
+    <string name="permission_warning_usage_stats_title">Akses penggunaan</string>
+    <string name="permission_warning_usage_stats_desc">Mendeteksi saat aplikasi yang dilindungi diluncurkan.</string>
+    <string name="permission_warning_shizuku_title">Izin Shizuku</string>
+    <string name="permission_warning_shizuku_desc">Mendeteksi dengan aman saat aplikasi yang dilindungi diluncurkan.</string>
+    <string name="permission_warning_device_admin_title">Admin Perangkat</string>
+    <string name="permission_warning_device_admin_desc">Mencegah App Lock Revived dicopot.</string>
+    <string name="permission_warning_title_suffix"> diperlukan</string>
+
+    <string name="join_community">Bergabung dengan komunitas</string>
+    <string name="join_community_desc">Bergabunglah dengan komunitas Discord kami untuk terhubung dengan pengguna lain, berbagi masukan, serta mendapatkan informasi terbaru tentang berita dan fitur.</string>
+    <string name="join_discord">Gabung Discord</string>
+    <string name="maybe_later">Nanti saja</string>
+
+    <string name="applist_status_active_title">Perlindungan aktif</string>
+    <string name="applist_status_paused_title">Perlindungan dijeda</string>
+    <string name="applist_status_paused_desc">Aplikasi yang dikunci terbuka tanpa meminta. Ketuk untuk melanjutkan.</string>
+    <string name="applist_status_setup_title">Perlindungan perlu perhatian</string>
+    <string name="applist_status_setup_desc">%1$s diperlukan. Ketuk untuk memperbaiki.</string>
+    <string name="applist_status_stopped_title">Layanan kunci tidak berjalan</string>
+    <string name="applist_status_stopped_desc">Ketuk untuk memulai ulang layanan %1$s.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Anti-copot: %1$s diperlukan</string>
+    <string name="applist_status_fix">Perbaiki</string>
+    <string name="applist_status_switch_cd">Perlindungan</string>
+    <string name="applist_backend_accessibility">Aksesibilitas</string>
+    <string name="applist_backend_usage_stats">Akses penggunaan</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="other">%d aplikasi terkunci</item>
+    </plurals>
+
+    <string name="applist_more_options_cd">Opsi lainnya</string>
+    <string name="applist_menu_lock_all_now">Kunci semua sekarang</string>
+    <string name="applist_locked_all_now">Semua aplikasi akan meminta autentikasi lagi</string>
+    <string name="applist_menu_trigger_exclusions">Pengecualian pemicu</string>
+    <string name="applist_menu_prevent_uninstall">Cegah copot pemasangan</string>
+    <string name="applist_menu_show_system_apps">Tampilkan aplikasi sistem</string>
+
+    <string name="applist_search_placeholder">Cari aplikasi atau nama paket</string>
+    <string name="applist_search_clear_cd">Hapus pencarian</string>
+    <string name="applist_filter_all">Semua</string>
+    <string name="applist_filter_locked">Terkunci</string>
+    <string name="applist_filter_unlocked">Tidak terkunci</string>
+    <string name="applist_filter_system">Sistem</string>
+    <string name="applist_sort_cd">Urutan</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">Baru dipasang</string>
+
+    <string name="applist_section_locked">Terkunci</string>
+    <string name="applist_section_other">Aplikasi lain</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Pilih</string>
+    <string name="applist_system_supporting">Sistem · %1$s</string>
+    <string name="applist_remove_package_cd">Hapus %1$s</string>
+
+    <string name="applist_loading">Memuat aplikasi…</string>
+    <string name="applist_empty_search_title">Tidak ada aplikasi yang cocok dengan “%1$s”</string>
+    <string name="applist_empty_search_desc">Coba nama atau paket lain.</string>
+    <string name="applist_empty_locked_title">Belum ada aplikasi terkunci</string>
+    <string name="applist_empty_locked_desc">Aktifkan sakelar di samping aplikasi untuk menguncinya.</string>
+    <string name="applist_empty_generic_title">Tidak ada yang ditampilkan</string>
+    <string name="applist_empty_generic_desc">Coba filter lain.</string>
+
+    <plurals name="applist_selected_count">
+        <item quantity="other">%d dipilih</item>
+    </plurals>
+    <string name="applist_action_lock">Kunci yang dipilih</string>
+    <string name="applist_action_unlock">Buka kunci yang dipilih</string>
+    <string name="applist_action_select_all">Pilih semua</string>
+    <string name="applist_action_close_selection">Batalkan pilihan</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="other">%d aplikasi dikunci</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="other">%d aplikasi dibuka kuncinya</item>
+    </plurals>
+    <string name="applist_undo">Batalkan</string>
+
+    <string name="applist_navigate_back_cd">Kembali</string>
+    <string name="applist_show_system_apps">Aplikasi sistem</string>
+    <string name="applist_add_package_cd">Tambahkan paket secara manual</string>
+    <string name="applist_add_package_title">Tambahkan paket secara manual</string>
+    <string name="applist_package_name_label">Nama paket</string>
+    <string name="applist_package_name_placeholder">com.contoh.aplikasi</string>
+    <string name="applist_package_name_invalid">Masukkan nama paket yang valid</string>
+    <string name="applist_add">Tambah</string>
+    <string name="applist_cancel">Batal</string>
+    <string name="applist_manual_package_desc">Tidak terpasang · ditambahkan secara manual</string>
+    <string name="applist_section_manual">Ditambahkan secara manual</string>
+    <string name="applist_section_installed">Aplikasi terpasang</string>
+
+    <string name="trigger_exclusions_title">Pengecualian pemicu</string>
+    <string name="trigger_exclusions_hero_title">Aplikasi yang tidak pernah memicu kunci</string>
+    <string name="trigger_exclusions_hero_desc">Beralih dari aplikasi ini ke aplikasi yang dikunci tidak akan menampilkan layar kunci. Berguna untuk keyboard, peluncur, dan overlay mengambang.</string>
+    <string name="trigger_exclusions_section_excluded">Dikecualikan</string>
+    <string name="trigger_exclusions_add_desc">Masukkan nama paket aplikasi yang ingin Anda kecualikan.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="other">%d aplikasi dikecualikan</item>
+    </plurals>
+
+    <string name="anti_uninstall_title">Cegah copot pemasangan</string>
+    <string name="anti_uninstall_section_protected">Dilindungi</string>
+    <string name="anti_uninstall_add_desc">Masukkan nama paket aplikasi yang ingin Anda lindungi dari pencopotan.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="other">%d aplikasi dilindungi</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku perlu diperbarui</string>
+    <string name="anti_uninstall_ready_title">Shizuku terhubung</string>
+    <string name="anti_uninstall_ready_desc">Aplikasi yang dilindungi tidak dapat dicopot sampai Anda mematikan sakelarnya di sini. Shizuku hanya diperlukan saat mengubah perlindungan.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku belum terpasang</string>
+    <string name="anti_uninstall_not_installed_desc">Shizuku (atau Sui di perangkat ber-root) diperlukan untuk memblokir pencopotan tanpa root. Pasang untuk mengubah perlindungan.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku tidak berjalan</string>
+    <string name="anti_uninstall_not_running_desc">Buka Shizuku dan jalankan dengan debugging nirkabel atau root, lalu kembali. Perlindungan Anda saat ini tetap aktif.</string>
+    <string name="anti_uninstall_permission_title">Diperlukan izin Shizuku</string>
+    <string name="anti_uninstall_permission_desc">Izinkan App Lock Revived menggunakan Shizuku agar dapat mengubah aplikasi mana yang bisa dicopot.</string>
+    <string name="anti_uninstall_action_install">Pasang Shizuku</string>
+    <string name="anti_uninstall_action_open">Buka Shizuku</string>
+    <string name="anti_uninstall_action_grant">Berikan izin</string>
+    <string name="anti_uninstall_action_retry">Periksa lagi</string>
+    <string name="anti_uninstall_needs_shizuku">Jalankan Shizuku terlebih dahulu untuk mengubah perlindungan anti-copot</string>
+    <string name="anti_uninstall_toggle_failed">Tidak dapat mengubah perlindungan anti-copot untuk %1$s</string>
+    <string name="anti_uninstall_shizuku_old">Versi Shizuku ini terlalu lama. Harap perbarui Shizuku.</string>
+    <string name="anti_uninstall_remove_all">Hapus perlindungan dari semua aplikasi</string>
+    <string name="anti_uninstall_remove_all_title">Hapus semua perlindungan?</string>
+    <string name="anti_uninstall_remove_all_desc">Setiap aplikasi di perangkat ini yang diblokir dari pencopotan akan diizinkan untuk dicopot lagi, termasuk aplikasi yang dilindungi di luar daftar ini.</string>
+    <string name="anti_uninstall_remove_all_confirm">Hapus</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="other">Perlindungan dihapus dari %d aplikasi</item>
+    </plurals>
+
+    <string name="lock_enter_pin">Masukkan PIN Anda</string>
+    <string name="lock_draw_pattern">Gambar pola Anda</string>
+    <string name="lock_enter_password">Masukkan kata sandi Anda</string>
+    <string name="lock_wrong_pin">PIN salah</string>
+    <string name="lock_wrong_pattern">Pola salah</string>
+    <string name="lock_wrong_password">Kata sandi salah</string>
+    <string name="lock_lockout_message">Terlalu banyak percobaan. Coba lagi dalam %1$s</string>
+    <string name="lock_close_cd">Tutup dan kembali ke layar utama</string>
+    <string name="lock_backspace_cd">Hapus</string>
+    <string name="lock_confirm_cd">Buka kunci</string>
+    <string name="lock_unlock_button">Buka kunci</string>
+    <string name="lock_use_biometrics">Gunakan biometrik</string>
+    <string name="lock_biometric_subtitle">Gunakan sidik jari atau wajah Anda untuk melanjutkan</string>
+    <string name="lock_biometric_waiting">Menunggu konfirmasi biometrik</string>
+    <string name="lock_app_icon_cd">Ikon %1$s</string>
+    <string name="lock_pin_progress_cd">%1$d digit dimasukkan</string>
+    <string name="lock_pattern_pad_cd">Papan pola</string>
+    <string name="lock_show_password_cd">Tampilkan kata sandi</string>
+    <string name="lock_hide_password_cd">Sembunyikan kata sandi</string>
+    <string name="lock_admin_title">Nonaktifkan anti-copot</string>
+    <string name="lock_admin_cancel_cd">Batal</string>
+
+    <string name="intro_welcome_title">Selamat datang di App Lock Revived</string>
+    <string name="intro_welcome_desc">Lindungi aplikasi dan privasi Anda. Kami akan memandu penyiapan singkat. Hanya butuh semenit.</string>
+    <string name="intro_page_indicator">Langkah %1$d dari %2$d</string>
+    <string name="intro_back">Kembali</string>
+    <string name="intro_allow_button">Izinkan</string>
+    <string name="intro_status_granted">Diizinkan</string>
+    <string name="intro_status_not_granted">Belum diizinkan</string>
+    <string name="intro_open_app_info">Buka info aplikasi</string>
+    <string name="intro_battery_title">Jaga App Lock tetap berjalan</string>
+    <string name="intro_battery_desc">Android mungkin menghentikan App Lock Revived di latar belakang untuk menghemat baterai. Jika itu terjadi, aplikasi berhenti mengunci setelah perangkat dinyalakan ulang atau setelah beberapa menit. Izinkan aplikasi berjalan tanpa pembatasan baterai.</string>
+    <string name="intro_battery_oem_hint">Di beberapa ponsel (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) buka juga info aplikasi, atur penggunaan baterai ke \"Tidak dibatasi\", dan aktifkan mulai otomatis jika tersedia.</string>
+    <string name="intro_accessibility_desc">App Lock Revived menggunakan layanan aksesibilitas hanya untuk mendeteksi saat aplikasi yang dilindungi dibuka. Ketuk Izinkan, temukan App Lock Revived dalam daftar, lalu aktifkan.</string>
+    <string name="intro_shizuku_not_running">Shizuku tidak berjalan. Mulai di aplikasi Shizuku, lalu ketuk Izinkan lagi.</string>
+
+    <string name="ob_restricted_settings_title">Melihat \"Setelan terbatas\"?</string>
+    <string name="ob_restricted_settings_desc">Android memblokir aksesibilitas untuk aplikasi yang dipasang dari luar toko aplikasi hingga Anda mengizinkannya.</string>
+    <string name="ob_restricted_settings_steps">1. Ketuk Buka info aplikasi di bawah\n2. Ketuk ⋮ di sudut atas\n3. Pilih Izinkan setelan terbatas lalu konfirmasi\n4. Kembali dan aktifkan layanan</string>
+
+    <string name="ob_accessibility_guide_steps">1. Ketuk Buka setelan\n2. Temukan App Lock Revived (mungkin ada di Aplikasi yang diunduh atau Aplikasi terpasang)\n3. Aktifkan dan ketuk Izinkan</string>
+    <string name="ob_usage_stats_dialog_title">Berikan akses penggunaan</string>
+    <string name="ob_usage_stats_dialog_text">Anda telah memilih mode Statistik Penggunaan, tetapi App Lock Revived memerlukan akses penggunaan untuk mendeteksi saat aplikasi yang dilindungi dibuka.</string>
+
+    <string name="setup_title_new">Atur kunci</string>
+    <string name="setup_title_change">Ubah kunci</string>
+    <string name="setup_type_pin">PIN</string>
+    <string name="setup_type_pattern">Pola</string>
+    <string name="setup_type_password">Kata sandi</string>
+    <string name="setup_create_pin">Buat PIN</string>
+    <string name="setup_confirm_pin">Konfirmasi PIN Anda</string>
+    <string name="setup_verify_pin">Masukkan PIN Anda saat ini</string>
+    <string name="setup_create_pattern">Gambar pola</string>
+    <string name="setup_confirm_pattern">Gambar lagi</string>
+    <string name="setup_verify_pattern">Gambar pola Anda saat ini</string>
+    <string name="setup_create_password">Buat kata sandi</string>
+    <string name="setup_confirm_password">Konfirmasi kata sandi Anda</string>
+    <string name="setup_verify_password">Masukkan kata sandi Anda saat ini</string>
+    <string name="setup_hint_pin">Gunakan minimal 4 digit</string>
+    <string name="setup_hint_pattern">Hubungkan minimal 4 titik</string>
+    <string name="setup_hint_password">Gunakan minimal 4 karakter</string>
+    <string name="setup_hint_confirm">Masukkan sekali lagi untuk mengonfirmasi</string>
+    <string name="setup_hint_verify">Pastikan ini Anda sebelum mengubah kunci</string>
+    <string name="setup_pattern_too_short">Hubungkan minimal 4 titik</string>
+    <string name="setup_patterns_dont_match">Pola tidak cocok. Coba lagi.</string>
+    <string name="setup_continue">Lanjutkan</string>
+    <string name="setup_confirm">Konfirmasi</string>
+    <string name="setup_delete">Hapus</string>
+    <string name="setup_show_password">Tampilkan kata sandi</string>
+    <string name="setup_hide_password">Sembunyikan kata sandi</string>
+    <string name="setup_use_keyboard">Gunakan keyboard</string>
+    <string name="setup_use_keypad">Gunakan papan angka</string>
+    <string name="setup_digits_entered">%1$d digit dimasukkan</string>
+
+    <string name="tile_lock_now_label">Kunci semua sekarang</string>
+    <string name="tile_lock_now_subtitle_active">Perlindungan aktif</string>
+    <string name="tile_lock_now_subtitle_inactive">Perlindungan nonaktif</string>
+    <string name="tile_lock_now_done">Semua aplikasi terkunci</string>
+
+    <string name="auto_lock_channel_name">Aplikasi yang terkunci otomatis</string>
+    <string name="auto_lock_channel_description">Ditampilkan saat aplikasi yang baru dipasang dikunci otomatis</string>
+    <string name="auto_lock_notification_title">%1$s dikunci otomatis</string>
+    <string name="auto_lock_notification_text">Ketuk untuk mengelola aplikasi yang dikunci</string>
+
+    <string name="service_channel_name_usage">Layanan perlindungan (Statistik penggunaan)</string>
+    <string name="service_channel_name_shizuku">Layanan perlindungan (Shizuku)</string>
+    <string name="service_notification_text">Melindungi aplikasi Anda</string>
+    <string name="service_notification_text_shizuku">Melindungi aplikasi Anda dengan Shizuku</string>
+    <string name="service_notification_waiting_shizuku">Menunggu Shizuku dimulai…</string>
+    <string name="anti_uninstall_blocked_toast">Nonaktifkan anti-copot di App Lock Revived untuk menghapus pembatasan ini.</string>
+
+    <string name="settings_section_appearance">Tampilan</string>
+    <string name="settings_section_lock_screen">Layar kunci</string>
+    <string name="settings_section_protection">Perlindungan</string>
+    <string name="settings_section_privacy">Privasi</string>
+    <string name="settings_section_backup">Cadangan &amp; pemulihan</string>
+    <string name="settings_section_updates">Pembaruan</string>
+
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_system">Sistem</string>
+    <string name="settings_theme_light">Terang</string>
+    <string name="settings_theme_dark">Gelap</string>
+    <string name="settings_dynamic_color_title">Warna dinamis</string>
+    <string name="settings_dynamic_color_desc">Gunakan warna dari wallpaper Anda</string>
+    <string name="settings_amoled_title">Hitam pekat</string>
+    <string name="settings_amoled_desc">Gunakan latar belakang hitam pekat pada tema gelap</string>
+    <string name="settings_amoled_desc_needs_dark">Tersedia saat tema gelap aktif</string>
+
+    <string name="settings_biometric_desc_available">Gunakan sidik jari atau buka dengan wajah</string>
+    <string name="settings_biometric_desc_unavailable">Belum ada biometrik yang diatur di perangkat ini</string>
+    <string name="settings_biometric_auto_prompt_title">Tampilkan permintaan biometrik otomatis</string>
+    <string name="settings_biometric_auto_prompt_desc">Buka permintaan sidik jari atau wajah segera setelah layar kunci muncul</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Aktifkan buka kunci biometrik untuk menggunakan ini</string>
+    <string name="settings_scramble_keypad_title">Acak papan PIN</string>
+    <string name="settings_scramble_keypad_desc">Acak angka setiap kali agar orang lain tidak dapat mempelajari PIN Anda dari gerakan jari</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Hanya tersedia dengan kunci PIN</string>
+    <string name="settings_auto_unlock_desc">Buka kunci segera setelah PIN yang benar dimasukkan, tanpa menekan konfirmasi</string>
+    <string name="settings_disable_haptics_title">Matikan getaran sentuh</string>
+
+    <string name="settings_change_pattern_title">Ubah pola</string>
+    <string name="settings_change_pattern_desc">Gambar pola buka kunci yang baru</string>
+    <string name="settings_change_password_title">Ubah kata sandi</string>
+    <string name="settings_change_password_desc">Atur kata sandi baru</string>
+    <string name="settings_unlock_duration_until_screen_off">Sampai layar mati</string>
+    <string name="settings_unlock_duration_sheet_desc">Berapa lama aplikasi tetap terbuka setelah Anda membukanya</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="other">%1$d menit</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Percobaan gagal sebelum dikunci</string>
+    <string name="settings_failed_attempts_desc">Blokir input untuk sementara setelah terlalu banyak percobaan salah</string>
+    <string name="settings_failed_attempts_off">Nonaktif</string>
+    <string name="settings_lockout_duration_title">Durasi kunci sementara</string>
+    <string name="settings_lockout_duration_desc">Dua kali lipat setiap kali kunci sementara berulang</string>
+    <string name="settings_lockout_duration_desc_disabled">Aktifkan kunci sementara setelah percobaan gagal untuk menggunakan ini</string>
+    <string name="settings_lockout_seconds_short">%1$d dtk</string>
+    <string name="settings_lockout_minutes_short">%1$d mnt</string>
+
+    <string name="settings_auto_lock_new_apps_title">Kunci aplikasi yang baru dipasang</string>
+    <string name="settings_auto_lock_new_apps_desc">Otomatis kunci aplikasi segera setelah dipasang</string>
+
+    <string name="settings_unlock_history_title">Riwayat buka kunci</string>
+    <string name="settings_unlock_history_desc">Simpan catatan percobaan buka kunci di perangkat. Mematikan ini akan menghapus catatan.</string>
+    <string name="settings_view_unlock_history_title">Lihat riwayat buka kunci</string>
+    <string name="settings_view_unlock_history_desc">Lihat buka kunci terbaru dan percobaan gagal</string>
+
+    <string name="settings_backup_export_title">Ekspor cadangan</string>
+    <string name="settings_backup_export_desc">Simpan aplikasi terkunci dan setelan ke file</string>
+    <string name="settings_backup_import_title">Pulihkan dari cadangan</string>
+    <string name="settings_backup_import_desc">Ganti aplikasi terkunci dan setelan dengan file cadangan</string>
+    <string name="settings_backup_footer">PIN, pola, atau kata sandi Anda tidak pernah disertakan dalam cadangan.</string>
+    <string name="settings_backup_export_success">Cadangan disimpan</string>
+    <string name="settings_backup_export_failed">Tidak dapat menyimpan cadangan: %1$s</string>
+    <string name="settings_backup_import_invalid">File ini bukan cadangan App Lock Revived</string>
+    <string name="settings_backup_import_newer_version">Cadangan ini dibuat oleh versi App Lock Revived yang lebih baru. Perbarui aplikasi lalu coba lagi.</string>
+    <string name="settings_backup_import_failed">Tidak dapat membaca cadangan: %1$s</string>
+    <string name="settings_backup_no_file_picker">Tidak ada aplikasi yang tersedia untuk memilih file</string>
+    <string name="settings_backup_restore_complete_title">Cadangan dipulihkan</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="other">%1$d aplikasi terkunci dipulihkan.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="other">%1$d setelan dipulihkan.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">PIN, pola, atau kata sandi Anda saat ini tetap seperti semula.</string>
+    <string name="settings_ok_button">OK</string>
+
+    <string name="settings_update_check_title">Periksa pembaruan otomatis</string>
+    <string name="settings_update_check_desc">Cari rilis baru di GitHub</string>
+    <string name="settings_update_check_now_title">Periksa pembaruan</string>
+    <string name="settings_update_checking">Memeriksa…</string>
+    <string name="settings_update_current_version">Anda menggunakan versi %1$s</string>
+    <string name="settings_update_latest">Anda sudah menggunakan versi terbaru</string>
+    <string name="settings_update_check_failed">Tidak dapat memeriksa pembaruan. Periksa koneksi Anda lalu coba lagi.</string>
+    <string name="settings_update_check_footer">Ini satu-satunya waktu aplikasi terhubung ke internet. Tidak ada informasi tentang Anda atau aplikasi Anda yang dikirim.</string>
+
+    <string name="settings_backend_accessibility_title">Layanan aksesibilitas</string>
+    <string name="settings_backend_accessibility_desc">Metode standar yang berfungsi di sebagian besar perangkat</string>
+    <string name="settings_backend_usage_stats_title">Statistik penggunaan</string>
+    <string name="settings_backend_usage_stats_desc">Metode eksperimental menggunakan statistik penggunaan aplikasi</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Metode lanjutan menggunakan Shizuku dan API internal</string>
+
+    <string name="settings_logging_title">Log debug</string>
+    <string name="settings_logging_desc">Rekam log terperinci untuk pemecahan masalah</string>
+    <string name="settings_share_logs">Bagikan log</string>
+    <string name="settings_share_audit_logs">Bagikan log keamanan</string>
+
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Versi %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Gratis, open source, dan bebas iklan</string>
+    <string name="settings_about_developed_by">Dikembangkan oleh Riyad M</string>
+    <string name="settings_about_source_title">Kode sumber</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Rilis</string>
+    <string name="settings_about_releases_desc">Catatan perubahan dan unduhan</string>
+    <string name="settings_about_issue_title">Laporkan masalah</string>
+    <string name="settings_about_issue_desc">Menemukan bug atau punya ide? Beri tahu kami</string>
+    <string name="settings_about_credits_title">Kredit</string>
+    <string name="settings_about_credits_desc">Berdasarkan AppLock oleh Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">Lisensi</string>
+    <string name="settings_about_license_desc">Lisensi MIT</string>
+    <string name="settings_no_browser">Tidak ada aplikasi yang tersedia untuk membuka tautan</string>
+
+    <string name="settings_support_sheet_title">Menikmati App Lock Revived?</string>
+    <string name="settings_support_sheet_message">App Lock Revived gratis, open source, dan bebas iklan. Anda dapat mendukungnya dengan memberi bintang pada proyek di GitHub, melaporkan bug, atau membagikannya kepada teman.</string>
+    <string name="settings_support_sheet_star">Beri bintang di GitHub</string>
+
+    <string name="history_title">Riwayat buka kunci</string>
+    <plurals name="history_entry_count">
+        <item quantity="other">%1$d entri</item>
+    </plurals>
+    <string name="history_clear_cd">Hapus riwayat</string>
+    <string name="history_clear_dialog_title">Hapus riwayat buka kunci?</string>
+    <string name="history_clear_dialog_text">Semua buka kunci dan percobaan gagal yang tercatat akan dihapus. Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="history_clear_confirm">Hapus</string>
+    <string name="history_cleared">Riwayat dihapus</string>
+    <plurals name="history_summary_failed">
+        <item quantity="other">percobaan gagal dalam 24 jam terakhir</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="other">%1$d buka kunci berhasil dalam periode yang sama</item>
+    </plurals>
+    <string name="history_entry_success">Dibuka dengan %1$s · %2$s</string>
+    <string name="history_entry_failed">Percobaan %1$s gagal · %2$s</string>
+    <string name="history_status_success_cd">Dibuka</string>
+    <string name="history_status_failed_cd">Percobaan gagal</string>
+    <string name="history_method_pin">PIN</string>
+    <string name="history_method_pattern">pola</string>
+    <string name="history_method_password">kata sandi</string>
+    <string name="history_method_biometric">biometrik</string>
+    <string name="history_today">Hari ini</string>
+    <string name="history_yesterday">Kemarin</string>
+    <string name="history_disabled_banner">Riwayat buka kunci nonaktif. Percobaan baru tidak akan dicatat.</string>
+    <string name="history_turn_on">Aktifkan</string>
+    <string name="history_empty_title">Belum ada percobaan buka kunci</string>
+    <string name="history_empty_desc">Saat seseorang membuka atau mencoba membuka aplikasi yang dikunci, akan muncul di sini. Riwayat tidak pernah meninggalkan perangkat Anda.</string>
+
+    <string name="update_dialog_title">Pembaruan tersedia</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">Yang baru</string>
+    <string name="update_dialog_no_notes">Tidak ada catatan rilis.</string>
+    <string name="update_dialog_download">Unduh</string>
+    <string name="update_dialog_download_size">Unduh (%1$s)</string>
+    <string name="update_dialog_later">Nanti</string>
+    <string name="update_dialog_skip">Lewati versi ini</string>
+    <string name="update_dialog_icon_description">Ikon App Lock Revived</string>
+    <string name="update_dialog_no_browser">Tidak ada aplikasi yang ditemukan untuk membuka tautan unduhan</string>
+</resources>
