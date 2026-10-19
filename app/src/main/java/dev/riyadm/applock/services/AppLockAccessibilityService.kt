@@ -265,6 +265,14 @@ class AppLockAccessibilityService : AccessibilityService() {
         if (packageName in exitedPackages) return
         if (packageName !in appLockRepository.getLockedApps()) return
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return
+        if (AppLockManager.isWithinUnlockDuration(
+                packageName,
+                appLockRepository.getUnlockTimeDuration(),
+                System.currentTimeMillis()
+            )
+        ) {
+            return
+        }
         if (handleDeviceLocked()) return
 
         // Stale events from an app that just left the screen must not lock the new foreground.
