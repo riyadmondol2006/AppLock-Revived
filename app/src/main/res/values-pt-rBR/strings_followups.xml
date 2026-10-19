@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Apps definidos como Duas etapas sempre pedem autenticação, mesmo em uma rede confiável.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · definido pelo perfil %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Este é o padrão para perfis sem duração de desbloqueio própria. O perfil ativo %1$s usa a sua: %2$s. Altere em Perfis de bloqueio.</string>
+</resources>

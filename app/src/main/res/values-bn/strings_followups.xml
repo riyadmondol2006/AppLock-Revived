@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">দুই-ধাপে সেট করা অ্যাপগুলো বিশ্বস্ত নেটওয়ার্কেও সবসময় যাচাই চাইবে।</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · %2$s প্রোফাইল দ্বারা নির্ধারিত</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">যেসব প্রোফাইলের নিজস্ব আনলক সময়কাল নেই, এটি তাদের ডিফল্ট। সক্রিয় %1$s প্রোফাইল নিজস্ব সময়কাল ব্যবহার করে: %2$s। লক প্রোফাইলে গিয়ে এটি বদলান।</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Apps mit Zwei-Schritt-Sperre fragen immer, auch in einem vertrauenswürdigen Netzwerk.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · vom Profil %2$s festgelegt</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Das ist der Standard für Profile ohne eigene Entsperrdauer. Das aktive Profil %1$s nutzt seine eigene: %2$s. Ändere sie unter Sperrprofile.</string>
+</resources>

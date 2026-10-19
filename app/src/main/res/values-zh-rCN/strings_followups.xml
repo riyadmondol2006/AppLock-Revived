@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">设为“两步验证”的应用即使在受信任的网络中也始终需要验证。</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · 由“%2$s”配置文件设置</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">这是没有单独解锁时长的配置文件的默认值。当前的“%1$s”配置文件使用自己的时长：%2$s。可在锁定配置文件中更改。</string>
+</resources>

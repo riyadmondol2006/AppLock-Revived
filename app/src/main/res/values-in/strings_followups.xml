@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Aplikasi dengan setelan Dua langkah selalu meminta autentikasi, bahkan di jaringan tepercaya.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · diatur oleh profil %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Ini adalah default untuk profil tanpa durasi buka kunci sendiri. Profil aktif %1$s memakai durasinya sendiri: %2$s. Ubah di Profil kunci.</string>
+</resources>

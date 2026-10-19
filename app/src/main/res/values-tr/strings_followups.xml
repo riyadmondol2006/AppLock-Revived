@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">İki adımlı olarak ayarlanan uygulamalar, güvenilir bir ağda bile her zaman doğrulama ister.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · %2$s profili tarafından ayarlandı</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Bu, kendi kilit açma süresi olmayan profiller için varsayılandır. Etkin %1$s profili kendi süresini kullanıyor: %2$s. Kilit profillerinden değiştirebilirsin.</string>
+</resources>

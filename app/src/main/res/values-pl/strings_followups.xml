@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Aplikacje z blokadą dwuetapową zawsze pytają, nawet w zaufanej sieci.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · ustawione przez profil %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">To domyślna wartość dla profili bez własnego czasu odblokowania. Aktywny profil %1$s używa własnego: %2$s. Zmień go w Profilach blokady.</string>
+</resources>

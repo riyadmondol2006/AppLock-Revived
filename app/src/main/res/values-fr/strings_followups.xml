@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Les applis en double vérification demandent toujours l\'authentification, même sur un réseau de confiance.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · défini par le profil %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Il s\'agit de la valeur par défaut pour les profils sans durée de déverrouillage propre. Le profil actif %1$s utilise la sienne : %2$s. Modifiez-la dans Profils de verrouillage.</string>
+</resources>

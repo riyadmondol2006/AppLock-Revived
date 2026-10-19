@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Приложения с двухэтапной защитой всегда запрашивают подтверждение, даже в доверенной сети.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · задано профилем «%2$s»</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Это значение по умолчанию для профилей без собственного времени разблокировки. Активный профиль «%1$s» использует своё: %2$s. Изменить его можно в профилях блокировки.</string>
+</resources>

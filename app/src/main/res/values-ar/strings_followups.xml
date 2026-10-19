@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">التطبيقات المضبوطة على \"خطوتان\" تطلب المصادقة دائمًا، حتى على شبكة موثوقة.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · يحدّده ملف %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">هذه هي القيمة الافتراضية للملفات التي ليست لها مدة فتح خاصة. يستخدم الملف النشط %1$s مدته الخاصة: %2$s. يمكنك تغييرها في ملفات القفل.</string>
+</resources>

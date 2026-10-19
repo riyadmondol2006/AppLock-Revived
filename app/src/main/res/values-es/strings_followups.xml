@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Las apps configuradas en dos pasos siempre lo piden, incluso en una red de confianza.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · definido por el perfil %2$s</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Este es el valor predeterminado para los perfiles sin duración de desbloqueo propia. El perfil activo %1$s usa la suya: %2$s. Cámbiala en Perfiles de bloqueo.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">दो-चरण पर सेट ऐप्स भरोसेमंद नेटवर्क पर भी हमेशा पुष्टि मांगते हैं।</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · %2$s प्रोफ़ाइल द्वारा सेट</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">यह उन प्रोफ़ाइलों के लिए डिफ़ॉल्ट है जिनकी अपनी अनलॉक अवधि नहीं है। सक्रिय %1$s प्रोफ़ाइल अपनी अवधि उपयोग करती है: %2$s। इसे लॉक प्रोफ़ाइल में बदलें।</string>
+</resources>

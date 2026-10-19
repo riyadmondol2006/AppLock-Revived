@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="followups_trusted_two_step_note">Ứng dụng đặt ở chế độ Hai bước luôn yêu cầu xác thực, kể cả khi dùng mạng tin cậy.</string>
+    <string name="followups_unlock_duration_by_profile">%1$s · do hồ sơ %2$s đặt</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">Đây là giá trị mặc định cho các hồ sơ không có thời gian mở khóa riêng. Hồ sơ đang dùng %1$s có thời gian riêng: %2$s. Thay đổi trong Hồ sơ khóa.</string>
+</resources>
