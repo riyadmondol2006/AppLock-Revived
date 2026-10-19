@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">Yetkisiz kişilerin uygulamayı kaldırmasını önler.</string>
+    <string name="accessibility_service_description">App Lock Revived\'ın korunan uygulamaların açıldığını algılamasına ve şifre doğrulamasını göstermesine izin verir.</string>
+
+    <string name="unlock_to_disable_admin">Cihaz yöneticisi iznini devre dışı bırakmak için şifrenizi girin.</string>
+    <string name="incorrect_pin_try_again">PIN yanlış. Lütfen tekrar deneyin.</string>
+    <string name="incorrect_pass_try_again">Şifre yanlış. Lütfen tekrar deneyin.</string>
+    <string name="password_verified_admin">Şifre doğrulandı, artık cihaz yöneticisi iznini devre dışı bırakabilirsiniz</string>
+    <string name="choose_app_detection">Uygulama algılama yöntemini seçin</string>
+    <string name="app_detection_desc">App Lock Revived\'ın korunan uygulamalar açıldığında bunu nasıl algılayacağını seçin.</string>
+    <string name="notif_perm">Bildirim izni</string>
+    <string name="notif_perm_desc">App Lock Revived sizi bilgilendirmek ve arka planda düzgün çalışmaya devam etmek için bildirim göstermek zorunda. İzin vermek için \'İleri\'ye dokunun.</string>
+    <string name="notif_perm_granted">Bildirim izni, Android sürümünüzde otomatik olarak verilir.</string>
+    <string name="welc_applock">App Lock Revived\'a hoş geldiniz</string>
+    <string name="welcome_desc">Uygulamalarınızı ve gizliliğinizi App Lock Revived ile koruyun. Kısa bir kurulumda size yol göstereceğiz.</string>
+    <string name="secure_apps">Uygulamalarınızı güvence altına alın</string>
+    <string name="secure_apps_desc">Özel uygulamalarınızı gelişmiş kilitleme yöntemleriyle koruyun</string>
+    <string name="display_over_apps">Diğer uygulamaların üzerinde göster</string>
+    <string name="display_over_apps_desc">App Lock Revived, kilit ekranını göstermek için diğer uygulamaların üzerinde görüntüleme iznine ihtiyaç duyar. \'İleri\'ye dokunun ve izni etkinleştirin.</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">App Lock Revived\'ın düzgün çalışması için bildirim izni gerekli.</string>
+    <string name="shizuku_permission_granted">Shizuku izni verildi</string>
+    <string name="shizuku_permission_required_desc">Gelişmiş özellikler için Shizuku izni gerekli.</string>
+    <string name="allow_display_over_other_apps">Lütfen App Lock Revived\'ın diğer uygulamaların üzerinde görünmesine izin verin.</string>
+    <string name="disable_battery_optimization_title">Pil optimizasyonunu kapatın</string>
+    <string name="disable_battery_optimization_desc">App Lock Revived\'ın arka planda güvenilir şekilde çalışması için bu uygulama için pil optimizasyonlarını kapatın. Ayarları açmak için \'İleri\'ye dokunun.</string>
+    <string name="accessibility_service_title">Erişilebilirlik hizmeti</string>
+    <string name="accessibility_service_card_desc">Çoğu cihazda çalışan standart yöntem. Erişilebilirlik izni gerektirir. Bazı üreticilerde hafif gecikmeler olabilir.</string>
+    <string name="usage_stats_title">Kullanım istatistikleri</string>
+    <string name="usage_stats_card_desc">Sistemin kullanım istatistiklerini kullanan deneysel yöntem. Bazı cihazlarda daha iyi çalışır.</string>
+    <string name="shizuku_service_title">Shizuku hizmeti</string>
+    <string name="shizuku_service_card_desc">Daha iyi performans ve üstün deneyim sunan gelişmiş yöntem. Shizuku uygulamasının yüklü ve ADB ile etkinleştirilmiş olmasını gerektirir.</string>
+    <string name="can_change_later_in_settings">Bunu daha sonra ayarlardan değiştirebilirsiniz</string>
+    <string name="app_intro_accessibility_desc">
+Erişilebilirlik hizmeti, App Lock Revived\'ın düzgün çalışması için gereklidir.
+
+\"Kısıtlı ayar\" mesajını alırsanız lütfen Ayarlar > Uygulamalar > App Lock bölümüne gidin, sağ üstteki menüye dokunup \"Kısıtlı ayarlara izin ver\"e dokunun.
+
+Etkinleştirmek için \'İleri\'ye dokunun.
+    </string>
+    <string name="app_intro_usage_stats_title">Kullanım istatistikleri izni</string>
+    <string name="app_intro_usage_stats_desc">
+Kilitli uygulamaların açıldığını algılamak için bu izin gereklidir.
+
+\"Kısıtlı ayar\" mesajını alırsanız lütfen Ayarlar > Uygulamalar > App Lock bölümüne gidin, sağ üstteki menüye dokunup \"Kısıtlı ayarlara izin ver\"e dokunun.
+
+Etkinleştirmek için \'İleri\'ye dokunun.</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku, sistem uygulamalarını kilitleme gibi gelişmiş özellikler sunar.
+
+Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin vermek için \'İleri\'ye dokunun.
+    </string>
+    <string name="app_intro_complete_privacy_title">Tam gizlilik</string>
+    <string name="app_intro_complete_privacy_desc">Verileriniz asla cihazınızdan çıkmaz. App Lock Revived gizliliğinizi her zaman korur.</string>
+    <string name="all_permissions_required">Devam etmek için tüm izinler gerekli.</string>
+    <string name="next_button">İleri</string>
+    <string name="get_started_button">Başlayın</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">Uygulama</string>
+    <string name="this_app">bu uygulama</string>
+    <string name="unlock_app_title">%1$s kilidini aç</string>
+    <string name="confirm_biometric_subtitle">Devam etmek için biyometrik doğrulamayı onaylayın</string>
+    <string name="use_pin_button">PIN kullan</string>
+    <string name="enter_password_to_continue">Devam etmek için şifre girin</string>
+    <string name="biometric_authentication_cd">Biyometrik kimlik doğrulama</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">Devam etmek için lütfen bir PIN belirleyin</string>
+    <string name="authenticate_to_reset_pin_title">PIN\'i sıfırlamak için kimliğinizi doğrulayın</string>
+    <string name="use_device_pin_pattern_password_subtitle">Cihazınızın PIN, desen veya şifresini kullanın</string>
+    <string name="enter_current_pin_title">Mevcut PIN\'i girin</string>
+    <string name="confirm_pin_title">PIN\'i onaylayın</string>
+    <string name="set_new_pin_title">Yeni PIN belirleyin</string>
+    <string name="create_pin_explanation">Kilitli uygulamalarınızı korumak için bir PIN oluşturun. Kilitli bir uygulamaya erişmeye çalıştığınızda bu PIN istenecek.</string>
+    <string name="enter_current_pin_label">Mevcut PIN\'inizi girin</string>
+    <string name="confirm_new_pin_label">Yeni PIN\'inizi onaylayın</string>
+    <string name="create_new_pin_label">Yeni bir PIN oluşturun</string>
+    <string name="tooltip_enter_current_pin">Devam etmek için mevcut PIN\'inizi girin</string>
+    <string name="tooltip_confirm_pin">Onaylamak için lütfen PIN\'i yeniden girin</string>
+    <string name="tooltip_create_pin_min_length">En az 4 haneli bir PIN oluşturun</string>
+    <string name="information_cd">Bilgi</string>
+    <string name="pins_dont_match_error">PIN\'ler eşleşmiyor. Tekrar deneyin.</string>
+    <string name="pin_min_length_error">PIN en az 4 haneli olmalıdır</string>
+    <string name="re_enter_new_pin_confirm_label">Onaylamak için yeni PIN\'inizi tekrar girin</string>
+    <string name="reset_using_device_password_button">Cihaz şifresiyle sıfırla</string>
+    <string name="cancel_button">İptal</string>
+    <string name="start_over_button">Baştan başla</string>
+    <string name="password_set_successfully_toast">Şifre başarıyla belirlendi</string>
+    <string name="use_pattern_button">Desen kullan</string>
+    <string name="use_password_button">Şifre kullan</string>
+    <string name="use_pin_instead">PIN kullan</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">Şifre belirleyin</string>
+    <string name="create_alphanumeric_password_label">Bir şifre oluşturun</string>
+    <string name="confirm_alphanumeric_password_label">Şifrenizi onaylayın</string>
+    <string name="enter_current_password_label">Mevcut şifreyi girin</string>
+    <string name="password_hint">Şifre girin</string>
+    <string name="password_too_short_error">Şifre en az 4 karakter olmalıdır</string>
+    <string name="password_too_long_error">Şifre en fazla 64 karakter olmalıdır</string>
+    <string name="passwords_dont_match_error">Şifreler eşleşmiyor</string>
+    <string name="incorrect_password_try_again">Şifre yanlış. Lütfen tekrar deneyin.</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">Kaldırmayı engelleme etkin</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku kullanılamıyor. Lütfen Shizuku\'yu yükleyip yapılandırın.</string>
+    <string name="main_screen_overlay_permission_dialog_title">Üstte gösterme izni gerekli</string>
+    <string name="main_screen_overlay_permission_dialog_text">Lütfen ayarlarda uygulamaya katmanları çizme izni verin. Bu, uygulamanın kilit ekranını göstermesi için gereklidir.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">Ayarları aç</string>
+    <string name="main_screen_shizuku_manual_permission_toast">Lütfen Shizuku iznini elle verin</string>
+    <string name="main_screen_device_admin_explanation">App Lock, kaldırılmayı engellemek için cihaz yöneticisi iznine ihtiyaç duyar. Cihazınızın işleyişini etkilemez.</string>
+    <string name="main_screen_join_community_dialog_title">Topluluğa katılın</string>
+    <string name="main_screen_join_community_dialog_text">Güncellemeler ve destek için Discord topluluğumuza katılın.</string>
+    <string name="main_screen_join_community_join_discord_button">Discord\'a katıl</string>
+    <string name="main_screen_join_community_dismiss_button">Kapat</string>
+    <string name="main_screen_support_development_dialog_title">Geliştirmeyi destekleyin</string>
+    <string name="main_screen_support_development_donate_button">Bağış yap</string>
+    <string name="main_screen_app_protection_cd">Uygulama koruması</string>
+    <string name="main_screen_settings_cd">Ayarlar</string>
+    <string name="main_screen_loading_applications_text">Uygulamalar yükleniyor…</string>
+    <string name="main_screen_search_apps_placeholder">Uygulama ara</string>
+    <string name="main_screen_search_cd">Ara</string>
+    <string name="main_screen_empty_search_title">Uygulama bulunamadı</string>
+    <string name="main_screen_empty_search_subtitle">Aramanızı değiştirmeyi deneyin</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">Ayarlar</string>
+    <string name="settings_screen_back_cd">Geri</string>
+    <string name="settings_screen_support_development_dialog_title">Geliştirmeyi destekleyin</string>
+    <string name="settings_screen_support_development_donate_button">Bağış yap</string>
+    <string name="settings_screen_permission_required_dialog_title">İzin gerekli</string>
+    <string name="settings_screen_permission_required_dialog_text">Kaldırmaya karşı korumayı etkinleştirmek için App Lock iki izne ihtiyaç duyar: Cihaz yöneticisi ve Erişilebilirlik hizmeti. Bunlar, yetkisiz kaldırmayı önlemek ve güçlü koruma sağlamak için gereklidir. Bu izinleri vermek ister misiniz?</string>
+    <string name="settings_screen_permission_required_proceed_button">Devam et</string>
+    <string name="settings_screen_device_admin_dialog_title">Cihaz yöneticisi izni</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock, yetkisiz kaldırmayı önlemek için cihaz yöneticisi iznine ihtiyaç duyar. Lütfen bir sonraki ekranda bu izni verin. Cihazınızın normal işleyişini etkilemeyecek.</string>
+    <string name="settings_screen_device_admin_grant_button">İzin ver</string>
+    <string name="settings_screen_accessibility_dialog_title">Erişilebilirlik hizmeti izni</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock, uygulama kaldırma girişimlerini izlemek ve devre dışı bırakılırsa cihaz yöneticisini yeniden etkinleştirmek için Erişilebilirlik hizmeti iznine de ihtiyaç duyar. Bu, kaldırmaya karşı korumanın etkili kalmasını sağlar. Lütfen ayarlarda App Lock için Erişilebilirlik hizmetini etkinleştirin.</string>
+    <string name="settings_screen_accessibility_open_settings_button">Ayarları aç</string>
+    <string name="settings_screen_lock_screen_customization_title">Kilit ekranı özelleştirme</string>
+    <string name="settings_screen_max_brightness_title">En yüksek parlaklık</string>
+    <string name="settings_screen_max_brightness_desc">Netlik için kilit ekranını en yüksek parlaklıkta göster</string>
+    <string name="settings_screen_biometric_auth_title">Biyometrik kimlik doğrulama</string>
+    <string name="settings_screen_biometric_auth_desc">Varsa parmak izi veya yüz kilidini kullan</string>
+    <string name="settings_screen_biometric_auth_unavailable">Bu cihazda biyometrik kimlik doğrulama kullanılamıyor.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">Biyometrik istemi otomatik göster</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">Kilit ekranında biyometrik istemi otomatik olarak göster</string>
+    <string name="settings_screen_app_locking_behavior_title">Uygulama kilitleme davranışı</string>
+    <string name="settings_screen_unlock_behavior_title">Kilit açma davranışı</string>
+    <string name="settings_screen_unlock_behavior_desc">Kilidi açmak uygulamanın yeniden başlamasına neden oluyorsa bunu kapatın</string>
+    <string name="settings_screen_unlock_behavior_option_close">Kilit ekranını kapat</string>
+    <string name="settings_screen_unlock_behavior_option_launch">Kilit ekranını kapat ve uygulamayı başlat</string>
+    <string name="settings_screen_auto_unlock_title">Otomatik kilit açma</string>
+    <string name="settings_screen_auto_unlock_desc">Doğru PIN girildiğinde uygulamanın kilidini hemen aç</string>
+    <string name="settings_screen_unlock_duration_title">Kilit açık kalma süresi</string>
+    <string name="settings_screen_unlock_duration_desc">İlk kilit açmadan sonra uygulamaları belirli bir süre açık tut</string>
+    <string name="settings_screen_unlock_duration_dialog_title">Kilit açık kalma süresini ayarla</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">Uygulamalar, ilk kilit açmadan sonra bu süre boyunca açık kalır. Devre dışı bırakmak için 0 saniye seçin.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">saniye</string>
+    <string name="settings_screen_security_title">Güvenlik</string>
+    <string name="settings_screen_change_pin_title">PIN\'i değiştir</string>
+    <string name="settings_screen_change_pin_desc">Mevcut PIN\'inizi güncelleyin</string>
+    <string name="settings_screen_anti_uninstall_title">Kaldırmaya karşı koruma</string>
+    <string name="settings_screen_anti_uninstall_desc">App Lock Revived\'ın yetkisiz kaldırılmasını önleyin</string>
+    <string name="settings_screen_haptic_feedback_title">Dokunsal geri bildirim</string>
+    <string name="settings_screen_haptic_feedback_desc">Tuşlara basıldığında dokunsal geri bildirimi kapat</string>
+    <string name="settings_screen_backend_implementation_title">Arka uç uygulaması</string>
+    <string name="settings_screen_backend_implementation_desc">App Lock Revived\'ın ön plandaki uygulamaları algılamak için kullandığı yöntemi seçin</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">Erişilebilirlik hizmeti</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">Standart yöntem, bazı üreticilerde hafif gecikmeler olabilir.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">Kullanım istatistikleri</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">Deneysel yöntem, bazı cihazlarda daha iyi çalışır.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">Gelişmiş yöntem, ADB üzerinden Shizuku kurulumu gerektirir.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku kullanılamıyor veya izin reddedildi.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Shizuku deneysel özellikleri</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Shizuku arka ucu için deneysel özellikleri etkinleştirin (ör. belirli etkinlikleri kilitleme). Kararsızlığa neden olabilir.</string>
+    <string name="settings_screen_about_title">Hakkında</string>
+    <string name="settings_screen_developer_title">Geliştirici</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">Kaynak kodu</string>
+    <string name="settings_screen_source_code_desc">Kaynak kodunu GitHub\'da görüntüleyin</string>
+    <string name="settings_screen_support_development_title">Geliştirmeyi destekleyin</string>
+    <string name="settings_screen_support_development_desc">Bu uygulamanın geliştirilmesine destek olun</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">Lütfen uygulamamızın pil optimizasyonlarını yok saymasına izin verin.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">Belirli ayarlar bulunamadı. Lütfen uygulamayı pil kısıtlamalarından çıkarın.</string>
+    <string name="utils_battery_settings_not_found_toast">Hiçbir pil ayarı açılamadı.</string>
+    <string name="utils_usage_permission_error_log">Kullanım izni kontrol edilirken hata: </string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">Shizuku iznini verin</string>
+    <string name="shizuku_permission_dialog_text_1">Shizuku modunu etkinleştirdiniz, ancak uygulamanın düzgün çalışması için ek izinlere ihtiyacı var.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">Ayarları açmak ve gerekli izinleri vermek için \'İzin ver\'e dokunun.</string>
+    <string name="grant_permission_button">İzin ver</string>
+    <string name="open_settings_button">Ayarları aç</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">Cihaz yöneticisi izni gerekli</string>
+    <string name="device_admin_permission_dialog_text">Kaldırmaya karşı koruma modunu etkinleştirdiniz. Uygulamayı korumak için cihaz yöneticisi izni gerekir.</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">Erişilebilirlik izni gerekli</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">Kaldırmaya karşı koruma modunu etkinleştirdiniz, ancak bunu uygulamak için uygulamanın erişilebilirlik izinlerine ihtiyacı var.</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">Şifre doğrulaması gerekli</string>
+    <string name="admin_password_verification_dialog_text">Yönetici izinlerini devre dışı bırakmak için lütfen uygulama kilidi şifrenizi girin</string>
+    <string name="password_label">Şifre</string>
+    <string name="password_empty_error">Şifre boş olamaz</string>
+    <string name="incorrect_password_error">Şifre yanlış</string>
+    <string name="verify_button">Doğrula</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">Erişilebilirlik hizmetini etkinleştirin</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock, korunan uygulamaların açıldığını algılamak için erişilebilirlik iznine ihtiyaç duyar.</string>
+    <string name="accessibility_guide_dialog_text_2">Lütfen şu adımları izleyin:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. Aşağıdaki \'Ayarları aç\'a dokunun\n
+2. Anahtarı AÇIK konumuna getirin\n
+3. Onay penceresinde \'İzin ver\'e dokunun.
+    </string>
+    <string name="accessibility_guide_open_settings_button">Ayarları aç</string>
+    <string name="settings_screen_about_and_support_title">Hakkında ve destek</string>
+    <string name="settings_screen_join_community_title">Topluluğa katılın</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d dakika</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">Hemen kilitle</string>
+    <string name="settings_screen_biometric_auth_desc_available">Uygulamaların kilidini açmak için parmak izi veya yüz kilidini kullanın</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">Biyometrik kimlik doğrulama ayarlanmamış veya kullanılamıyor.
+    </string>
+    <string name="settings_screen_shizuku_permission_granted">Shizuku izni verildi</string>
+    <string name="settings_screen_shizuku_permission_required_desc">Gelişmiş özellikler için Shizuku izni gerekli.
+    </string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku çalışmıyor</string>
+    <string name="settings_screen_usage_permission_toast">Lütfen kullanım erişimi izni verin.
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">Uygulamaların PIN girildikten sonra ne kadar süre açık kalacağını seçin:
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">Hemen kilitle</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d dakika</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 saat</string>
+    <string name="settings_screen_permission_required_dialog_text_1">Kaldırmaya karşı korumayı etkinleştirmek için App Lock iki izne ihtiyaç duyar:
+    </string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. Cihaz yöneticisi - Kaldırılmayı önler\n2. Erişilebilirlik hizmeti - Uygulama kullanımını izler\n\nBu izinler, uygulamanın haberiniz olmadan kaldırılmasını önlemeye yardımcı olur.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock, kaldırılmayı önlemek için cihaz yöneticisi iznine ihtiyaç duyar.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_2">Bu izin uygulamaya şunları yapma olanağı tanır:\n• Kendisinin kaldırılmasını önlemek\n• Uygulama kilidi ayarlarınızı korumak\n\nCihazınızın normal işleyişini etkilemez.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock, uygulama kullanımını izlemek için Erişilebilirlik hizmeti iznine ihtiyaç duyar.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_2">Bu izin uygulamaya şunları yapma olanağı tanır:\n• Uygulamaların açıldığını algılamak\n• Gerektiğinde kilit ekranını göstermek\n• Sorunsuz uygulama koruması sağlamak
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_3">Gizliliğiniz korunur — hiçbir veri toplanmaz veya paylaşılmaz.
+    </string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">Gelişmiş</string>
+    <string name="settings_screen_fallback_selection_dialog_title">Yedek yöntemi seçin</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">Birincil yöntem başarısız olduğunda kullanılacak yedek yöntemi seçin:
+    </string>
+    <string name="confirm_button">Onayla</string>
+    <string name="enable_button">Etkinleştir</string>
+    <string name="settings_screen_advanced_title">Gelişmiş</string>
+    <string name="settings_screen_export_logs_title">Günlükleri dışa aktar</string>
+    <string name="settings_screen_export_logs_desc">Hata ayıklama için uygulama günlüklerini dışa aktarın.</string>
+    <string name="settings_Screen_export_audit">Güvenlik günlüklerini dışa aktar</string>
+    <string name="settings_screen_export_audit_desc">İnceleme için güvenlik günlüklerini dışa aktarın.</string>
+    <string name="settings_screen_export_logs_success">Günlükler dışa aktarıldı</string>
+    <string name="settings_screen_export_logs_error">Günlükler dışa aktarılamadı</string>
+    <string name="settings_screen_version_template">Sürüm %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">Devam etmek için deseni çizin</string>
+    <string name="incorrect_pattern_try_again">Desen yanlış. Lütfen tekrar deneyin.</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">Diğer uygulamaların üzerinde göster</string>
+    <string name="permission_warning_overlay_desc">Kilit ekranını korunan uygulamaların üzerinde gösterir.</string>
+    <string name="permission_warning_accessibility_title">Erişilebilirlik hizmeti</string>
+    <string name="permission_warning_accessibility_desc">Korunan uygulamaların açıldığını algılar.</string>
+    <string name="permission_warning_usage_stats_title">Kullanım erişimi</string>
+    <string name="permission_warning_usage_stats_desc">Korunan uygulamaların açıldığını algılar.</string>
+    <string name="permission_warning_shizuku_title">Shizuku izni</string>
+    <string name="permission_warning_shizuku_desc">Korunan uygulamaların açıldığını güvenli bir şekilde algılar.</string>
+    <string name="permission_warning_device_admin_title">Cihaz yöneticisi</string>
+    <string name="permission_warning_device_admin_desc">App Lock Revived\'ın kaldırılmasını önler.</string>
+    <string name="permission_warning_title_suffix"> gerekli</string>
+
+    <string name="join_community">Topluluğa katılın</string>
+    <string name="join_community_desc">Diğer kullanıcılarla bağlantı kurmak, geri bildirim paylaşmak ve en son haber ve özelliklerden haberdar olmak için Discord topluluğumuza katılın.</string>
+    <string name="join_discord">Discord\'a katıl</string>
+    <string name="maybe_later">Belki sonra</string>
+
+    <!-- strings_lock.xml -->
+    <string name="lock_enter_pin">PIN\'inizi girin</string>
+    <string name="lock_draw_pattern">Deseninizi çizin</string>
+    <string name="lock_enter_password">Şifrenizi girin</string>
+    <string name="lock_wrong_pin">Yanlış PIN</string>
+    <string name="lock_wrong_pattern">Yanlış desen</string>
+    <string name="lock_wrong_password">Yanlış şifre</string>
+    <string name="lock_lockout_message">Çok fazla deneme. %1$s içinde tekrar deneyin</string>
+    <string name="lock_close_cd">Kapat ve ana ekrana git</string>
+    <string name="lock_backspace_cd">Sil</string>
+    <string name="lock_confirm_cd">Kilidi aç</string>
+    <string name="lock_unlock_button">Kilidi aç</string>
+    <string name="lock_use_biometrics">Biyometrik doğrulamayı kullan</string>
+    <string name="lock_biometric_subtitle">Devam etmek için parmak izinizi veya yüzünüzü kullanın</string>
+    <string name="lock_biometric_waiting">Biyometrik doğrulama bekleniyor</string>
+    <string name="lock_app_icon_cd">%1$s simgesi</string>
+    <string name="lock_pin_progress_cd">%1$d hane girildi</string>
+    <string name="lock_pattern_pad_cd">Desen alanı</string>
+    <string name="lock_show_password_cd">Şifreyi göster</string>
+    <string name="lock_hide_password_cd">Şifreyi gizle</string>
+    <string name="lock_admin_title">Kaldırmaya karşı korumayı devre dışı bırak</string>
+    <string name="lock_admin_cancel_cd">İptal</string>
+
+    <!-- strings_services.xml -->
+    <string name="tile_lock_now_label">Hepsini hemen kilitle</string>
+    <string name="tile_lock_now_subtitle_active">Koruma açık</string>
+    <string name="tile_lock_now_subtitle_inactive">Koruma kapalı</string>
+    <string name="tile_lock_now_done">Tüm uygulamalar kilitlendi</string>
+    <string name="auto_lock_channel_name">Otomatik kilitlenen uygulamalar</string>
+    <string name="auto_lock_channel_description">Yeni yüklenen bir uygulama otomatik olarak kilitlendiğinde gösterilir</string>
+    <string name="auto_lock_notification_title">%1$s otomatik olarak kilitlendi</string>
+    <string name="auto_lock_notification_text">Kilitli uygulamaları yönetmek için dokunun</string>
+    <string name="service_channel_name_usage">Koruma hizmeti (Kullanım istatistikleri)</string>
+    <string name="service_channel_name_shizuku">Koruma hizmeti (Shizuku)</string>
+    <string name="service_notification_text">Uygulamalarınız korunuyor</string>
+    <string name="service_notification_text_shizuku">Uygulamalarınız Shizuku ile korunuyor</string>
+    <string name="service_notification_waiting_shizuku">Shizuku\'nun başlaması bekleniyor…</string>
+    <string name="anti_uninstall_blocked_toast">Bu kısıtlamayı kaldırmak için App Lock Revived\'da kaldırmaya karşı korumayı kapatın.</string>
+
+    <!-- strings_settings.xml -->
+    <string name="settings_section_appearance">Görünüm</string>
+    <string name="settings_section_lock_screen">Kilit ekranı</string>
+    <string name="settings_section_protection">Koruma</string>
+    <string name="settings_section_privacy">Gizlilik</string>
+    <string name="settings_section_backup">Yedekleme ve geri yükleme</string>
+    <string name="settings_section_updates">Güncellemeler</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_system">Sistem</string>
+    <string name="settings_theme_light">Açık</string>
+    <string name="settings_theme_dark">Koyu</string>
+    <string name="settings_dynamic_color_title">Dinamik renk</string>
+    <string name="settings_dynamic_color_desc">Duvar kağıdınızdaki renkleri kullanın</string>
+    <string name="settings_amoled_title">Saf siyah</string>
+    <string name="settings_amoled_desc">Koyu temada gerçek siyah bir arka plan kullanın</string>
+    <string name="settings_amoled_desc_needs_dark">Koyu tema açıkken kullanılabilir</string>
+    <string name="settings_biometric_desc_available">Parmak izi veya yüz kilidini kullanın</string>
+    <string name="settings_biometric_desc_unavailable">Bu cihazda biyometrik doğrulama ayarlanmamış</string>
+    <string name="settings_biometric_auto_prompt_title">Biyometrik istemi otomatik göster</string>
+    <string name="settings_biometric_auto_prompt_desc">Kilit ekranı göründüğünde parmak izi veya yüz istemini hemen aç</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Bunu kullanmak için biyometrik kilit açmayı etkinleştirin</string>
+    <string name="settings_scramble_keypad_title">PIN tuş takımını karıştır</string>
+    <string name="settings_scramble_keypad_desc">Parmak hareketlerinizden PIN\'inizin öğrenilmemesi için rakamları her seferinde karıştırın</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Yalnızca PIN kilidiyle kullanılabilir</string>
+    <string name="settings_auto_unlock_desc">Doğru PIN girildiğinde onay tuşuna basmadan kilidi açın</string>
+    <string name="settings_disable_haptics_title">Dokunsal geri bildirimi kapat</string>
+    <string name="settings_change_pattern_title">Deseni değiştir</string>
+    <string name="settings_change_pattern_desc">Yeni bir kilit deseni çizin</string>
+    <string name="settings_change_password_title">Şifreyi değiştir</string>
+    <string name="settings_change_password_desc">Yeni bir şifre belirleyin</string>
+    <string name="settings_unlock_duration_until_screen_off">Ekran kapanana kadar</string>
+    <string name="settings_unlock_duration_sheet_desc">Bir uygulama, kilidini açtıktan sonra ne kadar süre açık kalır</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="other">%1$d dakika</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Kilitlenmeden önceki başarısız denemeler</string>
+    <string name="settings_failed_attempts_desc">Çok fazla yanlış denemeden sonra bir süre giriş engellenir</string>
+    <string name="settings_failed_attempts_off">Kapalı</string>
+    <string name="settings_lockout_duration_title">Kilitlenme süresi</string>
+    <string name="settings_lockout_duration_desc">Kilitlenme her tekrarlandığında iki katına çıkar</string>
+    <string name="settings_lockout_duration_desc_disabled">Bunu kullanmak için başarısız deneme kilitlenmesini etkinleştirin</string>
+    <string name="settings_lockout_seconds_short">%1$d sn</string>
+    <string name="settings_lockout_minutes_short">%1$d dk</string>
+    <string name="settings_auto_lock_new_apps_title">Yeni yüklenen uygulamaları kilitle</string>
+    <string name="settings_auto_lock_new_apps_desc">Uygulamalar yüklendikten hemen sonra otomatik olarak kilitlensin</string>
+    <string name="settings_unlock_history_title">Kilit açma geçmişi</string>
+    <string name="settings_unlock_history_desc">Kilit açma denemelerinin cihaz üzerinde bir günlüğünü tutun. Bunu kapatmak günlüğü siler.</string>
+    <string name="settings_view_unlock_history_title">Kilit açma geçmişini görüntüle</string>
+    <string name="settings_view_unlock_history_desc">Son kilit açmaları ve başarısız denemeleri görün</string>
+    <string name="settings_backup_export_title">Yedeği dışa aktar</string>
+    <string name="settings_backup_export_desc">Kilitli uygulamaları ve ayarları bir dosyaya kaydedin</string>
+    <string name="settings_backup_import_title">Yedekten geri yükle</string>
+    <string name="settings_backup_import_desc">Kilitli uygulamaları ve ayarları bir yedek dosyasıyla değiştirin</string>
+    <string name="settings_backup_footer">PIN, desen veya şifreniz hiçbir zaman yedeğe dahil edilmez.</string>
+    <string name="settings_backup_export_success">Yedek kaydedildi</string>
+    <string name="settings_backup_export_failed">Yedek kaydedilemedi: %1$s</string>
+    <string name="settings_backup_import_invalid">Bu dosya bir App Lock Revived yedeği değil</string>
+    <string name="settings_backup_import_newer_version">Bu yedek, App Lock Revived\'ın daha yeni bir sürümü tarafından oluşturulmuş. Uygulamayı güncelleyip tekrar deneyin.</string>
+    <string name="settings_backup_import_failed">Yedek okunamadı: %1$s</string>
+    <string name="settings_backup_no_file_picker">Dosya seçmek için kullanılabilir uygulama yok</string>
+    <string name="settings_backup_restore_complete_title">Yedek geri yüklendi</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="other">%1$d kilitli uygulama geri yüklendi.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="other">%1$d ayar geri yüklendi.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">Mevcut PIN, desen veya şifreniz olduğu gibi korundu.</string>
+    <string name="settings_ok_button">Tamam</string>
+    <string name="settings_update_check_title">Güncellemeleri otomatik denetle</string>
+    <string name="settings_update_check_desc">GitHub\'da yeni sürümleri arayın</string>
+    <string name="settings_update_check_now_title">Güncellemeleri denetle</string>
+    <string name="settings_update_checking">Denetleniyor…</string>
+    <string name="settings_update_current_version">Sürümünüz: %1$s</string>
+    <string name="settings_update_latest">En son sürümü kullanıyorsunuz</string>
+    <string name="settings_update_check_failed">Güncellemeler denetlenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="settings_update_check_footer">Uygulama bu sırada yalnızca internete bağlanır. Sizin veya uygulamalarınızın hiçbir bilgisi gönderilmez.</string>
+    <string name="settings_backend_accessibility_title">Erişilebilirlik hizmeti</string>
+    <string name="settings_backend_accessibility_desc">Çoğu cihazda çalışan standart yöntem</string>
+    <string name="settings_backend_usage_stats_title">Kullanım istatistikleri</string>
+    <string name="settings_backend_usage_stats_desc">Uygulama kullanım istatistiklerini kullanan deneysel yöntem</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Shizuku ve dahili API\'leri kullanan gelişmiş yöntem</string>
+    <string name="settings_logging_title">Hata ayıklama günlüğü</string>
+    <string name="settings_logging_desc">Sorun gidermek için ayrıntılı günlükler kaydedin</string>
+    <string name="settings_share_logs">Günlükleri paylaş</string>
+    <string name="settings_share_audit_logs">Güvenlik günlüklerini paylaş</string>
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Sürüm %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Ücretsiz, açık kaynaklı ve reklamsız</string>
+    <string name="settings_about_developed_by">Geliştirici: Riyad M</string>
+    <string name="settings_about_source_title">Kaynak kodu</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Sürümler</string>
+    <string name="settings_about_releases_desc">Değişiklik günlüğü ve indirmeler</string>
+    <string name="settings_about_issue_title">Sorun bildir</string>
+    <string name="settings_about_issue_desc">Bir hata mı buldunuz ya da bir fikriniz mi var? Bize bildirin</string>
+    <string name="settings_about_credits_title">Katkıda bulunanlar</string>
+    <string name="settings_about_credits_desc">Pranav Purwar (aload0) tarafından geliştirilen AppLock\'a dayanır</string>
+    <string name="settings_about_license_title">Lisans</string>
+    <string name="settings_about_license_desc">MIT Lisansı</string>
+    <string name="settings_no_browser">Bağlantıları açmak için kullanılabilir uygulama yok</string>
+    <string name="settings_support_sheet_title">App Lock Revived\'dan memnun musunuz?</string>
+    <string name="settings_support_sheet_message">App Lock Revived ücretsiz, açık kaynaklı ve reklamsız. Projeye GitHub\'da yıldız vererek, hataları bildirerek veya arkadaşlarınızla paylaşarak destek olabilirsiniz.</string>
+    <string name="settings_support_sheet_star">GitHub\'da yıldız ver</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">Kilit açma geçmişi</string>
+    <plurals name="history_entry_count">
+        <item quantity="other">%1$d kayıt</item>
+    </plurals>
+    <string name="history_clear_cd">Geçmişi temizle</string>
+    <string name="history_clear_dialog_title">Kilit açma geçmişi temizlensin mi?</string>
+    <string name="history_clear_dialog_text">Kaydedilmiş tüm kilit açmalar ve başarısız denemeler silinecek. Bu işlem geri alınamaz.</string>
+    <string name="history_clear_confirm">Temizle</string>
+    <string name="history_cleared">Geçmiş temizlendi</string>
+    <plurals name="history_summary_failed">
+        <item quantity="other">son 24 saatteki başarısız deneme</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="other">Aynı dönemde %1$d başarılı kilit açma</item>
+    </plurals>
+    <string name="history_entry_success">%1$s ile kilidi açıldı · %2$s</string>
+    <string name="history_entry_failed">%1$s başarısız denemesi · %2$s</string>
+    <string name="history_status_success_cd">Kilidi açıldı</string>
+    <string name="history_status_failed_cd">Başarısız deneme</string>
+    <string name="history_method_pin">PIN</string>
+    <string name="history_method_pattern">desen</string>
+    <string name="history_method_password">şifre</string>
+    <string name="history_method_biometric">biyometrik doğrulama</string>
+    <string name="history_today">Bugün</string>
+    <string name="history_yesterday">Dün</string>
+    <string name="history_disabled_banner">Kilit açma geçmişi kapalı. Yeni denemeler kaydedilmiyor.</string>
+    <string name="history_turn_on">Aç</string>
+    <string name="history_empty_title">Henüz kilit açma denemesi yok</string>
+    <string name="history_empty_desc">Biri kilitli bir uygulamanın kilidini açmaya veya açmayı denediğinde burada görünür. Geçmiş asla cihazınızdan ayrılmaz.</string>
+
+    <!-- strings_applist.xml -->
+    <string name="applist_status_active_title">Koruma açık</string>
+    <string name="applist_status_paused_title">Koruma duraklatıldı</string>
+    <string name="applist_status_paused_desc">Kilitli uygulamalar sormadan açılır. Devam etmek için dokunun.</string>
+    <string name="applist_status_setup_title">Koruma dikkat gerektiriyor</string>
+    <string name="applist_status_setup_desc">%1$s gerekli. Düzeltmek için dokunun.</string>
+    <string name="applist_status_stopped_title">Kilit hizmeti çalışmıyor</string>
+    <string name="applist_status_stopped_desc">%1$s hizmetini yeniden başlatmak için dokunun.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Kaldırmaya karşı koruma: %1$s gerekli</string>
+    <string name="applist_status_fix">Düzelt</string>
+    <string name="applist_status_switch_cd">Koruma</string>
+    <string name="applist_backend_accessibility">Erişilebilirlik</string>
+    <string name="applist_backend_usage_stats">Kullanım erişimi</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="other">%d uygulama kilitli</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">Diğer seçenekler</string>
+    <string name="applist_menu_lock_all_now">Hepsini hemen kilitle</string>
+    <string name="applist_locked_all_now">Tüm uygulamalar kimlik doğrulamasını yeniden isteyecek</string>
+    <string name="applist_menu_trigger_exclusions">Tetikleme istisnaları</string>
+    <string name="applist_menu_prevent_uninstall">Kaldırmayı engelle</string>
+    <string name="applist_menu_show_system_apps">Sistem uygulamalarını göster</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">Uygulama veya paket adı ara</string>
+    <string name="applist_search_clear_cd">Aramayı temizle</string>
+    <string name="applist_filter_all">Tümü</string>
+    <string name="applist_filter_locked">Kilitli</string>
+    <string name="applist_filter_unlocked">Kilitsiz</string>
+    <string name="applist_filter_system">Sistem</string>
+    <string name="applist_sort_cd">Sıralama</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">Son yüklenenler</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">Kilitli</string>
+    <string name="applist_section_other">Diğer uygulamalar</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Seç</string>
+    <string name="applist_system_supporting">Sistem · %1$s</string>
+    <string name="applist_remove_package_cd">%1$s kaldır</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">Uygulamalar yükleniyor…</string>
+    <string name="applist_empty_search_title">“%1$s” ile eşleşen uygulama yok</string>
+    <string name="applist_empty_search_desc">Farklı bir ad veya paket deneyin.</string>
+    <string name="applist_empty_locked_title">Henüz kilitli uygulama yok</string>
+    <string name="applist_empty_locked_desc">Bir uygulamayı kilitlemek için yanındaki anahtarı açın.</string>
+    <string name="applist_empty_generic_title">Gösterilecek bir şey yok</string>
+    <string name="applist_empty_generic_desc">Başka bir filtre deneyin.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="other">%d seçildi</item>
+    </plurals>
+    <string name="applist_action_lock">Seçilenleri kilitle</string>
+    <string name="applist_action_unlock">Seçilenlerin kilidini aç</string>
+    <string name="applist_action_select_all">Tümünü seç</string>
+    <string name="applist_action_close_selection">Seçimi iptal et</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="other">%d uygulama kilitlendi</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="other">%d uygulamanın kilidi açıldı</item>
+    </plurals>
+    <string name="applist_undo">Geri al</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">Geri git</string>
+    <string name="applist_show_system_apps">Sistem uygulamaları</string>
+    <string name="applist_add_package_cd">Paketi elle ekle</string>
+    <string name="applist_add_package_title">Paketi elle ekle</string>
+    <string name="applist_package_name_label">Paket adı</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">Geçerli bir paket adı girin</string>
+    <string name="applist_add">Ekle</string>
+    <string name="applist_cancel">İptal</string>
+    <string name="applist_manual_package_desc">Yüklü değil · elle eklendi</string>
+    <string name="applist_section_manual">Elle eklenenler</string>
+    <string name="applist_section_installed">Yüklü uygulamalar</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">Tetikleme istisnaları</string>
+    <string name="trigger_exclusions_hero_title">Hiçbir zaman kilit tetiklemeyen uygulamalar</string>
+    <string name="trigger_exclusions_hero_desc">Bu uygulamalardan kilitli bir uygulamaya geçmek kilit ekranını göstermez. Klavyeler, ana ekranlar ve yüzen katmanlar için kullanışlıdır.</string>
+    <string name="trigger_exclusions_section_excluded">İstisna tutulanlar</string>
+    <string name="trigger_exclusions_add_desc">İstisna tutmak istediğiniz uygulamanın paket adını girin.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="other">%d uygulama istisna tutuldu</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">Kaldırmayı engelle</string>
+    <string name="anti_uninstall_section_protected">Korunanlar</string>
+    <string name="anti_uninstall_add_desc">Kaldırılmaya karşı korumak istediğiniz uygulamanın paket adını girin.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="other">%d uygulama korunuyor</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku güncellenmeli</string>
+    <string name="anti_uninstall_ready_title">Shizuku bağlı</string>
+    <string name="anti_uninstall_ready_desc">Korunan uygulamalar, buradaki anahtarlarını kapatana kadar kaldırılamaz. Shizuku yalnızca koruma değiştirilirken gereklidir.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku yüklü değil</string>
+    <string name="anti_uninstall_not_installed_desc">Root olmadan kaldırmayı engellemek için Shizuku (ya da root\'lu cihazlarda Sui) gerekir. Korumayı değiştirmek için yükleyin.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku çalışmıyor</string>
+    <string name="anti_uninstall_not_running_desc">Shizuku\'yu açın ve kablosuz hata ayıklama ya da root ile başlatın, ardından geri dönün. Mevcut koruma yerinde kalır.</string>
+    <string name="anti_uninstall_permission_title">Shizuku izni gerekli</string>
+    <string name="anti_uninstall_permission_desc">App Lock Revived\'ın hangi uygulamaların kaldırılabileceğini değiştirebilmesi için Shizuku kullanmasına izin verin.</string>
+    <string name="anti_uninstall_action_install">Shizuku\'yu yükle</string>
+    <string name="anti_uninstall_action_open">Shizuku\'yu aç</string>
+    <string name="anti_uninstall_action_grant">İzin ver</string>
+    <string name="anti_uninstall_action_retry">Tekrar denetle</string>
+    <string name="anti_uninstall_needs_shizuku">Kaldırma korumasını değiştirmek için önce Shizuku\'yu başlatın</string>
+    <string name="anti_uninstall_toggle_failed">%1$s için kaldırma koruması değiştirilemedi</string>
+    <string name="anti_uninstall_shizuku_old">Bu Shizuku sürümü çok eski. Lütfen Shizuku\'yu güncelleyin.</string>
+    <string name="anti_uninstall_remove_all">Tüm uygulamalardan korumayı kaldır</string>
+    <string name="anti_uninstall_remove_all_title">Tüm koruma kaldırılsın mı?</string>
+    <string name="anti_uninstall_remove_all_desc">Bu cihazda kaldırılması engellenen her uygulama, bu listenin dışında korunanlar dahil olmak üzere yeniden kaldırılabilir olacak.</string>
+    <string name="anti_uninstall_remove_all_confirm">Kaldır</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="other">%d uygulamadan koruma kaldırıldı</item>
+    </plurals>
+
+    <!-- strings_onboarding.xml -->
+    <string name="intro_welcome_title">App Lock Revived\'a hoş geldiniz</string>
+    <string name="intro_welcome_desc">Uygulamalarınızı ve gizliliğinizi koruyun. Sizi kısa bir kuruluma yönlendireceğiz. Yalnızca bir dakika sürer.</string>
+    <string name="intro_page_indicator">Adım %1$d / %2$d</string>
+    <string name="intro_back">Geri</string>
+    <string name="intro_allow_button">İzin ver</string>
+    <string name="intro_status_granted">İzin verildi</string>
+    <string name="intro_status_not_granted">Henüz izin verilmedi</string>
+    <string name="intro_open_app_info">Uygulama bilgisini aç</string>
+    <string name="intro_battery_title">App Lock\'un çalışmaya devam etmesini sağlayın</string>
+    <string name="intro_battery_desc">Android, pil tasarrufu için App Lock Revived\'ı arka planda durdurabilir. Bu olursa, uygulamalar yeniden başlatmadan veya birkaç dakika sonra kilitlenmeyi bırakır. Pil kısıtlamaları olmadan çalışmasına izin verin.</string>
+    <string name="intro_battery_oem_hint">Bazı telefonlarda (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) ayrıca Uygulama bilgisini açın, pil kullanımını \"Kısıtlama yok\" olarak ayarlayın ve varsa otomatik başlatmayı açın.</string>
+    <string name="intro_accessibility_desc">App Lock Revived erişilebilirlik hizmetini yalnızca korunan bir uygulama açıldığında fark etmek için kullanır. İzin ver\'e dokunun, listede App Lock Revived\'ı bulup açın.</string>
+    <string name="intro_shizuku_not_running">Shizuku çalışmıyor. Shizuku uygulamasında başlatın, ardından tekrar İzin ver\'e dokunun.</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">\"Kısıtlı ayar\" mı görüyorsunuz?</string>
+    <string name="ob_restricted_settings_desc">Android, bir uygulama mağazası dışından yüklenen uygulamalara erişilebilirlik iznini siz izin verene kadar engeller.</string>
+    <string name="ob_restricted_settings_steps">1. Aşağıdaki \'Uygulama bilgisini aç\'a dokunun\n2. Sağ üstteki ⋮ simgesine dokunun\n3. \"Kısıtlı ayarlara izin ver\"i seçip onaylayın\n4. Geri dönün ve hizmeti açın</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. Ayarları aç\'a dokunun\n2. App Lock Revived\'ı bulun (İndirilen uygulamalar veya Yüklü uygulamalar altında olabilir)\n3. Açın ve İzin ver\'e dokunun</string>
+    <string name="ob_usage_stats_dialog_title">Kullanım erişimi verin</string>
+    <string name="ob_usage_stats_dialog_text">Kullanım istatistikleri modunu seçtiniz, ancak App Lock Revived korunan uygulamaların açıldığını algılamak için kullanım erişimine ihtiyaç duyar.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">Kilit ayarla</string>
+    <string name="setup_title_change">Kilidi değiştir</string>
+    <string name="setup_type_pin">PIN</string>
+    <string name="setup_type_pattern">Desen</string>
+    <string name="setup_type_password">Şifre</string>
+    <string name="setup_create_pin">Bir PIN oluşturun</string>
+    <string name="setup_confirm_pin">PIN\'inizi onaylayın</string>
+    <string name="setup_verify_pin">Mevcut PIN\'inizi girin</string>
+    <string name="setup_create_pattern">Bir desen çizin</string>
+    <string name="setup_confirm_pattern">Deseni tekrar çizin</string>
+    <string name="setup_verify_pattern">Mevcut deseninizi çizin</string>
+    <string name="setup_create_password">Bir şifre oluşturun</string>
+    <string name="setup_confirm_password">Şifrenizi onaylayın</string>
+    <string name="setup_verify_password">Mevcut şifrenizi girin</string>
+    <string name="setup_hint_pin">En az 4 hane kullanın</string>
+    <string name="setup_hint_pattern">En az 4 noktayı birleştirin</string>
+    <string name="setup_hint_password">En az 4 karakter kullanın</string>
+    <string name="setup_hint_confirm">Onaylamak için bir kez daha girin</string>
+    <string name="setup_hint_verify">Kilidinizi değiştirmeden önce sizin olduğunuzu doğrulayın</string>
+    <string name="setup_pattern_too_short">En az 4 noktayı birleştirin</string>
+    <string name="setup_patterns_dont_match">Desenler eşleşmiyor. Tekrar deneyin.</string>
+    <string name="setup_continue">Devam</string>
+    <string name="setup_confirm">Onayla</string>
+    <string name="setup_delete">Sil</string>
+    <string name="setup_show_password">Şifreyi göster</string>
+    <string name="setup_hide_password">Şifreyi gizle</string>
+    <string name="setup_use_keyboard">Bunun yerine klavyeyi kullan</string>
+    <string name="setup_use_keypad">Sayı tuştakımını kullan</string>
+    <string name="setup_digits_entered">%1$d hane girildi</string>
+
+    <!-- strings_update.xml -->
+    <string name="update_dialog_title">Güncelleme var</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">Yenilikler</string>
+    <string name="update_dialog_no_notes">Sürüm notu sağlanmadı.</string>
+    <string name="update_dialog_download">İndir</string>
+    <string name="update_dialog_download_size">İndir (%1$s)</string>
+    <string name="update_dialog_later">Sonra</string>
+    <string name="update_dialog_skip">Bu sürümü atla</string>
+    <string name="update_dialog_icon_description">App Lock Revived simgesi</string>
+    <string name="update_dialog_no_browser">İndirme bağlantısını açacak uygulama bulunamadı</string>
+
+</resources>
