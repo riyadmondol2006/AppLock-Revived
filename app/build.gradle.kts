@@ -32,8 +32,8 @@ android {
         applicationId = "dev.riyadm.applock"
         minSdk = 26
         targetSdk = 37
-        versionCode = 300
-        versionName = "3.0.0"
+        versionCode = 310
+        versionName = "3.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

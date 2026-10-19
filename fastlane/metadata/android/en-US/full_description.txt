@@ -5,6 +5,8 @@ App Lock Revived is an open-source app locker for Android, rebuilt with Google's
 * Fingerprint and face unlock, with an optional automatic prompt
 * Accessibility, Usage stats or Shizuku detection, no root required
 * Unlock duration, auto-lock for newly installed apps and a "Lock all now" Quick Settings tile
+* Per-app lock method (biometric only, PIN only, or two-step) and lock profiles for home, work and guests
+* Trusted Wi-Fi networks and automation actions
 * Anti-uninstall protection
 
 <b>Security</b>
@@ -12,12 +14,15 @@ App Lock Revived is an open-source app locker for Android, rebuilt with Google's
 * Scrambled PIN keypad
 * Screenshots blocked on lock screens
 * PBKDF2-hashed credentials
-* On-device unlock history
+* Opt-in intruder selfie, stored only on the device
+* On-device unlock history with automatic cleanup
+* Password-encrypted backups
 
 <b>Design</b>
 * Material 3 Expressive throughout, with Google Sans Flex typography and spring motion
 * Light, dark and system theme, dynamic color and pure black mode
 * Themed adaptive icon
+* Available in 14 languages
 
 <b>Privacy</b>
 Everything stays on your device. There are no ads, trackers or accounts. The only network request is an optional check for new releases on GitHub, and you can turn it off.

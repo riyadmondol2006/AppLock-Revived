@@ -50,32 +50,67 @@ Package name: `dev.riyadm.applock`. It installs alongside the original app.
 
 **Locking**
 - Lock any app with PIN, pattern or alphanumeric password
-- Fingerprint / face unlock, with an optional automatic biometric prompt
+- Fingerprint / face unlock, with an automatic biometric prompt
+- **Per-app lock method:** default, biometric only, PIN/pattern only, or two-step (biometric *and* PIN)
+- **Lock profiles:** Home, Work, Guest and custom profiles, each with its own app list and unlock duration, plus a
+  "Lock profile" Quick Settings tile
+- **Trusted Wi-Fi:** optionally skip the lock on networks you trust. Two-step apps and App Lock itself always lock,
+  and everything re-locks the moment you leave the network
 - Three detection methods: Accessibility service, Usage stats, or Shizuku
 - Unlock duration: re-lock immediately, after a few minutes, or when the screen turns off
 - Lock newly installed apps automatically
-- "Lock all now" Quick Settings tile
-- Anti-uninstall protection (device admin)
+- "Lock all now" Quick Settings tile, and optionally close locked apps when the screen turns off
+- Anti-uninstall protection (device admin) with a safe recovery path
 - Trigger exclusions (apps that never trigger a lock, such as keyboards)
 
 **Security**
+- Instant lock shield: an opaque cover is drawn before the lock screen, so app content doesn't flash
 - Brute-force protection: input is blocked after repeated wrong attempts, and the cooldown doubles each time
+- **Intruder selfie** (opt-in): a front-camera photo after wrong attempts, stored only on the device and deleted
+  automatically
 - Scrambled PIN keypad option against shoulder-surfing
 - Screenshots and screen recording blocked on lock screens (`FLAG_SECURE`)
-- Credentials hashed with PBKDF2-HMAC-SHA256; patterns are no longer stored in plain text
-- On-device unlock history showing which app, when, which method, and success or failure
+- Credentials hashed with PBKDF2-HMAC-SHA256, with automatic upgrade of older formats and unit tests for every
+  upgrade path
+- Unlock history (opt-in) with automatic cleanup after 1, 7 or 30 days
 
 **Design**
 - Material 3 Expressive throughout: flexible app bars, segmented lists, button groups, shape morphing, wavy progress
+- Fast keypad: digits register on touch, with crisp spring animations and haptics
 - Google Sans Flex variable typography
 - Spring-based motion, predictive back, haptics (can be turned off)
 - Light / dark / system theme, dynamic color, and pure black (AMOLED) mode
 - Adaptive launcher icon, including Android 13+ themed icon
+- Adjustable pattern size
 
 **Convenience**
-- Backup and restore of locked apps and settings to a JSON file (your PIN/pattern/password is never exported)
+- Backup and restore of locked apps, profiles and settings, optionally encrypted with a password
+  (AES-256-GCM). Your PIN/pattern/password is never exported
+- Automation actions for apps that hold the automation permission (see below)
 - In-app update notice when a new release is published on GitHub
 - Search, filters (locked / unlocked / system), sorting and multi-select on the app list
+
+**Languages**
+
+English, العربية, বাংলা, Deutsch, Español, Français, हिन्दी, Bahasa Indonesia, Polski, Português (Brasil), Русский,
+Türkçe, Tiếng Việt and 简体中文. On Android 13+ you can pick the app language in **System settings → Apps →
+App Lock Revived → Language**.
+
+## What's new in 3.1
+
+- **Per-app lock methods and lock profiles:** upstream issue #221.
+- **Trusted Wi-Fi and automation:** #243.
+- **Intruder selfie:** #229.
+- **Unlock history retention:** #214.
+- **Pattern size:** #212.
+- **Close locked apps on screen off:** #218.
+- **Faster keypad:** digits now register on touch instead of on release.
+- **Lock shield:** an opaque cover appears before the lock screen draws.
+- **Encrypted backups.**
+- **13 languages and a per-app language picker.**
+- **Credential fix:** old passwords containing `:` were rejected after updating (#215).
+- **Backup privacy:** Android's phone-to-phone transfer no longer copies credentials or history.
+- **Release checks:** CI runs the unit tests, and every release ships with a SHA-256 checksum.
 
 ## What's new in 3.0
 
@@ -119,7 +154,35 @@ The app checks for new releases on its own and offers the update in a dialog. Yo
 - The only network request is the optional update check, which reads the public
   [GitHub releases API](https://api.github.com/repos/riyadmondol2006/AppLock-Revived/releases/latest). Nothing about
   you or your apps is sent. Disable it in **Settings → Updates** and the app never goes online.
-- Backups contain the list of locked apps and settings only, never your PIN, pattern or password.
+- Backups contain locked apps, profiles and settings only, never your PIN, pattern or password. Protect them with a
+  password to encrypt the file.
+- Intruder photos and unlock history never leave the device, are excluded from Android backup and transfer, and are
+  deleted automatically.
+
+## Automation
+
+Turn on **Settings → Automation → Allow automation apps**. Apps that hold the
+`dev.riyadm.applock.permission.AUTOMATION` permission can then send these explicit broadcasts to `dev.riyadm.applock`:
+
+| Action | Effect |
+|---|---|
+| `dev.riyadm.applock.action.LOCK_ALL_NOW` | Re-lock every app immediately |
+| `dev.riyadm.applock.action.ENABLE_PROTECTION` | Turn protection on |
+| `dev.riyadm.applock.action.DISABLE_PROTECTION` | Turn protection off. Only works if you also enable "Allow automation to turn protection off" |
+
+The permission is a *dangerous* permission, so you have to grant it to the automation app yourself. Broadcasts
+must target the package, for example with `-p dev.riyadm.applock`.
+
+## Permissions
+
+| Permission | Why |
+|---|---|
+| Accessibility / Usage access / Shizuku | Detect when a locked app opens (you pick one) |
+| Display over other apps | Draw the lock screen |
+| Notifications, ignore battery optimization | Keep protection running reliably |
+| Camera *(optional)* | Intruder selfie, only if you turn it on |
+| Precise + background location *(optional)* | Trusted Wi-Fi, because Android only reveals the Wi-Fi name with it |
+| Internet | Update check only. Turn it off in Settings |
 
 ## Building
 
@@ -143,9 +206,10 @@ keyPassword=...
 
 ## Continuous integration and releases
 
-[`.github/workflows/android.yml`](.github/workflows/android.yml) builds every push and pull request.
-On pushes to `master` it also builds a **signed release APK**. When `versionName` in `app/build.gradle.kts`
-changes, it publishes a GitHub Release tagged `v<versionName>` with the APK attached. The release notes come
+[`.github/workflows/android.yml`](.github/workflows/android.yml) runs the unit tests and builds every push and
+pull request. On pushes to `master` it also builds a **signed release APK**. When `versionName` in
+`app/build.gradle.kts` changes, it publishes a GitHub Release tagged `v<versionName>` with the APK and its
+SHA-256 checksum attached. Verify a download with `sha256sum -c AppLock-Revived-v<version>.apk.sha256`. The release notes come
 from `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt` when that file exists.
 
 Add these repository secrets (**Settings → Secrets and variables → Actions**):

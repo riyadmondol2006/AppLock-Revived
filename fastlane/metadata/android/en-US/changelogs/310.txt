@@ -1,0 +1,9 @@
+App Lock Revived 3.1.0
+• Per-app lock methods: biometric only, PIN only or two-step
+• Lock profiles (Home, Work, Guest) with a Quick Settings tile
+• Trusted Wi-Fi networks and automation actions
+• Intruder selfie (opt-in, stays on device)
+• Faster, snappier PIN keypad; instant lock shield
+• Password-encrypted backups, history retention, pattern size
+• 13 languages incl. বাংলা, हिन्दी, Español, 中文
+• Fixes for old passwords and backup privacy
