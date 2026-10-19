@@ -6,7 +6,6 @@ import android.util.LruCache
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -22,11 +21,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -48,8 +43,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowForward
-import androidx.compose.material.icons.automirrored.rounded.Backspace
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.material.icons.rounded.Lock
@@ -61,15 +54,12 @@ import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.LoadingIndicator
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.toPath
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -88,26 +78,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -127,14 +110,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
-import java.security.SecureRandom
 import java.util.Locale
 import kotlin.concurrent.thread
 import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.roundToInt
 
 /** Everything a lock screen needs from its host. */
 @Immutable
@@ -193,6 +175,7 @@ class UnlockController internal constructor(
     // failed attempt once the user abandons it, so auto-unlock can't be used to brute force.
     private var pendingSilentFailure: String? = null
     private var lastCountedSilentFailure: String? = null
+    private val silentCheck = Mutex()
 
     private val lockedOutState = derivedStateOf { remainingLockoutMs > 0 }
     val isLockedOut: Boolean get() = lockedOutState.value
@@ -228,10 +211,16 @@ class UnlockController internal constructor(
         }
     }
 
-    /** Auto-unlock check: a wrong candidate isn't reported until it is abandoned. */
+    /**
+     * Auto-unlock check: a wrong candidate isn't reported until it is abandoned.
+     * Checks run one at a time; a caller cancelled while waiting (newer input) never hashes,
+     * so fast typing can't pile up PBKDF2 work on the background cores.
+     */
     suspend fun trySilently(input: String) {
         if (!canInput) return
-        val valid = withContext(Dispatchers.Default) { validate(input) }
+        val valid = silentCheck.withLock {
+            withContext(Dispatchers.Default) { validate(input) }
+        }
         if (!canInput) return
         if (valid) {
             pendingSilentFailure = null
@@ -659,292 +648,6 @@ internal fun AppIconBadge(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-private val DotShapes by lazy {
-    listOf(
-        MaterialShapes.Cookie4Sided,
-        MaterialShapes.Sunny,
-        MaterialShapes.Gem,
-        MaterialShapes.Clover4Leaf,
-        MaterialShapes.Pentagon,
-        MaterialShapes.SoftBurst,
-        MaterialShapes.Diamond,
-        MaterialShapes.Cookie6Sided,
-    )
-}
-
-/**
- * PIN progress: each dot springs in while morphing from an expressive shape into a
- * circle, and springs out when deleted. Layout and drawing read animations directly,
- * so typing never recomposes the row.
- */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-internal fun PinDots(
-    length: Int,
-    isError: Boolean,
-    modifier: Modifier = Modifier,
-    dotSize: Dp = 14.dp,
-) {
-    val colors = MaterialTheme.colorScheme
-    val color = animateColorAsState(
-        targetValue = if (isError) colors.error else colors.primary,
-        animationSpec = MaterialTheme.motionScheme.defaultEffectsSpec(),
-        label = "dotColor"
-    )
-    var rendered by remember { mutableIntStateOf(length) }
-    LaunchedEffect(length) {
-        if (length >= rendered) {
-            rendered = length
-        } else {
-            delay(DOT_EXIT_MS)
-            rendered = length
-        }
-    }
-    val progressDescription = stringResource(R.string.lock_pin_progress_cd, length)
-
-    BoxWithConstraints(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(dotSize * 2.6f)
-            .semantics { contentDescription = progressDescription },
-        contentAlignment = Alignment.Center
-    ) {
-        val spacing = dotSize * 0.85f
-        val maxDots = max(1, (maxWidth / (dotSize + spacing)).toInt())
-        val count = min(max(length, rendered), maxDots)
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            for (index in 0 until count) {
-                key(index) {
-                    PinDot(
-                        visible = index < length,
-                        index = index,
-                        size = dotSize,
-                        spacing = spacing,
-                        color = { color.value }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-private fun PinDot(visible: Boolean, index: Int, size: Dp, spacing: Dp, color: () -> Color) {
-    val presence = remember { Animatable(0f) }
-    val morphProgress = remember { Animatable(0f) }
-    val exitSpec = MaterialTheme.motionScheme.fastSpatialSpec<Float>()
-    val morphSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
-    LaunchedEffect(visible) {
-        if (visible) {
-            launch {
-                morphProgress.snapTo(0f)
-                morphProgress.animateTo(1f, morphSpec)
-            }
-            presence.animateTo(1f, spring(dampingRatio = 0.45f, stiffness = 700f))
-        } else {
-            presence.animateTo(0f, exitSpec)
-        }
-    }
-    val morph = remember(index) {
-        Morph(DotShapes[index % DotShapes.size], MaterialShapes.Circle)
-    }
-    val path = remember { Path() }
-    val matrix = remember { Matrix() }
-
-    Box(
-        Modifier
-            .layout { measurable, _ ->
-                val dotPx = size.roundToPx()
-                val slot = (size + spacing).toPx() * presence.value.coerceIn(0f, 1f)
-                val placeable = measurable.measure(Constraints.fixed(dotPx, dotPx))
-                val width = slot.roundToInt()
-                layout(width, dotPx) { placeable.place((width - dotPx) / 2, 0) }
-            }
-            .graphicsLayer {
-                val p = presence.value
-                scaleX = p
-                scaleY = p
-                alpha = p.coerceIn(0f, 1f)
-            }
-            .drawBehind {
-                path.rewind()
-                morph.toPath(morphProgress.value.coerceIn(0f, 1f), path)
-                matrix.reset()
-                matrix.scale(this.size.width, this.size.height)
-                path.transform(matrix)
-                drawPath(path, color())
-            }
-    )
-}
-
-/**
- * Keypad key whose container morphs from a rounded square into a circle while pressed.
- * Press progress is driven by an [Animatable] read only in draw/graphicsLayer.
- */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-internal fun KeypadKey(
-    onClick: () -> Unit,
-    size: Dp,
-    containerColor: Color,
-    pressedContainerColor: Color,
-    contentColor: Color,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    onLongClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val press = remember { Animatable(0f) }
-    val pressSpec = MaterialTheme.motionScheme.fastSpatialSpec<Float>()
-    val releaseSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
-    LaunchedEffect(interactionSource) {
-        interactionSource.interactions.collect { interaction ->
-            when (interaction) {
-                is PressInteraction.Press -> launch { press.animateTo(1f, pressSpec) }
-                is PressInteraction.Release, is PressInteraction.Cancel -> launch {
-                    if (press.value < 0.85f) press.animateTo(1f, pressSpec)
-                    press.animateTo(0f, releaseSpec)
-                }
-            }
-        }
-    }
-    val container by rememberUpdatedState(containerColor)
-    val pressedContainer by rememberUpdatedState(pressedContainerColor)
-
-    Box(
-        modifier = modifier
-            .size(size)
-            .graphicsLayer {
-                val scale = 1f - 0.06f * press.value
-                scaleX = scale
-                scaleY = scale
-                alpha = if (enabled) 1f else 0.38f
-            }
-            .drawBehind {
-                val p = press.value.coerceIn(0f, 1f)
-                val radius = this.size.minDimension * (0.3f + 0.2f * p)
-                drawRoundRect(
-                    color = lerp(container, pressedContainer, p),
-                    cornerRadius = CornerRadius(radius, radius)
-                )
-            }
-            .combinedClickable(
-                interactionSource = interactionSource,
-                indication = null,
-                enabled = enabled,
-                role = Role.Button,
-                onLongClick = onLongClick,
-                onClick = onClick
-            )
-            .semantics { if (contentDescription != null) this.contentDescription = contentDescription },
-        contentAlignment = Alignment.Center
-    ) {
-        CompositionLocalProvider(LocalContentColor provides contentColor) { content() }
-    }
-}
-
-/** Digits in keypad order (1-9 then 0), shuffled with a CSPRNG when scrambling is on. */
-internal fun keypadDigits(scramble: Boolean): List<Int> {
-    val digits = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
-    if (scramble) java.util.Collections.shuffle(digits, SecureRandom())
-    return digits
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-internal fun PinKeypad(
-    digits: List<Int>,
-    enabled: Boolean,
-    isVerifying: Boolean,
-    onDigit: (Int) -> Unit,
-    onBackspace: () -> Unit,
-    onClear: () -> Unit,
-    onSubmit: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val colors = MaterialTheme.colorScheme
-    BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
-        val keySize = minOf(
-            maxWidth / (3 + 2 * KEY_GAP_RATIO),
-            maxHeight / (4 + 3 * KEY_GAP_RATIO)
-        ).coerceIn(48.dp, 96.dp)
-        val gap = keySize * KEY_GAP_RATIO
-        val digitStyle = if (keySize >= 76.dp) MaterialTheme.typography.displaySmall
-        else MaterialTheme.typography.headlineLarge
-
-        @Composable
-        fun Digit(digit: Int) {
-            KeypadKey(
-                onClick = { onDigit(digit) },
-                size = keySize,
-                containerColor = colors.surfaceContainerHigh,
-                pressedContainerColor = colors.primaryContainer,
-                contentColor = colors.onSurface,
-                contentDescription = digit.toString(),
-                enabled = enabled
-            ) {
-                Text(text = digit.toString(), style = digitStyle)
-            }
-        }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(gap),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            for (row in 0 until 3) {
-                Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
-                    for (col in 0 until 3) Digit(digits[row * 3 + col])
-                }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
-                KeypadKey(
-                    onClick = onBackspace,
-                    onLongClick = onClear,
-                    size = keySize,
-                    containerColor = colors.secondaryContainer,
-                    pressedContainerColor = colors.tertiaryContainer,
-                    contentColor = colors.onSecondaryContainer,
-                    contentDescription = stringResource(R.string.lock_backspace_cd),
-                    enabled = enabled
-                ) {
-                    Icon(
-                        Icons.AutoMirrored.Rounded.Backspace,
-                        contentDescription = null,
-                        modifier = Modifier.size(keySize * 0.36f)
-                    )
-                }
-                Digit(digits[9])
-                KeypadKey(
-                    onClick = onSubmit,
-                    size = keySize,
-                    containerColor = colors.primary,
-                    pressedContainerColor = colors.inversePrimary,
-                    contentColor = colors.onPrimary,
-                    contentDescription = stringResource(R.string.lock_confirm_cd),
-                    enabled = enabled || isVerifying
-                ) {
-                    if (isVerifying) {
-                        LoadingIndicator(
-                            color = colors.onPrimary,
-                            modifier = Modifier.size(keySize * 0.6f)
-                        )
-                    } else {
-                        Icon(
-                            Icons.AutoMirrored.Rounded.ArrowForward,
-                            contentDescription = null,
-                            modifier = Modifier.size(keySize * 0.36f)
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
 internal fun Context.canUseBiometrics(): Boolean =
     BiometricManager.from(this).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) ==
             BiometricManager.BIOMETRIC_SUCCESS
@@ -977,7 +680,5 @@ internal fun Context.loadAppLabel(packageName: String): String = try {
 
 internal const val MIN_PIN_LENGTH = 4
 internal const val MAX_PIN_LENGTH = 32
-private const val KEY_GAP_RATIO = 0.2f
 private const val ICON_FRACTION = 0.6f
-private const val DOT_EXIT_MS = 320L
 private const val SUCCESS_EXIT_MS = 220L

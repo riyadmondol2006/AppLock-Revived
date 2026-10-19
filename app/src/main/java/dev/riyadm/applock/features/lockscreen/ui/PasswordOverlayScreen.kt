@@ -11,18 +11,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.biometric.BiometricPrompt
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,11 +25,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -43,7 +37,6 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.utf16CodePoint
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -53,10 +46,13 @@ import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.services.AppLockManager
-import dev.riyadm.applock.ui.motion.rememberAppHaptics
+import dev.riyadm.applock.ui.components.PinDots
+import dev.riyadm.applock.ui.components.PinKeypad
+import dev.riyadm.applock.ui.components.keypadDigits
 import dev.riyadm.applock.ui.theme.AppLockTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
@@ -268,7 +264,10 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
 
     val digits = remember(spec.sessionKey) { keypadDigits(repository.isScrambleKeypadEnabled()) }
     val autoUnlock = remember(spec.sessionKey) { repository.isAutoUnlockEnabled() }
-    var pin by remember(spec.sessionKey) { mutableStateOf("") }
+    // Only the dots read the PIN during composition; the host and keypad don't recompose per digit.
+    val pinState = remember(spec.sessionKey) { mutableStateOf("") }
+    var pin by pinState
+    val ready by remember(pinState) { derivedStateOf { pinState.value.length >= MIN_PIN_LENGTH } }
     var showError by remember { mutableStateOf(false) }
     var rejecting by remember { mutableStateOf(false) }
     val shake = remember { Animatable(0f) }
@@ -278,48 +277,50 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         if (controller.failureCount == 0) return@LaunchedEffect
         showError = true
         rejecting = true
-        shake.shake()
-        pin = ""
-        rejecting = false
+        try {
+            shake.shake()
+        } finally {
+            // Typing during the shake already started a fresh PIN.
+            if (rejecting) {
+                rejecting = false
+                pin = ""
+            }
+        }
     }
     if (autoUnlock) {
-        LaunchedEffect(pin) {
-            if (pin.length >= MIN_PIN_LENGTH) {
-                delay(AUTO_UNLOCK_DEBOUNCE_MS)
-                controller.trySilently(pin)
+        LaunchedEffect(controller, pinState) {
+            snapshotFlow { pinState.value }.collectLatest { value ->
+                if (value.length >= MIN_PIN_LENGTH) {
+                    delay(AUTO_UNLOCK_DEBOUNCE_MS)
+                    controller.trySilently(value)
+                }
             }
         }
     }
     LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
 
-    val inputEnabled = controller.canInput && !rejecting
-
     fun updatePin(value: String) {
+        rejecting = false
         pin = value
         showError = false
         controller.onInputChanged(value)
     }
 
+    // The keypad gives haptics on touch down; hardware keys need none.
     val onDigit: (Int) -> Unit = { digit ->
-        if (inputEnabled && pin.length < MAX_PIN_LENGTH) {
-            haptics.press()
-            updatePin(pin + digit)
+        if (controller.canInput) {
+            val base = if (rejecting) "" else pin
+            if (base.length < MAX_PIN_LENGTH) updatePin(base + digit)
         }
     }
     val onBackspace: () -> Unit = {
-        if (inputEnabled && pin.isNotEmpty()) {
-            haptics.press()
-            updatePin(pin.dropLast(1))
-        }
+        if (controller.canInput && pin.isNotEmpty()) updatePin(if (rejecting) "" else pin.dropLast(1))
     }
     val onClear: () -> Unit = {
-        if (inputEnabled && pin.isNotEmpty()) {
-            haptics.longPress()
-            updatePin("")
-        }
+        if (controller.canInput && pin.isNotEmpty()) updatePin("")
     }
     val onSubmit: () -> Unit = submit@{
-        if (!inputEnabled) return@submit
+        if (!controller.canInput || rejecting) return@submit
         if (pin.length < MIN_PIN_LENGTH) {
             haptics.reject()
             scope.launch { shake.shake() }
@@ -356,7 +357,8 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
                 Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
                 PinDots(
                     length = pin.length,
-                    isError = showError || rejecting,
+                    isError = showError,
+                    dotSize = if (compact) 14.dp else 16.dp,
                     modifier = Modifier
                         .shakeOffset(shake)
                         .padding(horizontal = 32.dp)
@@ -370,79 +372,17 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         input = {
             PinKeypad(
                 digits = digits,
-                enabled = inputEnabled,
-                isVerifying = controller.isVerifying,
+                enabled = controller.canInput,
+                confirmReady = ready,
+                busy = controller.isVerifying,
                 onDigit = onDigit,
                 onBackspace = onBackspace,
                 onClear = onClear,
-                onSubmit = onSubmit,
+                onConfirm = onSubmit,
                 modifier = Modifier.fillMaxSize()
             )
         }
     )
 }
 
-/** PIN progress dots, also used by the set-PIN screens. */
-@Composable
-fun PasswordIndicators(passwordLength: Int) {
-    PinDots(length = passwordLength, isError = false, modifier = Modifier.padding(horizontal = 32.dp))
-}
-
-/** One row of morphing keypad keys, also used by the set-PIN screens. */
-@Composable
-fun KeypadRow(
-    disableHaptics: Boolean = false,
-    keys: List<String>,
-    icons: List<ImageVector?> = emptyList(),
-    onKeyClick: (String) -> Unit,
-    buttonSize: Dp,
-    buttonSpacing: Dp
-) {
-    val haptics = rememberAppHaptics()
-    val colors = MaterialTheme.colorScheme
-    val backspace = stringResource(R.string.lock_backspace_cd)
-    val confirm = stringResource(R.string.lock_confirm_cd)
-    val digitStyle = if (buttonSize >= 76.dp) MaterialTheme.typography.displaySmall
-    else MaterialTheme.typography.headlineLarge
-
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(buttonSpacing),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        keys.forEachIndexed { index, key ->
-            val icon = icons.getOrNull(index)
-            val isPrimary = key == "proceed"
-            KeypadKey(
-                onClick = {
-                    if (!disableHaptics) haptics.press()
-                    onKeyClick(key)
-                },
-                size = buttonSize,
-                containerColor = when {
-                    isPrimary -> colors.primary
-                    icon != null -> colors.secondaryContainer
-                    else -> colors.surfaceContainerHigh
-                },
-                pressedContainerColor = if (isPrimary) colors.inversePrimary else colors.primaryContainer,
-                contentColor = when {
-                    isPrimary -> colors.onPrimary
-                    icon != null -> colors.onSecondaryContainer
-                    else -> colors.onSurface
-                },
-                contentDescription = when (key) {
-                    "backspace" -> backspace
-                    "proceed" -> confirm
-                    else -> key
-                }
-            ) {
-                if (icon != null) {
-                    Icon(icon, contentDescription = null, modifier = Modifier.size(buttonSize * 0.38f))
-                } else {
-                    Text(text = key, style = digitStyle)
-                }
-            }
-        }
-    }
-}
-
-private const val AUTO_UNLOCK_DEBOUNCE_MS = 160L
+private const val AUTO_UNLOCK_DEBOUNCE_MS = 60L

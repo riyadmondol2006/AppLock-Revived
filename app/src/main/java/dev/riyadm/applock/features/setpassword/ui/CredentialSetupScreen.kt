@@ -41,6 +41,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Dialpad
 import androidx.compose.material.icons.rounded.Keyboard
 import androidx.compose.material.icons.rounded.Lock
@@ -64,6 +66,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -102,6 +105,8 @@ import dev.riyadm.applock.core.utils.SecurityUtils
 import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.ui.PatternPad
 import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
+import dev.riyadm.applock.ui.components.PinDots
+import dev.riyadm.applock.ui.components.PinKeypad
 import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
@@ -167,6 +172,9 @@ fun CredentialSetupScreen(
     val activeKind = if (step == SetupStep.VERIFY) verifyKind else kind
     val usesTextField = activeKind == LockKind.PASSWORD ||
             (step == SetupStep.VERIFY && activeKind == LockKind.PIN && verifyWithKeyboard)
+    val pinReady by remember {
+        derivedStateOf { if (step == SetupStep.VERIFY) input.isNotEmpty() else input.length >= MIN_LENGTH }
+    }
 
     fun fail(message: String) {
         error = message
@@ -474,29 +482,34 @@ fun CredentialSetupScreen(
                 modifier = modifier.offset { IntOffset(shake.value.dp.roundToPx(), 0) }
             )
 
-            else -> ExpressivePinKeypad(
+            else -> PinKeypad(
                 onDigit = { digit ->
-                    if (input.length < MAX_PIN_LENGTH) {
+                    if (!busy && input.length < MAX_PIN_LENGTH) {
                         input += digit
                         error = null
                     }
                 },
                 onBackspace = {
-                    input = input.dropLast(1)
-                    error = null
+                    if (!busy && input.isNotEmpty()) {
+                        input = input.dropLast(1)
+                        error = null
+                    }
                 },
                 onClear = {
-                    input = ""
-                    error = null
+                    if (!busy && input.isNotEmpty()) {
+                        input = ""
+                        error = null
+                    }
                 },
-                onConfirm = {
-                    if (step == SetupStep.VERIFY || input.length >= MIN_LENGTH) haptics.press()
-                    submit(input)
-                },
-                confirmEnabled = if (step == SetupStep.VERIFY) input.isNotEmpty() else input.length >= MIN_LENGTH,
-                isFinalStep = step != SetupStep.CREATE,
-                haptics = haptics,
+                onConfirm = { submit(input) },
+                confirmReady = pinReady,
+                confirmIcon = if (step == SetupStep.CREATE) Icons.AutoMirrored.Rounded.ArrowForward
+                else Icons.Rounded.Check,
+                confirmContentDescription = stringResource(
+                    if (step == SetupStep.CREATE) R.string.setup_continue else R.string.setup_confirm
+                ),
                 enabled = !busy,
+                busy = busy,
                 modifier = modifier
             )
         }
