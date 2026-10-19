@@ -30,12 +30,13 @@ import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
 import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
+import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
+import dev.riyadm.applock.features.lockscreen.domain.resolvedLockPolicy
 import dev.riyadm.applock.features.profiles.ui.ProfilesScreen
 import dev.riyadm.applock.features.intruder.ui.IntruderPhotosScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreenSpec
 import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
-import dev.riyadm.applock.features.lockscreen.ui.canUseBiometrics
 import dev.riyadm.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
@@ -148,13 +149,12 @@ fun NavController.finishPasswordSetup(isFirstTimeSetup: Boolean) {
 private fun InAppLockScreen(navController: NavHostController) {
     val activity = LocalActivity.current as FragmentActivity
     val repository = remember { activity.appLockRepository() }
-    val biometricUsable = remember {
-        repository.isBiometricAuthEnabled() && activity.canUseBiometrics()
-    }
+    val gate = remember { PolicyUnlockGate(activity.resolvedLockPolicy(activity.packageName)) }
+    val biometricUsable = gate.policy.allowBiometric
     var autoPrompted by rememberSaveable { mutableStateOf(false) }
     val onSuccess = remember(navController) { { handleAuthenticationSuccess(navController) } }
-    val onBiometric = remember(activity) {
-        { showInAppBiometricPrompt(activity, repository, onSuccess) }
+    val onBiometric = remember(activity, gate) {
+        { showInAppBiometricPrompt(activity, repository, gate, onSuccess) }
     }
 
     // Back on the lock screen leaves the app; it must never pop to the protected screens.
@@ -163,7 +163,7 @@ private fun InAppLockScreen(navController: NavHostController) {
     SecureWindowEffect()
 
     LaunchedEffect(Unit) {
-        if (!autoPrompted && biometricUsable && repository.isBiometricAutoPromptEnabled()) {
+        if (!autoPrompted && gate.shouldAutoPromptBiometric) {
             autoPrompted = true
             onBiometric()
         }
@@ -175,6 +175,7 @@ private fun InAppLockScreen(navController: NavHostController) {
             title = stringResource(R.string.app_name),
             showBiometric = biometricUsable,
             onBiometric = onBiometric,
+            gate = gate,
             onSuccess = onSuccess
         )
     )
@@ -183,6 +184,7 @@ private fun InAppLockScreen(navController: NavHostController) {
 private fun showInAppBiometricPrompt(
     activity: FragmentActivity,
     repository: AppLockRepository,
+    gate: PolicyUnlockGate,
     onSuccess: () -> Unit
 ) {
     try {
@@ -192,6 +194,7 @@ private fun showInAppBiometricPrompt(
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     Log.w(TAG, "Biometric authentication error: $errString ($errorCode)")
+                    gate.onBiometricError(errorCode)
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -200,12 +203,16 @@ private fun showInAppBiometricPrompt(
                     thread(name = "unlock-attempt") {
                         repository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
                     }
-                    onSuccess()
+                    if (gate.onBiometricSucceeded()) onSuccess()
                 }
             }
         )
         biometricPrompt.authenticate(
-            buildBiometricPromptInfo(activity, activity.getString(R.string.app_name))
+            buildBiometricPromptInfo(
+                activity,
+                activity.getString(R.string.app_name),
+                credentialFallback = !gate.policy.biometricFirst
+            )
         )
     } catch (e: Exception) {
         Log.e(TAG, "Error during biometric authentication", e)

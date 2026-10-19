@@ -61,7 +61,9 @@ fun AlphanumericPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier =
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(Unit) {
+    val credentialVisible = spec.credentialVisible
+    LaunchedEffect(credentialVisible) {
+        if (!credentialVisible) return@LaunchedEffect
         runCatching { focusRequester.requestFocus() }
         keyboard?.show()
     }
@@ -72,12 +74,12 @@ fun AlphanumericPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier =
         shake.shake()
     }
 
-    val enabled = controller.canInput
+    val enabled = controller.canInput && credentialVisible
     val submit = {
         if (enabled && password.length >= MIN_PIN_LENGTH) controller.submit(password)
         else if (enabled) controller.haptics.reject()
     }
-    val hint = spec.subtitle ?: stringResource(R.string.lock_enter_password)
+    val hint = policyHint(spec, stringResource(R.string.lock_enter_password), R.string.policy_lock_step_password)
     val wrong = stringResource(R.string.lock_wrong_password)
 
     LockScreenScaffold(
@@ -91,7 +93,11 @@ fun AlphanumericPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier =
                 LockStatusText(text = if (showError) wrong else hint, isError = showError)
             }
         },
-        input = {
+        input = input@{
+            if (!credentialVisible) {
+                BiometricFirstPanel(spec)
+                return@input
+            }
             Column(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -147,7 +153,7 @@ fun AlphanumericPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier =
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (spec.showBiometric) {
+                    if (spec.biometricVisible) {
                         FilledTonalIconButton(
                             onClick = spec.onBiometric,
                             shapes = IconButtonDefaults.shapes(),

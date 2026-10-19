@@ -59,7 +59,8 @@ fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
         rejecting = false
     }
 
-    val hint = spec.subtitle ?: stringResource(R.string.lock_draw_pattern)
+    val credentialVisible = spec.credentialVisible
+    val hint = policyHint(spec, stringResource(R.string.lock_draw_pattern), R.string.policy_lock_step_pattern)
     val wrong = stringResource(R.string.lock_wrong_pattern)
 
     LockScreenScaffold(
@@ -72,12 +73,16 @@ fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
             } else {
                 LockStatusText(text = if (showError) wrong else hint, isError = showError)
             }
-            if (spec.showBiometric) {
+            if (spec.biometricVisible && credentialVisible) {
                 Spacer(Modifier.height(if (compact) 8.dp else 16.dp))
                 BiometricButton(onClick = spec.onBiometric, compact = compact)
             }
         },
-        input = {
+        input = input@{
+            if (!credentialVisible) {
+                BiometricFirstPanel(spec)
+                return@input
+            }
             PatternPad(
                 state = padState,
                 enabled = controller.canInput && !rejecting,

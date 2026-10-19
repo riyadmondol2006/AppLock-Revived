@@ -64,7 +64,6 @@
     <string name="policy_lock_step_pattern">Now draw your pattern</string>
     <string name="policy_lock_step_password">Now enter your password</string>
     <string name="policy_lock_biometric_required">Use your fingerprint or face to unlock</string>
-    <string name="policy_lock_use_biometric">Use biometrics</string>
 
     <!-- Quick Settings tile -->
     <string name="tile_profile_label">Lock profile</string>

@@ -37,6 +37,8 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.UnlockLogRepository
+import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
+import dev.riyadm.applock.features.lockscreen.domain.resolvedLockPolicy
 import dev.riyadm.applock.services.AppLockManager
 import dev.riyadm.applock.ui.theme.AppLockTheme
 import java.lang.ref.WeakReference
@@ -58,6 +60,7 @@ class LockScreenOverlayManager(private val context: Context) :
         val token: Long,
         val onUnlock: () -> Unit,
         val onExit: () -> Unit,
+        val gate: PolicyUnlockGate,
     )
 
     private val windowManager = context.getSystemService(WindowManager::class.java)
@@ -78,7 +81,6 @@ class LockScreenOverlayManager(private val context: Context) :
     private var layoutParams: WindowManager.LayoutParams? = null
     private var backInvokedCallback: Any? = null
     private var session by mutableStateOf<Session?>(null)
-    private var biometricAvailable by mutableStateOf(false)
     private var appName by mutableStateOf("")
 
     private var biometricToken = 0L
@@ -126,7 +128,6 @@ class LockScreenOverlayManager(private val context: Context) :
         }
 
         session = newSession(lockedPackageName, onUnlock, onExit)
-        biometricAvailable = repository.isBiometricAuthEnabled() && context.canUseBiometrics()
         leaving = false
 
         val root = OverlayRootView(context) { onBackPressedDispatcher.onBackPressed() }.apply {
@@ -179,10 +180,11 @@ class LockScreenOverlayManager(private val context: Context) :
                 spec = LockScreenSpec(
                     packageName = current.packageName,
                     title = appName,
-                    showBiometric = biometricAvailable,
+                    showBiometric = current.gate.policy.allowBiometric,
                     onBiometric = { startBiometric() },
                     onClose = { exitToHome() },
                     sessionKey = current.token,
+                    gate = current.gate,
                     onSuccess = { unlock(current.token) }
                 )
             )
@@ -196,7 +198,8 @@ class LockScreenOverlayManager(private val context: Context) :
             val label = context.loadAppLabel(packageName)
             mainHandler.post { if (session?.token == token) appName = label }
         }
-        return Session(packageName, token, onUnlock, onExit)
+        val gate = PolicyUnlockGate(context.resolvedLockPolicy(packageName))
+        return Session(packageName, token, onUnlock, onExit, gate)
     }
 
     private fun createLayoutParams() = WindowManager.LayoutParams(
@@ -228,8 +231,9 @@ class LockScreenOverlayManager(private val context: Context) :
     }
 
     private fun maybeAutoPromptBiometric() {
-        val token = session?.token ?: return
-        if (!biometricAvailable || !repository.isBiometricAutoPromptEnabled()) return
+        val current = session ?: return
+        val token = current.token
+        if (!current.gate.shouldAutoPromptBiometric) return
         mainHandler.postDelayed({
             if (session?.token == token) startBiometric()
         }, AUTO_PROMPT_DELAY_MS)
@@ -250,6 +254,7 @@ class LockScreenOverlayManager(private val context: Context) :
             putExtra(TransparentBiometricActivity.EXTRA_LOCKED_PACKAGE, current.packageName)
             putExtra(TransparentBiometricActivity.EXTRA_APP_NAME, appName)
             putExtra(TransparentBiometricActivity.EXTRA_TOKEN, current.token)
+            putExtra(TransparentBiometricActivity.EXTRA_CREDENTIAL_FALLBACK, !current.gate.policy.biometricFirst)
         }
         try {
             context.startActivity(intent)
@@ -268,7 +273,7 @@ class LockScreenOverlayManager(private val context: Context) :
         return true
     }
 
-    private fun onBiometricResult(token: Long, success: Boolean): Boolean {
+    private fun onBiometricResult(token: Long, success: Boolean, errorCode: Int): Boolean {
         if (token == 0L || token != biometricToken) return false
         // Restore the overlay first; on success it is removed in the same frame.
         endBiometric()
@@ -279,7 +284,10 @@ class LockScreenOverlayManager(private val context: Context) :
             thread(name = "unlock-attempt") {
                 repository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
             }
-            unlock(token)
+            // Two-step keeps the overlay up and asks for the credential next.
+            if (current.gate.onBiometricSucceeded()) unlock(token)
+        } else {
+            current.gate.onBiometricError(errorCode)
         }
         return true
     }
@@ -328,7 +336,7 @@ class LockScreenOverlayManager(private val context: Context) :
 
     private fun unlock(token: Long) {
         val current = session ?: return
-        if (current.token != token || leaving) return
+        if (current.token != token || leaving || !current.gate.isSatisfied) return
         leaving = true
         current.onUnlock()
         removeOverlay()
@@ -420,7 +428,7 @@ class LockScreenOverlayManager(private val context: Context) :
             activeManager?.get()?.onBiometricHostReady(token) == true
 
         /** Returns false when no overlay session owns this prompt any more. */
-        internal fun dispatchBiometricResult(token: Long, success: Boolean): Boolean =
-            activeManager?.get()?.onBiometricResult(token, success) == true
+        internal fun dispatchBiometricResult(token: Long, success: Boolean, errorCode: Int = 0): Boolean =
+            activeManager?.get()?.onBiometricResult(token, success, errorCode) == true
     }
 }
