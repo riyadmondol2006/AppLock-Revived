@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">অনধিকৃত ব্যক্তিদের অ্যাপটি আনইনস্টল করা থেকে বিরত রাখে।</string>
+    <string name="accessibility_service_description">সুরক্ষিত অ্যাপ খোলা হলে তা শনাক্ত করে পাসওয়ার্ড যাচাই দেখানোর জন্য App Lock-কে অনুমতি দেয়।</string>
+
+    <string name="unlock_to_disable_admin">অ্যাডমিন অনুমতি বন্ধ করতে আপনার পাসওয়ার্ড লিখুন।</string>
+    <string name="incorrect_pin_try_again">ভুল পিন। আবার চেষ্টা করুন।</string>
+    <string name="incorrect_pass_try_again">ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।</string>
+    <string name="password_verified_admin">পাসওয়ার্ড যাচাই হয়েছে, এখন আপনি অ্যাডমিন অনুমতি বন্ধ করতে পারবেন</string>
+    <string name="choose_app_detection">অ্যাপ শনাক্তকরণ পদ্ধতি বেছে নিন</string>
+    <string name="app_detection_desc">সুরক্ষিত অ্যাপ কখন চালু হয় তা App Lock Revived কীভাবে শনাক্ত করবে তা বেছে নিন।</string>
+    <string name="notif_perm">বিজ্ঞপ্তির অনুমতি</string>
+    <string name="notif_perm_desc">তথ্য জানাতে এবং ব্যাকগ্রাউন্ডে ঠিকভাবে চালু থাকতে App Lock Revived-এর বিজ্ঞপ্তি দেখানোর অনুমতি প্রয়োজন। অনুমতি দিতে \'পরবর্তী\'-তে ট্যাপ করুন।</string>
+    <string name="notif_perm_granted">আপনার Android সংস্করণে বিজ্ঞপ্তির অনুমতি স্বয়ংক্রিয়ভাবে দেওয়া থাকে।</string>
+    <string name="welc_applock">App Lock Revived-এ স্বাগতম</string>
+    <string name="welcome_desc">App Lock Revived দিয়ে আপনার অ্যাপ ও গোপনীয়তা সুরক্ষিত রাখুন। একটি দ্রুত সেটআপে আমরা আপনাকে সাহায্য করব।</string>
+    <string name="secure_apps">আপনার অ্যাপ সুরক্ষিত করুন</string>
+    <string name="secure_apps_desc">উন্নত লকিং ব্যবস্থার মাধ্যমে আপনার ব্যক্তিগত অ্যাপ সুরক্ষিত রাখুন</string>
+    <string name="display_over_apps">অন্য অ্যাপের উপরে প্রদর্শন</string>
+    <string name="display_over_apps_desc">লক স্ক্রিন দেখাতে App Lock Revived-এর অন্য অ্যাপের উপরে প্রদর্শনের অনুমতি প্রয়োজন। \'পরবর্তী\'-তে ট্যাপ করে অনুমতি চালু করুন।</string>
+
+    <string name="notification_permission_required_desc">App Lock Revived ঠিকভাবে কাজ করার জন্য বিজ্ঞপ্তির অনুমতি প্রয়োজন।</string>
+    <string name="shizuku_permission_granted">Shizuku-র অনুমতি দেওয়া হয়েছে</string>
+    <string name="shizuku_permission_required_desc">উন্নত বৈশিষ্ট্যের জন্য Shizuku-র অনুমতি প্রয়োজন।</string>
+    <string name="allow_display_over_other_apps">অনুগ্রহ করে App Lock Revived-কে অন্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন।</string>
+    <string name="disable_battery_optimization_title">ব্যাটারি অপটিমাইজেশন বন্ধ করুন</string>
+    <string name="disable_battery_optimization_desc">ব্যাকগ্রাউন্ডে App Lock Revived যেন নির্ভরযোগ্যভাবে চলে, সেজন্য এই অ্যাপের ব্যাটারি অপটিমাইজেশন বন্ধ করুন। সেটিংস খুলতে \'পরবর্তী\'-তে ট্যাপ করুন।</string>
+    <string name="accessibility_service_title">অ্যাক্সেসিবিলিটি সার্ভিস</string>
+    <string name="accessibility_service_card_desc">বেশিরভাগ ডিভাইসে কাজ করে এমন স্ট্যান্ডার্ড পদ্ধতি। অ্যাক্সেসিবিলিটির অনুমতি প্রয়োজন। কিছু OEM ডিভাইসে সামান্য বিলম্ব হতে পারে।</string>
+    <string name="usage_stats_title">ব্যবহারের পরিসংখ্যান</string>
+    <string name="usage_stats_card_desc">সিস্টেমের ব্যবহারের পরিসংখ্যান ব্যবহার করে একটি পরীক্ষামূলক পদ্ধতি। কিছু ডিভাইসে ভালো কাজ করে।</string>
+    <string name="shizuku_service_title">Shizuku সার্ভিস</string>
+    <string name="shizuku_service_card_desc">ভালো কর্মক্ষমতা ও উন্নত অভিজ্ঞতার জন্য উন্নত পদ্ধতি। Shizuku অ্যাপ ইনস্টল করে ADB-এর মাধ্যমে চালু থাকতে হবে।</string>
+    <string name="can_change_later_in_settings">আপনি পরে সেটিংসে এটি পরিবর্তন করতে পারবেন</string>
+    <string name="app_intro_accessibility_desc">
+App Lock Revived ঠিকভাবে কাজ করার জন্য অ্যাক্সেসিবিলিটি সার্ভিস প্রয়োজন।
+
+যদি \"Restricted Setting\" বার্তা আসে, অনুগ্রহ করে ম্যানুয়ালি Settings > Apps > App Lock > উপরের ডানদিকের মেনু-তে যান এবং \"Allow restricted settings\" চাপুন।
+
+চালু করতে \'পরবর্তী\'-তে ট্যাপ করুন।
+    </string>
+    <string name="app_intro_usage_stats_title">ব্যবহারের পরিসংখ্যানের অনুমতি</string>
+    <string name="app_intro_usage_stats_desc">
+সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করতে এই অনুমতি প্রয়োজন।
+
+যদি \"Restricted Setting\" বার্তা আসে, অনুগ্রহ করে ম্যানুয়ালি Settings > Apps > App Lock > উপরের ডানদিকের মেনু-তে যান এবং \"Allow restricted settings\" চাপুন।
+
+চালু করতে \'পরবর্তী\'-তে ট্যাপ করুন।</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku লক করা সিস্টেম অ্যাপ লক করার মতো আরও উন্নত বৈশিষ্ট্য দেয়।
+
+নিশ্চিত করুন যে Shizuku ইনস্টল করা আছে এবং ADB-এর মাধ্যমে চালু আছে। অনুমতি দিতে \'পরবর্তী\'-তে ট্যাপ করুন।
+    </string>
+    <string name="app_intro_complete_privacy_title">সম্পূর্ণ গোপনীয়তা</string>
+    <string name="app_intro_complete_privacy_desc">আপনার ডেটা কখনো আপনার ডিভাইস ছেড়ে যায় না। App Lock Revived সবসময় আপনার গোপনীয়তা রক্ষা করে।</string>
+    <string name="all_permissions_required">এগিয়ে যেতে সব অনুমতি প্রয়োজন।</string>
+    <string name="next_button">পরবর্তী</string>
+    <string name="get_started_button">শুরু করুন</string>
+
+    <string name="default_app_name">অ্যাপ</string>
+    <string name="this_app">এই অ্যাপ</string>
+    <string name="unlock_app_title">%1$s আনলক করুন</string>
+    <string name="confirm_biometric_subtitle">চালিয়ে যেতে বায়োমেট্রিক নিশ্চিত করুন</string>
+    <string name="use_pin_button">পিন ব্যবহার করুন</string>
+    <string name="enter_password_to_continue">চালিয়ে যেতে পাসওয়ার্ড লিখুন</string>
+    <string name="biometric_authentication_cd">বায়োমেট্রিক যাচাইকরণ</string>
+
+    <string name="set_pin_to_continue_toast">চালিয়ে যেতে একটি পিন সেট করুন</string>
+    <string name="authenticate_to_reset_pin_title">পিন রিসেট করতে যাচাই করুন</string>
+    <string name="use_device_pin_pattern_password_subtitle">আপনার ডিভাইসের পিন, প্যাটার্ন বা পাসওয়ার্ড ব্যবহার করুন</string>
+    <string name="enter_current_pin_title">বর্তমান পিন লিখুন</string>
+    <string name="confirm_pin_title">পিন নিশ্চিত করুন</string>
+    <string name="set_new_pin_title">নতুন পিন সেট করুন</string>
+    <string name="create_pin_explanation">লক করা অ্যাপ সুরক্ষিত রাখতে একটি পিন তৈরি করুন। লক করা কোনো অ্যাপ খুলতে চাইলেই এই পিন লাগবে।</string>
+    <string name="enter_current_pin_label">আপনার বর্তমান পিন লিখুন</string>
+    <string name="confirm_new_pin_label">আপনার নতুন পিন নিশ্চিত করুন</string>
+    <string name="create_new_pin_label">একটি নতুন পিন তৈরি করুন</string>
+    <string name="tooltip_enter_current_pin">চালিয়ে যেতে আপনার বর্তমান পিন লিখুন</string>
+    <string name="tooltip_confirm_pin">নিশ্চিত করতে একই পিন আবার লিখুন</string>
+    <string name="tooltip_create_pin_min_length">কমপক্ষে 4 সংখ্যার একটি পিন তৈরি করুন</string>
+    <string name="information_cd">তথ্য</string>
+    <string name="pins_dont_match_error">পিন মিলছে না। আবার চেষ্টা করুন।</string>
+    <string name="pin_min_length_error">পিন কমপক্ষে 4 সংখ্যার হতে হবে</string>
+    <string name="re_enter_new_pin_confirm_label">নিশ্চিত করতে আপনার নতুন পিন আবার লিখুন</string>
+    <string name="reset_using_device_password_button">ডিভাইসের পাসওয়ার্ড দিয়ে রিসেট করুন</string>
+    <string name="cancel_button">বাতিল</string>
+    <string name="start_over_button">আবার শুরু করুন</string>
+    <string name="password_set_successfully_toast">পাসওয়ার্ড সফলভাবে সেট হয়েছে</string>
+    <string name="use_pattern_button">প্যাটার্ন ব্যবহার করুন</string>
+    <string name="use_password_button">পাসওয়ার্ড ব্যবহার করুন</string>
+    <string name="use_pin_instead">পিন ব্যবহার করুন</string>
+
+    <string name="set_alphanumeric_password_title">পাসওয়ার্ড সেট করুন</string>
+    <string name="create_alphanumeric_password_label">একটি পাসওয়ার্ড তৈরি করুন</string>
+    <string name="confirm_alphanumeric_password_label">আপনার পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="enter_current_password_label">বর্তমান পাসওয়ার্ড লিখুন</string>
+    <string name="password_hint">পাসওয়ার্ড লিখুন</string>
+    <string name="password_too_short_error">পাসওয়ার্ড কমপক্ষে 4 অক্ষরের হতে হবে</string>
+    <string name="password_too_long_error">পাসওয়ার্ড সর্বোচ্চ 64 অক্ষরের হতে হবে</string>
+    <string name="passwords_dont_match_error">পাসওয়ার্ড মিলছে না</string>
+    <string name="incorrect_password_try_again">ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।</string>
+
+    <string name="main_screen_anti_uninstall_log">অ্যান্টি-আনইনস্টল চালু আছে</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku পাওয়া যাচ্ছে না। অনুগ্রহ করে Shizuku ইনস্টল ও কনফিগার করুন।</string>
+    <string name="main_screen_overlay_permission_dialog_title">ওভারলে অনুমতি প্রয়োজন</string>
+    <string name="main_screen_overlay_permission_dialog_text">অনুগ্রহ করে সেটিংসে অ্যাপটিকে ওভারলে আঁকার অনুমতি দিন। লক স্ক্রিন দেখাতে এটি প্রয়োজন।</string>
+    <string name="main_screen_overlay_permission_open_settings_button">সেটিংস খুলুন</string>
+    <string name="main_screen_shizuku_manual_permission_toast">অনুগ্রহ করে Shizuku-র অনুমতি ম্যানুয়ালি দিন</string>
+    <string name="main_screen_device_admin_explanation">অ্যাপ আনইনস্টল হওয়া ঠেকাতে App Lock-এর ডিভাইস অ্যাডমিন অনুমতি প্রয়োজন। এতে আপনার ডিভাইসের স্বাভাবিক কাজে কোনো প্রভাব পড়বে না।</string>
+    <string name="main_screen_join_community_dialog_title">কমিউনিটিতে যোগ দিন</string>
+    <string name="main_screen_join_community_dialog_text">আপডেট ও সহায়তার জন্য আমাদের Discord কমিউনিটিতে যোগ দিন।</string>
+    <string name="main_screen_join_community_join_discord_button">Discord-এ যোগ দিন</string>
+    <string name="main_screen_join_community_dismiss_button">বাদ দিন</string>
+    <string name="main_screen_support_development_dialog_title">ডেভেলপমেন্টে সহায়তা করুন</string>
+    <string name="main_screen_support_development_donate_button">দান করুন</string>
+    <string name="main_screen_app_protection_cd">অ্যাপ সুরক্ষা</string>
+    <string name="main_screen_settings_cd">সেটিংস</string>
+    <string name="main_screen_loading_applications_text">অ্যাপ লোড হচ্ছে…</string>
+    <string name="main_screen_search_apps_placeholder">অ্যাপ খুঁজুন</string>
+    <string name="main_screen_search_cd">খুঁজুন</string>
+    <string name="main_screen_empty_search_title">কোনো অ্যাপ পাওয়া যায়নি</string>
+    <string name="main_screen_empty_search_subtitle">আপনার অনুসন্ধান বদলে দেখুন</string>
+
+    <string name="settings_screen_title">সেটিংস</string>
+    <string name="settings_screen_back_cd">পিছনে</string>
+    <string name="settings_screen_support_development_dialog_title">ডেভেলপমেন্টে সহায়তা করুন</string>
+    <string name="settings_screen_support_development_donate_button">দান করুন</string>
+    <string name="settings_screen_permission_required_dialog_title">অনুমতি প্রয়োজন</string>
+    <string name="settings_screen_permission_required_dialog_text">অ্যান্টি-আনইনস্টল চালু করতে App Lock-এর দুটি অনুমতি প্রয়োজন: ডিভাইস অ্যাডমিন ও অ্যাক্সেসিবিলিটি সার্ভিস। অনধিকৃত আনইনস্টল ঠেকাতে এবং শক্তিশালী সুরক্ষা নিশ্চিত করতে এগুলো দরকার। আপনি কি এই অনুমতিগুলো দিতে চান?</string>
+    <string name="settings_screen_permission_required_proceed_button">এগিয়ে যান</string>
+    <string name="settings_screen_device_admin_dialog_title">ডিভাইস অ্যাডমিন অনুমতি</string>
+    <string name="settings_screen_device_admin_dialog_text">অনধিকৃত আনইনস্টল ঠেকাতে App Lock-এর ডিভাইস অ্যাডমিন অনুমতি প্রয়োজন। পরের স্ক্রিনে এই অনুমতি দিন। এতে আপনার ডিভাইসের স্বাভাবিক কাজে কোনো প্রভাব পড়বে না।</string>
+    <string name="settings_screen_device_admin_grant_button">অনুমতি দিন</string>
+    <string name="settings_screen_accessibility_dialog_title">অ্যাক্সেসিবিলিটি সার্ভিসের অনুমতি</string>
+    <string name="settings_screen_accessibility_dialog_text">অ্যাপ আনইনস্টলের চেষ্টা পর্যবেক্ষণ করতে এবং ডিভাইস অ্যাডমিন বন্ধ হলে তা আবার চালু করতে App Lock-এর অ্যাক্সেসিবিলিটি সার্ভিসের অনুমতিও প্রয়োজন। এতে অ্যান্টি-আনইনস্টল সুরক্ষা কার্যকর থাকে। অনুগ্রহ করে সেটিংসে App Lock-এর জন্য অ্যাক্সেসিবিলিটি সার্ভিস চালু করুন।</string>
+    <string name="settings_screen_accessibility_open_settings_button">সেটিংস খুলুন</string>
+    <string name="settings_screen_lock_screen_customization_title">লক স্ক্রিন কাস্টমাইজেশন</string>
+    <string name="settings_screen_max_brightness_title">সর্বোচ্চ উজ্জ্বলতা</string>
+    <string name="settings_screen_max_brightness_desc">স্পষ্টতার জন্য সর্বোচ্চ উজ্জ্বলতায় লক স্ক্রিন দেখান</string>
+    <string name="settings_screen_biometric_auth_title">বায়োমেট্রিক যাচাইকরণ</string>
+    <string name="settings_screen_biometric_auth_desc">উপলব্ধ থাকলে ফিঙ্গারপ্রিন্ট বা ফেস আনলক ব্যবহার করুন</string>
+    <string name="settings_screen_biometric_auth_unavailable">এই ডিভাইসে বায়োমেট্রিক যাচাইকরণ উপলব্ধ নেই।</string>
+    <string name="settings_screen_auto_prompt_biometric_title">বায়োমেট্রিক প্রম্পট স্বয়ংক্রিয়ভাবে দেখান</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">লক স্ক্রিন আসার সঙ্গে সঙ্গে বায়োমেট্রিক প্রম্পট দেখান</string>
+    <string name="settings_screen_app_locking_behavior_title">অ্যাপ লকের আচরণ</string>
+    <string name="settings_screen_unlock_behavior_title">আনলক আচরণ</string>
+    <string name="settings_screen_unlock_behavior_desc">আনলক করলে অ্যাপ রিস্টার্ট হলে এটি বন্ধ করুন</string>
+    <string name="settings_screen_unlock_behavior_option_close">লক স্ক্রিন বন্ধ করুন</string>
+    <string name="settings_screen_unlock_behavior_option_launch">লক স্ক্রিন বন্ধ করে অ্যাপ চালু করুন</string>
+    <string name="settings_screen_auto_unlock_title">স্বয়ংক্রিয় আনলক</string>
+    <string name="settings_screen_auto_unlock_desc">সঠিক পিন লেখা মাত্র অ্যাপ আনলক করুন</string>
+    <string name="settings_screen_unlock_duration_title">আনলক থাকার সময়</string>
+    <string name="settings_screen_unlock_duration_desc">প্রথমবার আনলকের পর নির্দিষ্ট সময় পর্যন্ত অ্যাপ আনলক রাখুন</string>
+    <string name="settings_screen_unlock_duration_dialog_title">আনলকের সময়কাল সেট করুন</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">প্রথমবার আনলকের পর অ্যাপ এই সময়কাল পর্যন্ত আনলক থাকবে। বন্ধ করতে 0 সেকেন্ড বেছে নিন।</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">সেকেন্ড</string>
+    <string name="settings_screen_security_title">নিরাপত্তা</string>
+    <string name="settings_screen_change_pin_title">পিন পরিবর্তন করুন</string>
+    <string name="settings_screen_change_pin_desc">আপনার বর্তমান পিন আপডেট করুন</string>
+    <string name="settings_screen_anti_uninstall_title">অ্যান্টি-আনইনস্টল সুরক্ষা</string>
+    <string name="settings_screen_anti_uninstall_desc">App Lock Revived অনধিকৃতভাবে আনইনস্টল হওয়া ঠেকান</string>
+    <string name="settings_screen_haptic_feedback_title">হ্যাপটিক ফিডব্যাক</string>
+    <string name="settings_screen_haptic_feedback_desc">কী চাপার সময় হ্যাপটিক ফিডব্যাক বন্ধ করুন</string>
+    <string name="settings_screen_backend_implementation_title">ব্যাকএন্ড বাস্তবায়ন</string>
+    <string name="settings_screen_backend_implementation_desc">সামনের অ্যাপ শনাক্ত করতে App Lock Revived যে পদ্ধতি ব্যবহার করবে তা বেছে নিন</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">অ্যাক্সেসিবিলিটি সার্ভিস</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">স্ট্যান্ডার্ড পদ্ধতি, কিছু OEM ডিভাইসে সামান্য বিলম্ব হতে পারে।</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">ব্যবহারের পরিসংখ্যান</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">পরীক্ষামূলক পদ্ধতি, কিছু ডিভাইসে ভালো কাজ করে।</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">উন্নত পদ্ধতি, ADB-এর মাধ্যমে Shizuku সেটআপ প্রয়োজন।</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku পাওয়া যাচ্ছে না বা অনুমতি দেওয়া হয়নি।</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Shizuku পরীক্ষামূলক বৈশিষ্ট্য</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Shizuku ব্যাকএন্ডের পরীক্ষামূলক বৈশিষ্ট্য চালু করুন (যেমন নির্দিষ্ট অ্যাক্টিভিটি লক করা)। এতে অস্থিরতা দেখা দিতে পারে।</string>
+    <string name="settings_screen_about_title">সম্পর্কে</string>
+    <string name="settings_screen_developer_title">ডেভেলপার</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">সোর্স কোড</string>
+    <string name="settings_screen_source_code_desc">GitHub-এ সোর্স কোড দেখুন</string>
+    <string name="settings_screen_support_development_title">ডেভেলপমেন্টে সহায়তা করুন</string>
+    <string name="settings_screen_support_development_desc">এই অ্যাপের উন্নয়নে সহায়তা করুন</string>
+
+    <string name="utils_battery_ignore_toast">অনুগ্রহ করে আমাদের অ্যাপকে ব্যাটারি অপটিমাইজেশন উপেক্ষা করার অনুমতি দিন।</string>
+    <string name="utils_battery_specific_settings_not_found_toast">নির্দিষ্ট সেটিংস খুঁজে পাওয়া যায়নি। অনুগ্রহ করে অ্যাপটিকে ব্যাটারি সীমাবদ্ধতা থেকে সরিয়ে দিন।</string>
+    <string name="utils_battery_settings_not_found_toast">কোনো ব্যাটারি সেটিংস খোলা যায়নি।</string>
+    <string name="utils_usage_permission_error_log">ব্যবহারের অনুমতি যাচাই করতে ত্রুটি: </string>
+
+    <string name="shizuku_permission_dialog_title">Shizuku-র অনুমতি দিন</string>
+    <string name="shizuku_permission_dialog_text_1">আপনি Shizuku মোড চালু করেছেন, কিন্তু অ্যাপটি ঠিকভাবে কাজ করতে আরও অনুমতি প্রয়োজন।</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">সেটিংস খুলে প্রয়োজনীয় অনুমতি দিতে \'অনুমতি দিন\'-এ চাপুন।</string>
+    <string name="grant_permission_button">অনুমতি দিন</string>
+    <string name="open_settings_button">সেটিংস খুলুন</string>
+
+    <string name="device_admin_permission_dialog_title">ডিভাইস অ্যাডমিন অনুমতি প্রয়োজন</string>
+    <string name="device_admin_permission_dialog_text">আপনি অ্যান্টি-আনইনস্টল মোড চালু করেছেন। অ্যাপটি রক্ষা করতে এর জন্য ডিভাইস অ্যাডমিন অনুমতি প্রয়োজন।</string>
+
+    <string name="anti_uninstall_accessibility_permission_dialog_title">অ্যাক্সেসিবিলিটির অনুমতি প্রয়োজন</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">আপনি অ্যান্টি-আনইনস্টল মোড চালু করেছেন, কিন্তু এটি কার্যকর করতে অ্যাপটির অ্যাক্সেসিবিলিটির অনুমতি প্রয়োজন।</string>
+
+    <string name="admin_password_verification_dialog_title">পাসওয়ার্ড যাচাই প্রয়োজন</string>
+    <string name="admin_password_verification_dialog_text">অ্যাডমিন অনুমতি বন্ধ করতে আপনার অ্যাপ লকের পাসওয়ার্ড লিখুন</string>
+    <string name="password_label">পাসওয়ার্ড</string>
+    <string name="password_empty_error">পাসওয়ার্ড খালি রাখা যাবে না</string>
+    <string name="incorrect_password_error">ভুল পাসওয়ার্ড</string>
+    <string name="verify_button">যাচাই করুন</string>
+
+    <string name="accessibility_guide_dialog_title">অ্যাক্সেসিবিলিটি সার্ভিস চালু করুন</string>
+    <string name="accessibility_guide_dialog_text_1">সুরক্ষিত অ্যাপ খোলা হলে তা শনাক্ত করতে App Lock-এর অ্যাক্সেসিবিলিটির অনুমতি প্রয়োজন।</string>
+    <string name="accessibility_guide_dialog_text_2">অনুগ্রহ করে এই ধাপগুলো অনুসরণ করুন:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. নিচের \'সেটিংস খুলুন\'-এ ট্যাপ করুন\n
+2. সুইচটি চালু করুন\n
+3. নিশ্চিতকরণ ডায়ালগে \'অনুমতি দিন\'-এ ট্যাপ করুন।
+    </string>
+    <string name="accessibility_guide_open_settings_button">সেটিংস খুলুন</string>
+    <string name="settings_screen_about_and_support_title">সম্পর্কে &amp; সহায়তা</string>
+    <string name="settings_screen_join_community_title">কমিউনিটিতে যোগ দিন</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d মিনিট</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">সঙ্গে সঙ্গে লক করুন</string>
+    <string name="settings_screen_biometric_auth_desc_available">অ্যাপ আনলক করতে ফিঙ্গারপ্রিন্ট বা ফেস আনলক ব্যবহার করুন</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">বায়োমেট্রিক যাচাইকরণ সেট আপ করা নেই বা উপলব্ধ নেই।</string>
+    <string name="settings_screen_shizuku_permission_granted">Shizuku-র অনুমতি দেওয়া হয়েছে</string>
+    <string name="settings_screen_shizuku_permission_required_desc">উন্নত বৈশিষ্ট্যের জন্য Shizuku-র অনুমতি প্রয়োজন।</string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku চালু নেই</string>
+    <string name="settings_screen_usage_permission_toast">অনুগ্রহ করে ব্যবহারের অ্যাক্সেসের অনুমতি দিন।</string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">পিন দেওয়ার পর অ্যাপগুলো কতক্ষণ আনলক থাকবে তা বেছে নিন:</string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">সঙ্গে সঙ্গে লক করুন</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d মিনিট</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 ঘণ্টা</string>
+    <string name="settings_screen_permission_required_dialog_text_1">অ্যান্টি-আনইনস্টল সুরক্ষা চালু করতে App Lock-এর দুটি অনুমতি প্রয়োজন:</string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. ডিভাইস অ্যাডমিন - আনইনস্টল ঠেকায়\n2. অ্যাক্সেসিবিলিটি সার্ভিস - অ্যাপের ব্যবহার পর্যবেক্ষণ করে\n\nএই অনুমতিগুলো আপনার অজান্তে অ্যাপটি সরিয়ে ফেলা থেকে সুরক্ষা দিতে সাহায্য করে।</string>
+    <string name="settings_screen_device_admin_dialog_text_1">অনধিকৃত আনইনস্টল ঠেকাতে App Lock-এর ডিভাইস অ্যাডমিন অনুমতি প্রয়োজন।</string>
+    <string name="settings_screen_device_admin_dialog_text_2">এই অনুমতির মাধ্যমে অ্যাপটি:\n• নিজেকে আনইনস্টল হওয়া থেকে রক্ষা করতে পারে\n• আপনার অ্যাপ লকের সেটিংস সুরক্ষিত রাখতে পারে\n\nএতে আপনার ডিভাইসের স্বাভাবিক কাজে কোনো প্রভাব পড়বে না।</string>
+    <string name="settings_screen_accessibility_dialog_text_1">অ্যাপের ব্যবহার পর্যবেক্ষণ করতে App Lock-এর অ্যাক্সেসিবিলিটি সার্ভিসের অনুমতি প্রয়োজন।</string>
+    <string name="settings_screen_accessibility_dialog_text_2">এই অনুমতির মাধ্যমে অ্যাপটি:\n• অ্যাপ খোলা হলে তা শনাক্ত করতে পারে\n• প্রয়োজনে লক স্ক্রিন দেখাতে পারে\n• নির্বিঘ্নে অ্যাপ সুরক্ষা দিতে পারে</string>
+    <string name="settings_screen_accessibility_dialog_text_3">আপনার গোপনীয়তা সুরক্ষিত — কোনো ডেটা সংগ্রহ বা শেয়ার করা হয় না।</string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">উন্নত</string>
+    <string name="settings_screen_fallback_selection_dialog_title">বিকল্প পদ্ধতি বেছে নিন</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">প্রধান পদ্ধতি ব্যর্থ হলে ব্যবহারের জন্য একটি বিকল্প পদ্ধতি বেছে নিন:</string>
+    <string name="confirm_button">নিশ্চিত করুন</string>
+    <string name="enable_button">চালু করুন</string>
+    <string name="settings_screen_advanced_title">উন্নত</string>
+    <string name="settings_screen_export_logs_title">লগ এক্সপোর্ট করুন</string>
+    <string name="settings_screen_export_logs_desc">ডিবাগিংয়ের জন্য অ্যাপের লগ এক্সপোর্ট করুন।</string>
+    <string name="settings_Screen_export_audit">নিরাপত্তা লগ এক্সপোর্ট করুন</string>
+    <string name="settings_screen_export_audit_desc">পর্যালোচনার জন্য নিরাপত্তা লগ এক্সপোর্ট করুন।</string>
+    <string name="settings_screen_export_logs_success">লগ এক্সপোর্ট করা হয়েছে</string>
+    <string name="settings_screen_export_logs_error">লগ এক্সপোর্ট করা যায়নি</string>
+    <string name="settings_screen_version_template">সংস্করণ %1$s</string>
+
+    <string name="enter_pattern_to_continue">চালিয়ে যেতে প্যাটার্ন আঁকুন</string>
+    <string name="incorrect_pattern_try_again">ভুল প্যাটার্ন। আবার চেষ্টা করুন।</string>
+    <string name="permission_warning_overlay_title">অন্য অ্যাপের উপরে প্রদর্শন</string>
+    <string name="permission_warning_overlay_desc">সুরক্ষিত অ্যাপের উপরে লক স্ক্রিন দেখায়।</string>
+    <string name="permission_warning_accessibility_title">অ্যাক্সেসিবিলিটি সার্ভিস</string>
+    <string name="permission_warning_accessibility_desc">সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করে।</string>
+    <string name="permission_warning_usage_stats_title">ব্যবহারের অ্যাক্সেস</string>
+    <string name="permission_warning_usage_stats_desc">সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করে।</string>
+    <string name="permission_warning_shizuku_title">Shizuku অনুমতি</string>
+    <string name="permission_warning_shizuku_desc">নিরাপদে সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করে।</string>
+    <string name="permission_warning_device_admin_title">ডিভাইস অ্যাডমিন</string>
+    <string name="permission_warning_device_admin_desc">App Lock Revived-কে আনইনস্টল হওয়া থেকে বিরত রাখে।</string>
+    <string name="permission_warning_title_suffix"> প্রয়োজন</string>
+
+    <string name="join_community">কমিউনিটিতে যোগ দিন</string>
+    <string name="join_community_desc">অন্য ব্যবহারকারীদের সঙ্গে যুক্ত হতে, মতামত জানাতে এবং সর্বশেষ খবর ও বৈশিষ্ট্য জানতে আমাদের Discord কমিউনিটিতে যোগ দিন।</string>
+    <string name="join_discord">Discord-এ যোগ দিন</string>
+    <string name="maybe_later">পরে দেখা যাক</string>
+
+    <string name="lock_enter_pin">আপনার পিন লিখুন</string>
+    <string name="lock_draw_pattern">আপনার প্যাটার্ন আঁকুন</string>
+    <string name="lock_enter_password">আপনার পাসওয়ার্ড লিখুন</string>
+    <string name="lock_wrong_pin">ভুল পিন</string>
+    <string name="lock_wrong_pattern">ভুল প্যাটার্ন</string>
+    <string name="lock_wrong_password">ভুল পাসওয়ার্ড</string>
+    <string name="lock_lockout_message">অনেকবার চেষ্টা করা হয়েছে। %1$s পরে আবার চেষ্টা করুন</string>
+    <string name="lock_close_cd">বন্ধ করে হোম স্ক্রিনে যান</string>
+    <string name="lock_backspace_cd">মুছুন</string>
+    <string name="lock_confirm_cd">আনলক করুন</string>
+    <string name="lock_unlock_button">আনলক করুন</string>
+    <string name="lock_use_biometrics">বায়োমেট্রিক ব্যবহার করুন</string>
+    <string name="lock_biometric_subtitle">চালিয়ে যেতে আপনার ফিঙ্গারপ্রিন্ট বা ফেস ব্যবহার করুন</string>
+    <string name="lock_biometric_waiting">বায়োমেট্রিক নিশ্চিতকরণের অপেক্ষায়</string>
+    <string name="lock_app_icon_cd">%1$s আইকন</string>
+    <string name="lock_pin_progress_cd">%1$d টি সংখ্যা লেখা হয়েছে</string>
+    <string name="lock_pattern_pad_cd">প্যাটার্ন প্যাড</string>
+    <string name="lock_show_password_cd">পাসওয়ার্ড দেখান</string>
+    <string name="lock_hide_password_cd">পাসওয়ার্ড লুকান</string>
+    <string name="lock_admin_title">অ্যান্টি-আনইনস্টল বন্ধ করুন</string>
+    <string name="lock_admin_cancel_cd">বাতিল</string>
+
+    <string name="intro_welcome_title">App Lock Revived-এ স্বাগতম</string>
+    <string name="intro_welcome_desc">আপনার অ্যাপ ও গোপনীয়তা সুরক্ষিত রাখুন। আমরা একটি দ্রুত সেটআপে আপনাকে সাহায্য করব। মাত্র এক মিনিট লাগবে।</string>
+    <string name="intro_page_indicator">ধাপ %1$d / %2$d</string>
+    <string name="intro_back">পিছনে</string>
+    <string name="intro_allow_button">অনুমতি দিন</string>
+    <string name="intro_status_granted">অনুমতি দেওয়া হয়েছে</string>
+    <string name="intro_status_not_granted">এখনো অনুমতি দেওয়া হয়নি</string>
+    <string name="intro_open_app_info">অ্যাপের তথ্য খুলুন</string>
+    <string name="intro_battery_title">App Lock চালু রাখুন</string>
+    <string name="intro_battery_desc">ব্যাটারি বাঁচাতে Android App Lock Revived-কে ব্যাকগ্রাউন্ডে বন্ধ করে দিতে পারে। তখন রিবুটের পর বা কিছুক্ষণ পর অ্যাপগুলো আর লক থাকবে না। ব্যাটারি সীমাবদ্ধতা ছাড়া চলতে দিন।</string>
+    <string name="intro_battery_oem_hint">কিছু ফোনে (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) অ্যাপের তথ্য খুলে ব্যাটারি ব্যবহার \"Unrestricted\" করুন এবং উপলব্ধ থাকলে অটোস্টার্ট চালু করুন।</string>
+    <string name="intro_accessibility_desc">App Lock Revived অ্যাক্সেসিবিলিটি সার্ভিস শুধু সুরক্ষিত অ্যাপ খোলা হলে তা জানতে ব্যবহার করে। অনুমতি দিন-এ ট্যাপ করুন, তালিকায় App Lock Revived খুঁজে বের করে চালু করুন।</string>
+    <string name="intro_shizuku_not_running">Shizuku চালু নেই। Shizuku অ্যাপে এটি চালু করুন, তারপর আবার অনুমতি দিন-এ ট্যাপ করুন।</string>
+
+    <string name="ob_restricted_settings_title">\"Restricted setting\" দেখাচ্ছে?</string>
+    <string name="ob_restricted_settings_desc">অ্যাপ স্টোরের বাইরে থেকে ইনস্টল করা অ্যাপের অ্যাক্সেসিবিলিটি আপনি অনুমতি না দেওয়া পর্যন্ত Android তা ব্লক করে রাখে।</string>
+    <string name="ob_restricted_settings_steps">1. নিচের অ্যাপের তথ্য খুলুন-এ ট্যাপ করুন\n2. উপরের কোণের ⋮-তে ট্যাপ করুন\n3. Allow restricted settings বেছে নিয়ে নিশ্চিত করুন\n4. ফিরে এসে সার্ভিসটি চালু করুন</string>
+
+    <string name="ob_accessibility_guide_steps">1. সেটিংস খুলুন-এ ট্যাপ করুন\n2. App Lock Revived খুঁজুন (এটি Downloaded apps বা Installed apps-এর অধীনে থাকতে পারে)\n3. চালু করে অনুমতি দিন-এ ট্যাপ করুন</string>
+    <string name="ob_usage_stats_dialog_title">ব্যবহারের অ্যাক্সেস দিন</string>
+    <string name="ob_usage_stats_dialog_text">আপনি ব্যবহারের পরিসংখ্যান মোড বেছে নিয়েছেন, কিন্তু সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করতে App Lock Revived-এর ব্যবহারের অ্যাক্সেস প্রয়োজন।</string>
+
+    <string name="setup_title_new">লক সেট করুন</string>
+    <string name="setup_title_change">লক পরিবর্তন করুন</string>
+    <string name="setup_type_pin">পিন</string>
+    <string name="setup_type_pattern">প্যাটার্ন</string>
+    <string name="setup_type_password">পাসওয়ার্ড</string>
+    <string name="setup_create_pin">একটি পিন তৈরি করুন</string>
+    <string name="setup_confirm_pin">আপনার পিন নিশ্চিত করুন</string>
+    <string name="setup_verify_pin">আপনার বর্তমান পিন লিখুন</string>
+    <string name="setup_create_pattern">একটি প্যাটার্ন আঁকুন</string>
+    <string name="setup_confirm_pattern">আবার আঁকুন</string>
+    <string name="setup_verify_pattern">আপনার বর্তমান প্যাটার্ন আঁকুন</string>
+    <string name="setup_create_password">একটি পাসওয়ার্ড তৈরি করুন</string>
+    <string name="setup_confirm_password">আপনার পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="setup_verify_password">আপনার বর্তমান পাসওয়ার্ড লিখুন</string>
+    <string name="setup_hint_pin">কমপক্ষে 4 সংখ্যা ব্যবহার করুন</string>
+    <string name="setup_hint_pattern">কমপক্ষে 4টি বিন্দু যুক্ত করুন</string>
+    <string name="setup_hint_password">কমপক্ষে 4 অক্ষর ব্যবহার করুন</string>
+    <string name="setup_hint_confirm">নিশ্চিত করতে আরেকবার লিখুন</string>
+    <string name="setup_hint_verify">লক বদলানোর আগে নিশ্চিত করুন যে আপনিই আছেন</string>
+    <string name="setup_pattern_too_short">কমপক্ষে 4টি বিন্দু যুক্ত করুন</string>
+    <string name="setup_patterns_dont_match">প্যাটার্ন মিলছে না। আবার চেষ্টা করুন।</string>
+    <string name="setup_continue">চালিয়ে যান</string>
+    <string name="setup_confirm">নিশ্চিত করুন</string>
+    <string name="setup_delete">মুছুন</string>
+    <string name="setup_show_password">পাসওয়ার্ড দেখান</string>
+    <string name="setup_hide_password">পাসওয়ার্ড লুকান</string>
+    <string name="setup_use_keyboard">বদলে কিবোর্ড ব্যবহার করুন</string>
+    <string name="setup_use_keypad">বদলে সংখ্যা প্যাড ব্যবহার করুন</string>
+    <string name="setup_digits_entered">%1$d টি সংখ্যা লেখা হয়েছে</string>
+
+    <string name="tile_lock_now_label">এখনই সব লক করুন</string>
+    <string name="tile_lock_now_subtitle_active">সুরক্ষা চালু</string>
+    <string name="tile_lock_now_subtitle_inactive">সুরক্ষা বন্ধ</string>
+    <string name="tile_lock_now_done">সব অ্যাপ লক করা হয়েছে</string>
+
+    <string name="auto_lock_channel_name">স্বয়ংক্রিয়ভাবে লক করা অ্যাপ</string>
+    <string name="auto_lock_channel_description">নতুন ইনস্টল করা অ্যাপ স্বয়ংক্রিয়ভাবে লক হলে দেখানো হয়</string>
+    <string name="auto_lock_notification_title">%1$s স্বয়ংক্রিয়ভাবে লক করা হয়েছে</string>
+    <string name="auto_lock_notification_text">লক করা অ্যাপ পরিচালনা করতে ট্যাপ করুন</string>
+
+    <string name="service_channel_name_usage">সুরক্ষা সার্ভিস (ব্যবহারের পরিসংখ্যান)</string>
+    <string name="service_channel_name_shizuku">সুরক্ষা সার্ভিস (Shizuku)</string>
+    <string name="service_notification_text">আপনার অ্যাপ সুরক্ষিত রাখা হচ্ছে</string>
+    <string name="service_notification_text_shizuku">Shizuku দিয়ে আপনার অ্যাপ সুরক্ষিত রাখা হচ্ছে</string>
+    <string name="service_notification_waiting_shizuku">Shizuku চালু হওয়ার অপেক্ষা করা হচ্ছে…</string>
+    <string name="anti_uninstall_blocked_toast">এই সীমাবদ্ধতা সরাতে App Lock Revived-এ অ্যান্টি-আনইনস্টল বন্ধ করুন।</string>
+
+    <string name="settings_section_appearance">চেহারা</string>
+    <string name="settings_section_lock_screen">লক স্ক্রিন</string>
+    <string name="settings_section_protection">সুরক্ষা</string>
+    <string name="settings_section_privacy">গোপনীয়তা</string>
+    <string name="settings_section_backup">ব্যাকআপ &amp; পুনরুদ্ধার</string>
+    <string name="settings_section_updates">আপডেট</string>
+
+    <string name="settings_theme_title">থিম</string>
+    <string name="settings_theme_system">সিস্টেম</string>
+    <string name="settings_theme_light">হালকা</string>
+    <string name="settings_theme_dark">গাঢ়</string>
+    <string name="settings_dynamic_color_title">ডায়নামিক রং</string>
+    <string name="settings_dynamic_color_desc">আপনার ওয়ালপেপারের রং ব্যবহার করুন</string>
+    <string name="settings_amoled_title">পিওর ব্ল্যাক</string>
+    <string name="settings_amoled_desc">গাঢ় থিমে সত্যিকারের কালো ব্যাকগ্রাউন্ড ব্যবহার করুন</string>
+    <string name="settings_amoled_desc_needs_dark">গাঢ় থিম চালু থাকলে উপলব্ধ</string>
+
+    <string name="settings_biometric_desc_available">ফিঙ্গারপ্রিন্ট বা ফেস আনলক ব্যবহার করুন</string>
+    <string name="settings_biometric_desc_unavailable">এই ডিভাইসে কোনো বায়োমেট্রিক সেট আপ করা নেই</string>
+    <string name="settings_biometric_auto_prompt_title">বায়োমেট্রিক প্রম্পট স্বয়ংক্রিয়ভাবে দেখান</string>
+    <string name="settings_biometric_auto_prompt_desc">লক স্ক্রিন আসার সঙ্গে সঙ্গে ফিঙ্গারপ্রিন্ট বা ফেস প্রম্পট খুলুন</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">এটি ব্যবহার করতে বায়োমেট্রিক আনলক চালু করুন</string>
+    <string name="settings_scramble_keypad_title">পিন কিপ্যাড এলোমেলো করুন</string>
+    <string name="settings_scramble_keypad_desc">প্রতিবার সংখ্যার অবস্থান বদলে দিন, যাতে অন্যরা আঙুলের নড়াচড়া দেখে আপনার পিন জানতে না পারে</string>
+    <string name="settings_scramble_keypad_desc_pin_only">শুধু পিন লক থাকলে উপলব্ধ</string>
+    <string name="settings_auto_unlock_desc">নিশ্চিত না করেই সঠিক পিন লেখা মাত্র আনলক হবে</string>
+    <string name="settings_disable_haptics_title">হ্যাপটিক ফিডব্যাক বন্ধ করুন</string>
+
+    <string name="settings_change_pattern_title">প্যাটার্ন পরিবর্তন করুন</string>
+    <string name="settings_change_pattern_desc">নতুন আনলক প্যাটার্ন আঁকুন</string>
+    <string name="settings_change_password_title">পাসওয়ার্ড পরিবর্তন করুন</string>
+    <string name="settings_change_password_desc">নতুন পাসওয়ার্ড সেট করুন</string>
+    <string name="settings_unlock_duration_until_screen_off">স্ক্রিন বন্ধ হওয়া পর্যন্ত</string>
+    <string name="settings_unlock_duration_sheet_desc">আপনি আনলক করার পর একটি অ্যাপ কতক্ষণ আনলক থাকবে</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="one">%1$d মিনিট</item>
+        <item quantity="other">%1$d মিনিট</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">লকআউটের আগে ব্যর্থ চেষ্টা</string>
+    <string name="settings_failed_attempts_desc">অনেকবার ভুল চেষ্টার পর কিছু সময়ের জন্য ইনপুট বন্ধ রাখুন</string>
+    <string name="settings_failed_attempts_off">বন্ধ</string>
+    <string name="settings_lockout_duration_title">লকআউটের সময়কাল</string>
+    <string name="settings_lockout_duration_desc">লকআউট পুনরায় হলে প্রতিবার সময় দ্বিগুণ হয়</string>
+    <string name="settings_lockout_duration_desc_disabled">এটি ব্যবহার করতে ব্যর্থ চেষ্টায় লকআউট চালু করুন</string>
+    <string name="settings_lockout_seconds_short">%1$d সে</string>
+    <string name="settings_lockout_minutes_short">%1$d মি</string>
+
+    <string name="settings_auto_lock_new_apps_title">নতুন ইনস্টল করা অ্যাপ লক করুন</string>
+    <string name="settings_auto_lock_new_apps_desc">ইনস্টল করার সঙ্গে সঙ্গে অ্যাপ স্বয়ংক্রিয়ভাবে লক করুন</string>
+
+    <string name="settings_unlock_history_title">আনলক ইতিহাস</string>
+    <string name="settings_unlock_history_desc">আনলকের চেষ্টার একটি লগ ডিভাইসে রাখুন। এটি বন্ধ করলে লগ মুছে যাবে।</string>
+    <string name="settings_view_unlock_history_title">আনলক ইতিহাস দেখুন</string>
+    <string name="settings_view_unlock_history_desc">সাম্প্রতিক আনলক ও ব্যর্থ চেষ্টা দেখুন</string>
+
+    <string name="settings_backup_export_title">ব্যাকআপ এক্সপোর্ট করুন</string>
+    <string name="settings_backup_export_desc">লক করা অ্যাপ ও সেটিংস একটি ফাইলে সংরক্ষণ করুন</string>
+    <string name="settings_backup_import_title">ব্যাকআপ থেকে পুনরুদ্ধার করুন</string>
+    <string name="settings_backup_import_desc">একটি ব্যাকআপ ফাইল দিয়ে লক করা অ্যাপ ও সেটিংস প্রতিস্থাপন করুন</string>
+    <string name="settings_backup_footer">আপনার পিন, প্যাটার্ন বা পাসওয়ার্ড কখনো ব্যাকআপে যুক্ত হয় না।</string>
+    <string name="settings_backup_export_success">ব্যাকআপ সংরক্ষিত হয়েছে</string>
+    <string name="settings_backup_export_failed">ব্যাকআপ সংরক্ষণ করা যায়নি: %1$s</string>
+    <string name="settings_backup_import_invalid">এটি একটি App Lock Revived ব্যাকআপ ফাইল নয়</string>
+    <string name="settings_backup_import_newer_version">এই ব্যাকআপটি App Lock Revived-এর একটি নতুন সংস্করণ দিয়ে তৈরি। অ্যাপ আপডেট করে আবার চেষ্টা করুন।</string>
+    <string name="settings_backup_import_failed">ব্যাকআপ পড়া যায়নি: %1$s</string>
+    <string name="settings_backup_no_file_picker">ফাইল বাছাই করার জন্য কোনো অ্যাপ নেই</string>
+    <string name="settings_backup_restore_complete_title">ব্যাকআপ পুনরুদ্ধার হয়েছে</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="one">%1$d টি লক করা অ্যাপ পুনরুদ্ধার হয়েছে।</item>
+        <item quantity="other">%1$d টি লক করা অ্যাপ পুনরুদ্ধার হয়েছে।</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="one">%1$d টি সেটিং পুনরুদ্ধার হয়েছে।</item>
+        <item quantity="other">%1$d টি সেটিং পুনরুদ্ধার হয়েছে।</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">আপনার বর্তমান পিন, প্যাটার্ন বা পাসওয়ার্ড অপরিবর্তিত রাখা হয়েছে।</string>
+    <string name="settings_ok_button">ঠিক আছে</string>
+
+    <string name="settings_update_check_title">স্বয়ংক্রিয়ভাবে আপডেট পরীক্ষা করুন</string>
+    <string name="settings_update_check_desc">GitHub-এ নতুন রিলিজ খুঁজুন</string>
+    <string name="settings_update_check_now_title">আপডেট পরীক্ষা করুন</string>
+    <string name="settings_update_checking">পরীক্ষা করা হচ্ছে…</string>
+    <string name="settings_update_current_version">আপনার সংস্করণ %1$s</string>
+    <string name="settings_update_latest">আপনি সর্বশেষ সংস্করণে আছেন</string>
+    <string name="settings_update_check_failed">আপডেট পরীক্ষা করা যায়নি। আপনার সংযোগ দেখে আবার চেষ্টা করুন।</string>
+    <string name="settings_update_check_footer">এই অ্যাপ শুধু এই সময়েই ইন্টারনেটে সংযুক্ত হয়। আপনার বা আপনার অ্যাপ সম্পর্কে কোনো তথ্য পাঠানো হয় না।</string>
+
+    <string name="settings_backend_accessibility_title">অ্যাক্সেসিবিলিটি সার্ভিস</string>
+    <string name="settings_backend_accessibility_desc">বেশিরভাগ ডিভাইসে কাজ করে এমন স্ট্যান্ডার্ড পদ্ধতি</string>
+    <string name="settings_backend_usage_stats_title">ব্যবহারের পরিসংখ্যান</string>
+    <string name="settings_backend_usage_stats_desc">অ্যাপের ব্যবহারের পরিসংখ্যান ব্যবহার করে পরীক্ষামূলক পদ্ধতি</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Shizuku ও অভ্যন্তরীণ API ব্যবহার করে উন্নত পদ্ধতি</string>
+
+    <string name="settings_logging_title">ডিবাগ লগিং</string>
+    <string name="settings_logging_desc">সমস্যা সমাধানের জন্য বিস্তারিত লগ রেকর্ড করুন</string>
+    <string name="settings_share_logs">লগ শেয়ার করুন</string>
+    <string name="settings_share_audit_logs">নিরাপত্তা লগ শেয়ার করুন</string>
+
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">সংস্করণ %1$s (%2$d)</string>
+    <string name="settings_about_tagline">বিনামূল্যে, ওপেন সোর্স ও বিজ্ঞাপনমুক্ত</string>
+    <string name="settings_about_developed_by">ডেভেলপ করেছেন Riyad M</string>
+    <string name="settings_about_source_title">সোর্স কোড</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">রিলিজ</string>
+    <string name="settings_about_releases_desc">পরিবর্তনের তালিকা ও ডাউনলোড</string>
+    <string name="settings_about_issue_title">সমস্যা জানান</string>
+    <string name="settings_about_issue_desc">কোনো বাগ পেয়েছেন বা ধারণা আছে? আমাদের জানান</string>
+    <string name="settings_about_credits_title">কৃতজ্ঞতা স্বীকার</string>
+    <string name="settings_about_credits_desc">Pranav Purwar (aload0)-এর AppLock-এর উপর ভিত্তি করে</string>
+    <string name="settings_about_license_title">লাইসেন্স</string>
+    <string name="settings_about_license_desc">MIT লাইসেন্স</string>
+    <string name="settings_no_browser">লিংক খোলার জন্য কোনো অ্যাপ নেই</string>
+
+    <string name="settings_support_sheet_title">App Lock Revived ভালো লাগছে?</string>
+    <string name="settings_support_sheet_message">App Lock Revived বিনামূল্যে, ওপেন সোর্স ও বিজ্ঞাপনমুক্ত। GitHub-এ প্রজেক্টে স্টার দিয়ে, বাগ জানিয়ে বা বন্ধুদের সঙ্গে শেয়ার করে একে সমর্থন করতে পারেন।</string>
+    <string name="settings_support_sheet_star">GitHub-এ স্টার দিন</string>
+
+    <string name="history_title">আনলক ইতিহাস</string>
+    <plurals name="history_entry_count">
+        <item quantity="one">%1$d টি এন্ট্রি</item>
+        <item quantity="other">%1$d টি এন্ট্রি</item>
+    </plurals>
+    <string name="history_clear_cd">ইতিহাস মুছুন</string>
+    <string name="history_clear_dialog_title">আনলক ইতিহাস মুছবেন?</string>
+    <string name="history_clear_dialog_text">রেকর্ড করা সব আনলক ও ব্যর্থ চেষ্টা মুছে যাবে। এটি আর ফেরানো যাবে না।</string>
+    <string name="history_clear_confirm">মুছুন</string>
+    <string name="history_cleared">ইতিহাস মুছে ফেলা হয়েছে</string>
+    <plurals name="history_summary_failed">
+        <item quantity="one">গত 24 ঘণ্টায় একটি ব্যর্থ চেষ্টা</item>
+        <item quantity="other">গত 24 ঘণ্টায় ব্যর্থ চেষ্টা</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="one">একই সময়ে %1$d টি সফল আনলক</item>
+        <item quantity="other">একই সময়ে %1$d টি সফল আনলক</item>
+    </plurals>
+    <string name="history_entry_success">%1$s দিয়ে আনলক করা হয়েছে · %2$s</string>
+    <string name="history_entry_failed">%1$s ব্যর্থ চেষ্টা · %2$s</string>
+    <string name="history_status_success_cd">আনলক করা হয়েছে</string>
+    <string name="history_status_failed_cd">ব্যর্থ চেষ্টা</string>
+    <string name="history_method_pin">পিন</string>
+    <string name="history_method_pattern">প্যাটার্ন</string>
+    <string name="history_method_password">পাসওয়ার্ড</string>
+    <string name="history_method_biometric">বায়োমেট্রিক</string>
+    <string name="history_today">আজ</string>
+    <string name="history_yesterday">গতকাল</string>
+    <string name="history_disabled_banner">আনলক ইতিহাস বন্ধ আছে। নতুন চেষ্টা রেকর্ড করা হচ্ছে না।</string>
+    <string name="history_turn_on">চালু করুন</string>
+    <string name="history_empty_title">এখনো কোনো আনলকের চেষ্টা নেই</string>
+    <string name="history_empty_desc">কেউ লক করা অ্যাপ আনলক বা আনলক করার চেষ্টা করলে তা এখানে দেখানো হবে। এই ইতিহাস কখনো আপনার ডিভাইস ছেড়ে যায় না।</string>
+
+    <string name="update_dialog_title">আপডেট পাওয়া যাচ্ছে</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">নতুন কী আছে</string>
+    <string name="update_dialog_no_notes">কোনো রিলিজ নোট দেওয়া হয়নি।</string>
+    <string name="update_dialog_download">ডাউনলোড</string>
+    <string name="update_dialog_download_size">ডাউনলোড (%1$s)</string>
+    <string name="update_dialog_later">পরে</string>
+    <string name="update_dialog_skip">এই সংস্করণ এড়িয়ে যান</string>
+    <string name="update_dialog_icon_description">App Lock Revived আইকন</string>
+    <string name="update_dialog_no_browser">ডাউনলোড লিংক খোলার জন্য কোনো অ্যাপ পাওয়া যায়নি</string>
+
+    <string name="applist_status_active_title">সুরক্ষা চালু আছে</string>
+    <string name="applist_status_paused_title">সুরক্ষা বিরতিতে আছে</string>
+    <string name="applist_status_paused_desc">লক করা অ্যাপগুলো জিজ্ঞাসা না করেই খুলছে। চালু করতে ট্যাপ করুন।</string>
+    <string name="applist_status_setup_title">সুরক্ষায় মনোযোগ প্রয়োজন</string>
+    <string name="applist_status_setup_desc">%1$s প্রয়োজন। ঠিক করতে ট্যাপ করুন।</string>
+    <string name="applist_status_stopped_title">লক সার্ভিস চালু নেই</string>
+    <string name="applist_status_stopped_desc">%1$s সার্ভিস আবার চালু করতে ট্যাপ করুন।</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">অ্যান্টি-আনইনস্টল: %1$s প্রয়োজন</string>
+    <string name="applist_status_fix">ঠিক করুন</string>
+    <string name="applist_status_switch_cd">সুরক্ষা</string>
+    <string name="applist_backend_accessibility">অ্যাক্সেসিবিলিটি</string>
+    <string name="applist_backend_usage_stats">ব্যবহারের অ্যাক্সেস</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="one">%d টি অ্যাপ লক করা</item>
+        <item quantity="other">%d টি অ্যাপ লক করা</item>
+    </plurals>
+
+    <string name="applist_more_options_cd">আরও বিকল্প</string>
+    <string name="applist_menu_lock_all_now">এখনই সব লক করুন</string>
+    <string name="applist_locked_all_now">সব অ্যাপ আবার যাচাইকরণ চাইবে</string>
+    <string name="applist_menu_trigger_exclusions">ট্রিগার বর্জন</string>
+    <string name="applist_menu_prevent_uninstall">আনইনস্টল বন্ধ রাখুন</string>
+    <string name="applist_menu_show_system_apps">সিস্টেম অ্যাপ দেখান</string>
+
+    <string name="applist_search_placeholder">অ্যাপ বা প্যাকেজের নাম খুঁজুন</string>
+    <string name="applist_search_clear_cd">অনুসন্ধান মুছুন</string>
+    <string name="applist_filter_all">সব</string>
+    <string name="applist_filter_locked">লক করা</string>
+    <string name="applist_filter_unlocked">আনলক করা</string>
+    <string name="applist_filter_system">সিস্টেম</string>
+    <string name="applist_sort_cd">সাজানোর ক্রম</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">সম্প্রতি ইনস্টল করা</string>
+
+    <string name="applist_section_locked">লক করা</string>
+    <string name="applist_section_other">অন্যান্য অ্যাপ</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">নির্বাচন করুন</string>
+    <string name="applist_system_supporting">সিস্টেম · %1$s</string>
+    <string name="applist_remove_package_cd">%1$s সরান</string>
+
+    <string name="applist_loading">অ্যাপ লোড হচ্ছে…</string>
+    <string name="applist_empty_search_title">“%1$s”-এর সঙ্গে কোনো অ্যাপ মেলেনি</string>
+    <string name="applist_empty_search_desc">অন্য নাম বা প্যাকেজ দিয়ে চেষ্টা করুন।</string>
+    <string name="applist_empty_locked_title">এখনো কোনো অ্যাপ লক করা হয়নি</string>
+    <string name="applist_empty_locked_desc">কোনো অ্যাপ লক করতে তার পাশের সুইচ চালু করুন।</string>
+    <string name="applist_empty_generic_title">দেখানোর কিছু নেই</string>
+    <string name="applist_empty_generic_desc">অন্য ফিল্টার দিয়ে চেষ্টা করুন।</string>
+
+    <plurals name="applist_selected_count">
+        <item quantity="one">%d টি নির্বাচিত</item>
+        <item quantity="other">%d টি নির্বাচিত</item>
+    </plurals>
+    <string name="applist_action_lock">নির্বাচিত লক করুন</string>
+    <string name="applist_action_unlock">নির্বাচিত আনলক করুন</string>
+    <string name="applist_action_select_all">সব নির্বাচন করুন</string>
+    <string name="applist_action_close_selection">নির্বাচন বাতিল করুন</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="one">%d টি অ্যাপ লক করা হয়েছে</item>
+        <item quantity="other">%d টি অ্যাপ লক করা হয়েছে</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="one">%d টি অ্যাপ আনলক করা হয়েছে</item>
+        <item quantity="other">%d টি অ্যাপ আনলক করা হয়েছে</item>
+    </plurals>
+    <string name="applist_undo">আগের অবস্থায় ফিরুন</string>
+
+    <string name="applist_navigate_back_cd">পিছনে যান</string>
+    <string name="applist_show_system_apps">সিস্টেম অ্যাপ</string>
+    <string name="applist_add_package_cd">প্যাকেজ নিজে যোগ করুন</string>
+    <string name="applist_add_package_title">প্যাকেজ নিজে যোগ করুন</string>
+    <string name="applist_package_name_label">প্যাকেজের নাম</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">একটি সঠিক প্যাকেজের নাম লিখুন</string>
+    <string name="applist_add">যোগ করুন</string>
+    <string name="applist_cancel">বাতিল</string>
+    <string name="applist_manual_package_desc">ইনস্টল করা নেই · নিজে যোগ করা হয়েছে</string>
+    <string name="applist_section_manual">নিজে যোগ করা হয়েছে</string>
+    <string name="applist_section_installed">ইনস্টল করা অ্যাপ</string>
+
+    <string name="trigger_exclusions_title">ট্রিগার বর্জন</string>
+    <string name="trigger_exclusions_hero_title">যেসব অ্যাপ কখনো লক ট্রিগার করে না</string>
+    <string name="trigger_exclusions_hero_desc">এই অ্যাপগুলো থেকে কোনো লক করা অ্যাপে গেলে লক স্ক্রিন দেখাবে না। কিবোর্ড, লঞ্চার ও ভাসমান ওভারলের জন্য কার্যকর।</string>
+    <string name="trigger_exclusions_section_excluded">বর্জিত</string>
+    <string name="trigger_exclusions_add_desc">যে অ্যাপ বাদ দিতে চান তার প্যাকেজের নাম লিখুন।</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="one">%d টি অ্যাপ বর্জিত</item>
+        <item quantity="other">%d টি অ্যাপ বর্জিত</item>
+    </plurals>
+
+    <string name="anti_uninstall_title">আনইনস্টল বন্ধ রাখুন</string>
+    <string name="anti_uninstall_section_protected">সুরক্ষিত</string>
+    <string name="anti_uninstall_add_desc">যে অ্যাপ আনইনস্টল থেকে সুরক্ষিত রাখতে চান তার প্যাকেজের নাম লিখুন।</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="one">%d টি অ্যাপ সুরক্ষিত</item>
+        <item quantity="other">%d টি অ্যাপ সুরক্ষিত</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku-র আপডেট প্রয়োজন</string>
+    <string name="anti_uninstall_ready_title">Shizuku সংযুক্ত আছে</string>
+    <string name="anti_uninstall_ready_desc">এখানে সুইচ বন্ধ না করা পর্যন্ত সুরক্ষিত অ্যাপ আনইনস্টল করা যাবে না। সুরক্ষা বদলানোর সময়ই শুধু Shizuku লাগে।</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku ইনস্টল করা নেই</string>
+    <string name="anti_uninstall_not_installed_desc">রুট ছাড়া আনইনস্টল বন্ধ করতে Shizuku (বা রুট করা ডিভাইসে Sui) লাগে। সুরক্ষা বদলাতে এটি ইনস্টল করুন।</string>
+    <string name="anti_uninstall_not_running_title">Shizuku চালু নেই</string>
+    <string name="anti_uninstall_not_running_desc">Shizuku খুলে ওয়্যারলেস ডিবাগিং বা রুট দিয়ে এটি চালু করে ফিরে আসুন। আপনার বর্তমান সুরক্ষা বজায় থাকবে।</string>
+    <string name="anti_uninstall_permission_title">Shizuku-র অনুমতি প্রয়োজন</string>
+    <string name="anti_uninstall_permission_desc">কোন অ্যাপ আনইনস্টল করা যাবে তা বদলাতে App Lock Revived-কে Shizuku ব্যবহারের অনুমতি দিন।</string>
+    <string name="anti_uninstall_action_install">Shizuku ইনস্টল করুন</string>
+    <string name="anti_uninstall_action_open">Shizuku খুলুন</string>
+    <string name="anti_uninstall_action_grant">অনুমতি দিন</string>
+    <string name="anti_uninstall_action_retry">আবার যাচাই করুন</string>
+    <string name="anti_uninstall_needs_shizuku">আনইনস্টল সুরক্ষা বদলাতে আগে Shizuku চালু করুন</string>
+    <string name="anti_uninstall_toggle_failed">%1$s-এর আনইনস্টল সুরক্ষা বদলানো যায়নি</string>
+    <string name="anti_uninstall_shizuku_old">এই Shizuku সংস্করণটি অনেক পুরোনো। অনুগ্রহ করে Shizuku আপডেট করুন।</string>
+    <string name="anti_uninstall_remove_all">সব অ্যাপ থেকে সুরক্ষা সরান</string>
+    <string name="anti_uninstall_remove_all_title">সব সুরক্ষা সরাবেন?</string>
+    <string name="anti_uninstall_remove_all_desc">এই ডিভাইসে আনইনস্টল থেকে আটকানো সব অ্যাপ আবার আনইনস্টল করা যাবে, এই তালিকার বাইরে সুরক্ষিত অ্যাপও এর মধ্যে পড়বে।</string>
+    <string name="anti_uninstall_remove_all_confirm">সরান</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="one">%d টি অ্যাপ থেকে সুরক্ষা সরানো হয়েছে</item>
+        <item quantity="other">%d টি অ্যাপ থেকে সুরক্ষা সরানো হয়েছে</item>
+    </plurals>
+</resources>
