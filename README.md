@@ -4,6 +4,7 @@
 
 <h1 align="center">App Lock Revived</h1>
 <p align="center"><b>Open-source Android app locker, rebuilt with Material 3 Expressive</b></p>
+<p align="center">A fork of <a href="https://github.com/aload0/AppLock">aload0/AppLock</a> by Pranav Purwar</p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
