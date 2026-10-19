@@ -1,5 +1,15 @@
 package dev.riyadm.applock.features.settings.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.ButtonGroup
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.remember
+import dev.riyadm.applock.ui.motion.AppHaptics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +47,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -173,11 +182,12 @@ private fun SettingsTitle(text: String) {
     Text(text = text, maxLines = 2, overflow = TextOverflow.Ellipsis)
 }
 
+/** App haptics that follow the live "disable haptics" toggle on the settings screen. */
 @Composable
-private fun rememberHaptics(): (HapticFeedbackType) -> Unit {
+fun rememberSettingsHaptics(): AppHaptics {
     val haptic = LocalHapticFeedback.current
     val enabled = LocalSettingsHapticsEnabled.current
-    return { type -> if (enabled) haptic.performHapticFeedback(type) }
+    return remember(haptic, enabled) { AppHaptics(haptic::performHapticFeedback, enabled) }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -192,11 +202,11 @@ fun SwitchSettingItem(
     enabled: Boolean = true,
     accent: SettingsAccent = SettingsAccent.Primary
 ) {
-    val haptic = rememberHaptics()
+    val haptics = rememberSettingsHaptics()
     SegmentedListItem(
         checked = checked,
         onCheckedChange = {
-            haptic(if (it) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff)
+            haptics.toggle(it)
             onCheckedChange(it)
         },
         shapes = shapes,
@@ -287,48 +297,82 @@ fun <T> ConnectedChoiceRow(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    val haptic = rememberHaptics()
-    Row(
+    val haptics = rememberSettingsHaptics()
+    val interactionSources = remember(options.size) {
+        List(options.size) { MutableInteractionSource() }
+    }
+    val select: (T) -> Unit = { value ->
+        if (value != selected) {
+            haptics.tick()
+            onSelect(value)
+        }
+    }
+
+    ButtonGroup(
+        overflowIndicator = { menuState -> ButtonGroupDefaults.OverflowIndicator(menuState) },
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
     ) {
         options.forEachIndexed { index, option ->
             val checked = option.value == selected
-            ToggleButton(
-                checked = checked,
-                onCheckedChange = {
-                    if (!checked) {
-                        haptic(HapticFeedbackType.SegmentTick)
-                        onSelect(option.value)
+            val interactionSource = interactionSources[index]
+            customItem(
+                {
+                    ToggleButton(
+                        checked = checked,
+                        onCheckedChange = { select(option.value) },
+                        enabled = enabled,
+                        interactionSource = interactionSource,
+                        modifier = Modifier
+                            .weight(1f)
+                            .animateWidth(interactionSource)
+                            .semantics { role = Role.RadioButton },
+                        shapes = when (index) {
+                            0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                            options.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                            else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                        },
+                        colors = ToggleButtonDefaults.colors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
+                        )
+                    ) {
+                        AnimatedVisibility(
+                            visible = checked,
+                            enter = fadeIn(MaterialTheme.motionScheme.fastEffectsSpec()) +
+                                    expandHorizontally(MaterialTheme.motionScheme.fastSpatialSpec()),
+                            exit = fadeOut(MaterialTheme.motionScheme.fastEffectsSpec()) +
+                                    shrinkHorizontally(MaterialTheme.motionScheme.fastSpatialSpec())
+                        ) {
+                            Row {
+                                Icon(
+                                    imageVector = Icons.Rounded.Check,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(Modifier.size(6.dp))
+                            }
+                        }
+                        Text(
+                            text = option.label,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 },
-                enabled = enabled,
-                modifier = Modifier
-                    .weight(1f)
-                    .semantics { role = Role.RadioButton },
-                shapes = when (index) {
-                    0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                    options.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
-                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
-                },
-                colors = ToggleButtonDefaults.colors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-                )
-            ) {
-                if (checked) {
-                    Icon(
-                        imageVector = Icons.Rounded.Check,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
+                { menuState ->
+                    DropdownMenuItem(
+                        text = { Text(option.label) },
+                        leadingIcon = if (checked) {
+                            { Icon(Icons.Rounded.Check, contentDescription = null) }
+                        } else null,
+                        enabled = enabled,
+                        onClick = {
+                            select(option.value)
+                            menuState.dismiss()
+                        }
                     )
-                    Spacer(Modifier.size(6.dp))
                 }
-                Text(
-                    text = option.label,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            )
         }
     }
 }

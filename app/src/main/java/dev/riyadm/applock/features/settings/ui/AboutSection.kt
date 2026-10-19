@@ -31,6 +31,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material.icons.rounded.Update
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.SnackbarHostState
+import dev.riyadm.applock.core.update.UpdateChecker
+import dev.riyadm.applock.core.update.UpdateInfo
+import dev.riyadm.applock.data.repository.AppLockRepository
+import dev.riyadm.applock.ui.components.UpdateDialog
+import dev.riyadm.applock.ui.motion.pressScale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,15 +80,72 @@ fun Context.openUrl(url: String) {
 
 private data class VersionInfo(val name: String, val code: Long)
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun AboutSection() {
+fun AboutSection(repository: AppLockRepository, snackbarHostState: SnackbarHostState) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val haptics = rememberSettingsHaptics()
+    var checking by remember { mutableStateOf(false) }
+    var updateInfo by remember { mutableStateOf<UpdateInfo?>(null) }
+
+    val version by produceState<VersionInfo?>(initialValue = null) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                val info = context.packageManager.getPackageInfo(context.packageName, 0)
+                VersionInfo(info.versionName ?: "?", PackageInfoCompat.getLongVersionCode(info))
+            }.getOrNull()
+        }
+    }
+
+    updateInfo?.let { info -> UpdateDialog(info) { updateInfo = null } }
+
+    fun checkForUpdates() {
+        if (checking) return
+        checking = true
+        scope.launch {
+            val lastCheckBefore = repository.getLastUpdateCheck()
+            val info = UpdateChecker.check(context, force = true)
+            checking = false
+            when {
+                info != null -> {
+                    haptics.confirm()
+                    updateInfo = info
+                }
+
+                repository.getLastUpdateCheck() != lastCheckBefore -> {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarHostState.showSnackbar(context.getString(R.string.settings_update_latest))
+                }
+
+                else -> {
+                    haptics.reject()
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarHostState.showSnackbar(context.getString(R.string.settings_update_check_failed))
+                }
+            }
+        }
+    }
 
     Column {
         SettingsSectionHeader(stringResource(R.string.settings_screen_about_title))
-        AboutHeroCard(onDeveloperClick = { context.openUrl(DEVELOPER_URL) })
+        AboutHeroCard(version = version, onDeveloperClick = { context.openUrl(DEVELOPER_URL) })
         Spacer(Modifier.height(12.dp))
         SettingsGroup(title = null) {
+            item { shapes ->
+                ActionSettingItem(
+                    shapes = shapes,
+                    icon = Icons.Rounded.Update,
+                    title = stringResource(R.string.settings_update_check_now_title),
+                    summary = if (checking) stringResource(R.string.settings_update_checking)
+                    else version?.let { stringResource(R.string.settings_update_current_version, it.name) },
+                    enabled = !checking,
+                    onClick = ::checkForUpdates,
+                    trailing = if (checking) {
+                        { LoadingIndicator(modifier = Modifier.size(32.dp)) }
+                    } else null
+                )
+            }
             item { shapes ->
                 ActionSettingItem(
                     shapes = shapes,
@@ -130,20 +204,17 @@ fun AboutSection() {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun AboutHeroCard(onDeveloperClick: () -> Unit) {
+private fun AboutHeroCard(version: VersionInfo?, onDeveloperClick: () -> Unit) {
     val context = LocalContext.current
-    val version = remember {
-        runCatching {
-            val info = context.packageManager.getPackageInfo(context.packageName, 0)
-            VersionInfo(info.versionName ?: "?", PackageInfoCompat.getLongVersionCode(info))
-        }.getOrNull()
+    val appIcon by produceState<ImageBitmap?>(initialValue = null) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                context.packageManager.getApplicationIcon(context.packageName)
+                    .toBitmap(192, 192).asImageBitmap()
+            }.getOrNull()
+        }
     }
-    val appIcon: ImageBitmap? = remember {
-        runCatching {
-            context.packageManager.getApplicationIcon(context.packageName)
-                .toBitmap(192, 192).asImageBitmap()
-        }.getOrNull()
-    }
+    val interactionSource = remember { MutableInteractionSource() }
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -164,9 +235,10 @@ private fun AboutHeroCard(onDeveloperClick: () -> Unit) {
                     .background(MaterialTheme.colorScheme.primary),
                 contentAlignment = Alignment.Center
             ) {
-                if (appIcon != null) {
+                val icon = appIcon
+                if (icon != null) {
                     Image(
-                        bitmap = appIcon,
+                        bitmap = icon,
                         contentDescription = null,
                         modifier = Modifier.size(72.dp)
                     )
@@ -204,6 +276,8 @@ private fun AboutHeroCard(onDeveloperClick: () -> Unit) {
             FilledTonalButton(
                 onClick = onDeveloperClick,
                 shapes = ButtonDefaults.shapes(),
+                interactionSource = interactionSource,
+                modifier = Modifier.pressScale(interactionSource, pressedScale = 0.96f),
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                     contentColor = MaterialTheme.colorScheme.onSurface

@@ -38,6 +38,7 @@ fun BackupSection(
     val backup = remember(repository) { BackupRepository(context.applicationContext, repository) }
     val currentOnImported by rememberUpdatedState(onImported)
     var busy by remember { mutableStateOf(false) }
+    val haptics = rememberSettingsHaptics()
 
     fun showMessage(message: String, long: Boolean = false) {
         scope.launch {
@@ -59,9 +60,11 @@ fun BackupSection(
             val result = runCatching { withContext(Dispatchers.IO) { backup.export(uri) } }
             busy = false
             result.onSuccess {
+                haptics.confirm()
                 showMessage(context.getString(R.string.settings_backup_export_success))
             }.onFailure { e ->
                 Log.e(TAG, "Export failed", e)
+                haptics.reject()
                 showMessage(
                     context.getString(
                         R.string.settings_backup_export_failed,
@@ -81,9 +84,13 @@ fun BackupSection(
         scope.launch {
             val result = runCatching { withContext(Dispatchers.IO) { backup.import(uri) } }
             busy = false
-            result.onSuccess { currentOnImported(it) }
+            result.onSuccess {
+                haptics.confirm()
+                currentOnImported(it)
+            }
                 .onFailure { e ->
                     Log.e(TAG, "Import failed", e)
+                    haptics.reject()
                     val message = when {
                         e is IllegalArgumentException && e.message?.contains("newer") == true ->
                             context.getString(R.string.settings_backup_import_newer_version)

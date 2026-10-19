@@ -33,6 +33,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -42,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -73,6 +75,8 @@ import dev.riyadm.applock.ui.icons.Fingerprint
 import dev.riyadm.applock.ui.icons.FingerprintOff
 import dev.riyadm.applock.ui.icons.Timer
 import dev.riyadm.applock.ui.theme.AppearanceSettings
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private val FAILED_ATTEMPT_OPTIONS = listOf(0, 3, 5, 10)
 private val LOCKOUT_DURATION_OPTIONS = listOf(30, 60, 300)
@@ -90,7 +94,8 @@ fun SettingsScreen(navController: NavController) {
     val state = remember(reloadKey) { SettingsState(repository) }
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var biometricAvailable by remember { mutableStateOf(isBiometricAvailable(context)) }
+    var biometricAvailable by remember { mutableStateOf(repository.isBiometricAuthEnabled()) }
+    var resumeCount by remember { mutableIntStateOf(0) }
     var showUnlockDurationSheet by remember { mutableStateOf(false) }
     var showPermissionDialog by remember { mutableStateOf(false) }
     var showDeviceAdminDialog by remember { mutableStateOf(false) }
@@ -101,7 +106,7 @@ fun SettingsScreen(navController: NavController) {
 
     LifecycleResumeEffect(state) {
         state.refreshExternal()
-        biometricAvailable = isBiometricAvailable(context)
+        resumeCount++
         if (pendingAntiUninstall && !state.antiUninstall) {
             val hasAdmin = context.hasDeviceAdmin()
             val hasAccessibility = context.isAccessibilityServiceEnabled()
@@ -115,6 +120,10 @@ fun SettingsScreen(navController: NavController) {
             }
         }
         onPauseOrDispose { }
+    }
+
+    LaunchedEffect(resumeCount) {
+        biometricAvailable = withContext(Dispatchers.Default) { isBiometricAvailable(context) }
     }
 
     fun requestDeviceAdmin() {
@@ -216,8 +225,9 @@ fun SettingsScreen(navController: NavController) {
         topBar = {
             LargeFlexibleTopAppBar(
                 title = { Text(stringResource(R.string.settings_screen_title)) },
+                subtitle = { Text(stringResource(R.string.settings_about_app_name)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = onBack, shapes = IconButtonDefaults.shapes()) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = stringResource(R.string.settings_screen_back_cd)
@@ -244,25 +254,25 @@ fun SettingsScreen(navController: NavController) {
                     bottom = innerPadding.calculateBottomPadding() + 32.dp
                 )
             ) {
-                item(key = "appearance") { AppearanceSection(repository) }
-                item(key = "lock_screen") { LockScreenSection(state, biometricAvailable) }
-                item(key = "security") {
+                item(key = "appearance", contentType = "section") { AppearanceSection(repository) }
+                item(key = "lock_screen", contentType = "section") { LockScreenSection(state, biometricAvailable) }
+                item(key = "security", contentType = "section") {
                     SecuritySection(
                         state = state,
                         onChangeCredential = { navController.navigate(Screen.ChangePassword.route) },
                         onUnlockDurationClick = { showUnlockDurationSheet = true }
                     )
                 }
-                item(key = "protection") {
+                item(key = "protection", contentType = "section") {
                     ProtectionSection(state = state, onAntiUninstallChanged = ::onAntiUninstallChanged)
                 }
-                item(key = "privacy") {
+                item(key = "privacy", contentType = "section") {
                     PrivacySection(
                         state = state,
                         onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
                     )
                 }
-                item(key = "backup") {
+                item(key = "backup", contentType = "section") {
                     BackupSection(
                         repository = repository,
                         snackbarHostState = snackbarHostState,
@@ -274,16 +284,16 @@ fun SettingsScreen(navController: NavController) {
                         }
                     )
                 }
-                item(key = "updates") { UpdatesSection(state) }
-                item(key = "backend") {
+                item(key = "updates", contentType = "section") { UpdatesSection(state) }
+                item(key = "backend", contentType = "section") {
                     BackendSection(
                         repository = repository,
                         selected = state.backend,
                         onBackendChanged = state::onBackendChanged
                     )
                 }
-                item(key = "advanced") { AdvancedSection(state) }
-                item(key = "about") { AboutSection() }
+                item(key = "advanced", contentType = "section") { AdvancedSection(state) }
+                item(key = "about", contentType = "about") { AboutSection(repository, snackbarHostState) }
             }
         }
     }

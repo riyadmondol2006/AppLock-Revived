@@ -88,6 +88,11 @@
     <!-- Updates -->
     <string name="settings_update_check_title">Check for updates automatically</string>
     <string name="settings_update_check_desc">Look for new releases on GitHub</string>
+    <string name="settings_update_check_now_title">Check for updates</string>
+    <string name="settings_update_checking">Checking…</string>
+    <string name="settings_update_current_version">You have version %1$s</string>
+    <string name="settings_update_latest">You\'re on the latest version</string>
+    <string name="settings_update_check_failed">Couldn\'t check for updates. Check your connection and try again.</string>
     <string name="settings_update_check_footer">This is the only time the app connects to the internet. Nothing about you or your apps is sent.</string>
 
     <!-- Backend -->

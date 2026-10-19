@@ -46,6 +46,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialShapes
@@ -91,6 +92,7 @@ import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.applist.ui.AppIconCache
 import dev.riyadm.applock.features.settings.ui.SettingsSectionHeader
 import dev.riyadm.applock.features.settings.ui.settingsItemColors
+import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -113,6 +115,8 @@ fun UnlockHistoryScreen(navController: NavController) {
             ?: AppLockRepository(context.applicationContext)
     }
     val scope = rememberCoroutineScope()
+    val haptics = rememberAppHaptics()
+    val timeFormat = remember(context) { android.text.format.DateFormat.getTimeFormat(context) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     var entries by remember { mutableStateOf<List<UnlockLogRepository.Entry>?>(null) }
@@ -161,6 +165,7 @@ fun UnlockHistoryScreen(navController: NavController) {
                         scope.launch {
                             withContext(Dispatchers.IO) { repository.unlockLog.clear() }
                             entries = emptyList()
+                            haptics.confirm()
                             snackbarHostState.showSnackbar(context.getString(R.string.history_cleared))
                         }
                     },
@@ -193,7 +198,7 @@ fun UnlockHistoryScreen(navController: NavController) {
                     { Text(pluralStringResource(R.plurals.history_entry_count, total, total)) }
                 } else null,
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = onBack, shapes = IconButtonDefaults.shapes()) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = stringResource(R.string.settings_screen_back_cd)
@@ -201,7 +206,11 @@ fun UnlockHistoryScreen(navController: NavController) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { showClearDialog = true }, enabled = total > 0) {
+                    IconButton(
+                        onClick = { showClearDialog = true },
+                        enabled = total > 0,
+                        shapes = IconButtonDefaults.shapes()
+                    ) {
                         Icon(
                             imageVector = Icons.Rounded.DeleteSweep,
                             contentDescription = stringResource(R.string.history_clear_cd)
@@ -239,11 +248,12 @@ fun UnlockHistoryScreen(navController: NavController) {
             )
         ) {
             if (!loggingEnabled) {
-                item(key = "disabled") {
+                item(key = "disabled", contentType = "banner") {
                     HistoryDisabledBanner(
                         onEnable = {
                             repository.setUnlockLogEnabled(true)
                             loggingEnabled = true
+                            haptics.toggle(true)
                         }
                     )
                     Spacer(Modifier.height(12.dp))
@@ -251,7 +261,7 @@ fun UnlockHistoryScreen(navController: NavController) {
             }
 
             if (currentEntries.isEmpty()) {
-                item(key = "empty") {
+                item(key = "empty", contentType = "empty") {
                     EmptyHistory(
                         modifier = Modifier
                             .fillParentMaxHeight(0.75f)
@@ -261,24 +271,33 @@ fun UnlockHistoryScreen(navController: NavController) {
                 return@LazyColumn
             }
 
-            item(key = "summary") {
-                SummaryCard(failed = failedLastDay, successful = successLastDay)
+            item(key = "summary", contentType = "summary") {
+                SummaryCard(
+                    failed = failedLastDay,
+                    successful = successLastDay,
+                    modifier = Modifier.animateItem()
+                )
             }
 
             groups.forEach { group ->
-                item(key = "day_${group.dayStart}") {
-                    SettingsSectionHeader(dayLabel(context, group.dayStart, now))
+                item(key = "day_${group.dayStart}", contentType = "header") {
+                    SettingsSectionHeader(
+                        text = dayLabel(context, group.dayStart, now),
+                        modifier = Modifier.animateItem()
+                    )
                 }
                 itemsIndexed(
                     items = group.entries,
-                    key = { index, entry -> "${group.dayStart}_${index}_${entry.timestamp}" }
+                    key = { index, entry -> "${group.dayStart}_${index}_${entry.timestamp}" },
+                    contentType = { _, _ -> "entry" }
                 ) { index, entry ->
                     HistoryEntryItem(
                         entry = entry,
                         app = apps[entry.packageName],
                         index = index,
                         count = group.entries.size,
-                        modifier = Modifier.padding(
+                        timeFormat = timeFormat,
+                        modifier = Modifier.animateItem().padding(
                             top = if (index == 0) 0.dp else ListItemDefaults.SegmentedGap
                         )
                     )
@@ -290,7 +309,7 @@ fun UnlockHistoryScreen(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun SummaryCard(failed: Int, successful: Int) {
+private fun SummaryCard(failed: Int, successful: Int, modifier: Modifier = Modifier) {
     val hasFailures = failed > 0
     val container = if (hasFailures) MaterialTheme.colorScheme.errorContainer
     else MaterialTheme.colorScheme.secondaryContainer
@@ -302,7 +321,7 @@ private fun SummaryCard(failed: Int, successful: Int) {
     else MaterialTheme.colorScheme.onSecondary
 
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
         shape = MaterialTheme.shapes.extraLarge,
@@ -358,12 +377,10 @@ private fun HistoryEntryItem(
     app: AppDisplay?,
     index: Int,
     count: Int,
+    timeFormat: java.text.DateFormat,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val time = remember(entry.timestamp) {
-        android.text.format.DateFormat.getTimeFormat(context).format(entry.timestamp)
-    }
+    val time = remember(entry.timestamp, timeFormat) { timeFormat.format(entry.timestamp) }
     val method = stringResource(methodLabel(entry.method))
     val status = if (entry.success) stringResource(R.string.history_entry_success, method, time)
     else stringResource(R.string.history_entry_failed, method, time)

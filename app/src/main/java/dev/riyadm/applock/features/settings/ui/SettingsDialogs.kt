@@ -25,7 +25,8 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -56,7 +57,7 @@ fun UnlockDurationSheet(
     onDismiss: () -> Unit,
     onSelect: (Int) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(SheetValue.Hidden, setOf(SheetValue.Hidden, SheetValue.Expanded))
     val scope = rememberCoroutineScope()
     val selected = if (currentDuration > UNTIL_SCREEN_OFF_THRESHOLD) Int.MAX_VALUE
     else UNLOCK_DURATION_OPTIONS.minBy { kotlin.math.abs(it.toLong() - currentDuration) }
