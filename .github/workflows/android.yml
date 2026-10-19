@@ -6,6 +6,12 @@ on:
     tags-ignore: [ '**' ]
   pull_request:
   workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump for this release'
+        type: choice
+        options: [patch, minor, major, none]
+        default: patch
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,6 +26,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # tags are needed to work out the next version
 
       - name: Set up JDK 21
         uses: actions/setup-java@v6
@@ -36,14 +44,13 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
 
-      - name: Read app version
+      - name: Work out version
         id: version
+        env:
+          BUMP: ${{ github.event.inputs.bump }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
-          code=$(grep -oP 'versionCode = \K[0-9]+' app/build.gradle.kts)
-          echo "name=$name" >> "$GITHUB_OUTPUT"
-          echo "code=$code" >> "$GITHUB_OUTPUT"
-          echo "tag=v$name" >> "$GITHUB_OUTPUT"
+          bash .github/scripts/next-version.sh | tee -a "$GITHUB_OUTPUT"
 
       - name: Decode signing keystore
         id: signing
@@ -61,6 +68,8 @@ jobs:
 
       - name: Build
         env:
+          VERSION_NAME: ${{ steps.version.outputs.name }}
+          VERSION_CODE: ${{ steps.version.outputs.code }}
           SIGNING_KEYSTORE_PATH: ${{ steps.signing.outputs.path }}
           SIGNING_KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
@@ -100,13 +109,13 @@ jobs:
 
       - name: Publish GitHub release
         # Only publish signed builds from master, once per versionName.
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && steps.signing.outputs.available == 'true'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && steps.signing.outputs.available == 'true' && steps.version.outputs.release == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.version.outputs.tag }}
         run: |
           if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists; bump versionName/versionCode to publish a new one."
+            echo "Release $TAG already exists; nothing to publish."
             exit 0
           fi
           notes_file=fastlane/metadata/android/en-US/changelogs/${{ steps.version.outputs.code }}.txt

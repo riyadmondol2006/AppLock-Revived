@@ -17,6 +17,11 @@ val keystoreProperties = Properties().apply {
 fun signingValue(env: String, property: String): String? =
     System.getenv(env)?.takeIf { it.isNotBlank() } ?: keystoreProperties.getProperty(property)
 
+// Local builds use these; CI bumps the version automatically on every release.
+// Raise them by hand only to jump to a higher version (CI keeps whichever is higher).
+val DEFAULT_VERSION_NAME = "3.1.1"
+val DEFAULT_VERSION_CODE = 30101
+
 val releaseStoreFile = signingValue("SIGNING_KEYSTORE_PATH", "storeFile")
 val hasReleaseSigning = releaseStoreFile != null && file(releaseStoreFile).exists()
 
@@ -32,8 +37,9 @@ android {
         applicationId = "dev.riyadm.applock"
         minSdk = 26
         targetSdk = 37
-        versionCode = 311
-        versionName = "3.1.1"
+        // CI sets these from the latest release tag (see .github/scripts/next-version.sh)
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: DEFAULT_VERSION_CODE
+        versionName = System.getenv("VERSION_NAME")?.takeIf { it.isNotBlank() } ?: DEFAULT_VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

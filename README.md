@@ -207,10 +207,21 @@ keyPassword=...
 ## Continuous integration and releases
 
 [`.github/workflows/android.yml`](.github/workflows/android.yml) runs the unit tests and builds every push and
-pull request. On pushes to `master` it also builds a **signed release APK**. When `versionName` in
-`app/build.gradle.kts` changes, it publishes a GitHub Release tagged `v<versionName>` with the APK and its
-SHA-256 checksum attached. Verify a download with `sha256sum -c AppLock-Revived-v<version>.apk.sha256`. The release notes come
-from `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt` when that file exists.
+pull request. **Versions are bumped automatically:** on every push to `master`, CI takes the latest release tag,
+raises the patch number (`v3.1.1` → `v3.1.2`), builds a **signed release APK** with that version and publishes it
+as a GitHub Release with its SHA-256 checksum, so installed apps show the update popup.
+
+| Put this in the commit message | Result |
+|---|---|
+| *(nothing)* | patch release, e.g. 3.1.1 → 3.1.2 |
+| `[minor]` | 3.1.1 → 3.2.0 |
+| `[major]` | 3.1.1 → 4.0.0 |
+| `[skip release]` | build and test only, nothing published |
+
+You can also start a release by hand from the Actions tab (**Run workflow** → choose the bump). `versionCode` is
+`major × 10000 + minor × 100 + patch`, so it always increases. Release notes come from
+`fastlane/metadata/android/en-US/changelogs/<versionCode>.txt` when that file exists, otherwise they're generated
+from the commit messages. Verify a download with `sha256sum -c AppLock-Revived-v<version>.apk.sha256`.
 
 Add these repository secrets (**Settings → Secrets and variables → Actions**):
 
