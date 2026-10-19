@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Vertrauenswürdige Orte: WLAN -->
+    <string name="trusted_section_title">Vertrauenswürdige Orte</string>
+    <string name="trusted_wifi_title">Vertrauenswürdiges Wi-Fi</string>
+    <string name="trusted_wifi_desc_off">Gesperrte Apps öffnen sich ohne Nachfrage, solange du mit einem Wi-Fi-Netzwerk verbunden bist, dem du vertraust</string>
+    <string name="trusted_wifi_desc_on">Ein. App Lock Revived fragt trotzdem nach deiner PIN, deinem Muster oder Passwort</string>
+    <string name="trusted_wifi_desc_problem">Ein, aber pausiert: %1$s</string>
+    <string name="trusted_networks_title">Vertrauenswürdige Netzwerke</string>
+    <string name="trusted_networks_summary_none">Noch keine Netzwerke hinzugefügt</string>
+    <plurals name="trusted_networks_summary_count">
+        <item quantity="one">%d Netzwerk</item>
+        <item quantity="other">%d Netzwerke</item>
+    </plurals>
+    <string name="trusted_networks_summary_relaxed">%1$s · Gelockert bei „%2$s“</string>
+    <string name="trusted_section_footer">Das Sperren wird nur gelockert, solange der Bildschirm entsperrt ist und das Telefon mit einem vertrauenswürdigen Netzwerk verbunden ist. Sobald du die Verbindung trennst oder einem anderen Netzwerk beitrittst, werden alle Apps wieder gesperrt.</string>
+
+    <string name="trusted_enable_dialog_title">Wi-Fi-Netzwerken vertrauen?</string>
+    <string name="trusted_enable_dialog_text">Solange du mit einem Netzwerk verbunden bist, dem du vertraust, öffnen sich deine gesperrten Apps ohne Nachfrage nach PIN, Muster, Passwort oder Biometrie. Wer dort dein entsperrtes Telefon in die Hand nimmt, kann sie öffnen.</string>
+    <string name="trusted_enable_dialog_supporting">Um das Netzwerk zu erkennen, braucht App Lock Revived Standortzugriff, weil Android Wi-Fi-Namen als Standortdaten behandelt. Der Name wird nur auf deinem Gerät verglichen und verlässt es nie.</string>
+    <string name="trusted_enable_dialog_confirm">Einschalten</string>
+
+    <!-- Vertrauenswürdige Netzwerke: Bildschirm -->
+    <string name="trusted_screen_subtitle_relaxed">Gelockert bei „%1$s“</string>
+    <string name="trusted_screen_subtitle_on">Ein · Apps werden hier normal gesperrt</string>
+    <string name="trusted_screen_subtitle_off">Vertrauenswürdiges Wi-Fi ist aus</string>
+    <string name="trusted_master_switch">Vertrauenswürdiges Wi-Fi verwenden</string>
+    <string name="trusted_current_header">Aktuelles Netzwerk</string>
+    <string name="trusted_current_not_connected">Nicht mit Wi-Fi verbunden</string>
+    <string name="trusted_current_unknown">Mit Wi-Fi verbunden</string>
+    <string name="trusted_current_unknown_desc">Der Netzwerkname kann nicht gelesen werden, bis der Standortzugriff behoben ist</string>
+    <string name="trusted_current_trusted">Vertrauenswürdig. Gesperrte Apps öffnen sich hier ohne Nachfrage</string>
+    <string name="trusted_current_trusted_paused">Vertrauenswürdig, aber pausiert, bis das oben genannte Problem behoben ist</string>
+    <string name="trusted_current_trusted_off">Als vertrauenswürdig gespeichert. Schalte vertrauenswürdiges Wi-Fi ein, um es zu verwenden</string>
+    <string name="trusted_current_not_trusted">Nicht vertrauenswürdig. Apps werden normal gesperrt</string>
+    <string name="trusted_current_open">Offenes Netzwerk: Ihm kann nicht vertraut werden, weil jeder ein Netzwerk mit demselben Namen einrichten kann</string>
+    <string name="trusted_current_router">Router %1$s</string>
+    <string name="trusted_match_router_title">Nur dieser genaue Router</string>
+    <string name="trusted_match_router_desc">Zusätzlich die Hardwareadresse des Routers (BSSID) prüfen. Sicherer, funktioniert aber nicht mehr, wenn du den Router ersetzt oder mehrere Access Points hast</string>
+    <string name="trusted_match_router_desc_recommended">Empfohlen: Diese Android-Version kann nicht erkennen, ob ein Netzwerk passwortgeschützt ist</string>
+    <string name="trusted_add_current">Diesem Netzwerk vertrauen</string>
+    <string name="trusted_added">„%1$s“ ist jetzt vertrauenswürdig</string>
+    <string name="trusted_removed">„%1$s“ entfernt</string>
+    <string name="trusted_undo">Rückgängig</string>
+    <string name="trusted_saved_header">Gespeicherte Netzwerke</string>
+    <string name="trusted_saved_empty">Netzwerke, denen du vertraust, werden hier angezeigt. Verbinde dich mit einem und tippe auf „Diesem Netzwerk vertrauen“.</string>
+    <string name="trusted_saved_any_router">Jeder Router mit diesem Namen</string>
+    <string name="trusted_saved_exact_router">Nur Router %1$s</string>
+    <string name="trusted_saved_connected">Jetzt verbunden</string>
+    <string name="trusted_remove_cd">%1$s entfernen</string>
+    <string name="trusted_screen_footer">Die Sperre von App Lock Revived selbst wird nie gelockert, und solange dein Telefon gesperrt ist, wird nichts gelockert. Offene Netzwerke können nicht vertraut werden. Jeder kann ein Netzwerk mit demselben Namen und derselben Router-Adresse einrichten. Vertraue deshalb nur Netzwerken, die durch ein Passwort geschützt sind, das nur du kennst.</string>
+
+    <!-- Probleme mit vertrauenswürdigen Netzwerken -->
+    <string name="trusted_problem_location_title">Standortzugriff nötig</string>
+    <string name="trusted_problem_location_desc">Android zeigt den Namen des verbundenen Wi-Fi-Netzwerks nur Apps mit Standortzugriff.</string>
+    <string name="trusted_problem_precise_title">Genauer Standort nötig</string>
+    <string name="trusted_problem_precise_desc">Bei nur ungefährem Standort blendet Android den Wi-Fi-Namen aus. Wechsle auf genauen Standort.</string>
+    <string name="trusted_problem_background_title">Standort immer erlauben</string>
+    <string name="trusted_problem_background_desc">App Lock Revived prüft das Netzwerk, während andere Apps geöffnet sind. Ohne „%1$s“ blendet Android den Wi-Fi-Namen dafür aus.</string>
+    <string name="trusted_problem_location_off_title">Standort ist aus</string>
+    <string name="trusted_problem_location_off_desc">Android blendet Wi-Fi-Namen aus, solange der Standort für das ganze Telefon ausgeschaltet ist.</string>
+    <string name="trusted_problem_ssid_title">Netzwerkname nicht verfügbar</string>
+    <string name="trusted_problem_ssid_desc">Android gibt den Namen dieses Netzwerks im Moment nicht weiter, daher wird es als nicht vertrauenswürdig behandelt.</string>
+    <string name="trusted_problem_short_location">Standortzugriff nötig</string>
+    <string name="trusted_problem_short_background">Standortzugriff „immer“ nötig</string>
+    <string name="trusted_problem_short_location_off">Standort ist aus</string>
+    <string name="trusted_problem_short_ssid">Netzwerkname nicht verfügbar</string>
+    <string name="trusted_problem_footer">Bis das behoben ist, wird jedes Netzwerk als nicht vertrauenswürdig behandelt und Apps werden normal gesperrt.</string>
+    <string name="trusted_action_allow">Erlauben</string>
+    <string name="trusted_action_turn_on_location">Standort einschalten</string>
+    <string name="trusted_action_open_settings">App-Einstellungen öffnen</string>
+    <string name="trusted_background_default_label">Immer erlauben</string>
+
+    <string name="trusted_location_dialog_title">Standortzugriff erlauben?</string>
+    <string name="trusted_location_dialog_text">Android zählt Wi-Fi-Netzwerknamen zu den Standortdaten. Deshalb braucht App Lock Revived den genauen Standort, um zu sehen, mit welchem Netzwerk du verbunden bist. Die GPS-Position wird nie abgefragt, und nichts wird irgendwohin gesendet.</string>
+    <string name="trusted_background_dialog_title">Standort immer erlauben?</string>
+    <string name="trusted_background_dialog_text">App Lock Revived entscheidet, ob eine App gesperrt wird, während diese App auf dem Bildschirm ist. Deshalb liest sie den Netzwerknamen im Hintergrund. Wähle auf dem nächsten Bildschirm „%1$s“.</string>
+    <string name="trusted_background_dialog_supporting">Wenn die Option nicht angeboten wird, öffne die Einstellungen von App Lock Revived, gehe zu Berechtigungen › Standort und wähle „%1$s“. Du kannst das jederzeit ausschalten. Apps werden dann überall normal gesperrt.</string>
+    <string name="trusted_dialog_continue">Weiter</string>
+    <string name="trusted_permission_denied">Der Standortzugriff wurde verweigert. Öffne die App-Einstellungen, um ihn zu erlauben.</string>
+
+    <!-- Startseite: Statuskarte -->
+    <string name="trusted_status_relaxed_title">Schutz gelockert</string>
+    <string name="trusted_status_relaxed_desc">Im vertrauenswürdigen Wi-Fi „%1$s“. Apps werden wieder gesperrt, sobald du es verlässt</string>
+
+    <!-- Automatisierung -->
+    <string name="automation_section_title">Automatisierung</string>
+    <string name="automation_enable_title">Automatisierungs-Apps erlauben</string>
+    <string name="automation_enable_desc">Apps wie Tasker oder MacroDroid dürfen alle Apps sperren oder den Schutz einschalten, sobald du ihnen die Berechtigung erteilst</string>
+    <string name="automation_allow_disable_title">Automatisierung darf Schutz ausschalten</string>
+    <string name="automation_allow_disable_desc">Standardmäßig aus. Nur aktivieren, wenn du allen Automatisierungs-Apps vertraust, denen du die Berechtigung erteilt hast</string>
+    <string name="automation_allow_disable_needs_master">Schalte zuerst „Automatisierungs-Apps erlauben“ ein</string>
+    <string name="automation_disable_dialog_title">Automatisierung den Schutz ausschalten lassen?</string>
+    <string name="automation_disable_dialog_text">Jede App, der du die Automatisierungs-Berechtigung erteilt hast, könnte App Lock Revived dann ohne PIN, Muster, Passwort oder Biometrie ausschalten. Alle gesperrten Apps wären dann offen. Ein Fehler oder eine manipulierte Automatisierungs-App könnte dasselbe bewirken.</string>
+    <string name="automation_disable_dialog_confirm">Erlauben</string>
+    <string name="automation_last_command_title">Letzter Befehl</string>
+    <string name="automation_last_command_none">Noch keine Befehle empfangen</string>
+    <string name="automation_last_command_value">%1$s · %2$s · %3$s</string>
+    <string name="automation_last_command_from">%1$s · %2$s · %3$s · von %4$s</string>
+    <string name="automation_outcome_applied">erledigt</string>
+    <string name="automation_outcome_disabled">ignoriert, Automatisierung aus</string>
+    <string name="automation_outcome_not_allowed">ignoriert, nicht erlaubt</string>
+    <string name="automation_outcome_invalid">ignoriert</string>
+    <string name="automation_action_lock_all">Alle jetzt sperren</string>
+    <string name="automation_action_enable">Schutz einschalten</string>
+    <string name="automation_action_disable">Schutz ausschalten</string>
+    <string name="automation_howto_title">So richtest du es ein</string>
+    <string name="automation_howto_desc">Tippe, um Berechtigung und Aktionen zu kopieren</string>
+    <string name="automation_howto_sheet_title">Einrichtung der Automatisierung</string>
+    <string name="automation_howto_sheet_text">1. Die Automatisierungs-App muss die unten stehende Berechtigung anfordern, und du musst sie erteilen (Einstellungen › Apps › die Automatisierungs-App › Berechtigungen).\n2. Sende einen Broadcast mit einer der unten stehenden Aktionen und dem Paketnamen dev.riyadm.applock. Es werden keine Extras benötigt.</string>
+    <string name="automation_howto_permission">Berechtigung</string>
+    <string name="automation_howto_package">Paketname</string>
+    <string name="automation_howto_actions">Aktionen</string>
+    <string name="automation_howto_copy_all">Alles kopieren</string>
+    <string name="automation_howto_copied">In die Zwischenablage kopiert</string>
+    <string name="automation_howto_copy_cd">%1$s kopieren</string>
+    <string name="automation_howto_note">Den Schutz auszuschalten funktioniert nur, wenn „Automatisierung darf Schutz ausschalten“ aktiviert ist. Befehle werden ignoriert, solange „Automatisierungs-Apps erlauben“ aus ist.</string>
+    <string name="automation_howto_clipboard_label">App Lock Revived Automatisierung</string>
+
+    <string name="automation_permission_label">App Lock Revived steuern</string>
+    <string name="automation_permission_description">Erlaubt der App, sofort alle Apps zu sperren und den Schutz von App Lock Revived einzuschalten oder auszuschalten, wenn du das in den Einstellungen von App Lock Revived erlaubt hast.</string>
+
+    <!-- Eindringlings-Selfie: Einstellungen -->
+    <string name="intruder_section_title">Eindringlings-Selfie</string>
+    <string name="intruder_switch_title">Eindringlings-Selfie</string>
+    <string name="intruder_switch_desc">Mit der Frontkamera ein Foto aufnehmen, wenn jemand eine falsche PIN, ein falsches Muster oder Passwort eingibt</string>
+    <string name="intruder_switch_desc_no_permission">Der Kamerazugriff ist aus, daher werden keine Fotos aufgenommen. Schalte dies ein, um es wieder zu erlauben.</string>
+    <string name="intruder_threshold_title">Foto aufnehmen nach</string>
+    <string name="intruder_threshold_desc">Falsche Versuche in Folge</string>
+    <string name="intruder_retention_title">Fotos löschen nach</string>
+    <string name="intruder_retention_desc">Ältere Fotos werden automatisch entfernt</string>
+    <string name="intruder_retention_never">Nie</string>
+    <plurals name="intruder_retention_days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+    <string name="intruder_view_title">Eindringlingsfotos ansehen</string>
+    <string name="intruder_view_empty">Noch keine Fotos</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%d Foto</item>
+        <item quantity="other">%d Fotos</item>
+    </plurals>
+    <string name="intruder_footer">Fotos bleiben im privaten Speicher von App Lock Revived auf diesem Telefon. Sie werden nie hochgeladen oder in Sicherungen aufgenommen. Android zeigt beim Aufnehmen eines Fotos kurz die Kamera-Anzeige.</string>
+    <string name="intruder_footer_accessibility">Bei der Methode Bedienungshilfen lassen manche Telefone die Kamera nicht laufen, solange nur das Sperrbild angezeigt wird. Wenn keine Fotos erscheinen, wechsle zur Methode Nutzungszugriff oder Shizuku.</string>
+
+    <!-- Eindringlings-Selfie: Kamerazugriff -->
+    <string name="intruder_permission_title">Kamerazugriff erlauben</string>
+    <string name="intruder_permission_text">Damit App Lock Revived erkennt, wer versucht, sich Zugang zu verschaffen, nimmt sie nach einer falschen PIN, einem falschen Muster oder Passwort ein Foto mit der Frontkamera auf.</string>
+    <string name="intruder_permission_privacy">Die Kamera wird nur in diesem Moment benutzt, nichts wird auf dem Bildschirm angezeigt, und Fotos verlassen dein Telefon nie.</string>
+    <string name="intruder_permission_continue">Weiter</string>
+    <string name="intruder_permission_denied_title">Eindringlings-Selfie ist aus</string>
+    <string name="intruder_permission_denied_text">Ohne Kamerazugriff kann App Lock Revived keine Fotos aufnehmen, daher bleibt die Eindringlings-Selfie aus.</string>
+    <string name="intruder_permission_blocked_text">Der Kamerazugriff ist für App Lock Revived blockiert. Um die Eindringlings-Selfie zu nutzen, öffne die Einstellungen der App und erlaube Kamera unter Berechtigungen.</string>
+    <string name="intruder_permission_try_again">Erneut versuchen</string>
+    <string name="intruder_open_settings">Einstellungen öffnen</string>
+    <string name="intruder_not_now">Nicht jetzt</string>
+
+    <!-- Eindringlings-Selfie: Benachrichtigung -->
+    <string name="intruder_channel_name">Warnungen bei Eindringlingen</string>
+    <string name="intruder_channel_description">Benachrichtigt dich, wenn nach falschen Entsperrversuchen ein Foto aufgenommen wurde</string>
+    <string name="intruder_notification_title">Jemand hat versucht, %1$s zu öffnen</string>
+    <plurals name="intruder_notification_text">
+        <item quantity="one">Nach %d falschem Versuch wurde ein Foto aufgenommen</item>
+        <item quantity="other">Nach %d falschen Versuchen wurde ein Foto aufgenommen</item>
+    </plurals>
+    <string name="intruder_notification_public_text">Sicherheitswarnung</string>
+
+    <!-- Eindringlingsfotos: Bildschirm -->
+    <string name="intruder_photos_title">Eindringlingsfotos</string>
+    <string name="intruder_delete_all_cd">Alle Fotos löschen</string>
+    <string name="intruder_delete_all_title">Alle Fotos löschen?</string>
+    <string name="intruder_delete_all_text">Alle Eindringlingsfotos werden dauerhaft von diesem Telefon entfernt.</string>
+    <string name="intruder_delete_all_confirm">Alle löschen</string>
+    <string name="intruder_all_deleted">Alle Fotos gelöscht</string>
+    <string name="intruder_photo_deleted">Foto gelöscht</string>
+    <string name="intruder_disabled_banner">Die Eindringlings-Selfie ist aus. Schalte sie in den Einstellungen ein, um ein Foto von jedem zu erhalten, der falsche Zugangsdaten eingibt.</string>
+    <string name="intruder_empty_title">Keine Eindringlinge</string>
+    <string name="intruder_empty_desc">Wenn jemand deine PIN, dein Muster oder Passwort falsch eingibt, erscheint sein Foto hier.</string>
+    <string name="intruder_photo_cd">Foto, aufgenommen als jemand versuchte, %1$s zu öffnen, %2$s</string>
+    <plurals name="intruder_attempts_short">
+        <item quantity="one">%d falsch</item>
+        <item quantity="other">%d falsch</item>
+    </plurals>
+    <plurals name="intruder_attempts_long">
+        <item quantity="one">%d falscher Versuch</item>
+        <item quantity="other">%d falsche Versuche</item>
+    </plurals>
+    <string name="intruder_viewer_details">%1$s · %2$s</string>
+    <string name="intruder_viewer_close_cd">Foto schließen</string>
+    <string name="intruder_share">Teilen</string>
+    <string name="intruder_share_title">Foto teilen</string>
+    <string name="intruder_share_failed">Das Foto konnte nicht geteilt werden</string>
+    <string name="intruder_delete">Löschen</string>
+
+    <!-- Zusätzlicher Schutz -->
+    <string name="hardening_section_title">Zusätzlicher Schutz</string>
+    <string name="hardening_close_apps_title">Gesperrte Apps schließen, wenn der Bildschirm ausgeht</string>
+    <string name="hardening_close_apps_desc_shizuku">Schließt gesperrte Apps mit Shizuku zwangsweise, wenn der Bildschirm ausgeht oder du „Alle jetzt sperren“ verwendest. Sie hören auf, Medien abzuspielen, und erhalten keine Benachrichtigungen, bis du sie wieder öffnest. Systemapps, dein Launcher und deine Tastatur werden nie geschlossen.</string>
+    <string name="hardening_close_apps_desc_background">Schließt gesperrte Apps, die im Hintergrund laufen, wenn der Bildschirm ausgeht oder du „Alle jetzt sperren“ verwendest. Die App, die du gerade benutzt, läuft möglicherweise weiter. Mit Shizuku wird jede gesperrte App geschlossen. Systemapps, dein Launcher und deine Tastatur werden nie geschlossen.</string>
+    <string name="hardening_close_apps_desc_unavailable">Benötigt Shizuku: Seit Android 14 können Apps andere Apps nur noch über Shizuku schließen. Mit Shizuku werden gesperrte Apps zwangsweise beendet, wenn der Bildschirm ausgeht, und erhalten keine Benachrichtigungen, bis du sie wieder öffnest.</string>
+    <string name="hardening_pattern_size_title">Mustergröße</string>
+    <string name="hardening_pattern_size_desc">Größe des Musterrasters auf dem Sperrbildschirm und beim Festlegen eines Musters</string>
+    <string name="hardening_pattern_size_small">Klein</string>
+    <string name="hardening_pattern_size_medium">Mittel</string>
+    <string name="hardening_pattern_size_large">Groß</string>
+    <string name="hardening_history_retention_title">Entsperrverlauf behalten für</string>
+    <string name="hardening_history_retention_desc">Ältere Einträge werden automatisch gelöscht. Es werden höchstens 200 Einträge gespeichert.</string>
+    <string name="hardening_history_retention_desc_disabled">Schalte den Entsperrverlauf ein, um zu wählen, wie lange er gespeichert wird</string>
+    <plurals name="hardening_retention_days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+
+    <!-- Verschlüsselte Sicherungen -->
+    <string name="backup_export_desc_recommend">Gesperrte Apps und Einstellungen in einer Datei speichern. Ein Passwort zum Schutz wird empfohlen.</string>
+    <string name="backup_protect_title">Sicherung schützen</string>
+    <string name="backup_protect_text">Verschlüssle die Datei mit einem Passwort. Ohne Passwort kann jeder, der die Datei bekommt, sehen, welche Apps du sperrst und wie App Lock Revived eingerichtet ist.</string>
+    <string name="backup_password_label">Passwort</string>
+    <string name="backup_password_confirm_label">Passwort bestätigen</string>
+    <plurals name="backup_password_too_short">
+        <item quantity="one">Verwende mindestens %1$d Zeichen</item>
+        <item quantity="other">Verwende mindestens %1$d Zeichen</item>
+    </plurals>
+    <string name="backup_password_mismatch">Die Passwörter stimmen nicht überein</string>
+    <string name="backup_password_forget_warning">Wenn du dieses Passwort vergisst, kann die Sicherung nicht wiederhergestellt werden.</string>
+    <string name="backup_encrypt_and_export">Verschlüsseln und exportieren</string>
+    <string name="backup_export_unencrypted">Ohne Passwort exportieren</string>
+    <string name="backup_export_success_encrypted">Verschlüsselte Sicherung gespeichert</string>
+    <string name="backup_export_interrupted">Der Export wurde unterbrochen, daher wurde nichts gespeichert. Bitte versuche es erneut.</string>
+    <string name="backup_unlock_title">Passwortgeschützte Sicherung</string>
+    <string name="backup_unlock_text">Gib das Passwort ein, das du beim Erstellen dieser Sicherung gewählt hast.</string>
+    <string name="backup_unlock_restore">Wiederherstellen</string>
+    <string name="backup_wrong_password">Falsches Passwort oder die Datei ist beschädigt. Nichts wurde wiederhergestellt.</string>
+    <string name="backup_show_password_cd">Passwort anzeigen</string>
+    <string name="backup_hide_password_cd">Passwort verbergen</string>
+
+    <!-- Sicherheitsoptionen pro App -->
+    <string name="policy_tune_cd">Sicherheitsoptionen für %1$s</string>
+    <string name="policy_sheet_section_method">Entsperrmethode</string>
+    <string name="policy_sheet_section_profiles">In Profilen gesperrt</string>
+    <string name="policy_level_default">Standard</string>
+    <string name="policy_level_default_desc">Folgt den Biometrie-Einstellungen</string>
+    <string name="policy_level_biometric">Nur Biometrie</string>
+    <string name="policy_level_biometric_desc">Fingerabdruck oder Gesichtsentsperrung. Ist Biometrie nicht verfügbar, wird deine PIN, dein Muster oder Passwort verwendet</string>
+    <string name="policy_level_credential">Nur PIN, Muster oder Passwort</string>
+    <string name="policy_level_credential_desc">Fragt immer nach deiner PIN, deinem Muster oder Passwort</string>
+    <string name="policy_level_two_step">Zweistufig</string>
+    <string name="policy_level_two_step_desc">Erst Biometrie, dann PIN, Muster oder Passwort. Beides ist erforderlich</string>
+    <string name="policy_biometric_unavailable">Biometrie ist auf diesem Gerät nicht eingerichtet, daher fragt diese App nach deiner PIN, deinem Muster oder Passwort.</string>
+    <string name="policy_sheet_footer">Verwendet deine vorhandene PIN, dein Muster oder Passwort und die auf diesem Gerät eingerichtete Biometrie.</string>
+
+    <!-- Sperrbildschirm (zweistufig und nur Biometrie) -->
+    <string name="policy_lock_step_biometric">Schritt 1 von 2: mit Biometrie bestätigen</string>
+    <string name="policy_lock_step_pin">Gib jetzt deine PIN ein</string>
+    <string name="policy_lock_step_pattern">Zeichne jetzt dein Muster</string>
+    <string name="policy_lock_step_password">Gib jetzt dein Passwort ein</string>
+    <string name="policy_lock_biometric_required">Entsperre mit deinem Fingerabdruck oder deiner Gesichtsentsperrung</string>
+
+    <!-- Profile -->
+    <string name="profiles_name_home">Zuhause</string>
+    <string name="profiles_name_work">Arbeit</string>
+    <string name="profiles_name_guest">Gast</string>
+    <string name="profiles_name_custom">Benutzerdefiniert</string>
+
+    <!-- Startseite: Profilauswahl -->
+    <string name="profiles_selector_title">Sperrprofil</string>
+    <string name="profiles_manage_cd">Profile verwalten</string>
+    <string name="profiles_switched">Zu %1$s gewechselt</string>
+    <string name="profiles_lock_all_user_apps">Alle Apps sperren</string>
+
+    <!-- Profile: Bildschirm -->
+    <string name="profiles_title">Sperrprofile</string>
+    <string name="profiles_subtitle">Aktiv: %1$s</string>
+    <string name="profiles_intro">Jedes Profil hat seine eigene Liste gesperrter Apps. Nur das aktive Profil wird durchgesetzt, und beim Wechseln wirst du immer zuerst nach deiner PIN, deinem Muster oder Passwort gefragt.</string>
+    <string name="profiles_section_profiles">Profile</string>
+    <string name="profiles_active_badge">Aktiv</string>
+    <plurals name="profiles_app_count">
+        <item quantity="one">%d App</item>
+        <item quantity="other">%d Apps</item>
+    </plurals>
+    <string name="profiles_summary">%1$s · %2$s</string>
+    <string name="profiles_unlock_follow_global">Entsperrdauer aus den Einstellungen</string>
+    <string name="profiles_unlock_override">Entsperrt: %1$s</string>
+    <string name="profiles_new">Neues Profil</string>
+    <string name="profiles_activate">Aktivieren</string>
+    <string name="profiles_rename">Umbenennen</string>
+    <string name="profiles_delete">Löschen</string>
+    <string name="profiles_unlock_duration">Entsperrdauer</string>
+    <string name="profiles_unlock_duration_global">Wie in den Einstellungen (%1$s)</string>
+    <string name="profiles_unlock_duration_sheet_desc">Wie lange Apps dieses Profils entsperrt bleiben, nachdem du sie entsperrt hast.</string>
+    <string name="profiles_name_label">Profilname</string>
+    <string name="profiles_create_title">Neues Profil</string>
+    <string name="profiles_create_desc">Startet mit den in %1$s gesperrten Apps. Du kannst sie ändern, nachdem du zu diesem Profil gewechselt bist.</string>
+    <string name="profiles_create_confirm">Erstellen</string>
+    <string name="profiles_rename_title">Profil umbenennen</string>
+    <string name="profiles_save">Speichern</string>
+    <string name="profiles_delete_title">%1$s löschen?</string>
+    <string name="profiles_delete_text">Die Liste der gesperrten Apps wird entfernt. Deine anderen Profile sind nicht betroffen.</string>
+    <string name="profiles_guest_hint">Tipp: Aktiviere Gast und nutze „Alle Apps sperren“, bevor du dein Telefon jemand anderem gibst. Entsperre dann nur, was die Person verwenden darf.</string>
+    <string name="profiles_options_cd">Optionen für %1$s</string>
+
+    <!-- Schnelleinstellungs-Kachel -->
+    <string name="tile_profile_label">Sperrprofil</string>
+
+    <!-- Tastatur -->
+    <string name="pin_keypad_clear_action">Alle löschen</string>
+</resources>
