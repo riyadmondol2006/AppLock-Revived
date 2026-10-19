@@ -12,4 +12,5 @@ sealed class Screen(val route: String) {
     object TriggerExclusions : Screen("trigger_exclusions")
     object AntiUninstall: Screen("anti_uninstall")
     object UnlockHistory : Screen("unlock_history")
+    object IntruderPhotos : Screen("intruder_photos")
 }

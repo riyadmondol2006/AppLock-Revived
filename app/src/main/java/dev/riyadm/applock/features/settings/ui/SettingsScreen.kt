@@ -272,6 +272,9 @@ fun SettingsScreen(navController: NavController) {
                         onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
                     )
                 }
+                item(key = "intruder", contentType = "section") {
+                    IntruderSection(onViewPhotos = { navController.navigate(Screen.IntruderPhotos.route) })
+                }
                 item(key = "backup", contentType = "section") {
                     BackupSection(
                         repository = repository,
