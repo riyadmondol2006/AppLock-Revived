@@ -22,7 +22,10 @@ object LogUtils {
     private const val TAG = "LogUtils"
     private const val FILE_NAME = "app_logs.txt"
     private const val SECURITY_LOGS = "audit_log.txt"
+    private const val RETENTION_DAYS = 7L
+    private const val OLDEST_ENTRY_SCAN_LINES = 64
     private lateinit var context: Context
+    @Volatile
     private var loggingEnabled = false
 
     fun initialize(application: Context) {
@@ -135,7 +138,7 @@ object LogUtils {
     }
 
     /**
-     * Purge log entries older than 3 days from both audit and app log files.
+     * Purge log entries older than [RETENTION_DAYS] days from both audit and app log files.
      * This prevents logs from growing indefinitely.
      * Runs asynchronously to avoid blocking the main thread.
      */
@@ -146,11 +149,25 @@ object LogUtils {
         }
     }
 
+    private fun oldestEntry(logFile: File): Instant? = try {
+        logFile.bufferedReader().use { reader ->
+            reader.lineSequence()
+                .take(OLDEST_ENTRY_SCAN_LINES)
+                .firstNotNullOfOrNull { line -> runCatching { Instant.parse(line.substringBefore(" ")) }.getOrNull() }
+        }
+    } catch (_: Exception) {
+        null
+    }
+
     private fun purgeOldLogsFromFile(logFile: File, logType: String) {
         try {
             if (!logFile.exists()) {
                 return
             }
+            val cutoff = Instant.now().minus(RETENTION_DAYS, ChronoUnit.DAYS)
+            // Lines are appended in order, so the first one is the oldest. Runs on every app
+            // start: don't copy and rewrite the file when nothing is old enough to go.
+            if (oldestEntry(logFile)?.isAfter(cutoff) == true) return
 
             val tempDir = context.cacheDir
             val tempLogFile = File(tempDir, logFile.name + ".processing")
@@ -159,7 +176,6 @@ object LogUtils {
             try {
                 logFile.copyTo(backupFile, overwrite = true)
 
-                val threeDaysAgo = Instant.now().minus(7, ChronoUnit.DAYS)
                 var purgedCount = 0
                 var keptCount = 0
 
@@ -170,7 +186,7 @@ object LogUtils {
                                 val timestampStr = line.substringBefore(" ")
                                 val timestamp = Instant.parse(timestampStr)
 
-                                if (timestamp.isAfter(threeDaysAgo)) {
+                                if (timestamp.isAfter(cutoff)) {
                                     writer.write(line)
                                     writer.newLine()
                                     keptCount++
@@ -189,7 +205,7 @@ object LogUtils {
                 if (keptCount == 0) {
                     logFile.delete()
                     tempLogFile.delete()
-                    Log.d(TAG, "Deleted $logType log file - all entries were older than 3 days")
+                    Log.d(TAG, "Deleted $logType log file - all entries were older than $RETENTION_DAYS days")
                 } else if (purgedCount > 0) {
                     tempLogFile.copyTo(logFile, overwrite = true)
                     tempLogFile.delete()

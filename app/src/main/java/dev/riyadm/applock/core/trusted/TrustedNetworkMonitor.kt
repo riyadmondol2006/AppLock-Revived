@@ -121,6 +121,14 @@ object TrustedNetworkMonitor {
     /** Main thread only: the last value [update] published, used to detect loss of trust. */
     private var reportedTrusted = false
 
+    /**
+     * True once the keyguard was seen unlocked since the screen last turned off, so [isTrusted]
+     * doesn't ask the window manager (a binder call) on every lock decision. Cleared on screen
+     * off and with every periodic re-verification, so it is never trusted for long.
+     */
+    @Volatile
+    private var keyguardSeenUnlocked = false
+
     private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == TrustedNetworkSettings.KEY_ENABLED || key == TrustedNetworkSettings.KEY_NETWORKS || key == null) {
             runOnMain { update() }
@@ -192,7 +200,9 @@ object TrustedNetworkMonitor {
 
     /**
      * True only when locked apps may open without authentication right now. Cheap enough to be
-     * called on every lock decision; permissions and location are re-verified periodically.
+     * called on every lock decision: network changes, location mode changes and screen off are
+     * pushed by callbacks, and permissions, location and the keyguard are re-verified here at
+     * most every [REVERIFY_MS] (only while trusted, only when a lock decision asks; no timer).
      */
     fun isTrusted(): Boolean {
         if (!trusted) return false
@@ -203,14 +213,18 @@ object TrustedNetworkMonitor {
                 invalidate()
                 return false
             }
-            if (context.isDeviceLocked()) return false
             val now = SystemClock.elapsedRealtime()
             if (now - lastVerifiedAt >= REVERIFY_MS) {
+                keyguardSeenUnlocked = false
                 if (locationProblem(context) != null) {
                     invalidate()
                     return false
                 }
                 lastVerifiedAt = now
+            }
+            if (!keyguardSeenUnlocked) {
+                if (context.isDeviceLocked()) return false
+                keyguardSeenUnlocked = true
             }
             true
         } catch (e: Exception) {
@@ -357,14 +371,20 @@ object TrustedNetworkMonitor {
     private fun startListening(context: Context) {
         if (callback == null) registerCallback(context)
         if (locationReceiver == null) {
+            keyguardSeenUnlocked = false
             val receiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context?, intent: Intent?) {
+                    if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                        keyguardSeenUnlocked = false
+                        return
+                    }
                     runOnMain { update() }
                 }
             }
             val filter = IntentFilter().apply {
                 addAction(LocationManager.MODE_CHANGED_ACTION)
                 addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+                addAction(Intent.ACTION_SCREEN_OFF)
             }
             try {
                 ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
@@ -387,6 +407,7 @@ object TrustedNetworkMonitor {
             }
         }
         locationReceiver = null
+        keyguardSeenUnlocked = false
     }
 
     private fun registerCallback(context: Context) {
@@ -445,9 +466,18 @@ object TrustedNetworkMonitor {
     ) {
         if (source !== callback) return
         unconfirmedNetworks.remove(network)
-        wifiNetworks[network] = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            capabilities.transportInfo as? WifiInfo
-        } else null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val info = capabilities.transportInfo as? WifiInfo
+            val known = wifiNetworks.containsKey(network)
+            val previous = wifiNetworks.put(network, info)
+            // Capabilities also change with signal strength, link speed and so on. When the
+            // network's name, router and security are the same, the outcome can't change.
+            if (known && previous?.toCurrentWifi(null) == info?.toCurrentWifi(null)) return
+        } else {
+            // Before Android 12 the connection is read from WifiManager in update(), so a roam
+            // to another router isn't visible here: always re-evaluate.
+            wifiNetworks[network] = null
+        }
         update()
     }
 

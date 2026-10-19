@@ -39,6 +39,7 @@ import rikka.shizuku.Shizuku
 @SuppressLint("AccessibilityPolicy")
 class AppLockAccessibilityService : AccessibilityService() {
     private val appLockRepository: AppLockRepository by lazy { applicationContext.appLockRepository() }
+    private val config: LockConfig by lazy { LockConfig.get(this) }
     private val mainHandler = Handler(Looper.getMainLooper())
     private val appLabel: String by lazy { getString(R.string.app_name) }
 
@@ -217,13 +218,13 @@ class AppLockAccessibilityService : AccessibilityService() {
     private fun handleAccessibilityEvent(event: AccessibilityEvent) {
         val packageName = event.packageName?.toString() ?: return
 
-        if (appLockRepository.isAntiUninstallEnabled() &&
-            (packageName == SETTINGS_PACKAGE || packageName in PACKAGE_INSTALLER_PACKAGES)
+        if ((packageName == SETTINGS_PACKAGE || packageName in PACKAGE_INSTALLER_PACKAGES) &&
+            config.antiUninstallEnabled
         ) {
             checkForDeviceAdminDeactivation(event, packageName)
         }
 
-        if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+        if (!config.protectEnabled || !shouldAccessibilityHandleLocking()) {
             dismissOverlay()
             return
         }
@@ -265,13 +266,17 @@ class AppLockAccessibilityService : AccessibilityService() {
         }
     }
 
+    /**
+     * Content changes are by far the most frequent event, so everything that ends here for an
+     * app that isn't locked, or is unlocked, only reads memory: no binder calls, no copies.
+     */
     private fun onWindowContentChanged(event: AccessibilityEvent, packageName: String) {
-        if (packageName in launcherPackages() && isLauncherPaneChange(event)) {
+        if (isLauncherPaneChange(event) && packageName in launcherPackages()) {
             scheduleWindowScan()
         }
+        if (!config.isLocked(packageName)) return
         if (packageName == this.packageName || isIgnoredPackage(packageName)) return
         if (packageName in exitedPackages) return
-        if (packageName !in appLockRepository.getLockedApps()) return
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return
         if (AppLockManager.isWithinUnlockDuration(
                 packageName,
@@ -281,6 +286,14 @@ class AppLockAccessibilityService : AccessibilityService() {
         ) {
             return
         }
+        if (packageName == overlayPackage && overlayManager?.isShowing == true) {
+            // Already covered: only re-assert the overlay (cheap, no binder calls), e.g. after a
+            // cancelled biometric prompt. The keyguard check below is not needed for that.
+            maybeLock(packageName)
+            return
+        }
+        // On a trusted network maybeLock would decline anyway; skip the binder calls below.
+        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return
         if (handleDeviceLocked()) return
 
         // Stale events from an app that just left the screen must not lock the new foreground.
@@ -303,7 +316,7 @@ class AppLockAccessibilityService : AccessibilityService() {
         val triggerExcluded = appLockRepository.getTriggerExcludedApps()
         if (previous != packageName && previous in triggerExcluded) {
             // Opened from a trigger-excluded app: don't lock it for this session.
-            if (appLockRepository.isAppLocked(packageName)) {
+            if (config.isLocked(packageName)) {
                 AppLockManager.markUnlocked(packageName)
             }
             return
@@ -333,8 +346,7 @@ class AppLockAccessibilityService : AccessibilityService() {
 
     /** Shows the lock overlay for [packageName] if it is locked and not currently unlocked. */
     private fun maybeLock(packageName: String): Boolean {
-        if (packageName !in appLockRepository.getLockedApps()) return false
-        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return false
+        if (!config.isLocked(packageName)) return false
         if (AppLockManager.isBiometricAuthInProgress()) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
@@ -345,13 +357,14 @@ class AppLockAccessibilityService : AccessibilityService() {
         ) {
             return false
         }
+        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return false
         showLockScreenOverlay(packageName)
         return true
     }
 
     private fun relock(packageName: String) {
         AppLockManager.reportBiometricAuthFinished()
-        if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+        if (!config.protectEnabled || !shouldAccessibilityHandleLocking()) {
             AppLockManager.isLockScreenShown.set(false)
             return
         }
@@ -441,7 +454,7 @@ class AppLockAccessibilityService : AccessibilityService() {
      */
     private fun scanVisibleWindows() {
         try {
-            if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+            if (!config.protectEnabled || !shouldAccessibilityHandleLocking()) {
                 dismissOverlay()
                 return
             }
@@ -557,7 +570,7 @@ class AppLockAccessibilityService : AccessibilityService() {
     }
 
     private fun shouldAccessibilityHandleLocking(): Boolean {
-        return appLockRepository.getBackendImplementation() == BackendImplementation.ACCESSIBILITY
+        return config.backend == BackendImplementation.ACCESSIBILITY
     }
 
     @SuppressLint("InlinedApi")
