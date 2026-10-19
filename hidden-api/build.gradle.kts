@@ -6,7 +6,11 @@ plugins {
 
 android {
     namespace = "dev.riyadm.hidden_api"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         minSdk = 26

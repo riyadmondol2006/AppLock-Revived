@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- App Lock Revived launcher icon. 108x108 adaptive-icon canvas; artwork kept inside the 66dp safe zone. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0E8A87"/>
+      <stop offset="0.5" stop-color="#1F4E8C"/>
+      <stop offset="1" stop-color="#3D1D8F"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="54" x2="0" y2="81" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E4ECFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="108" height="108" fill="url(#bg)"/>
+  <path d="M40,56 V44 A12.5,12.5 0 0 1 65,44 V45" fill="none" stroke="#8DF5DC" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M58,43.5 H72 L65,51.5 Z" fill="#8DF5DC" stroke="#8DF5DC" stroke-width="2" stroke-linejoin="round"/>
+  <path fill="url(#body)" fill-rule="evenodd" d="M42.5,54 H62.5 A10,10 0 0 1 72.5,64 V71 A10,10 0 0 1 62.5,81 H42.5 A10,10 0 0 1 32.5,71 V64 A10,10 0 0 1 42.5,54 Z M52.5,59.8 A4.2,4.2 0 0 0 50.4,67.6 L49.7,72.4 A1.4,1.4 0 0 0 51.1,74 H53.9 A1.4,1.4 0 0 0 55.3,72.4 L54.6,67.6 A4.2,4.2 0 0 0 52.5,59.8 Z"/>
+</svg>
