@@ -268,7 +268,7 @@ class PreferencesRepository(context: Context) {
     fun getRemainingLockoutMs(): Long {
         val remaining = getLockoutUntil() - System.currentTimeMillis()
         // Guard against the clock being moved back to escape a lockout
-        val cap = getLockoutDurationSeconds() * 1000L * 16
+        val cap = getLockoutDurationSeconds().coerceAtLeast(0) * 1000L * 16
         return remaining.coerceIn(0L, cap)
     }
 
@@ -290,18 +290,40 @@ class PreferencesRepository(context: Context) {
         it in EXPORTABLE_SETTINGS_KEYS
     }
 
-    internal fun importSettings(values: Map<String, Any?>) {
+    /**
+     * Imports settings from a backup. Every value is type- and range-checked, because a
+     * wrongly typed preference makes the getters throw and could silently disable locking.
+     * Returns the number of settings applied.
+     */
+    internal fun importSettings(values: Map<String, Any?>): Int {
+        var applied = 0
         settingsPrefs.edit(commit = true) {
             values.forEach { (key, value) ->
-                if (key !in EXPORTABLE_SETTINGS_KEYS) return@forEach
-                when (value) {
-                    is Boolean -> putBoolean(key, value)
-                    is Int -> putInt(key, value)
-                    is Long -> putLong(key, value)
-                    is String -> putString(key, value)
-                }
+                when (key) {
+                    in BOOLEAN_SETTINGS_KEYS -> (value as? Boolean)?.let { putBoolean(key, it) }
+                    KEY_UNLOCK_TIME_DURATION -> value.toIntIn(0..Int.MAX_VALUE)?.let { putInt(key, it) }
+                    KEY_MAX_FAILED_ATTEMPTS -> value.toIntIn(0..100)?.let { putInt(key, it) }
+                    KEY_LOCKOUT_DURATION -> value.toIntIn(1..3600)?.let { putInt(key, it) }
+                    KEY_THEME_MODE -> (value as? String)
+                        ?.takeIf { it in setOf(THEME_SYSTEM, THEME_LIGHT, THEME_DARK) }
+                        ?.let { putString(key, it) }
+
+                    KEY_BACKEND_IMPLEMENTATION -> (value as? String)
+                        ?.takeIf { name -> BackendImplementation.entries.any { it.name == name } }
+                        ?.let { putString(key, it) }
+
+                    else -> null
+                }?.also { applied++ }
             }
         }
+        return applied
+    }
+
+    private fun Any?.toIntIn(range: IntRange): Int? {
+        val number = (this as? Number) ?: return null
+        val long = number.toLong()
+        if (number.toDouble() != long.toDouble()) return null
+        return long.takeIf { it in range.first..range.last }?.toInt()
     }
 
     companion object {
@@ -339,6 +361,13 @@ class PreferencesRepository(context: Context) {
         private const val KEY_UPDATE_CHECK = "update_check_enabled"
         private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
         private const val KEY_SKIPPED_UPDATE = "skipped_update_version"
+
+        private val BOOLEAN_SETTINGS_KEYS = setOf(
+            KEY_BIOMETRIC_AUTH_ENABLED, KEY_DISABLE_HAPTICS, KEY_USE_MAX_BRIGHTNESS,
+            KEY_APPLOCK_ENABLED, KEY_AUTO_UNLOCK, KEY_SHOW_SYSTEM_APPS, KEY_DYNAMIC_COLOR,
+            KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
+            KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_UPDATE_CHECK
+        )
 
         // Settings that are safe to export. Lock type is excluded because the
         // credential itself is never exported, so restoring it could lock the user out.

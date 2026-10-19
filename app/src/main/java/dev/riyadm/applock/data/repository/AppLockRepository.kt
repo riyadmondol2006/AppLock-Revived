@@ -173,7 +173,7 @@ class AppLockRepository(private val context: Context) {
 
     // Backup
     internal fun exportSettings(): Map<String, Any?> = preferencesRepository.exportSettings()
-    internal fun importSettings(values: Map<String, Any?>) =
+    internal fun importSettings(values: Map<String, Any?>): Int =
         preferencesRepository.importSettings(values)
 
     internal fun replaceAppLists(locked: Set<String>, excluded: Set<String>, antiUninstall: Set<String>) =

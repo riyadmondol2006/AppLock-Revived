@@ -56,9 +56,9 @@ class BackupRepository(
 
         val settingsJson = root.optJSONObject(FIELD_SETTINGS) ?: JSONObject()
         val settings = settingsJson.keys().asSequence().associateWith { settingsJson.get(it) }
-        repository.importSettings(settings)
+        val applied = repository.importSettings(settings)
 
-        return ImportResult(lockedApps = locked.size, settings = settings.size)
+        return ImportResult(lockedApps = locked.size, settings = applied)
     }
 
     private fun JSONArray?.toStringSet(): Set<String> {

@@ -1,8 +1,8 @@
 package dev.riyadm.applock.features.setpassword.ui
 
-import kotlinx.coroutines.delay
 import android.os.Build
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
@@ -64,6 +64,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -93,16 +94,19 @@ import androidx.compose.ui.unit.min
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.riyadm.appintro.MorphingHero
-import dev.riyadm.applock.features.lockscreen.ui.PatternPad
-import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
 import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.navigation.Screen
 import dev.riyadm.applock.core.navigation.finishPasswordSetup
 import dev.riyadm.applock.core.utils.SecurityUtils
+import dev.riyadm.applock.data.repository.UnlockLogRepository
+import dev.riyadm.applock.features.lockscreen.ui.PatternPad
+import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -141,6 +145,28 @@ fun CredentialSetupScreen(
     var busy by remember { mutableStateOf(false) }
     var verifyWithKeyboard by remember { mutableStateOf(false) }
     val shake = remember { Animatable(0f) }
+    var finished by remember { mutableStateOf(false) }
+    val ownRoute = remember { navController.currentBackStackEntry?.destination?.route }
+    val currentEntry by navController.currentBackStackEntryAsState()
+
+    DisposableEffect(activity) {
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        onDispose { activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE) }
+    }
+
+    // Only leave once this screen is on top again, so a lock screen pushed on resume
+    // while the credential was being hashed is never popped without authentication.
+    LaunchedEffect(finished, currentEntry?.destination?.route) {
+        if (!finished || currentEntry?.destination?.route != ownRoute) return@LaunchedEffect
+        if (isFirstTimeSetup) {
+            navController.navigate(Screen.Main.route) {
+                popUpTo(navController.graph.id) { inclusive = true }
+                launchSingleTop = true
+            }
+        } else {
+            navController.finishPasswordSetup(false)
+        }
+    }
 
     val activeKind = if (step == SetupStep.VERIFY) verifyKind else kind
     val usesTextField = activeKind == LockKind.PASSWORD ||
@@ -170,9 +196,11 @@ fun CredentialSetupScreen(
         busy = true
         scope.launch {
             withContext(Dispatchers.Default) {
-                repository.setLockType(chosen.prefValue)
+                // Credential first: if the process dies in between, the old lock type
+                // still matches a stored credential instead of locking the user out.
                 if (chosen == LockKind.PATTERN) repository.setPattern(credential)
                 else repository.setPassword(credential)
+                repository.setLockType(chosen.prefValue)
             }
             haptics.confirm()
             Toast.makeText(
@@ -180,14 +208,7 @@ fun CredentialSetupScreen(
                 context.getString(R.string.password_set_successfully_toast),
                 Toast.LENGTH_SHORT
             ).show()
-            if (isFirstTimeSetup) {
-                navController.navigate(Screen.Main.route) {
-                    popUpTo(navController.graph.id) { inclusive = true }
-                    launchSingleTop = true
-                }
-            } else {
-                navController.finishPasswordSetup(false)
-            }
+            finished = true
         }
     }
 
@@ -196,11 +217,19 @@ fun CredentialSetupScreen(
         when (step) {
             SetupStep.VERIFY -> {
                 if (value.isEmpty()) return
+                val lockoutMs = repository.getRemainingLockoutMs()
+                if (lockoutMs > 0) {
+                    input = ""
+                    fail(context.getString(R.string.lock_lockout_message, formatLockout(lockoutMs)))
+                    return
+                }
                 busy = true
                 scope.launch {
                     val valid = withContext(Dispatchers.Default) {
-                        if (verifyKind == LockKind.PATTERN) repository.validatePattern(value)
+                        val ok = if (verifyKind == LockKind.PATTERN) repository.validatePattern(value)
                         else repository.validatePassword(value)
+                        repository.recordUnlockAttempt(context.packageName, ok, verifyKind.logMethod)
+                        ok
                     }
                     busy = false
                     input = ""
@@ -742,3 +771,15 @@ private fun PasswordInput(
 }
 
 private const val PATTERN_CLEAR_DELAY_MS = 350L
+
+private val LockKind.logMethod: UnlockLogRepository.Method
+    get() = when (this) {
+        LockKind.PIN -> UnlockLogRepository.Method.PIN
+        LockKind.PATTERN -> UnlockLogRepository.Method.PATTERN
+        LockKind.PASSWORD -> UnlockLogRepository.Method.PASSWORD
+    }
+
+private fun formatLockout(ms: Long): String {
+    val seconds = (ms + 999) / 1000
+    return "%d:%02d".format(seconds / 60, seconds % 60)
+}
