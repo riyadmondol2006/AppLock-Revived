@@ -96,6 +96,17 @@ English, العربية, বাংলা, Deutsch, Español, Français, हि�
 Türkçe, Tiếng Việt and 简体中文. On Android 13+ you can pick the app language in **System settings → Apps →
 App Lock Revived → Language**.
 
+## What's new in 3.1.1
+
+- **Update notice that actually shows up:**
+  - The app checks for new releases every time it comes to the front, at most once an hour.
+  - A background check runs about twice a day and posts a notification.
+- **Lower battery use:**
+  - Usage-stats and Shizuku polling stop entirely while the screen is off, protection is off, or nothing is locked.
+  - The accessibility service handles each event with in-memory checks only.
+  - Lock screens and onboarding no longer redraw while idle, and the lock screen no longer keeps the display on.
+- **Automatic versioning:** every release is now versioned automatically by CI.
+
 ## What's new in 3.1
 
 - **Per-app lock methods and lock profiles:** upstream issue #221.
