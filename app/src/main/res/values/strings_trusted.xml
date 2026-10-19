@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings: trusted Wi-Fi -->
+    <string name="trusted_section_title">Trusted places</string>
+    <string name="trusted_wifi_title">Trusted Wi-Fi</string>
+    <string name="trusted_wifi_desc_off">Let locked apps open without asking while you\'re on a Wi-Fi network you trust</string>
+    <string name="trusted_wifi_desc_on">On. App Lock Revived itself still asks for your credential</string>
+    <string name="trusted_wifi_desc_problem">On, but paused: %1$s</string>
+    <string name="trusted_networks_title">Trusted networks</string>
+    <string name="trusted_networks_summary_none">No networks added yet</string>
+    <plurals name="trusted_networks_summary_count">
+        <item quantity="one">%d network</item>
+        <item quantity="other">%d networks</item>
+    </plurals>
+    <string name="trusted_networks_summary_relaxed">%1$s · Relaxed on “%2$s”</string>
+    <string name="trusted_section_footer">Locking relaxes only while the screen is unlocked and the phone is connected to a trusted network. As soon as you disconnect or join another network, every app locks again.</string>
+
+    <string name="trusted_enable_dialog_title">Trust Wi-Fi networks?</string>
+    <string name="trusted_enable_dialog_text">While you\'re connected to a network you trust, your locked apps open without asking for your PIN, pattern, password or biometrics. Anyone who picks up your unlocked phone there can open them.</string>
+    <string name="trusted_enable_dialog_supporting">To recognise the network, App Lock Revived needs location access, because Android treats Wi-Fi names as location data. The name is only compared on your device and never leaves it.</string>
+    <string name="trusted_enable_dialog_confirm">Turn on</string>
+
+    <!-- Trusted networks screen -->
+    <string name="trusted_screen_subtitle_relaxed">Relaxed on “%1$s”</string>
+    <string name="trusted_screen_subtitle_on">On · apps lock normally here</string>
+    <string name="trusted_screen_subtitle_off">Trusted Wi-Fi is off</string>
+    <string name="trusted_master_switch">Use trusted Wi-Fi</string>
+    <string name="trusted_current_header">Current network</string>
+    <string name="trusted_current_not_connected">Not connected to Wi-Fi</string>
+    <string name="trusted_current_unknown">Connected to Wi-Fi</string>
+    <string name="trusted_current_unknown_desc">The network name can\'t be read until location access is fixed</string>
+    <string name="trusted_current_trusted">Trusted. Locked apps open without asking here</string>
+    <string name="trusted_current_trusted_paused">Trusted, but paused until the problem above is fixed</string>
+    <string name="trusted_current_trusted_off">Saved as trusted. Turn on trusted Wi-Fi to use it</string>
+    <string name="trusted_current_not_trusted">Not trusted. Apps lock normally</string>
+    <string name="trusted_current_open">Open network: it can\'t be trusted, because anyone can create a network with the same name</string>
+    <string name="trusted_current_router">Router %1$s</string>
+    <string name="trusted_match_router_title">Only this exact router</string>
+    <string name="trusted_match_router_desc">Also check the router\'s hardware address (BSSID). Safer, but stops working if your router is replaced or you have several access points</string>
+    <string name="trusted_match_router_desc_recommended">Recommended: this Android version can\'t tell whether a network is password-protected</string>
+    <string name="trusted_add_current">Trust this network</string>
+    <string name="trusted_added">“%1$s” is now trusted</string>
+    <string name="trusted_removed">“%1$s” removed</string>
+    <string name="trusted_undo">Undo</string>
+    <string name="trusted_saved_header">Saved networks</string>
+    <string name="trusted_saved_empty">Networks you trust will appear here. Connect to one and tap “Trust this network”.</string>
+    <string name="trusted_saved_any_router">Any router with this name</string>
+    <string name="trusted_saved_exact_router">Only router %1$s</string>
+    <string name="trusted_saved_connected">Connected now</string>
+    <string name="trusted_remove_cd">Remove %1$s</string>
+    <string name="trusted_screen_footer">App Lock Revived\'s own lock is never relaxed, and nothing is relaxed while your phone is locked. Open networks can\'t be trusted. Anyone can set up a network with the same name and the same router address, so only trust networks protected by a password you keep private.</string>
+
+    <!-- Problems -->
+    <string name="trusted_problem_location_title">Location access needed</string>
+    <string name="trusted_problem_location_desc">Android only reveals the name of the connected Wi-Fi network to apps with location access.</string>
+    <string name="trusted_problem_precise_title">Precise location needed</string>
+    <string name="trusted_problem_precise_desc">With approximate location only, Android hides the Wi-Fi name. Switch to precise location.</string>
+    <string name="trusted_problem_background_title">Allow location all the time</string>
+    <string name="trusted_problem_background_desc">App Lock Revived checks the network while other apps are open. Without “%1$s”, Android hides the Wi-Fi name from it then.</string>
+    <string name="trusted_problem_location_off_title">Location is off</string>
+    <string name="trusted_problem_location_off_desc">Android hides Wi-Fi names while location is turned off for the whole phone.</string>
+    <string name="trusted_problem_ssid_title">Network name unavailable</string>
+    <string name="trusted_problem_ssid_desc">Android isn\'t sharing the name of this network right now, so it\'s treated as untrusted.</string>
+    <string name="trusted_problem_short_location">location access needed</string>
+    <string name="trusted_problem_short_background">location access “all the time” needed</string>
+    <string name="trusted_problem_short_location_off">location is off</string>
+    <string name="trusted_problem_short_ssid">network name unavailable</string>
+    <string name="trusted_problem_footer">Until this is fixed every network is treated as untrusted and apps lock normally.</string>
+    <string name="trusted_action_allow">Allow</string>
+    <string name="trusted_action_turn_on_location">Turn on location</string>
+    <string name="trusted_action_open_settings">Open app settings</string>
+    <string name="trusted_background_default_label">Allow all the time</string>
+
+    <string name="trusted_location_dialog_title">Allow location access?</string>
+    <string name="trusted_location_dialog_text">Android counts Wi-Fi network names as location data, so App Lock Revived needs precise location to see which network you\'re on. It never requests your GPS position, and nothing is sent anywhere.</string>
+    <string name="trusted_background_dialog_title">Allow location all the time?</string>
+    <string name="trusted_background_dialog_text">App Lock Revived decides whether to lock an app while that app is on screen, so it reads the network name in the background. On the next screen, choose “%1$s”.</string>
+    <string name="trusted_background_dialog_supporting">If the option isn\'t offered, open App Lock Revived\'s settings, go to Permissions › Location and choose “%1$s”. You can turn this off at any time; apps then simply lock normally everywhere.</string>
+    <string name="trusted_dialog_continue">Continue</string>
+    <string name="trusted_permission_denied">Location access was denied. Open app settings to allow it.</string>
+
+    <!-- Home screen status card -->
+    <string name="trusted_status_relaxed_title">Protection relaxed</string>
+    <string name="trusted_status_relaxed_desc">On trusted Wi-Fi “%1$s”. Apps lock again as soon as you leave it</string>
+
+    <!-- Automation -->
+    <string name="automation_section_title">Automation</string>
+    <string name="automation_enable_title">Allow automation apps</string>
+    <string name="automation_enable_desc">Let apps such as Tasker or MacroDroid lock all apps or turn protection on, once you grant them the permission</string>
+    <string name="automation_allow_disable_title">Allow automation to turn protection off</string>
+    <string name="automation_allow_disable_desc">Off by default. Only enable if you trust every automation app you granted the permission to</string>
+    <string name="automation_allow_disable_needs_master">Turn on “Allow automation apps” first</string>
+    <string name="automation_disable_dialog_title">Let automation turn protection off?</string>
+    <string name="automation_disable_dialog_text">Any app you granted the automation permission could then turn off App Lock Revived without your PIN, pattern, password or biometrics, leaving every locked app open. A bug or a compromised automation app could do the same.</string>
+    <string name="automation_disable_dialog_confirm">Allow</string>
+    <string name="automation_last_command_title">Last command</string>
+    <string name="automation_last_command_none">No commands received yet</string>
+    <string name="automation_last_command_value">%1$s · %2$s · %3$s</string>
+    <string name="automation_last_command_from">%1$s · %2$s · %3$s · from %4$s</string>
+    <string name="automation_outcome_applied">done</string>
+    <string name="automation_outcome_disabled">ignored, automation off</string>
+    <string name="automation_outcome_not_allowed">ignored, not allowed</string>
+    <string name="automation_outcome_invalid">ignored</string>
+    <string name="automation_action_lock_all">Lock all now</string>
+    <string name="automation_action_enable">Turn protection on</string>
+    <string name="automation_action_disable">Turn protection off</string>
+    <string name="automation_howto_title">How to set it up</string>
+    <string name="automation_howto_desc">Tap to copy the permission and actions</string>
+    <string name="automation_howto_sheet_title">Automation setup</string>
+    <string name="automation_howto_sheet_text">1. The automation app must request the permission below, and you must grant it (Settings › Apps › the automation app › Permissions).\n2. Send a broadcast with one of the actions below and package dev.riyadm.applock. No extras are needed.</string>
+    <string name="automation_howto_permission">Permission</string>
+    <string name="automation_howto_package">Package</string>
+    <string name="automation_howto_actions">Actions</string>
+    <string name="automation_howto_copy_all">Copy all</string>
+    <string name="automation_howto_copied">Copied to clipboard</string>
+    <string name="automation_howto_copy_cd">Copy %1$s</string>
+    <string name="automation_howto_note">Turning protection off only works when “Allow automation to turn protection off” is on. Commands are ignored while “Allow automation apps” is off.</string>
+    <string name="automation_howto_clipboard_label">App Lock Revived automation</string>
+
+    <string name="automation_permission_label">control App Lock Revived</string>
+    <string name="automation_permission_description">Lets the app lock all apps right away and turn App Lock Revived\'s protection on, or off if you allowed that in App Lock Revived\'s settings.</string>
+</resources>

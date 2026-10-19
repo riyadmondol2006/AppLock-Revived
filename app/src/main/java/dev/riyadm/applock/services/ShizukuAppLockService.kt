@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
@@ -84,6 +85,7 @@ class ShizukuAppLockService : Service() {
         appLockRepository.setActiveBackend(BackendImplementation.SHIZUKU)
         AppLockManager.stopAllOtherServices(this, this::class.java)
         NewAppAutoLocker.register(this, this)
+        TrustedNetworkMonitor.register(this, this)
 
         if (!listenersRegistered) {
             Shizuku.addBinderReceivedListenerSticky(binderReceivedListener, mainHandler)
@@ -151,6 +153,7 @@ class ShizukuAppLockService : Service() {
             listenersRegistered = false
         }
         NewAppAutoLocker.unregister(this, this)
+        TrustedNetworkMonitor.unregister(this)
         mainHandler.removeCallbacksAndMessages(null)
         isServiceRunning = false
         ServiceForeground.stop(this)
@@ -226,6 +229,7 @@ class ShizukuAppLockService : Service() {
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long): Boolean {
         if (packageName !in appLockRepository.getLockedApps()) return false
+        if (TrustedNetworkMonitor.isTrusted()) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
                 packageName,

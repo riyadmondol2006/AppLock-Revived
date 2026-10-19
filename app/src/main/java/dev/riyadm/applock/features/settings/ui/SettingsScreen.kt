@@ -266,6 +266,9 @@ fun SettingsScreen(navController: NavController) {
                 item(key = "protection", contentType = "section") {
                     ProtectionSection(state = state, onAntiUninstallChanged = ::onAntiUninstallChanged)
                 }
+                item(key = "trusted", contentType = "section") {
+                    TrustedNetworksSection(onOpenTrustedNetworks = { navController.navigate(Screen.TrustedNetworks.route) })
+                }
                 item(key = "privacy", contentType = "section") {
                     PrivacySection(
                         state = state,
