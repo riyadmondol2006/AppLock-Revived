@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- strings_trusted: automation -->
+    <string name="automation_action_disable">关闭保护</string>
+    <string name="automation_action_enable">开启保护</string>
+    <string name="automation_action_lock_all">立即锁定全部</string>
+    <string name="automation_allow_disable_desc">默认关闭。仅在你信任所有已获授权的自动化应用时开启。</string>
+    <string name="automation_allow_disable_needs_master">请先开启“允许自动化应用”</string>
+    <string name="automation_allow_disable_title">允许自动化关闭保护</string>
+    <string name="automation_disable_dialog_confirm">允许</string>
+    <string name="automation_disable_dialog_text">已获得自动化权限的任何应用都可以在你不输入 PIN 码、图案、密码或使用生物识别的情况下关闭 App Lock Revived，使所有已锁定的应用全部失去保护。程序错误或被攻破的自动化应用也可能造成同样的后果。</string>
+    <string name="automation_disable_dialog_title">允许自动化关闭保护？</string>
+    <string name="automation_enable_desc">在你授予权限后，Tasker、MacroDroid 等应用可以立即锁定所有应用或开启保护。</string>
+    <string name="automation_enable_title">允许自动化应用</string>
+    <string name="automation_howto_actions">操作</string>
+    <string name="automation_howto_clipboard_label">App Lock Revived 自动化</string>
+    <string name="automation_howto_copied">已复制到剪贴板</string>
+    <string name="automation_howto_copy_all">全部复制</string>
+    <string name="automation_howto_copy_cd">复制 %1$s</string>
+    <string name="automation_howto_desc">点按即可复制权限和操作</string>
+    <string name="automation_howto_note">只有开启“允许自动化关闭保护”时，关闭保护的命令才会生效。关闭“允许自动化应用”后，所有命令都会被忽略。</string>
+    <string name="automation_howto_package">包名</string>
+    <string name="automation_howto_permission">权限</string>
+    <string name="automation_howto_sheet_text">1. 自动化应用必须请求下方的权限，并且你需要授予该权限（设置 › 应用 › 该自动化应用 › 权限）。\n2. 发送一条带有下方任一操作的广播，包名为 dev.riyadm.applock。无需附加任何额外数据。</string>
+    <string name="automation_howto_sheet_title">自动化设置</string>
+    <string name="automation_howto_title">设置方法</string>
+    <string name="automation_last_command_from">%1$s · %2$s · %3$s · 来自 %4$s</string>
+    <string name="automation_last_command_none">尚未收到任何命令</string>
+    <string name="automation_last_command_title">最近的命令</string>
+    <string name="automation_last_command_value">%1$s · %2$s · %3$s</string>
+    <string name="automation_outcome_applied">已完成</string>
+    <string name="automation_outcome_disabled">已忽略，自动化已关闭</string>
+    <string name="automation_outcome_invalid">已忽略</string>
+    <string name="automation_outcome_not_allowed">已忽略，未获允许</string>
+    <string name="automation_permission_description">允许应用立即锁定所有应用并开启 App Lock Revived 的保护；如果你已在 App Lock Revived 的设置中允许，也可以关闭保护。</string>
+    <string name="automation_permission_label">控制 App Lock Revived</string>
+    <string name="automation_section_title">自动化</string>
+
+    <!-- strings_hardening: backup -->
+    <string name="backup_encrypt_and_export">加密并导出</string>
+    <string name="backup_export_desc_recommend">将已锁定的应用和设置保存到文件。建议使用密码保护该文件。</string>
+    <string name="backup_export_interrupted">导出已中断，未保存任何内容。请重试。</string>
+    <string name="backup_export_success_encrypted">已保存加密备份</string>
+    <string name="backup_export_unencrypted">不设密码导出</string>
+    <string name="backup_hide_password_cd">隐藏密码</string>
+    <string name="backup_password_confirm_label">确认密码</string>
+    <string name="backup_password_forget_warning">如果忘记此密码，将无法恢复该备份。</string>
+    <string name="backup_password_label">密码</string>
+    <string name="backup_password_mismatch">两次输入的密码不一致</string>
+    <plurals name="backup_password_too_short">
+        <item quantity="other">密码至少需要 %1$d 个字符</item>
+    </plurals>
+    <string name="backup_protect_text">使用密码加密文件。若不设置密码，任何获得该文件的人都能看到你锁定了哪些应用，以及 App Lock Revived 的设置方式。</string>
+    <string name="backup_protect_title">保护你的备份</string>
+    <string name="backup_show_password_cd">显示密码</string>
+    <string name="backup_unlock_restore">恢复</string>
+    <string name="backup_unlock_text">请输入你创建此备份时设置的密码。</string>
+    <string name="backup_unlock_title">受密码保护的备份</string>
+    <string name="backup_wrong_password">密码错误，或文件已损坏。未恢复任何内容。</string>
+
+    <!-- strings_hardening: extra protection -->
+    <string name="hardening_close_apps_desc_background">当屏幕关闭或你使用“立即锁定全部”时，关闭在后台运行的已锁定应用。你正在使用的应用可能会继续运行；使用 Shizuku 时，所有已锁定的应用都会被关闭。系统应用、桌面启动器和键盘永远不会被关闭。</string>
+    <string name="hardening_close_apps_desc_shizuku">使用 Shizuku 在屏幕关闭或你使用“立即锁定全部”时强制停止已锁定的应用。在你重新打开之前，这些应用将停止播放媒体，也不会收到通知。系统应用、桌面启动器和键盘永远不会被关闭。</string>
+    <string name="hardening_close_apps_desc_unavailable">需要 Shizuku：从 Android 14 开始，应用只能通过 Shizuku 关闭其他应用。使用 Shizuku 后，屏幕关闭时已锁定的应用会被强制停止，在你重新打开之前不会收到通知。</string>
+    <string name="hardening_close_apps_title">屏幕关闭时关闭已锁定的应用</string>
+    <string name="hardening_history_retention_desc">较早的记录会被自动删除。最多保留 200 条记录。</string>
+    <string name="hardening_history_retention_desc_disabled">开启解锁记录后即可选择保留时长</string>
+    <string name="hardening_history_retention_title">解锁记录保留时长</string>
+    <string name="hardening_pattern_size_desc">锁屏界面以及设置图案时所用图案网格的大小</string>
+    <string name="hardening_pattern_size_large">大</string>
+    <string name="hardening_pattern_size_medium">中</string>
+    <string name="hardening_pattern_size_small">小</string>
+    <string name="hardening_pattern_size_title">图案大小</string>
+    <plurals name="hardening_retention_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+    <string name="hardening_section_title">额外保护</string>
+
+    <!-- strings_intruder -->
+    <string name="intruder_all_deleted">已删除所有照片</string>
+    <plurals name="intruder_attempts_long">
+        <item quantity="other">%d 次错误尝试</item>
+    </plurals>
+    <plurals name="intruder_attempts_short">
+        <item quantity="other">错误 %d 次</item>
+    </plurals>
+    <string name="intruder_channel_description">在错误解锁尝试后拍摄照片时通知你</string>
+    <string name="intruder_channel_name">入侵提醒</string>
+    <string name="intruder_delete">删除</string>
+    <string name="intruder_delete_all_cd">删除所有照片</string>
+    <string name="intruder_delete_all_confirm">全部删除</string>
+    <string name="intruder_delete_all_text">所有入侵者照片都将从本手机中永久删除。</string>
+    <string name="intruder_delete_all_title">删除所有照片？</string>
+    <string name="intruder_disabled_banner">入侵者自拍已关闭。请在设置中开启，以便拍下任何输错凭据之人的照片。</string>
+    <string name="intruder_empty_desc">当有人输错 PIN 码、图案或密码时，其照片会显示在这里。</string>
+    <string name="intruder_empty_title">暂无入侵者</string>
+    <string name="intruder_footer">照片仅保存在本手机上 App Lock Revived 的私有存储中，绝不会上传，也不会包含在备份中。拍照时，Android 会短暂显示摄像头指示灯。</string>
+    <string name="intruder_footer_accessibility">使用无障碍服务方式时，部分手机在仅显示锁屏浮层时不允许摄像头运行。如果没有显示任何照片，请切换为使用情况访问或 Shizuku 方式。</string>
+    <string name="intruder_not_now">暂不</string>
+    <string name="intruder_notification_public_text">安全警报</string>
+    <plurals name="intruder_notification_text">
+        <item quantity="other">在 %d 次错误尝试后拍下了一张照片</item>
+    </plurals>
+    <string name="intruder_notification_title">有人试图打开 %1$s</string>
+    <string name="intruder_open_settings">打开设置</string>
+    <string name="intruder_permission_blocked_text">App Lock Revived 的相机访问已被禁止。如需使用入侵者自拍，请打开应用设置，并在“权限”中允许“相机”。</string>
+    <string name="intruder_permission_continue">继续</string>
+    <string name="intruder_permission_denied_text">没有相机访问权限，App Lock Revived 无法拍照，因此入侵者自拍将保持关闭。</string>
+    <string name="intruder_permission_denied_title">入侵者自拍已关闭</string>
+    <string name="intruder_permission_privacy">仅在拍照的那一刻使用摄像头，屏幕上不会显示任何内容，照片也绝不会离开你的手机。</string>
+    <string name="intruder_permission_text">为拍下试图闯入的人，在输入错误的 PIN 码、图案或密码后，App Lock Revived 会使用前置摄像头拍摄一张照片。</string>
+    <string name="intruder_permission_title">允许相机访问</string>
+    <string name="intruder_permission_try_again">重试</string>
+    <string name="intruder_photo_cd">有人试图打开 %1$s 时拍摄的照片，%2$s</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="other">%d 张照片</item>
+    </plurals>
+    <string name="intruder_photo_deleted">照片已删除</string>
+    <string name="intruder_photos_title">入侵者照片</string>
+    <plurals name="intruder_retention_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+    <string name="intruder_retention_desc">较早的照片会被自动删除</string>
+    <string name="intruder_retention_never">永不</string>
+    <string name="intruder_retention_title">删除照片的时间</string>
+    <string name="intruder_section_title">入侵者自拍</string>
+    <string name="intruder_share">分享</string>
+    <string name="intruder_share_failed">无法分享照片</string>
+    <string name="intruder_share_title">分享照片</string>
+    <string name="intruder_switch_desc">有人输入错误的 PIN 码、图案或密码时，使用前置摄像头拍照</string>
+    <string name="intruder_switch_desc_no_permission">相机访问已关闭，因此不会拍照。开启此项可重新允许相机访问。</string>
+    <string name="intruder_switch_title">入侵者自拍</string>
+    <string name="intruder_threshold_desc">连续错误尝试次数</string>
+    <string name="intruder_threshold_title">在以下次数后拍照</string>
+    <string name="intruder_view_empty">暂无照片</string>
+    <string name="intruder_view_title">查看入侵者照片</string>
+    <string name="intruder_viewer_close_cd">关闭照片</string>
+    <string name="intruder_viewer_details">%1$s · %2$s</string>
+
+    <!-- strings_lock -->
+    <string name="pin_keypad_clear_action">全部清除</string>
+
+    <!-- strings_profiles: policy -->
+    <string name="policy_biometric_unavailable">本设备尚未设置生物识别，因此此应用将要求你输入凭据。</string>
+    <string name="policy_level_biometric">仅生物识别</string>
+    <string name="policy_level_biometric_desc">指纹或人脸。生物识别不可用时使用你的凭据</string>
+    <string name="policy_level_credential">仅凭据</string>
+    <string name="policy_level_credential_desc">始终要求输入 PIN 码、图案或密码</string>
+    <string name="policy_level_default">默认</string>
+    <string name="policy_level_default_desc">遵循生物识别设置</string>
+    <string name="policy_level_two_step">两步验证</string>
+    <string name="policy_level_two_step_desc">先生物识别，再输入凭据。两者均需通过</string>
+    <string name="policy_lock_biometric_required">请使用指纹或人脸解锁</string>
+    <string name="policy_lock_step_biometric">第 1 步，共 2 步：验证生物识别</string>
+    <string name="policy_lock_step_password">现在请输入密码</string>
+    <string name="policy_lock_step_pattern">现在请绘制图案</string>
+    <string name="policy_lock_step_pin">现在请输入 PIN 码</string>
+    <string name="policy_sheet_footer">使用你现有的 PIN 码、图案或密码，以及本设备上已录入的生物识别信息。</string>
+    <string name="policy_sheet_section_method">解锁方式</string>
+    <string name="policy_sheet_section_profiles">所属锁定配置文件</string>
+    <string name="policy_tune_cd">%1$s 的安全选项</string>
+
+    <!-- strings_profiles: profiles -->
+    <string name="profiles_activate">启用</string>
+    <string name="profiles_active_badge">已启用</string>
+    <plurals name="profiles_app_count">
+        <item quantity="other">%d 个应用</item>
+    </plurals>
+    <string name="profiles_create_confirm">创建</string>
+    <string name="profiles_create_desc">以 %1$s 中已锁定的应用为起点。切换到该配置文件后，你可以再修改其中的应用。</string>
+    <string name="profiles_create_title">新建配置文件</string>
+    <string name="profiles_delete">删除</string>
+    <string name="profiles_delete_text">其已锁定应用的列表将被移除。你的其他配置文件不受影响。</string>
+    <string name="profiles_delete_title">删除 %1$s？</string>
+    <string name="profiles_guest_hint">提示：在将手机交给他人之前，启用“访客”并使用“锁定所有应用”，然后只解锁他们可以使用的应用。</string>
+    <string name="profiles_intro">每个配置文件都有各自的已锁定应用列表。只有当前启用的配置文件会生效，切换时始终需要先输入你的凭据。</string>
+    <string name="profiles_lock_all_user_apps">锁定所有应用</string>
+    <string name="profiles_manage_cd">管理配置文件</string>
+    <string name="profiles_name_custom">自定义</string>
+    <string name="profiles_name_guest">访客</string>
+    <string name="profiles_name_home">家庭</string>
+    <string name="profiles_name_label">配置文件名称</string>
+    <string name="profiles_name_work">工作</string>
+    <string name="profiles_new">新建配置文件</string>
+    <string name="profiles_options_cd">%1$s 的选项</string>
+    <string name="profiles_rename">重命名</string>
+    <string name="profiles_rename_title">重命名配置文件</string>
+    <string name="profiles_save">保存</string>
+    <string name="profiles_section_profiles">配置文件</string>
+    <string name="profiles_selector_title">锁定配置文件</string>
+    <string name="profiles_subtitle">当前：%1$s</string>
+    <string name="profiles_summary">%1$s · %2$s</string>
+    <string name="profiles_switched">已切换到 %1$s</string>
+    <string name="profiles_title">锁定配置文件</string>
+    <string name="profiles_unlock_duration">解锁时长</string>
+    <string name="profiles_unlock_duration_global">与设置相同（%1$s）</string>
+    <string name="profiles_unlock_duration_sheet_desc">解锁后，此配置文件中的应用将保持解锁的时长。</string>
+    <string name="profiles_unlock_follow_global">解锁时长遵循设置</string>
+    <string name="profiles_unlock_override">解锁：%1$s</string>
+    <string name="tile_profile_label">锁定配置文件</string>
+
+    <!-- strings_trusted: trusted Wi-Fi -->
+    <string name="trusted_action_allow">允许</string>
+    <string name="trusted_action_open_settings">打开应用设置</string>
+    <string name="trusted_action_turn_on_location">开启位置信息</string>
+    <string name="trusted_add_current">信任此网络</string>
+    <string name="trusted_added">“%1$s”已受信任</string>
+    <string name="trusted_background_default_label">始终允许</string>
+    <string name="trusted_background_dialog_supporting">如果没有此选项，请打开 App Lock Revived 的设置，前往“权限 › 位置信息”，并选择“%1$s”。你可以随时关闭此项，此后应用将在所有地方正常锁定。</string>
+    <string name="trusted_background_dialog_text">App Lock Revived 需要在某个应用显示在屏幕上时决定是否锁定该应用，因此会在后台读取网络名称。在下一屏幕中，请选择“%1$s”。</string>
+    <string name="trusted_background_dialog_title">始终允许位置信息访问？</string>
+    <string name="trusted_current_header">当前网络</string>
+    <string name="trusted_current_not_connected">未连接到 Wi-Fi</string>
+    <string name="trusted_current_not_trusted">不受信任。应用将正常锁定</string>
+    <string name="trusted_current_open">开放网络：无法信任，因为任何人都能创建同名网络</string>
+    <string name="trusted_current_router">路由器 %1$s</string>
+    <string name="trusted_current_trusted">受信任。在此处打开已锁定的应用时无需验证</string>
+    <string name="trusted_current_trusted_off">已保存为受信任。请开启受信任的 Wi-Fi 以使用它</string>
+    <string name="trusted_current_trusted_paused">受信任，但在上述问题修复前已暂停</string>
+    <string name="trusted_current_unknown">已连接到 Wi-Fi</string>
+    <string name="trusted_current_unknown_desc">在修复位置信息访问问题之前，无法读取网络名称</string>
+    <string name="trusted_dialog_continue">继续</string>
+    <string name="trusted_enable_dialog_confirm">开启</string>
+    <string name="trusted_enable_dialog_supporting">为识别网络，App Lock Revived 需要位置信息访问权限，因为 Android 将 Wi-Fi 名称视为位置数据。该名称仅在你的设备上进行比对，绝不会离开设备。</string>
+    <string name="trusted_enable_dialog_text">当你连接到受信任的网络时，已锁定的应用将无需输入 PIN 码、图案、密码或使用生物识别即可打开。在该网络下，任何拿起你已解锁手机的人都可以打开这些应用。</string>
+    <string name="trusted_enable_dialog_title">信任 Wi-Fi 网络？</string>
+    <string name="trusted_location_dialog_text">Android 将 Wi-Fi 网络名称视为位置数据，因此 App Lock Revived 需要精确位置信息才能判断你所连接的网络。它从不请求你的 GPS 位置，也不会将任何数据发送到别处。</string>
+    <string name="trusted_location_dialog_title">允许位置信息访问？</string>
+    <string name="trusted_master_switch">使用受信任的 Wi-Fi</string>
+    <string name="trusted_match_router_desc">同时检查路由器的硬件地址（BSSID）。更安全，但如果更换路由器或你有多个接入点，则会失效</string>
+    <string name="trusted_match_router_desc_recommended">推荐：此 Android 版本无法判断网络是否设有密码</string>
+    <string name="trusted_match_router_title">仅限此特定路由器</string>
+    <plurals name="trusted_networks_summary_count">
+        <item quantity="other">%d 个网络</item>
+    </plurals>
+    <string name="trusted_networks_summary_none">尚未添加网络</string>
+    <string name="trusted_networks_summary_relaxed">%1$s · 在“%2$s”上已放宽</string>
+    <string name="trusted_networks_title">受信任的网络</string>
+    <string name="trusted_permission_denied">位置信息访问被拒绝。请打开应用设置进行允许。</string>
+    <string name="trusted_problem_background_desc">App Lock Revived 会在其他应用打开时检查网络。如果未开启“%1$s”，Android 在此期间会向它隐藏 Wi-Fi 名称。</string>
+    <string name="trusted_problem_background_title">始终允许位置信息访问</string>
+    <string name="trusted_problem_footer">在此问题修复前，所有网络都将视为不受信任，应用将正常锁定。</string>
+    <string name="trusted_problem_location_desc">Android 只会向具有位置信息访问权限的应用显示已连接 Wi-Fi 网络的名称。</string>
+    <string name="trusted_problem_location_off_desc">关闭整部手机的位置信息时，Android 会隐藏 Wi-Fi 名称。</string>
+    <string name="trusted_problem_location_off_title">位置信息已关闭</string>
+    <string name="trusted_problem_location_title">需要位置信息访问权限</string>
+    <string name="trusted_problem_precise_desc">仅使用大致位置信息时，Android 会隐藏 Wi-Fi 名称。请切换为精确位置。</string>
+    <string name="trusted_problem_precise_title">需要精确位置信息</string>
+    <string name="trusted_problem_short_background">需要“始终”允许位置信息访问</string>
+    <string name="trusted_problem_short_location">需要位置信息访问权限</string>
+    <string name="trusted_problem_short_location_off">位置信息已关闭</string>
+    <string name="trusted_problem_short_ssid">网络名称不可用</string>
+    <string name="trusted_problem_ssid_desc">Android 目前未共享此网络的名称，因此它将被视为不受信任。</string>
+    <string name="trusted_problem_ssid_title">网络名称不可用</string>
+    <string name="trusted_remove_cd">移除 %1$s</string>
+    <string name="trusted_removed">已移除“%1$s”</string>
+    <string name="trusted_saved_any_router">任何具有此名称的路由器</string>
+    <string name="trusted_saved_connected">当前已连接</string>
+    <string name="trusted_saved_empty">你信任的网络将显示在这里。连接到某个网络后，点按“信任此网络”。</string>
+    <string name="trusted_saved_exact_router">仅限路由器 %1$s</string>
+    <string name="trusted_saved_header">已保存的网络</string>
+    <string name="trusted_screen_footer">App Lock Revived 自身的锁定永不放宽，手机锁定时也不会放宽任何设置。开放网络不可信任。任何人都能设置同名网络和相同的路由器地址，因此请只信任由你妥善保管密码的网络。</string>
+    <string name="trusted_screen_subtitle_off">受信任的 Wi-Fi 已关闭</string>
+    <string name="trusted_screen_subtitle_on">已开启 · 此处正常锁定应用</string>
+    <string name="trusted_screen_subtitle_relaxed">在“%1$s”上已放宽</string>
+    <string name="trusted_section_footer">只有在屏幕解锁且手机连接到受信任的网络时，锁定才会放宽。一旦断开连接或加入其他网络，所有应用都会重新锁定。</string>
+    <string name="trusted_section_title">受信任的地点</string>
+    <string name="trusted_status_relaxed_desc">位于受信任的 Wi-Fi“%1$s”上。离开该网络后，应用会立即重新锁定</string>
+    <string name="trusted_status_relaxed_title">保护已放宽</string>
+    <string name="trusted_undo">撤销</string>
+    <string name="trusted_wifi_desc_off">在你连接到受信任的 Wi-Fi 网络时，允许已锁定的应用无需验证即可打开</string>
+    <string name="trusted_wifi_desc_on">已开启。App Lock Revived 本身仍会要求你输入凭据</string>
+    <string name="trusted_wifi_desc_problem">已开启，但已暂停：%1$s</string>
+    <string name="trusted_wifi_title">受信任的 Wi-Fi</string>
+
+</resources>
