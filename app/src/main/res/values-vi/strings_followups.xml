@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Ứng dụng đặt ở chế độ Hai bước luôn yêu cầu xác thực, kể cả khi dùng mạng tin cậy.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · do hồ sơ %2$s đặt</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Đây là giá trị mặc định cho các hồ sơ không có thời gian mở khóa riêng. Hồ sơ đang dùng %1$s có thời gian riêng: %2$s. Thay đổi trong Hồ sơ khóa.</string>
+    <string name="followups_trusted_security_unknown">Không thể xác nhận mạng này cần mật khẩu, nên không thể tin cậy mạng này</string>
+    <string name="followups_trusted_match_router_required">Bắt buộc trên phiên bản Android này, vì nếu không nó không thể phân biệt mạng của bạn với một mạng giả cùng tên</string>
+    <string name="followups_trusted_match_router_off_warning">Tắt: ai cũng có thể tạo mạng Wi-Fi cùng tên. Chỉ tên và loại mật khẩu được kiểm tra</string>
+    <string name="followups_trusted_name_only_title">Tin cậy mọi bộ định tuyến có tên này?</string>
+    <string name="followups_trusted_name_only_text">Ai cũng có thể tạo mạng Wi-Fi cùng tên. Nếu không kiểm tra bộ định tuyến, một mạng giả dùng cùng loại mật khẩu cũng sẽ mở các ứng dụng bị khóa mà không hỏi. Chỉ tắt tùy chọn này nếu mạng của bạn có nhiều điểm truy cập.</string>
+    <string name="followups_trusted_name_only_confirm">Tin cậy mọi bộ định tuyến</string>
+    <string name="followups_trusted_router_unavailable">Hiện không thể đọc địa chỉ của bộ định tuyến, nên không thể lưu mạng này. Hãy thử lại sau giây lát.</string>
+    <string name="followups_trusted_saved_needs_router">Không dùng: phiên bản Android này cần địa chỉ bộ định tuyến. Hãy xóa và thêm lại mạng</string>
+    <string name="followups_automation_blocked_title">Lệnh tự động hóa đang bị chặn</string>
+    <string name="followups_automation_holders_error">Không thể kiểm tra ứng dụng nào có quyền tự động hóa, nên mọi lệnh đều bị từ chối</string>
+    <string name="followups_automation_legacy_warning">Được tạo cho phiên bản Android cũ và có thể đã nhận quyền tự động hóa mà không hỏi bạn: %1$s. Mọi lệnh đều bị từ chối cho đến khi bạn thu hồi quyền của các ứng dụng này hoặc gỡ cài đặt chúng.</string>
+    <string name="followups_automation_holders_title">Ứng dụng có thể điều khiển App Lock Revived</string>
+    <string name="followups_automation_holders_none">Không ứng dụng nào có quyền tự động hóa</string>
+    <string name="followups_automation_holder_legacy">%1$s (ứng dụng cũ, bị chặn)</string>
+    <string name="followups_automation_outcome_legacy">bị từ chối, một ứng dụng cũ có quyền</string>
 </resources>

@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">İki adımlı olarak ayarlanan uygulamalar, güvenilir bir ağda bile her zaman doğrulama ister.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · %2$s profili tarafından ayarlandı</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Bu, kendi kilit açma süresi olmayan profiller için varsayılandır. Etkin %1$s profili kendi süresini kullanıyor: %2$s. Kilit profillerinden değiştirebilirsin.</string>
+    <string name="followups_trusted_security_unknown">Bu ağın şifre gerektirdiği doğrulanamıyor, bu yüzden güvenilir olarak kabul edilemez</string>
+    <string name="followups_trusted_match_router_required">Bu Android sürümünde zorunlu; aksi halde ağınızı aynı adlı bir taklitten ayırt edemez</string>
+    <string name="followups_trusted_match_router_off_warning">Kapalı: herkes aynı adla bir Wi-Fi ağı oluşturabilir. Yalnızca ad ve şifre türü kontrol edilir</string>
+    <string name="followups_trusted_name_only_title">Bu adı taşıyan her yönlendiriciye güvenilsin mi?</string>
+    <string name="followups_trusted_name_only_text">Herkes aynı adla bir Wi-Fi ağı oluşturabilir. Yönlendirici kontrolü olmadan, aynı şifre türünü kullanan taklit bir ağ da kilitli uygulamalarınızı sormadan açar. Bunu yalnızca ağınızda birden fazla erişim noktası varsa kapatın.</string>
+    <string name="followups_trusted_name_only_confirm">Her yönlendiriciye güven</string>
+    <string name="followups_trusted_router_unavailable">Yönlendiricinin adresi şu anda okunamıyor, bu yüzden bu ağ kaydedilemiyor. Birazdan tekrar deneyin.</string>
+    <string name="followups_trusted_saved_needs_router">Kullanılmıyor: bu Android sürümü yönlendiricinin adresine ihtiyaç duyar. Ağı kaldırıp yeniden ekleyin</string>
+    <string name="followups_automation_blocked_title">Otomasyon komutları engellendi</string>
+    <string name="followups_automation_holders_error">Hangi uygulamaların otomasyon iznine sahip olduğu kontrol edilemedi, bu yüzden tüm komutlar reddediliyor</string>
+    <string name="followups_automation_legacy_warning">Eski bir Android sürümü için geliştirilmiş ve otomasyon iznini size sorulmadan almış olabilecek uygulamalar: %1$s. Bu uygulamalardan izni kaldırana veya onları kaldırana kadar tüm komutlar reddedilir.</string>
+    <string name="followups_automation_holders_title">App Lock Revived uygulamasını kontrol edebilen uygulamalar</string>
+    <string name="followups_automation_holders_none">Hiçbir uygulamada otomasyon izni yok</string>
+    <string name="followups_automation_holder_legacy">%1$s (eski uygulama, engellendi)</string>
+    <string name="followups_automation_outcome_legacy">reddedildi, eski bir uygulamada izin var</string>
 </resources>

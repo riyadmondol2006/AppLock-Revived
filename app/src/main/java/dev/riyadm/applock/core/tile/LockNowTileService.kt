@@ -38,7 +38,7 @@ class LockNowTileService : TileService() {
             return
         }
 
-        AppLockManager.lockAllNow()
+        AppLockManager.lockAllNow(closeApps = true)
         try {
             Toast.makeText(this, R.string.tile_lock_now_done, Toast.LENGTH_SHORT).show()
         } catch (_: Exception) {

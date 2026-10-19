@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">设为“两步验证”的应用即使在受信任的网络中也始终需要验证。</string>
     <string name="followups_unlock_duration_by_profile">%1$s · 由“%2$s”配置文件设置</string>
     <string name="followups_unlock_duration_sheet_desc_profile">这是没有单独解锁时长的配置文件的默认值。当前的“%1$s”配置文件使用自己的时长：%2$s。可在锁定配置文件中更改。</string>
+    <string name="followups_trusted_security_unknown">无法确认此网络需要密码，因此不能将其设为可信网络</string>
+    <string name="followups_trusted_match_router_required">此 Android 版本必须开启，否则无法区分你的网络与同名的仿冒网络</string>
+    <string name="followups_trusted_match_router_off_warning">已关闭：任何人都能创建同名的 Wi-Fi 网络。仅会检查名称和密码类型</string>
+    <string name="followups_trusted_name_only_title">要信任使用此名称的任何路由器吗？</string>
+    <string name="followups_trusted_name_only_text">任何人都能创建同名的 Wi-Fi 网络。如果不检查路由器，使用相同密码类型的仿冒网络也会让已锁定的应用无需验证即可打开。仅当你的网络有多个接入点时才关闭此项。</string>
+    <string name="followups_trusted_name_only_confirm">信任任何路由器</string>
+    <string name="followups_trusted_router_unavailable">目前无法读取路由器地址，因此无法保存此网络。请稍后重试。</string>
+    <string name="followups_trusted_saved_needs_router">未使用：此 Android 版本需要路由器地址。请移除后重新添加</string>
+    <string name="followups_automation_blocked_title">自动化命令已被阻止</string>
+    <string name="followups_automation_holders_error">无法检查哪些应用拥有自动化权限，因此所有命令都会被拒绝</string>
+    <string name="followups_automation_legacy_warning">以下应用针对旧版 Android 构建，可能未经你同意就获得了自动化权限：%1$s。在你撤销这些应用的权限或卸载它们之前，所有命令都会被拒绝。</string>
+    <string name="followups_automation_holders_title">可以控制 App Lock Revived 的应用</string>
+    <string name="followups_automation_holders_none">没有应用拥有自动化权限</string>
+    <string name="followups_automation_holder_legacy">%1$s（旧应用，已阻止）</string>
+    <string name="followups_automation_outcome_legacy">已拒绝，有旧应用拥有该权限</string>
 </resources>

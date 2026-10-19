@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Las apps configuradas en dos pasos siempre lo piden, incluso en una red de confianza.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · definido por el perfil %2$s</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Este es el valor predeterminado para los perfiles sin duración de desbloqueo propia. El perfil activo %1$s usa la suya: %2$s. Cámbiala en Perfiles de bloqueo.</string>
+    <string name="followups_trusted_security_unknown">No se puede confirmar que esta red necesite contraseña, así que no se puede considerar de confianza</string>
+    <string name="followups_trusted_match_router_required">Obligatorio en esta versión de Android, que de otro modo no puede distinguir tu red de una imitación con el mismo nombre</string>
+    <string name="followups_trusted_match_router_off_warning">Desactivado: cualquiera puede crear una red Wi-Fi con el mismo nombre. Solo se comprueban el nombre y el tipo de contraseña</string>
+    <string name="followups_trusted_name_only_title">¿Confiar en cualquier router con este nombre?</string>
+    <string name="followups_trusted_name_only_text">Cualquiera puede crear una red Wi-Fi con el mismo nombre. Sin la comprobación del router, una red de imitación que use el mismo tipo de contraseña también abriría tus apps bloqueadas sin preguntar. Desactívalo solo si tu red tiene varios puntos de acceso.</string>
+    <string name="followups_trusted_name_only_confirm">Confiar en cualquier router</string>
+    <string name="followups_trusted_router_unavailable">Ahora no se puede leer la dirección del router, así que no se puede guardar esta red. Inténtalo de nuevo en un momento.</string>
+    <string name="followups_trusted_saved_needs_router">Sin usar: esta versión de Android necesita la dirección del router. Elimínala y vuelve a añadirla</string>
+    <string name="followups_automation_blocked_title">Los comandos de automatización están bloqueados</string>
+    <string name="followups_automation_holders_error">No se pudo comprobar qué apps tienen el permiso de automatización, así que se rechazan todos los comandos</string>
+    <string name="followups_automation_legacy_warning">Creadas para una versión antigua de Android y que pueden haber recibido el permiso de automatización sin preguntarte: %1$s. Se rechazan todos los comandos hasta que les quites el permiso o las desinstales.</string>
+    <string name="followups_automation_holders_title">Apps que pueden controlar App Lock Revived</string>
+    <string name="followups_automation_holders_none">Ninguna app tiene el permiso de automatización</string>
+    <string name="followups_automation_holder_legacy">%1$s (app antigua, bloqueada)</string>
+    <string name="followups_automation_outcome_legacy">rechazado, una app antigua tiene el permiso</string>
 </resources>

@@ -213,7 +213,6 @@
     <string name="trusted_current_router">Bộ định tuyến %1$s</string>
     <string name="trusted_match_router_title">Chỉ bộ định tuyến này</string>
     <string name="trusted_match_router_desc">Cũng kiểm tra địa chỉ phần cứng (BSSID) của bộ định tuyến. An toàn hơn, nhưng sẽ ngừng hoạt động nếu bạn thay bộ định tuyến hoặc có nhiều điểm truy cập</string>
-    <string name="trusted_match_router_desc_recommended">Khuyến nghị: phiên bản Android này không thể xác định mạng có được bảo vệ bằng mật khẩu hay không</string>
     <string name="trusted_add_current">Tin cậy mạng này</string>
     <string name="trusted_added">Đã tin cậy “%1$s”</string>
     <string name="trusted_removed">Đã xóa “%1$s”</string>

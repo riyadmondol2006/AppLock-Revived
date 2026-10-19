@@ -6,4 +6,23 @@
     <!-- Settings: unlock duration when the active lock profile has its own -->
     <string name="followups_unlock_duration_by_profile">%1$s · set by %2$s profile</string>
     <string name="followups_unlock_duration_sheet_desc_profile">This is the default for profiles without their own unlock duration. The active %1$s profile uses its own: %2$s. Change it in Lock profiles.</string>
+
+    <!-- Security fixes: trusted Wi-Fi router matching -->
+    <string name="followups_trusted_security_unknown">Can\'t confirm that this network needs a password, so it can\'t be trusted</string>
+    <string name="followups_trusted_match_router_required">Required on this Android version, which can\'t otherwise tell your network from a look-alike with the same name</string>
+    <string name="followups_trusted_match_router_off_warning">Off: anyone can create a Wi-Fi network with the same name. Only the name and the type of password are checked</string>
+    <string name="followups_trusted_name_only_title">Trust any router with this name?</string>
+    <string name="followups_trusted_name_only_text">Anyone can create a Wi-Fi network with the same name. Without the router check, a look-alike network that uses the same type of password would also open your locked apps without asking. Only turn this off if your network has several access points.</string>
+    <string name="followups_trusted_name_only_confirm">Trust any router</string>
+    <string name="followups_trusted_router_unavailable">The router\'s address can\'t be read right now, so this network can\'t be saved. Try again in a moment.</string>
+    <string name="followups_trusted_saved_needs_router">Not used: this Android version needs the router\'s address. Remove it and add it again</string>
+
+    <!-- Security fixes: automation permission holders -->
+    <string name="followups_automation_blocked_title">Automation commands are blocked</string>
+    <string name="followups_automation_holders_error">Couldn\'t check which apps hold the automation permission, so all commands are refused</string>
+    <string name="followups_automation_legacy_warning">Built for an old Android version and may have received the automation permission without asking you: %1$s. All commands are refused until you remove the permission from these apps or uninstall them.</string>
+    <string name="followups_automation_holders_title">Apps that can control App Lock Revived</string>
+    <string name="followups_automation_holders_none">No app holds the automation permission</string>
+    <string name="followups_automation_holder_legacy">%1$s (old app, blocked)</string>
+    <string name="followups_automation_outcome_legacy">refused, an old app holds the permission</string>
 </resources>

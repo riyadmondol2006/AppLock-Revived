@@ -236,7 +236,6 @@
     <string name="trusted_location_dialog_title">অবস্থান অ্যাক্সেসের অনুমতি দেবেন?</string>
     <string name="trusted_master_switch">বিশ্বস্ত Wi-Fi ব্যবহার করুন</string>
     <string name="trusted_match_router_desc">রাউটারের হার্ডওয়্যার ঠিকানাও (BSSID) যাচাই করুন। এটি নিরাপদ, তবে রাউটার বদলালে বা আপনার একাধিক অ্যাক্সেস পয়েন্ট থাকলে কাজ বন্ধ হয়ে যাবে</string>
-    <string name="trusted_match_router_desc_recommended">সুপারিশকৃত: এই Android সংস্করণ বুঝতে পারে না নেটওয়ার্কটি পাসওয়ার্ড দিয়ে সুরক্ষিত কি না</string>
     <string name="trusted_match_router_title">শুধু এই নির্দিষ্ট রাউটার</string>
     <plurals name="trusted_networks_summary_count">
         <item quantity="one">%d টি নেটওয়ার্ক</item>

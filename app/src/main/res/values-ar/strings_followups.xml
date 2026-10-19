@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">التطبيقات المضبوطة على \"خطوتان\" تطلب المصادقة دائمًا، حتى على شبكة موثوقة.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · يحدّده ملف %2$s</string>
     <string name="followups_unlock_duration_sheet_desc_profile">هذه هي القيمة الافتراضية للملفات التي ليست لها مدة فتح خاصة. يستخدم الملف النشط %1$s مدته الخاصة: %2$s. يمكنك تغييرها في ملفات القفل.</string>
+    <string name="followups_trusted_security_unknown">تعذّر التأكد من أن هذه الشبكة تتطلب كلمة مرور، لذا لا يمكن الوثوق بها</string>
+    <string name="followups_trusted_match_router_required">مطلوب في إصدار Android هذا، إذ لا يمكنه بدونه التمييز بين شبكتك وشبكة مقلَّدة بالاسم نفسه</string>
+    <string name="followups_trusted_match_router_off_warning">متوقف: يمكن لأي شخص إنشاء شبكة Wi-Fi بالاسم نفسه. يتم التحقق من الاسم ونوع كلمة المرور فقط</string>
+    <string name="followups_trusted_name_only_title">هل تريد الوثوق بأي راوتر يحمل هذا الاسم؟</string>
+    <string name="followups_trusted_name_only_text">يمكن لأي شخص إنشاء شبكة Wi-Fi بالاسم نفسه. بدون التحقق من الراوتر، ستفتح أيضًا شبكةٌ مقلَّدة تستخدم النوع نفسه من كلمات المرور تطبيقاتك المقفلة دون أن تسألك. لا توقف هذا الخيار إلا إذا كانت شبكتك تضم عدة نقاط وصول.</string>
+    <string name="followups_trusted_name_only_confirm">الوثوق بأي راوتر</string>
+    <string name="followups_trusted_router_unavailable">تتعذّر قراءة عنوان الراوتر حاليًا، لذا لا يمكن حفظ هذه الشبكة. أعد المحاولة بعد لحظات.</string>
+    <string name="followups_trusted_saved_needs_router">غير مستخدمة: يحتاج إصدار Android هذا إلى عنوان الراوتر. أزلها ثم أضفها مرة أخرى</string>
+    <string name="followups_automation_blocked_title">أوامر الأتمتة محظورة</string>
+    <string name="followups_automation_holders_error">تعذّر التحقق من التطبيقات التي لديها إذن الأتمتة، لذا يتم رفض جميع الأوامر</string>
+    <string name="followups_automation_legacy_warning">تطبيقات مصممة لإصدار قديم من Android وربما حصلت على إذن الأتمتة دون أن تسألك: %1$s. سيتم رفض جميع الأوامر حتى تسحب الإذن من هذه التطبيقات أو تلغي تثبيتها.</string>
+    <string name="followups_automation_holders_title">التطبيقات التي يمكنها التحكم في App Lock Revived</string>
+    <string name="followups_automation_holders_none">لا يوجد تطبيق لديه إذن الأتمتة</string>
+    <string name="followups_automation_holder_legacy">%1$s (تطبيق قديم، محظور)</string>
+    <string name="followups_automation_outcome_legacy">تم الرفض، لدى تطبيق قديم الإذن</string>
 </resources>

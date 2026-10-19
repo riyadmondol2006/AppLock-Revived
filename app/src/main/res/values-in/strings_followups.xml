@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Aplikasi dengan setelan Dua langkah selalu meminta autentikasi, bahkan di jaringan tepercaya.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · diatur oleh profil %2$s</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Ini adalah default untuk profil tanpa durasi buka kunci sendiri. Profil aktif %1$s memakai durasinya sendiri: %2$s. Ubah di Profil kunci.</string>
+    <string name="followups_trusted_security_unknown">Tidak dapat memastikan bahwa jaringan ini memerlukan sandi, jadi jaringan ini tidak dapat dipercaya</string>
+    <string name="followups_trusted_match_router_required">Wajib di versi Android ini, yang jika tidak tak bisa membedakan jaringan Anda dari tiruan dengan nama yang sama</string>
+    <string name="followups_trusted_match_router_off_warning">Nonaktif: siapa pun dapat membuat jaringan Wi-Fi dengan nama yang sama. Hanya nama dan jenis sandi yang diperiksa</string>
+    <string name="followups_trusted_name_only_title">Percayai router apa pun dengan nama ini?</string>
+    <string name="followups_trusted_name_only_text">Siapa pun dapat membuat jaringan Wi-Fi dengan nama yang sama. Tanpa pemeriksaan router, jaringan tiruan yang memakai jenis sandi yang sama juga akan membuka aplikasi terkunci tanpa bertanya. Nonaktifkan ini hanya jika jaringan Anda memiliki beberapa titik akses.</string>
+    <string name="followups_trusted_name_only_confirm">Percayai router apa pun</string>
+    <string name="followups_trusted_router_unavailable">Alamat router tidak dapat dibaca saat ini, jadi jaringan ini tidak dapat disimpan. Coba lagi sebentar lagi.</string>
+    <string name="followups_trusted_saved_needs_router">Tidak digunakan: versi Android ini memerlukan alamat router. Hapus lalu tambahkan lagi</string>
+    <string name="followups_automation_blocked_title">Perintah otomatisasi diblokir</string>
+    <string name="followups_automation_holders_error">Tidak dapat memeriksa aplikasi mana yang memiliki izin otomatisasi, jadi semua perintah ditolak</string>
+    <string name="followups_automation_legacy_warning">Dibuat untuk versi Android lama dan mungkin mendapat izin otomatisasi tanpa bertanya kepada Anda: %1$s. Semua perintah ditolak sampai Anda mencabut izin dari aplikasi tersebut atau menghapusnya.</string>
+    <string name="followups_automation_holders_title">Aplikasi yang dapat mengontrol App Lock Revived</string>
+    <string name="followups_automation_holders_none">Tidak ada aplikasi yang memiliki izin otomatisasi</string>
+    <string name="followups_automation_holder_legacy">%1$s (aplikasi lama, diblokir)</string>
+    <string name="followups_automation_outcome_legacy">ditolak, aplikasi lama memiliki izin</string>
 </resources>

@@ -236,7 +236,6 @@
     <string name="trusted_location_dialog_title">Autoriser l\'accès à la localisation ?</string>
     <string name="trusted_master_switch">Utiliser le Wi-Fi de confiance</string>
     <string name="trusted_match_router_desc">Vérifie aussi l\'adresse matérielle du routeur (BSSID). Plus sûr, mais cesse de fonctionner si votre routeur est remplacé ou si vous avez plusieurs points d\'accès</string>
-    <string name="trusted_match_router_desc_recommended">Recommandé : cette version d\'Android ne peut pas savoir si un réseau est protégé par un mot de passe</string>
     <string name="trusted_match_router_title">Uniquement ce routeur précis</string>
     <plurals name="trusted_networks_summary_count">
         <item quantity="one">%d réseau</item>

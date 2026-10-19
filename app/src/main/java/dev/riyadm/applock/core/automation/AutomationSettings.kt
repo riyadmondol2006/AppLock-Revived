@@ -18,7 +18,7 @@ class AutomationSettings(context: Context) {
 
     data class LastCommand(val action: String, val outcome: Outcome, val timestamp: Long, val sender: String?)
 
-    enum class Outcome { APPLIED, IGNORED_DISABLED, IGNORED_NOT_ALLOWED, IGNORED_INVALID }
+    enum class Outcome { APPLIED, IGNORED_DISABLED, IGNORED_NOT_ALLOWED, IGNORED_INVALID, IGNORED_LEGACY_HOLDER }
 
     fun isEnabled(): Boolean = prefs.getBoolean(KEY_ENABLED, false)
 

@@ -398,7 +398,6 @@
     <string name="trusted_current_router">Roteador %1$s</string>
     <string name="trusted_match_router_title">Somente este roteador exato</string>
     <string name="trusted_match_router_desc">Também verifica o endereço de hardware do roteador (BSSID). Mais seguro, mas deixa de funcionar se o roteador for trocado ou se você tiver vários pontos de acesso</string>
-    <string name="trusted_match_router_desc_recommended">Recomendado: esta versão do Android não consegue identificar se uma rede tem senha</string>
     <string name="trusted_add_current">Confiar nesta rede</string>
     <string name="trusted_added">“%1$s” agora é confiável</string>
     <string name="trusted_removed">“%1$s” removida</string>

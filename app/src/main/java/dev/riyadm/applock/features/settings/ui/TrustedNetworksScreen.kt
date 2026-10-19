@@ -87,6 +87,7 @@ import dev.riyadm.applock.core.trusted.TrustedNetwork
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor.Problem
 import dev.riyadm.applock.core.trusted.TrustedNetworkSettings
+import dev.riyadm.applock.core.trusted.WifiTrust
 import dev.riyadm.applock.core.utils.openAppInfoSettings
 import dev.riyadm.applock.ui.components.ExpressivePermissionDialog
 import dev.riyadm.applock.ui.components.ExpressiveShapeIcon
@@ -235,9 +236,18 @@ fun TrustedNetworksScreen(navController: NavController) {
     fun addCurrent(matchRouter: Boolean) {
         val wifi = status.wifi ?: return
         if (!wifi.canBeTrusted) return
+        val pinRouter = matchRouter || WifiTrust.routerRequired(Build.VERSION.SDK_INT)
+        if (!WifiTrust.canSave(wifi, pinRouter, Build.VERSION.SDK_INT)) {
+            // Never fall back to trusting by name alone when the router's address is redacted.
+            scope.launch {
+                snackbarHostState.currentSnackbarData?.dismiss()
+                snackbarHostState.showSnackbar(resources.getString(R.string.followups_trusted_router_unavailable))
+            }
+            return
+        }
         val network = TrustedNetwork(
             ssid = wifi.ssid,
-            bssid = if (matchRouter) wifi.bssid else null,
+            bssid = if (pinRouter) WifiTrust.normalizeBssid(wifi.bssid) else null,
             securityType = wifi.securityType,
             addedAt = System.currentTimeMillis()
         )
@@ -533,12 +543,28 @@ private fun CurrentNetworkCard(
     val wifi = status.wifi
     val saved = remember(wifi, networks) {
         wifi?.let { current ->
-            networks.firstOrNull { it.ssid == current.ssid && (it.bssid == null || it.bssid == current.bssid) }
+            networks.firstOrNull { WifiTrust.matches(it, current, Build.VERSION.SDK_INT) }
         }
     }
-    val securityKnown = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    var matchRouter by remember(wifi?.ssid) { mutableStateOf(!securityKnown) }
+    val routerRequired = WifiTrust.routerRequired(Build.VERSION.SDK_INT)
+    var matchRouter by remember(wifi?.ssid) { mutableStateOf(true) }
+    var showNameOnlyWarning by remember { mutableStateOf(false) }
     val colors = MaterialTheme.colorScheme
+
+    if (showNameOnlyWarning) {
+        ExpressivePermissionDialog(
+            icon = Icons.Rounded.SignalWifiBad,
+            title = stringResource(R.string.followups_trusted_name_only_title),
+            text = stringResource(R.string.followups_trusted_name_only_text),
+            confirmText = stringResource(R.string.followups_trusted_name_only_confirm),
+            iconShape = MaterialShapes.SoftBurst,
+            onConfirm = {
+                showNameOnlyWarning = false
+                matchRouter = false
+            },
+            onDismiss = { showNameOnlyWarning = false }
+        )
+    }
     val isTrustedHere = saved != null && wifi?.canBeTrusted == true
 
     val (icon, title) = when {
@@ -549,6 +575,7 @@ private fun CurrentNetworkCard(
     val description = when {
         wifi == null && status.onWifi -> stringResource(R.string.trusted_current_unknown_desc)
         wifi == null -> null
+        !wifi.canBeTrusted && !wifi.securityKnown -> stringResource(R.string.followups_trusted_security_unknown)
         !wifi.canBeTrusted -> stringResource(R.string.trusted_current_open)
         saved != null && !enabled -> stringResource(R.string.trusted_current_trusted_off)
         saved != null && status.relaxed -> stringResource(R.string.trusted_current_trusted)
@@ -599,28 +626,43 @@ private fun CurrentNetworkCard(
 
             if (wifi != null && saved == null && wifi.canBeTrusted) {
                 Spacer(Modifier.height(16.dp))
-                val routerAvailable = wifi.bssid != null
+                val pinRouter = matchRouter || routerRequired
+                val canSave = WifiTrust.canSave(wifi, pinRouter, Build.VERSION.SDK_INT)
                 Column(verticalArrangement = Arrangement.spacedBy(ListItemDefaults.SegmentedGap)) {
                     SwitchSettingItem(
                         shapes = ListItemDefaults.segmentedShapes(0, 1),
                         icon = Icons.Rounded.Router,
                         title = stringResource(R.string.trusted_match_router_title),
                         summary = stringResource(
-                            if (securityKnown) R.string.trusted_match_router_desc
-                            else R.string.trusted_match_router_desc_recommended
+                            when {
+                                routerRequired -> R.string.followups_trusted_match_router_required
+                                !pinRouter -> R.string.followups_trusted_match_router_off_warning
+                                else -> R.string.trusted_match_router_desc
+                            }
                         ),
-                        checked = matchRouter && routerAvailable,
-                        enabled = routerAvailable,
-                        onCheckedChange = { matchRouter = it },
-                        accent = SettingsAccent.Secondary
+                        checked = pinRouter,
+                        enabled = !routerRequired,
+                        onCheckedChange = { checked ->
+                            if (checked) matchRouter = true else showNameOnlyWarning = true
+                        },
+                        accent = if (pinRouter) SettingsAccent.Secondary else SettingsAccent.Error
+                    )
+                }
+                if (!canSave) {
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        text = stringResource(R.string.followups_trusted_router_unavailable),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colors.error
                     )
                 }
                 Spacer(Modifier.height(16.dp))
                 val haptics = rememberSettingsHaptics()
                 Button(
+                    enabled = canSave,
                     onClick = {
                         haptics.confirm()
-                        onTrust(matchRouter && routerAvailable)
+                        onTrust(pinRouter)
                     },
                     shapes = ButtonDefaults.shapes(),
                     modifier = Modifier
@@ -650,7 +692,11 @@ private fun SavedNetworkItem(
 ) {
     val name = network.displayName
     val detail = network.bssid?.let { stringResource(R.string.trusted_saved_exact_router, it) }
-        ?: stringResource(R.string.trusted_saved_any_router)
+        ?: if (WifiTrust.routerRequired(Build.VERSION.SDK_INT)) {
+            stringResource(R.string.followups_trusted_saved_needs_router)
+        } else {
+            stringResource(R.string.trusted_saved_any_router)
+        }
     val supporting = if (connected) "${stringResource(R.string.trusted_saved_connected)} · $detail" else detail
     val icon: ImageVector = if (network.bssid != null) Icons.Rounded.Router else Icons.Rounded.Wifi
     val haptics = rememberSettingsHaptics()

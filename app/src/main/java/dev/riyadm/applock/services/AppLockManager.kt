@@ -188,15 +188,19 @@ object AppLockManager {
     /**
      * Forgets every unlock (session and unlock-duration timers) so each locked app requires
      * authentication again. Never disables protection.
+     *
+     * [closeApps] also closes locked apps (if the user opted in). Only pass true for an explicit
+     * "lock all now" request; automatic re-locks (trust lost, profile switch, restore) must not
+     * force-stop the app in use.
      */
-    fun lockAllNow() {
+    fun lockAllNow(closeApps: Boolean = false) {
         clearTemporarilyUnlockedApp()
         appUnlockTimes.clear()
         recentlyLeftApp = ""
         recentlyLeftTime = 0L
         LogUtils.d(TAG, "All apps locked on request")
         AppLockAccessibilityService.recheckForegroundApp()
-        dev.riyadm.applock.features.hardening.LockedAppCloser.onLockAllNow()
+        if (closeApps) dev.riyadm.applock.features.hardening.LockedAppCloser.onLockAllNow()
     }
 
     /**

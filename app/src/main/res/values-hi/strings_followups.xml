@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">दो-चरण पर सेट ऐप्स भरोसेमंद नेटवर्क पर भी हमेशा पुष्टि मांगते हैं।</string>
     <string name="followups_unlock_duration_by_profile">%1$s · %2$s प्रोफ़ाइल द्वारा सेट</string>
     <string name="followups_unlock_duration_sheet_desc_profile">यह उन प्रोफ़ाइलों के लिए डिफ़ॉल्ट है जिनकी अपनी अनलॉक अवधि नहीं है। सक्रिय %1$s प्रोफ़ाइल अपनी अवधि उपयोग करती है: %2$s। इसे लॉक प्रोफ़ाइल में बदलें।</string>
+    <string name="followups_trusted_security_unknown">यह पुष्टि नहीं हो सकी कि इस नेटवर्क के लिए पासवर्ड ज़रूरी है, इसलिए इस पर भरोसा नहीं किया जा सकता</string>
+    <string name="followups_trusted_match_router_required">इस Android वर्शन पर ज़रूरी है, वरना यह आपके नेटवर्क को उसी नाम वाले नकली नेटवर्क से अलग नहीं कर सकता</string>
+    <string name="followups_trusted_match_router_off_warning">बंद: कोई भी उसी नाम से वाई-फ़ाई नेटवर्क बना सकता है। सिर्फ़ नाम और पासवर्ड का प्रकार जांचा जाता है</string>
+    <string name="followups_trusted_name_only_title">इस नाम वाले किसी भी राउटर पर भरोसा करें?</string>
+    <string name="followups_trusted_name_only_text">कोई भी उसी नाम से वाई-फ़ाई नेटवर्क बना सकता है। राउटर की जांच के बिना, उसी प्रकार के पासवर्ड वाला नकली नेटवर्क भी आपके लॉक किए गए ऐप्स को बिना पूछे खोल देगा। इसे सिर्फ़ तभी बंद करें जब आपके नेटवर्क में कई ऐक्सेस पॉइंट हों।</string>
+    <string name="followups_trusted_name_only_confirm">किसी भी राउटर पर भरोसा करें</string>
+    <string name="followups_trusted_router_unavailable">अभी राउटर का पता नहीं पढ़ा जा सकता, इसलिए यह नेटवर्क सेव नहीं किया जा सकता। थोड़ी देर में फिर से कोशिश करें।</string>
+    <string name="followups_trusted_saved_needs_router">इस्तेमाल नहीं हो रहा: इस Android वर्शन को राउटर का पता चाहिए। इसे हटाकर फिर से जोड़ें</string>
+    <string name="followups_automation_blocked_title">ऑटोमेशन कमांड ब्लॉक हैं</string>
+    <string name="followups_automation_holders_error">यह जांचा नहीं जा सका कि किन ऐप्स के पास ऑटोमेशन अनुमति है, इसलिए सभी कमांड अस्वीकार किए जा रहे हैं</string>
+    <string name="followups_automation_legacy_warning">पुराने Android वर्शन के लिए बने ऐप्स, जिन्हें शायद आपसे पूछे बिना ऑटोमेशन अनुमति मिल गई है: %1$s। जब तक आप इनसे अनुमति नहीं हटाते या इन्हें अनइंस्टॉल नहीं करते, सभी कमांड अस्वीकार किए जाएंगे।</string>
+    <string name="followups_automation_holders_title">ऐप्स जो App Lock Revived को कंट्रोल कर सकते हैं</string>
+    <string name="followups_automation_holders_none">किसी भी ऐप के पास ऑटोमेशन अनुमति नहीं है</string>
+    <string name="followups_automation_holder_legacy">%1$s (पुराना ऐप, ब्लॉक किया गया)</string>
+    <string name="followups_automation_outcome_legacy">अस्वीकार किया गया, एक पुराने ऐप के पास अनुमति है</string>
 </resources>

@@ -37,7 +37,6 @@
     <string name="trusted_current_router">Router %1$s</string>
     <string name="trusted_match_router_title">Only this exact router</string>
     <string name="trusted_match_router_desc">Also check the router\'s hardware address (BSSID). Safer, but stops working if your router is replaced or you have several access points</string>
-    <string name="trusted_match_router_desc_recommended">Recommended: this Android version can\'t tell whether a network is password-protected</string>
     <string name="trusted_add_current">Trust this network</string>
     <string name="trusted_added">“%1$s” is now trusted</string>
     <string name="trusted_removed">“%1$s” removed</string>

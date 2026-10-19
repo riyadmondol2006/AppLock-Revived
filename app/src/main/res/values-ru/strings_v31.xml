@@ -223,7 +223,6 @@
     <string name="trusted_current_router">Роутер %1$s</string>
     <string name="trusted_match_router_title">Только этот роутер</string>
     <string name="trusted_match_router_desc">Также проверять аппаратный адрес роутера (BSSID). Надёжнее, но перестанет работать, если роутер заменят или у вас несколько точек доступа</string>
-    <string name="trusted_match_router_desc_recommended">Рекомендуется: эта версия Android не может определить, защищена ли сеть паролем</string>
     <string name="trusted_add_current">Доверять этой сети</string>
     <string name="trusted_added">«%1$s» теперь доверенная</string>
     <string name="trusted_removed">«%1$s» удалена</string>
