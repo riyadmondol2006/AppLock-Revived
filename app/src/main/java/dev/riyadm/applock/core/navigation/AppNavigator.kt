@@ -38,6 +38,7 @@ import dev.riyadm.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
+import dev.riyadm.applock.features.settings.ui.TrustedNetworksScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
 import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.ExpressiveMotion
@@ -107,6 +108,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.UnlockHistory.route) {
             UnlockHistoryScreen(navController)
+        }
+
+        composable(Screen.TrustedNetworks.route) {
+            TrustedNetworksScreen(navController)
         }
     }
 }

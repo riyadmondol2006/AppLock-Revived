@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.RemoveModerator
 import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material.icons.rounded.WifiLock
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
@@ -53,7 +54,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.RoundedPolygon
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.ui.MorphingIconBadge
 import dev.riyadm.applock.features.applist.ui.ProtectionStatus.State
 import dev.riyadm.applock.ui.motion.pressScale
@@ -98,6 +101,18 @@ private fun statusStyle(state: State): StatusStyle {
     }
 }
 
+/** Protection is on, but relaxed because the phone is on a trusted Wi-Fi network. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun relaxedStyle(): StatusStyle {
+    val colors = MaterialTheme.colorScheme
+    return StatusStyle(
+        colors.secondaryContainer, colors.onSecondaryContainer,
+        colors.secondary, colors.onSecondary,
+        MaterialShapes.Sunny, Icons.Rounded.WifiLock
+    )
+}
+
 /**
  * Hero card on the home screen summarising whether apps are actually being protected.
  * When something is wrong the whole card becomes a button that starts the matching fix.
@@ -115,7 +130,9 @@ fun ProtectionStatusCard(
     modifier: Modifier = Modifier,
 ) {
     val state = status.state
-    val style = statusStyle(state)
+    val trustedNetwork by TrustedNetworkMonitor.status.collectAsStateWithLifecycle()
+    val relaxedSsid = trustedNetwork.relaxedSsid.takeIf { state == State.ACTIVE }
+    val style = if (relaxedSsid != null) relaxedStyle() else statusStyle(state)
     val motion = MaterialTheme.motionScheme
     val container by animateColorAsState(style.container, motion.defaultEffectsSpec(), label = "container")
     val cardShape = MaterialTheme.shapes.extraLarge
@@ -125,12 +142,14 @@ fun ProtectionStatusCard(
     val backendLabel = stringResource(status.backend.labelRes())
     val lockedText = pluralStringResource(R.plurals.applist_locked_count, lockedCount, lockedCount)
     val title = when (state) {
+        State.ACTIVE if relaxedSsid != null -> stringResource(R.string.trusted_status_relaxed_title)
         State.ACTIVE -> stringResource(R.string.applist_status_active_title)
         State.PAUSED -> stringResource(R.string.applist_status_paused_title)
         State.NEEDS_SETUP -> stringResource(R.string.applist_status_setup_title)
         State.SERVICE_STOPPED -> stringResource(R.string.applist_status_stopped_title)
     }
     val description = when (state) {
+        State.ACTIVE if relaxedSsid != null -> stringResource(R.string.trusted_status_relaxed_desc, relaxedSsid)
         State.ACTIVE -> stringResource(R.string.applist_status_active_desc, lockedText, backendLabel)
         State.PAUSED -> stringResource(R.string.applist_status_paused_desc)
         State.NEEDS_SETUP -> stringResource(
