@@ -313,7 +313,7 @@ fun AppIntroScreen(navController: NavController) {
     /** Re-checks a permission when Next is pressed; requests it (and blocks) when missing. */
     fun gate(granted: Boolean, request: () -> Unit): Boolean {
         if (!granted) {
-            haptics.reject()
+            haptics.press()
             request()
         }
         return granted

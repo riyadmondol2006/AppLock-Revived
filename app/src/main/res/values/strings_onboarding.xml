@@ -55,5 +55,4 @@
     <string name="setup_use_keyboard">Use keyboard instead</string>
     <string name="setup_use_keypad">Use number pad</string>
     <string name="setup_digits_entered">%1$d digits entered</string>
-    <string name="setup_lock_type">Lock type</string>
 </resources>
