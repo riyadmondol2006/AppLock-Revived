@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?><!--
    See https://developer.android.com/about/versions/12/backup-restore#xml-changes
    allowBackup="false" stops cloud backup, but device-to-device transfer still runs on
-   Android 12+, so data that must never leave the phone is excluded explicitly.
+   Android 12+, so data that must never leave the phone is excluded explicitly: credentials,
+   lockout state, unlock history and intruder photos. Use the in-app backup instead.
 -->
 <data-extraction-rules>
     <cloud-backup>
+        <exclude domain="sharedpref" path="." />
+        <exclude domain="database" path="." />
         <exclude domain="file" path="intruders/" />
     </cloud-backup>
     <device-transfer>
+        <exclude domain="sharedpref" path="." />
+        <exclude domain="database" path="." />
         <exclude domain="file" path="intruders/" />
     </device-transfer>
 </data-extraction-rules>
