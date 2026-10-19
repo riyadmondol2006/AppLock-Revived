@@ -102,6 +102,7 @@ import dev.riyadm.applock.core.utils.SecurityUtils
 import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.ui.PatternPad
 import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
+import dev.riyadm.applock.features.lockscreen.ui.rememberPatternMaxSize
 import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
@@ -677,9 +678,10 @@ private fun PatternInput(
 ) {
     val padState = remember { PatternPadState() }
     val scope = rememberCoroutineScope()
+    val maxPadSize = rememberPatternMaxSize()
 
     BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
-        val side = min(maxWidth, if (maxHeight.value.isFinite()) maxHeight else maxWidth)
+        val side = min(min(maxWidth, if (maxHeight.value.isFinite()) maxHeight else maxWidth), maxPadSize)
         PatternPad(
             state = padState,
             enabled = enabled,

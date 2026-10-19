@@ -196,6 +196,7 @@ object AppLockManager {
         recentlyLeftTime = 0L
         LogUtils.d(TAG, "All apps locked on request")
         AppLockAccessibilityService.recheckForegroundApp()
+        dev.riyadm.applock.features.hardening.LockedAppCloser.onLockAllNow()
     }
 
     /**

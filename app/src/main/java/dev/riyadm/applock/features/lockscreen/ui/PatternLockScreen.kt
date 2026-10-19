@@ -48,6 +48,7 @@ fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
     var showError by remember { mutableStateOf(false) }
     var rejecting by remember { mutableStateOf(false) }
     val shake = remember { Animatable(0f) }
+    val maxPadSize = rememberPatternMaxSize()
 
     LaunchedEffect(controller.failureCount) {
         if (controller.failureCount == 0) return@LaunchedEffect
@@ -96,7 +97,7 @@ fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .widthIn(max = 380.dp)
+                    .widthIn(max = maxPadSize)
                     .aspectRatio(1f, matchHeightConstraintsFirst = true)
                     .shakeOffset(shake)
             )

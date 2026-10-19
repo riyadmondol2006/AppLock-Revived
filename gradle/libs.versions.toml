@@ -15,8 +15,10 @@ material3 = "1.5.0-beta01"
 materialIconsCore = "1.7.8"
 navigationCompose = "2.10.2"
 profileinstaller = "1.4.1"
+junit = "4.13.2"
 
 [libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }

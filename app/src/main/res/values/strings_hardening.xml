@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Extra protection settings -->
+    <string name="hardening_section_title">Extra protection</string>
+    <string name="hardening_close_apps_title">Close locked apps when the screen turns off</string>
+    <string name="hardening_close_apps_desc_shizuku">Uses Shizuku to force-stop locked apps when the screen turns off or you use Lock all now. They stop playing media and won\'t get notifications until you open them again. System apps, your launcher and keyboard are never closed.</string>
+    <string name="hardening_close_apps_desc_background">Closes locked apps that are running in the background when the screen turns off or you use Lock all now. The app you were using may keep running; with Shizuku every locked app is closed. System apps, your launcher and keyboard are never closed.</string>
+    <string name="hardening_close_apps_desc_unavailable">Needs Shizuku: since Android 14, apps can only close other apps through Shizuku. With it, locked apps are force-stopped when the screen turns off and won\'t get notifications until you open them again.</string>
+    <string name="hardening_pattern_size_title">Pattern size</string>
+    <string name="hardening_pattern_size_desc">Size of the pattern grid on the lock screen and when setting a pattern</string>
+    <string name="hardening_pattern_size_small">Small</string>
+    <string name="hardening_pattern_size_medium">Medium</string>
+    <string name="hardening_pattern_size_large">Large</string>
+    <string name="hardening_history_retention_title">Keep unlock history for</string>
+    <string name="hardening_history_retention_desc">Older entries are deleted automatically. At most 200 entries are kept.</string>
+    <string name="hardening_history_retention_desc_disabled">Turn on unlock history to choose how long it\'s kept</string>
+    <plurals name="hardening_retention_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <!-- Encrypted backups -->
+    <string name="backup_export_desc_recommend">Save locked apps and settings to a file. Protecting it with a password is recommended.</string>
+    <string name="backup_protect_title">Protect your backup</string>
+    <string name="backup_protect_text">Encrypt the file with a password. Without one, anyone who gets the file can see which apps you lock and how App Lock Revived is set up.</string>
+    <string name="backup_password_label">Password</string>
+    <string name="backup_password_confirm_label">Confirm password</string>
+    <plurals name="backup_password_too_short">
+        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
+    <string name="backup_password_mismatch">Passwords don\'t match</string>
+    <string name="backup_password_forget_warning">If you forget this password, the backup can\'t be restored.</string>
+    <string name="backup_encrypt_and_export">Encrypt and export</string>
+    <string name="backup_export_unencrypted">Export without password</string>
+    <string name="backup_export_success_encrypted">Encrypted backup saved</string>
+    <string name="backup_export_interrupted">The export was interrupted, so nothing was saved. Please try again.</string>
+    <string name="backup_unlock_title">Password-protected backup</string>
+    <string name="backup_unlock_text">Enter the password you chose when you made this backup.</string>
+    <string name="backup_unlock_restore">Restore</string>
+    <string name="backup_wrong_password">Wrong password, or the file is damaged. Nothing was restored.</string>
+    <string name="backup_show_password_cd">Show password</string>
+    <string name="backup_hide_password_cd">Hide password</string>
+</resources>

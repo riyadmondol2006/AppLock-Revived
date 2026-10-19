@@ -272,6 +272,7 @@ fun SettingsScreen(navController: NavController) {
                         onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
                     )
                 }
+                item(key = "hardening", contentType = "section") { HardeningSection(state.unlockLog) }
                 item(key = "backup", contentType = "section") {
                     BackupSection(
                         repository = repository,

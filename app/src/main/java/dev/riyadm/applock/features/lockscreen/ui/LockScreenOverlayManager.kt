@@ -7,6 +7,7 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -24,6 +25,8 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.view.doOnPreDraw
+import androidx.core.view.isNotEmpty
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -129,26 +132,16 @@ class LockScreenOverlayManager(private val context: Context) :
         biometricAvailable = repository.isBiometricAuthEnabled() && context.canUseBiometrics()
         leaving = false
 
+        // The window starts as an opaque shield in the lock screen's surface colour. Its first
+        // frame is a plain fill, so it covers the app right away; the Compose lock screen is
+        // attached only once that frame is on its way to the display.
+        val requestedAt = SystemClock.uptimeMillis()
         val root = OverlayRootView(context) { onBackPressedDispatcher.onBackPressed() }.apply {
             setViewTreeLifecycleOwner(this@LockScreenOverlayManager)
             setViewTreeSavedStateRegistryOwner(this@LockScreenOverlayManager)
             setViewTreeViewModelStoreOwner(this@LockScreenOverlayManager)
+            setBackgroundColor(LockShield.surfaceColor(context))
             isFocusableInTouchMode = true
-            addView(
-                ComposeView(context).apply {
-                    setContent {
-                        CompositionLocalProvider(
-                            LocalOnBackPressedDispatcherOwner provides this@LockScreenOverlayManager
-                        ) {
-                            AppLockTheme { OverlayContent() }
-                        }
-                    }
-                },
-                FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-                )
-            )
         }
         val params = createLayoutParams()
 
@@ -156,6 +149,13 @@ class LockScreenOverlayManager(private val context: Context) :
             windowManager.addView(root, params)
             rootView = root
             layoutParams = params
+            LockShield.afterFirstFrame(root) { committed ->
+                Log.d(
+                    TAG, "Shield frame ${if (committed) "committed" else "timed out"} after " +
+                            "${SystemClock.uptimeMillis() - requestedAt} ms"
+                )
+                attachLockUi(root, requestedAt)
+            }
             AppLockManager.isLockScreenShown.set(true)
             lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
             lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -169,6 +169,29 @@ class LockScreenOverlayManager(private val context: Context) :
             session = null
             AppLockManager.isLockScreenShown.set(false)
         }
+    }
+
+    private fun attachLockUi(root: OverlayRootView, requestedAt: Long) {
+        if (rootView !== root || root.isNotEmpty()) return
+        val composeView = ComposeView(context).apply {
+            setContent {
+                CompositionLocalProvider(
+                    LocalOnBackPressedDispatcherOwner provides this@LockScreenOverlayManager
+                ) {
+                    AppLockTheme { OverlayContent() }
+                }
+            }
+        }
+        composeView.doOnPreDraw {
+            Log.d(TAG, "Lock UI first frame after ${SystemClock.uptimeMillis() - requestedAt} ms")
+        }
+        root.addView(
+            composeView,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
     }
 
     @androidx.compose.runtime.Composable
