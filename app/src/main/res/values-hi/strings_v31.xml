@@ -205,7 +205,6 @@
     <string name="trusted_current_router">राउटर %1$s</string>
     <string name="trusted_match_router_title">सिर्फ़ यही राउटर</string>
     <string name="trusted_match_router_desc">राउटर का हार्डवेयर पता (BSSID) भी जांचें। यह ज़्यादा सुरक्षित है, लेकिन राउटर बदलने या कई एक्सेस पॉइंट होने पर काम करना बंद कर देगा</string>
-    <string name="trusted_match_router_desc_recommended">सुझाया गया: यह Android वर्शन बता नहीं सकता कि नेटवर्क पासवर्ड से सुरक्षित है या नहीं</string>
     <string name="trusted_add_current">इस नेटवर्क पर भरोसा करें</string>
     <string name="trusted_added">“%1$s” अब भरोसेमंद है</string>
     <string name="trusted_removed">“%1$s” हटा दिया गया</string>

@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Apps mit Zwei-Schritt-Sperre fragen immer, auch in einem vertrauenswürdigen Netzwerk.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · vom Profil %2$s festgelegt</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Das ist der Standard für Profile ohne eigene Entsperrdauer. Das aktive Profil %1$s nutzt seine eigene: %2$s. Ändere sie unter Sperrprofile.</string>
+    <string name="followups_trusted_security_unknown">Es lässt sich nicht bestätigen, dass dieses Netzwerk ein Passwort erfordert, daher kann ihm nicht vertraut werden</string>
+    <string name="followups_trusted_match_router_required">Auf dieser Android-Version erforderlich, da sie dein Netzwerk sonst nicht von einer Kopie mit demselben Namen unterscheiden kann</string>
+    <string name="followups_trusted_match_router_off_warning">Aus: Jeder kann ein WLAN mit demselben Namen erstellen. Geprüft werden nur der Name und die Art des Passworts</string>
+    <string name="followups_trusted_name_only_title">Jedem Router mit diesem Namen vertrauen?</string>
+    <string name="followups_trusted_name_only_text">Jeder kann ein WLAN mit demselben Namen erstellen. Ohne Router-Prüfung würde auch ein nachgeahmtes Netzwerk mit derselben Passwortart deine gesperrten Apps ohne Nachfrage öffnen. Schalte das nur aus, wenn dein Netzwerk mehrere Access Points hat.</string>
+    <string name="followups_trusted_name_only_confirm">Jedem Router vertrauen</string>
+    <string name="followups_trusted_router_unavailable">Die Adresse des Routers kann gerade nicht gelesen werden, daher kann dieses Netzwerk nicht gespeichert werden. Versuche es gleich noch einmal.</string>
+    <string name="followups_trusted_saved_needs_router">Nicht verwendet: Diese Android-Version benötigt die Adresse des Routers. Entferne das Netzwerk und füge es erneut hinzu</string>
+    <string name="followups_automation_blocked_title">Automatisierungsbefehle sind blockiert</string>
+    <string name="followups_automation_holders_error">Es konnte nicht geprüft werden, welche Apps die Automatisierungsberechtigung haben, daher werden alle Befehle abgelehnt</string>
+    <string name="followups_automation_legacy_warning">Für eine alte Android-Version entwickelt und hat die Automatisierungsberechtigung möglicherweise ohne deine Zustimmung erhalten: %1$s. Alle Befehle werden abgelehnt, bis du diesen Apps die Berechtigung entziehst oder sie deinstallierst.</string>
+    <string name="followups_automation_holders_title">Apps, die App Lock Revived steuern können</string>
+    <string name="followups_automation_holders_none">Keine App hat die Automatisierungsberechtigung</string>
+    <string name="followups_automation_holder_legacy">%1$s (alte App, blockiert)</string>
+    <string name="followups_automation_outcome_legacy">abgelehnt, eine alte App hat die Berechtigung</string>
 </resources>

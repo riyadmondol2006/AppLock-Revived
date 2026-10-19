@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Aplikacje z blokadą dwuetapową zawsze pytają, nawet w zaufanej sieci.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · ustawione przez profil %2$s</string>
     <string name="followups_unlock_duration_sheet_desc_profile">To domyślna wartość dla profili bez własnego czasu odblokowania. Aktywny profil %1$s używa własnego: %2$s. Zmień go w Profilach blokady.</string>
+    <string name="followups_trusted_security_unknown">Nie można potwierdzić, że ta sieć wymaga hasła, więc nie można jej zaufać</string>
+    <string name="followups_trusted_match_router_required">Wymagane w tej wersji Androida, która inaczej nie odróżni Twojej sieci od podróbki o tej samej nazwie</string>
+    <string name="followups_trusted_match_router_off_warning">Wyłączone: każdy może utworzyć sieć Wi-Fi o tej samej nazwie. Sprawdzana jest tylko nazwa i rodzaj hasła</string>
+    <string name="followups_trusted_name_only_title">Ufać każdemu routerowi o tej nazwie?</string>
+    <string name="followups_trusted_name_only_text">Każdy może utworzyć sieć Wi-Fi o tej samej nazwie. Bez sprawdzania routera podrobiona sieć z tym samym rodzajem hasła również otworzy zablokowane aplikacje bez pytania. Wyłącz to tylko wtedy, gdy Twoja sieć ma kilka punktów dostępu.</string>
+    <string name="followups_trusted_name_only_confirm">Ufaj każdemu routerowi</string>
+    <string name="followups_trusted_router_unavailable">Nie można teraz odczytać adresu routera, więc tej sieci nie można zapisać. Spróbuj ponownie za chwilę.</string>
+    <string name="followups_trusted_saved_needs_router">Nieużywana: ta wersja Androida wymaga adresu routera. Usuń sieć i dodaj ją ponownie</string>
+    <string name="followups_automation_blocked_title">Polecenia automatyzacji są zablokowane</string>
+    <string name="followups_automation_holders_error">Nie udało się sprawdzić, które aplikacje mają uprawnienie automatyzacji, więc wszystkie polecenia są odrzucane</string>
+    <string name="followups_automation_legacy_warning">Aplikacje stworzone dla starej wersji Androida, które mogły dostać uprawnienie automatyzacji bez pytania: %1$s. Wszystkie polecenia są odrzucane, dopóki nie odbierzesz im uprawnienia lub ich nie odinstalujesz.</string>
+    <string name="followups_automation_holders_title">Aplikacje, które mogą sterować App Lock Revived</string>
+    <string name="followups_automation_holders_none">Żadna aplikacja nie ma uprawnienia automatyzacji</string>
+    <string name="followups_automation_holder_legacy">%1$s (stara aplikacja, zablokowana)</string>
+    <string name="followups_automation_outcome_legacy">odrzucono, stara aplikacja ma uprawnienie</string>
 </resources>

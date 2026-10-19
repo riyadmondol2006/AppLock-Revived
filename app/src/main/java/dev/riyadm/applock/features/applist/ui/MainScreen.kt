@@ -299,7 +299,7 @@ fun MainScreen(
                 showSystemApps = uiState.showSystemFilter,
                 onToggleSystemApps = { mainViewModel.setShowSystemApps(!uiState.showSystemFilter) },
                 onLockAllNow = {
-                    AppLockManager.lockAllNow()
+                    AppLockManager.lockAllNow(closeApps = true)
                     haptics.confirm()
                     scope.launch {
                         snackbarHostState.currentSnackbarData?.dismiss()

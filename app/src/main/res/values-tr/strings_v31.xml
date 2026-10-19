@@ -201,7 +201,6 @@
     <string name="trusted_current_router">Yönlendirici %1$s</string>
     <string name="trusted_match_router_title">Yalnızca bu yönlendirici</string>
     <string name="trusted_match_router_desc">Yönlendiricinin donanım adresini (BSSID) de denetler. Daha güvenli, ancak yönlendirici değiştirilirse veya birden fazla erişim noktanız varsa çalışmaz</string>
-    <string name="trusted_match_router_desc_recommended">Önerilen: Bu Android sürümü bir ağın şifreli olup olmadığını anlayamaz</string>
     <string name="trusted_add_current">Bu ağa güven</string>
     <string name="trusted_added">“%1$s” artık güvenilir</string>
     <string name="trusted_removed">“%1$s” kaldırıldı</string>

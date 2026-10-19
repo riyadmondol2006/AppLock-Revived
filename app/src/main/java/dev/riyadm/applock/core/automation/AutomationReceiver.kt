@@ -20,6 +20,8 @@ import dev.riyadm.applock.services.AppLockManager
  *   permission the user has to grant to each automation app explicitly.
  * - The component is disabled unless "Allow automation apps" is on, and every command is
  *   checked against that setting again here.
+ * - Every command is refused while an app targeting Android 5.1 or older holds the
+ *   permission, because such apps can receive it without being asked (see [AutomationHolders]).
  * - Turning protection off needs a second, separate opt-in. Locking can always be requested
  *   because it only makes things stricter.
  * - Extras and data are ignored; only the action matters.
@@ -37,6 +39,8 @@ class AutomationReceiver : BroadcastReceiver() {
             when {
                 !isPermissionDefinedByUs(app) -> Outcome.IGNORED_INVALID
                 !settings.isEnabled() -> Outcome.IGNORED_DISABLED
+                // A legacy app may hold the permission without the user's consent.
+                AutomationHolders.blocksCommands(AutomationHolders.find(app)) -> Outcome.IGNORED_LEGACY_HOLDER
                 else -> execute(app, settings, action)
             }
         } catch (e: Exception) {
@@ -55,7 +59,7 @@ class AutomationReceiver : BroadcastReceiver() {
         val repository = context.appLockRepository()
         return when (action) {
             ACTION_LOCK_ALL_NOW -> {
-                AppLockManager.lockAllNow()
+                AppLockManager.lockAllNow(closeApps = true)
                 Outcome.APPLIED
             }
 

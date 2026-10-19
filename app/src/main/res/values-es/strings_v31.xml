@@ -65,7 +65,6 @@
     <string name="trusted_location_dialog_title">¿Permitir el acceso a la ubicación?</string>
     <string name="trusted_master_switch">Usar Wi-Fi de confianza</string>
     <string name="trusted_match_router_desc">Comprueba también la dirección de hardware del router (BSSID). Es más seguro, pero deja de funcionar si cambias de router o si tienes varios puntos de acceso</string>
-    <string name="trusted_match_router_desc_recommended">Recomendado: esta versión de Android no puede saber si una red tiene contraseña</string>
     <string name="trusted_match_router_title">Solo este router exacto</string>
     <plurals name="trusted_networks_summary_count">
         <item quantity="one">%d red</item>

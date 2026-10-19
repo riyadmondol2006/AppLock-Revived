@@ -46,8 +46,8 @@ import java.util.IdentityHashMap
 object TrustedNetworkMonitor {
     private const val TAG = "TrustedNetworkMonitor"
     private const val REVERIFY_MS = 10_000L
+    private const val CONFIRM_TIMEOUT_MS = 5_000L
     private const val UNKNOWN_SSID = "<unknown ssid>"
-    private val REDACTED_BSSIDS = setOf("02:00:00:00:00:00", "00:00:00:00:00:00")
 
     enum class Problem {
         LOCATION_PERMISSION,
@@ -61,9 +61,13 @@ object TrustedNetworkMonitor {
     data class CurrentWifi(val ssid: String, val bssid: String?, val securityType: Int) {
         val displayName: String get() = displaySsid(ssid)
 
-        /** False for open, enhanced-open (OWE) and WEP networks, which anyone can impersonate. */
-        val canBeTrusted: Boolean
-            get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || securityClass(securityType) != null
+        /**
+         * False for open, enhanced-open (OWE) and WEP networks, which anyone can impersonate,
+         * and whenever the security type couldn't be confirmed.
+         */
+        val canBeTrusted: Boolean get() = WifiTrust.canBeTrusted(securityType)
+
+        val securityKnown: Boolean get() = securityType != TrustedNetwork.SECURITY_UNKNOWN
     }
 
     @Immutable
@@ -97,6 +101,15 @@ object TrustedNetworkMonitor {
     private var callback: ConnectivityManager.NetworkCallback? = null
     private var locationReceiver: BroadcastReceiver? = null
     private val wifiNetworks = LinkedHashMap<Network, WifiInfo?>()
+
+    /** Networks kept across [refresh] that the new callback hasn't reported yet. */
+    private val unconfirmedNetworks = HashSet<Network>()
+    private val dropUnconfirmed = Runnable {
+        if (unconfirmedNetworks.isEmpty()) return@Runnable
+        wifiNetworks.keys.removeAll(unconfirmedNetworks)
+        unconfirmedNetworks.clear()
+        update()
+    }
 
     /** Read from any thread by the lock backends. */
     @Volatile
@@ -139,15 +152,42 @@ object TrustedNetworkMonitor {
     /**
      * Re-reads permissions and the connection, e.g. after the user granted location access.
      * On Android 12+ location info only arrives with fresh callbacks, so the callback is
-     * registered again; known networks are kept so trust doesn't flicker meanwhile.
+     * registered again. Known networks are kept so trust doesn't flicker meanwhile, but a lost
+     * event queued for the old callback is never delivered, so networks that are already gone
+     * are dropped now and any the new callback doesn't confirm shortly are dropped too.
      */
     fun refresh() = runOnMain {
         val context = appContext ?: return@runOnMain
         if (callback != null) {
             unregisterCallback(context, clearNetworks = false)
             registerCallback(context)
+            dropVanishedNetworks(context)
+            unconfirmedNetworks.clear()
+            unconfirmedNetworks.addAll(wifiNetworks.keys)
+            mainHandler.removeCallbacks(dropUnconfirmed)
+            if (unconfirmedNetworks.isNotEmpty()) mainHandler.postDelayed(dropUnconfirmed, CONFIRM_TIMEOUT_MS)
         }
         update()
+    }
+
+    /** Keeps only networks the system still reports as Wi-Fi; on any error, forgets them all. */
+    @Suppress("DEPRECATION")
+    private fun dropVanishedNetworks(context: Context) {
+        if (wifiNetworks.isEmpty()) return
+        val live = try {
+            val connectivityManager = context.getSystemService(ConnectivityManager::class.java)
+            connectivityManager?.allNetworks
+                ?.filter {
+                    connectivityManager.getNetworkCapabilities(it)
+                        ?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
+                }
+                ?.toSet()
+                .orEmpty()
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to list networks", e)
+            emptySet()
+        }
+        wifiNetworks.keys.retainAll(live)
     }
 
     /**
@@ -216,7 +256,8 @@ object TrustedNetworkMonitor {
         }
         if (wasTrusted && !nowTrusted) {
             // Re-lock everything right away: apps opened while trusted were never unlocked.
-            AppLockManager.lockAllNow()
+            // Apps are not closed: losing Wi-Fi for a moment must not force-stop the app in use.
+            AppLockManager.lockAllNow(closeApps = false)
         }
     }
 
@@ -230,7 +271,9 @@ object TrustedNetworkMonitor {
         val problem = permissionProblem ?: if (unreadable) Problem.SSID_UNAVAILABLE else null
         val saved = settings.getNetworks()
         val matched = if (onWifi && !unreadable && readable.isNotEmpty()) {
-            val matches = readable.map { wifi -> saved.firstOrNull { it.matches(wifi) } }
+            val matches = readable.map { wifi ->
+                saved.firstOrNull { WifiTrust.matches(it, wifi, Build.VERSION.SDK_INT) }
+            }
             if (matches.all { it != null }) matches.first() else null
         } else null
 
@@ -250,37 +293,42 @@ object TrustedNetworkMonitor {
     private fun currentConnections(context: Context): List<CurrentWifi?> {
         if (wifiNetworks.isEmpty()) return emptyList()
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            wifiNetworks.values.map { it?.toCurrentWifi() }
+            wifiNetworks.values.map { it?.toCurrentWifi(null) }
         } else {
             // WifiInfo is only attached to NetworkCapabilities from Android 12.
             val wifiManager = context.getSystemService(WifiManager::class.java)
-            listOf(wifiManager?.connectionInfo?.toCurrentWifi())
+            listOf(wifiManager?.connectionInfo?.toCurrentWifi(wifiManager))
         }
     }
 
     @SuppressLint("HardwareIds")
-    private fun WifiInfo.toCurrentWifi(): CurrentWifi? {
+    private fun WifiInfo.toCurrentWifi(wifiManager: WifiManager?): CurrentWifi? {
         val rawSsid = ssid
         if (rawSsid.isNullOrEmpty() || rawSsid == UNKNOWN_SSID || rawSsid == "\"\"") return null
-        val rawBssid = bssid?.lowercase()?.takeUnless { it in REDACTED_BSSIDS }
+        val rawBssid = WifiTrust.normalizeBssid(bssid)
         val security = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             currentSecurityType
         } else {
-            TrustedNetwork.SECURITY_UNKNOWN
+            scannedSecurityType(wifiManager, rawBssid)
         }
         return CurrentWifi(rawSsid, rawBssid, security)
     }
 
-    private fun TrustedNetwork.matches(wifi: CurrentWifi): Boolean {
-        if (ssid != wifi.ssid) return false
-        if (bssid != null && !bssid.equals(wifi.bssid, ignoreCase = true)) return false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val currentClass = securityClass(wifi.securityType) ?: return false
-            if (securityType != TrustedNetwork.SECURITY_UNKNOWN && securityClass(securityType) != currentClass) {
-                return false
-            }
+    /**
+     * Android 8-11 can't report the connected network's security type, so it is read from the
+     * scan result of the connected access point. Anything missing means "unknown", which is
+     * never trusted.
+     */
+    @SuppressLint("MissingPermission")
+    private fun scannedSecurityType(wifiManager: WifiManager?, bssid: String?): Int {
+        if (wifiManager == null || bssid == null) return TrustedNetwork.SECURITY_UNKNOWN
+        return try {
+            val result = wifiManager.scanResults?.firstOrNull { it.BSSID.equals(bssid, ignoreCase = true) }
+            WifiTrust.securityTypeFromCapabilities(result?.capabilities)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to read scan results", e)
+            TrustedNetwork.SECURITY_UNKNOWN
         }
-        return true
     }
 
     /** What the app still needs before it can read the network name from a background service. */
@@ -330,6 +378,8 @@ object TrustedNetworkMonitor {
     private fun stopListening(context: Context) {
         if (callback != null) unregisterCallback(context, clearNetworks = true)
         wifiNetworks.clear()
+        unconfirmedNetworks.clear()
+        mainHandler.removeCallbacks(dropUnconfirmed)
         locationReceiver?.let {
             try {
                 context.unregisterReceiver(it)
@@ -363,7 +413,11 @@ object TrustedNetworkMonitor {
             context.getSystemService(ConnectivityManager::class.java)?.unregisterNetworkCallback(current)
         } catch (_: Exception) {
         }
-        if (clearNetworks) wifiNetworks.clear()
+        if (clearNetworks) {
+            wifiNetworks.clear()
+            unconfirmedNetworks.clear()
+            mainHandler.removeCallbacks(dropUnconfirmed)
+        }
     }
 
     private fun createCallback(): ConnectivityManager.NetworkCallback =
@@ -390,6 +444,7 @@ object TrustedNetworkMonitor {
         capabilities: NetworkCapabilities
     ) {
         if (source !== callback) return
+        unconfirmedNetworks.remove(network)
         wifiNetworks[network] = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             capabilities.transportInfo as? WifiInfo
         } else null
@@ -398,12 +453,77 @@ object TrustedNetworkMonitor {
 
     private fun onNetworkLost(source: ConnectivityManager.NetworkCallback, network: Network) {
         if (source !== callback) return
+        unconfirmedNetworks.remove(network)
         wifiNetworks.remove(network)
         update()
     }
 
     private inline fun runOnMain(crossinline block: () -> Unit) {
         if (Looper.myLooper() == Looper.getMainLooper()) block() else mainHandler.post { block() }
+    }
+}
+
+/** Pure trust rules, kept apart from the monitor so they can be tested. */
+internal object WifiTrust {
+    private val REDACTED_BSSIDS = setOf("02:00:00:00:00:00", "00:00:00:00:00:00")
+
+    fun normalizeBssid(raw: String?): String? =
+        raw?.trim()?.lowercase()?.takeUnless { it.isEmpty() || it in REDACTED_BSSIDS }
+
+    fun canBeTrusted(securityType: Int): Boolean = securityClass(securityType) != null
+
+    /**
+     * Before Android 12 the security type can only be read from scan results, so a network is
+     * only trusted there when it is pinned to its router's address.
+     */
+    fun routerRequired(sdkInt: Int): Boolean = sdkInt < Build.VERSION_CODES.S
+
+    /** Whether [wifi] may be saved as trusted, with or without pinning its router. */
+    fun canSave(wifi: TrustedNetworkMonitor.CurrentWifi, matchRouter: Boolean, sdkInt: Int): Boolean {
+        if (!wifi.canBeTrusted) return false
+        if ((matchRouter || routerRequired(sdkInt)) && normalizeBssid(wifi.bssid) == null) return false
+        return true
+    }
+
+    /**
+     * A saved network matches only with the same name, a security type that needs a secret (of
+     * the same kind as when it was saved) and, when it was saved with one or always before
+     * Android 12, the same readable router address.
+     */
+    fun matches(saved: TrustedNetwork, wifi: TrustedNetworkMonitor.CurrentWifi, sdkInt: Int): Boolean {
+        if (saved.ssid != wifi.ssid) return false
+        val currentClass = securityClass(wifi.securityType) ?: return false
+        if (saved.securityType != TrustedNetwork.SECURITY_UNKNOWN &&
+            securityClass(saved.securityType) != currentClass
+        ) {
+            return false
+        }
+        val savedBssid = normalizeBssid(saved.bssid) ?: return !routerRequired(sdkInt)
+        val currentBssid = normalizeBssid(wifi.bssid) ?: return false
+        return savedBssid == currentBssid
+    }
+
+    /**
+     * Maps a ScanResult capabilities string (e.g. "[WPA2-PSK-CCMP][RSN-PSK-CCMP][ESS]") to a
+     * WifiInfo.SECURITY_TYPE_* value. Open, OWE and WEP-only networks map to types that are
+     * never trusted; anything unrecognised is unknown.
+     */
+    @SuppressLint("InlinedApi")
+    fun securityTypeFromCapabilities(capabilities: String?): Int {
+        if (capabilities.isNullOrBlank()) return TrustedNetwork.SECURITY_UNKNOWN
+        val caps = capabilities.uppercase()
+        val keyed = caps.contains("WPA") || caps.contains("RSN")
+        return when {
+            caps.contains("WAPI-CERT") -> WifiInfo.SECURITY_TYPE_WAPI_CERT
+            caps.contains("WAPI-PSK") -> WifiInfo.SECURITY_TYPE_WAPI_PSK
+            keyed && (caps.contains("EAP") || caps.contains("802.1X")) -> WifiInfo.SECURITY_TYPE_EAP
+            keyed && caps.contains("SAE") -> WifiInfo.SECURITY_TYPE_SAE
+            keyed && caps.contains("PSK") -> WifiInfo.SECURITY_TYPE_PSK
+            caps.contains("OWE") -> WifiInfo.SECURITY_TYPE_OWE
+            caps.contains("WEP") -> WifiInfo.SECURITY_TYPE_WEP
+            keyed || caps.contains("WAPI") -> TrustedNetwork.SECURITY_UNKNOWN
+            else -> WifiInfo.SECURITY_TYPE_OPEN
+        }
     }
 }
 

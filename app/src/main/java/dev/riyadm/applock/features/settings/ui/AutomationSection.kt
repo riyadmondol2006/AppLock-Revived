@@ -18,7 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.ContentCopy
+import androidx.compose.material.icons.rounded.Dangerous
 import androidx.compose.material.icons.rounded.GppMaybe
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.IntegrationInstructions
@@ -43,15 +45,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.automation.AutomationHolders
 import dev.riyadm.applock.core.automation.AutomationReceiver
 import dev.riyadm.applock.core.automation.AutomationSettings
 import dev.riyadm.applock.core.automation.AutomationSettings.Outcome
@@ -60,6 +67,32 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 private const val APP_PACKAGE = "dev.riyadm.applock"
+
+@Immutable
+private data class HolderUi(val label: String, val legacy: Boolean)
+
+/** [failed] when the holders couldn't be listed; commands are then refused. */
+@Immutable
+private data class HoldersState(val holders: List<HolderUi>, val failed: Boolean) {
+    val legacy: List<HolderUi> get() = holders.filter { it.legacy }
+}
+
+@Suppress("DEPRECATION")
+private fun loadHolders(context: Context): HoldersState {
+    val holders = AutomationHolders.find(context) ?: return HoldersState(emptyList(), failed = true)
+    val pm = context.packageManager
+    return HoldersState(
+        holders = holders.map { holder ->
+            val label = try {
+                pm.getApplicationLabel(pm.getApplicationInfo(holder.packageName, 0)).toString()
+            } catch (_: Exception) {
+                holder.packageName
+            }
+            HolderUi(label.ifBlank { holder.packageName }, holder.legacy)
+        },
+        failed = false
+    )
+}
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -72,6 +105,17 @@ fun AutomationSection() {
     var showDisableWarning by remember { mutableStateOf(false) }
     var showHowTo by remember { mutableStateOf(false) }
     val haptics = rememberSettingsHaptics()
+    var holdersState by remember { mutableStateOf<HoldersState?>(null) }
+    var holdersReload by remember { mutableIntStateOf(0) }
+
+    // Permissions can change in system settings while the app is in the background.
+    LifecycleResumeEffect(Unit) {
+        holdersReload++
+        onPauseOrDispose { }
+    }
+    LaunchedEffect(holdersReload) {
+        holdersState = withContext(Dispatchers.IO) { loadHolders(context) }
+    }
 
     DisposableEffect(settings) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -147,6 +191,46 @@ fun AutomationSection() {
                 accent = SettingsAccent.Error
             )
         }
+        val holders = holdersState
+        if (holders != null && (holders.failed || holders.legacy.isNotEmpty())) {
+            item { shapes ->
+                InfoSettingItem(
+                    shapes = shapes,
+                    icon = Icons.Rounded.Dangerous,
+                    title = stringResource(R.string.followups_automation_blocked_title),
+                    summary = if (holders.failed) {
+                        stringResource(R.string.followups_automation_holders_error)
+                    } else {
+                        stringResource(
+                            R.string.followups_automation_legacy_warning,
+                            holders.legacy.joinToString(", ") { it.label }
+                        )
+                    },
+                    accent = SettingsAccent.Error
+                )
+            }
+        }
+        if (holders != null && !holders.failed) {
+            item { shapes ->
+                val resources = LocalResources.current
+                InfoSettingItem(
+                    shapes = shapes,
+                    icon = Icons.Rounded.Apps,
+                    title = stringResource(R.string.followups_automation_holders_title),
+                    summary = if (holders.holders.isEmpty()) {
+                        stringResource(R.string.followups_automation_holders_none)
+                    } else {
+                        holders.holders.joinToString(", ") {
+                            if (it.legacy) {
+                                resources.getString(R.string.followups_automation_holder_legacy, it.label)
+                            } else {
+                                it.label
+                            }
+                        }
+                    }
+                )
+            }
+        }
         item { shapes ->
             InfoSettingItem(
                 shapes = shapes,
@@ -171,10 +255,16 @@ fun AutomationSection() {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun InfoSettingItem(shapes: ListItemShapes, icon: ImageVector, title: String, summary: String) {
+private fun InfoSettingItem(
+    shapes: ListItemShapes,
+    icon: ImageVector,
+    title: String,
+    summary: String,
+    accent: SettingsAccent = SettingsAccent.Secondary
+) {
     SegmentedListItem(
         shapes = shapes,
-        leadingContent = { SettingsIcon(icon, SettingsAccent.Secondary) },
+        leadingContent = { SettingsIcon(icon, accent) },
         supportingContent = { Text(summary) },
         colors = settingsItemColors(),
         content = { Text(title) }
@@ -196,6 +286,7 @@ private fun formatLastCommand(context: Context, command: AutomationSettings.Last
             Outcome.IGNORED_DISABLED -> R.string.automation_outcome_disabled
             Outcome.IGNORED_NOT_ALLOWED -> R.string.automation_outcome_not_allowed
             Outcome.IGNORED_INVALID -> R.string.automation_outcome_invalid
+            Outcome.IGNORED_LEGACY_HOLDER -> R.string.followups_automation_outcome_legacy
         }
     )
     val time = remember(command.timestamp) {

@@ -241,7 +241,6 @@
     <string name="trusted_current_router">جهاز التوجيه %1$s</string>
     <string name="trusted_match_router_title">هذا الراوتر تحديدًا فقط</string>
     <string name="trusted_match_router_desc">تحقّق أيضًا من عنوان الجهاز الخاص بالراوتر (BSSID). أكثر أمانًا، لكنه يتوقف عن العمل إذا استُبدل الراوتر أو كانت لديك عدة نقاط وصول</string>
-    <string name="trusted_match_router_desc_recommended">موصى به: لا يستطيع إصدار Android هذا معرفة ما إذا كانت الشبكة محمية بكلمة مرور</string>
     <string name="trusted_add_current">الوثوق بهذه الشبكة</string>
     <string name="trusted_added">أصبحت “%1$s” موثوقة</string>
     <string name="trusted_removed">تمت إزالة “%1$s”</string>

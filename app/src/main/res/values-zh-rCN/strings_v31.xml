@@ -229,7 +229,6 @@
     <string name="trusted_location_dialog_title">允许位置信息访问？</string>
     <string name="trusted_master_switch">使用受信任的 Wi-Fi</string>
     <string name="trusted_match_router_desc">同时检查路由器的硬件地址（BSSID）。更安全，但如果更换路由器或你有多个接入点，则会失效</string>
-    <string name="trusted_match_router_desc_recommended">推荐：此 Android 版本无法判断网络是否设有密码</string>
     <string name="trusted_match_router_title">仅限此特定路由器</string>
     <plurals name="trusted_networks_summary_count">
         <item quantity="other">%d 个网络</item>

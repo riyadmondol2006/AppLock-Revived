@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Les applis en double vérification demandent toujours l\'authentification, même sur un réseau de confiance.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · défini par le profil %2$s</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Il s\'agit de la valeur par défaut pour les profils sans durée de déverrouillage propre. Le profil actif %1$s utilise la sienne : %2$s. Modifiez-la dans Profils de verrouillage.</string>
+    <string name="followups_trusted_security_unknown">Impossible de confirmer que ce réseau exige un mot de passe, il ne peut donc pas être considéré comme de confiance</string>
+    <string name="followups_trusted_match_router_required">Obligatoire sur cette version d\'Android, qui ne peut sinon pas distinguer votre réseau d\'une copie portant le même nom</string>
+    <string name="followups_trusted_match_router_off_warning">Désactivé : n\'importe qui peut créer un réseau Wi-Fi portant le même nom. Seuls le nom et le type de mot de passe sont vérifiés</string>
+    <string name="followups_trusted_name_only_title">Faire confiance à tout routeur portant ce nom ?</string>
+    <string name="followups_trusted_name_only_text">N\'importe qui peut créer un réseau Wi-Fi portant le même nom. Sans la vérification du routeur, un réseau imitant le vôtre avec le même type de mot de passe ouvrirait aussi vos applications verrouillées sans rien demander. Ne désactivez cette option que si votre réseau a plusieurs points d\'accès.</string>
+    <string name="followups_trusted_name_only_confirm">Faire confiance à tout routeur</string>
+    <string name="followups_trusted_router_unavailable">L\'adresse du routeur est illisible pour le moment, ce réseau ne peut donc pas être enregistré. Réessayez dans un instant.</string>
+    <string name="followups_trusted_saved_needs_router">Inutilisé : cette version d\'Android a besoin de l\'adresse du routeur. Supprimez-le et ajoutez-le à nouveau</string>
+    <string name="followups_automation_blocked_title">Les commandes d\'automatisation sont bloquées</string>
+    <string name="followups_automation_holders_error">Impossible de vérifier quelles applications disposent de l\'autorisation d\'automatisation, toutes les commandes sont donc refusées</string>
+    <string name="followups_automation_legacy_warning">Conçues pour une ancienne version d\'Android et ayant pu recevoir l\'autorisation d\'automatisation sans votre accord : %1$s. Toutes les commandes sont refusées tant que vous ne leur retirez pas l\'autorisation ou ne les désinstallez pas.</string>
+    <string name="followups_automation_holders_title">Applications pouvant contrôler App Lock Revived</string>
+    <string name="followups_automation_holders_none">Aucune application ne dispose de l\'autorisation d\'automatisation</string>
+    <string name="followups_automation_holder_legacy">%1$s (ancienne application, bloquée)</string>
+    <string name="followups_automation_outcome_legacy">refusée, une ancienne application a l\'autorisation</string>
 </resources>

@@ -189,7 +189,6 @@
     <string name="trusted_current_router">Router %1$s</string>
     <string name="trusted_match_router_title">Hanya router ini</string>
     <string name="trusted_match_router_desc">Juga periksa alamat perangkat keras router (BSSID). Lebih aman, tetapi berhenti berfungsi jika router diganti atau Anda memiliki beberapa titik akses</string>
-    <string name="trusted_match_router_desc_recommended">Disarankan: versi Android ini tidak dapat mengetahui apakah jaringan dilindungi kata sandi</string>
     <string name="trusted_add_current">Percayai jaringan ini</string>
     <string name="trusted_added">“%1$s” kini tepercaya</string>
     <string name="trusted_removed">“%1$s” dihapus</string>

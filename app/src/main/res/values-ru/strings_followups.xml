@@ -3,4 +3,19 @@
     <string name="followups_trusted_two_step_note">Приложения с двухэтапной защитой всегда запрашивают подтверждение, даже в доверенной сети.</string>
     <string name="followups_unlock_duration_by_profile">%1$s · задано профилем «%2$s»</string>
     <string name="followups_unlock_duration_sheet_desc_profile">Это значение по умолчанию для профилей без собственного времени разблокировки. Активный профиль «%1$s» использует своё: %2$s. Изменить его можно в профилях блокировки.</string>
+    <string name="followups_trusted_security_unknown">Не удаётся подтвердить, что эта сеть требует пароль, поэтому ей нельзя доверять</string>
+    <string name="followups_trusted_match_router_required">Обязательно в этой версии Android: иначе она не отличит вашу сеть от подделки с таким же названием</string>
+    <string name="followups_trusted_match_router_off_warning">Выключено: кто угодно может создать сеть Wi-Fi с таким же названием. Проверяются только название и тип пароля</string>
+    <string name="followups_trusted_name_only_title">Доверять любому роутеру с этим названием?</string>
+    <string name="followups_trusted_name_only_text">Кто угодно может создать сеть Wi-Fi с таким же названием. Без проверки роутера поддельная сеть с тем же типом пароля тоже откроет заблокированные приложения без запроса. Отключайте это, только если в вашей сети несколько точек доступа.</string>
+    <string name="followups_trusted_name_only_confirm">Доверять любому роутеру</string>
+    <string name="followups_trusted_router_unavailable">Сейчас не удаётся прочитать адрес роутера, поэтому эту сеть нельзя сохранить. Повторите попытку чуть позже.</string>
+    <string name="followups_trusted_saved_needs_router">Не используется: этой версии Android нужен адрес роутера. Удалите сеть и добавьте её снова</string>
+    <string name="followups_automation_blocked_title">Команды автоматизации заблокированы</string>
+    <string name="followups_automation_holders_error">Не удалось проверить, у каких приложений есть разрешение на автоматизацию, поэтому все команды отклоняются</string>
+    <string name="followups_automation_legacy_warning">Созданы для старой версии Android и могли получить разрешение на автоматизацию без вашего согласия: %1$s. Все команды отклоняются, пока вы не отзовёте у них разрешение или не удалите их.</string>
+    <string name="followups_automation_holders_title">Приложения, которые могут управлять App Lock Revived</string>
+    <string name="followups_automation_holders_none">Ни у одного приложения нет разрешения на автоматизацию</string>
+    <string name="followups_automation_holder_legacy">%1$s (старое приложение, заблокировано)</string>
+    <string name="followups_automation_outcome_legacy">отклонено, разрешение есть у старого приложения</string>
 </resources>
