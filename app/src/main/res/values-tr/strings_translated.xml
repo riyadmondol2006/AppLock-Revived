@@ -288,7 +288,6 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="permission_warning_shizuku_desc">Korunan uygulamaların açıldığını güvenli bir şekilde algılar.</string>
     <string name="permission_warning_device_admin_title">Cihaz yöneticisi</string>
     <string name="permission_warning_device_admin_desc">App Lock Revived\'ın kaldırılmasını önler.</string>
-    <string name="permission_warning_title_suffix"> gerekli</string>
 
     <string name="join_community">Topluluğa katılın</string>
     <string name="join_community_desc">Diğer kullanıcılarla bağlantı kurmak, geri bildirim paylaşmak ve en son haber ve özelliklerden haberdar olmak için Discord topluluğumuza katılın.</string>
@@ -367,6 +366,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="settings_unlock_duration_until_screen_off">Ekran kapanana kadar</string>
     <string name="settings_unlock_duration_sheet_desc">Bir uygulama, kilidini açtıktan sonra ne kadar süre açık kalır</string>
     <plurals name="settings_unlock_duration_minutes">
+        <item quantity="one">%1$d dakika</item>
         <item quantity="other">%1$d dakika</item>
     </plurals>
     <string name="settings_failed_attempts_title">Kilitlenmeden önceki başarısız denemeler</string>
@@ -396,9 +396,11 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="settings_backup_no_file_picker">Dosya seçmek için kullanılabilir uygulama yok</string>
     <string name="settings_backup_restore_complete_title">Yedek geri yüklendi</string>
     <plurals name="settings_backup_restored_apps">
+        <item quantity="one">%1$d kilitli uygulama geri yüklendi.</item>
         <item quantity="other">%1$d kilitli uygulama geri yüklendi.</item>
     </plurals>
     <plurals name="settings_backup_restored_settings">
+        <item quantity="one">%1$d ayar geri yüklendi.</item>
         <item quantity="other">%1$d ayar geri yüklendi.</item>
     </plurals>
     <string name="settings_backup_restore_credentials_note">Mevcut PIN, desen veya şifreniz olduğu gibi korundu.</string>
@@ -443,6 +445,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <!-- Unlock history -->
     <string name="history_title">Kilit açma geçmişi</string>
     <plurals name="history_entry_count">
+        <item quantity="one">%1$d kayıt</item>
         <item quantity="other">%1$d kayıt</item>
     </plurals>
     <string name="history_clear_cd">Geçmişi temizle</string>
@@ -451,9 +454,11 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="history_clear_confirm">Temizle</string>
     <string name="history_cleared">Geçmiş temizlendi</string>
     <plurals name="history_summary_failed">
+        <item quantity="one">son 24 saatteki başarısız deneme</item>
         <item quantity="other">son 24 saatteki başarısız deneme</item>
     </plurals>
     <plurals name="history_summary_success">
+        <item quantity="one">Aynı dönemde %1$d başarılı kilit açma</item>
         <item quantity="other">Aynı dönemde %1$d başarılı kilit açma</item>
     </plurals>
     <string name="history_entry_success">%1$s ile kilidi açıldı · %2$s</string>
@@ -487,6 +492,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="applist_backend_usage_stats">Kullanım erişimi</string>
     <string name="applist_backend_shizuku">Shizuku</string>
     <plurals name="applist_locked_count">
+        <item quantity="one">%d uygulama kilitli</item>
         <item quantity="other">%d uygulama kilitli</item>
     </plurals>
 
@@ -528,6 +534,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
 
     <!-- Multi-select -->
     <plurals name="applist_selected_count">
+        <item quantity="one">%d seçildi</item>
         <item quantity="other">%d seçildi</item>
     </plurals>
     <string name="applist_action_lock">Seçilenleri kilitle</string>
@@ -535,9 +542,11 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="applist_action_select_all">Tümünü seç</string>
     <string name="applist_action_close_selection">Seçimi iptal et</string>
     <plurals name="applist_bulk_locked">
+        <item quantity="one">%d uygulama kilitlendi</item>
         <item quantity="other">%d uygulama kilitlendi</item>
     </plurals>
     <plurals name="applist_bulk_unlocked">
+        <item quantity="one">%d uygulamanın kilidi açıldı</item>
         <item quantity="other">%d uygulamanın kilidi açıldı</item>
     </plurals>
     <string name="applist_undo">Geri al</string>
@@ -563,6 +572,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="trigger_exclusions_section_excluded">İstisna tutulanlar</string>
     <string name="trigger_exclusions_add_desc">İstisna tutmak istediğiniz uygulamanın paket adını girin.</string>
     <plurals name="trigger_exclusions_count">
+        <item quantity="one">%d uygulama istisna tutuldu</item>
         <item quantity="other">%d uygulama istisna tutuldu</item>
     </plurals>
 
@@ -571,6 +581,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="anti_uninstall_section_protected">Korunanlar</string>
     <string name="anti_uninstall_add_desc">Kaldırılmaya karşı korumak istediğiniz uygulamanın paket adını girin.</string>
     <plurals name="anti_uninstall_count">
+        <item quantity="one">%d uygulama korunuyor</item>
         <item quantity="other">%d uygulama korunuyor</item>
     </plurals>
     <string name="anti_uninstall_outdated_title">Shizuku güncellenmeli</string>
@@ -594,6 +605,7 @@ Shizuku\'nun yüklü ve ADB ile etkinleştirilmiş olduğundan emin olun. İzin 
     <string name="anti_uninstall_remove_all_desc">Bu cihazda kaldırılması engellenen her uygulama, bu listenin dışında korunanlar dahil olmak üzere yeniden kaldırılabilir olacak.</string>
     <string name="anti_uninstall_remove_all_confirm">Kaldır</string>
     <plurals name="anti_uninstall_removed_count">
+        <item quantity="one">%d uygulamadan koruma kaldırıldı</item>
         <item quantity="other">%d uygulamadan koruma kaldırıldı</item>
     </plurals>
 

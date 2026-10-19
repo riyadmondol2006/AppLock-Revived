@@ -274,7 +274,6 @@ Pastikan Shizuku sudah terpasang dan diaktifkan melalui ADB. Ketuk \'Lanjut\' un
     <string name="permission_warning_shizuku_desc">Mendeteksi dengan aman saat aplikasi yang dilindungi diluncurkan.</string>
     <string name="permission_warning_device_admin_title">Admin Perangkat</string>
     <string name="permission_warning_device_admin_desc">Mencegah App Lock Revived dicopot.</string>
-    <string name="permission_warning_title_suffix"> diperlukan</string>
 
     <string name="join_community">Bergabung dengan komunitas</string>
     <string name="join_community_desc">Bergabunglah dengan komunitas Discord kami untuk terhubung dengan pengguna lain, berbagi masukan, serta mendapatkan informasi terbaru tentang berita dan fitur.</string>

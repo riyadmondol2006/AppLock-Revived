@@ -241,7 +241,6 @@ Upewnij się, że masz zainstalowaną aplikację Shizuku i włączoną ją przez
     <string name="permission_warning_shizuku_desc">Bezpiecznie wykrywa moment uruchomienia chronionych aplikacji.</string>
     <string name="permission_warning_device_admin_title">Administrator urządzenia</string>
     <string name="permission_warning_device_admin_desc">Zapobiega odinstalowaniu aplikacji App Lock Revived.</string>
-    <string name="permission_warning_title_suffix"> – wymagane</string>
     <string name="join_community">Dołącz do społeczności</string>
     <string name="join_community_desc">Dołącz do naszej społeczności na Discordzie, aby nawiązać kontakt z innymi użytkownikami, dzielić się opiniami i być na bieżąco z najnowszymi wiadomościami oraz funkcjami.</string>
     <string name="join_discord">Dołącz do Discorda</string>

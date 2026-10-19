@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">App Lock Revived</string>
 
     <string name="device_admin_description">অনধিকৃত ব্যক্তিদের অ্যাপটি আনইনস্টল করা থেকে বিরত রাখে।</string>
@@ -262,7 +262,6 @@ Shizuku লক করা সিস্টেম অ্যাপ লক করা�
     <string name="permission_warning_shizuku_desc">নিরাপদে সুরক্ষিত অ্যাপ কখন খোলা হয় তা শনাক্ত করে।</string>
     <string name="permission_warning_device_admin_title">ডিভাইস অ্যাডমিন</string>
     <string name="permission_warning_device_admin_desc">App Lock Revived-কে আনইনস্টল হওয়া থেকে বিরত রাখে।</string>
-    <string name="permission_warning_title_suffix"> প্রয়োজন</string>
 
     <string name="join_community">কমিউনিটিতে যোগ দিন</string>
     <string name="join_community_desc">অন্য ব্যবহারকারীদের সঙ্গে যুক্ত হতে, মতামত জানাতে এবং সর্বশেষ খবর ও বৈশিষ্ট্য জানতে আমাদের Discord কমিউনিটিতে যোগ দিন।</string>
@@ -489,8 +488,8 @@ Shizuku লক করা সিস্টেম অ্যাপ লক করা�
     <string name="history_clear_dialog_text">রেকর্ড করা সব আনলক ও ব্যর্থ চেষ্টা মুছে যাবে। এটি আর ফেরানো যাবে না।</string>
     <string name="history_clear_confirm">মুছুন</string>
     <string name="history_cleared">ইতিহাস মুছে ফেলা হয়েছে</string>
-    <plurals name="history_summary_failed">
-        <item quantity="one">গত 24 ঘণ্টায় একটি ব্যর্থ চেষ্টা</item>
+    <plurals name="history_summary_failed" tools:ignore="ImpliedQuantity">
+        <item quantity="one">গত 24 ঘণ্টায় ব্যর্থ চেষ্টা</item>
         <item quantity="other">গত 24 ঘণ্টায় ব্যর্থ চেষ্টা</item>
     </plurals>
     <plurals name="history_summary_success">

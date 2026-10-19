@@ -288,7 +288,6 @@ Hãy đảm bảo bạn đã cài đặt và bật Shizuku qua ADB. Nhấn \'Ti�
     <string name="permission_warning_shizuku_desc">Phát hiện an toàn khi ứng dụng được bảo vệ được mở.</string>
     <string name="permission_warning_device_admin_title">Quản trị thiết bị</string>
     <string name="permission_warning_device_admin_desc">Ngăn App Lock Revived bị gỡ cài đặt.</string>
-    <string name="permission_warning_title_suffix"> bắt buộc</string>
 
     <string name="join_community">Tham gia cộng đồng</string>
     <string name="join_community_desc">Tham gia cộng đồng Discord của chúng tôi để kết nối với người dùng khác, chia sẻ phản hồi và cập nhật tin tức và tính năng mới nhất.</string>

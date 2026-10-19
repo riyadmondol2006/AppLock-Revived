@@ -75,6 +75,11 @@ android {
         aidl = true
     }
 
+    androidResources {
+        // Lets users pick the app language in system settings (Android 13+)
+        generateLocaleConfig = true
+    }
+
     lint {
         // New strings fall back to English until they are translated.
         warning += setOf("MissingTranslation", "LocalContextGetResourceValueCall")

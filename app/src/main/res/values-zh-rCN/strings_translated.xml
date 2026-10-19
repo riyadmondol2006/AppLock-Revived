@@ -257,7 +257,6 @@
     <string name="permission_warning_shizuku_desc">安全地检测受保护的应用何时被打开。</string>
     <string name="permission_warning_device_admin_title">设备管理员</string>
     <string name="permission_warning_device_admin_desc">防止 App Lock Revived 被卸载。</string>
-    <string name="permission_warning_title_suffix"> 需授权</string>
 
     <string name="join_community">加入社区</string>
     <string name="join_community_desc">加入我们的 Discord 社区，与其他用户交流、分享反馈，并及时了解最新动态和功能。</string>

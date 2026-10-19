@@ -242,7 +242,6 @@ Certifique-se de que o Shizuku esteja instalado e configurado via ADB. Toque em 
     <string name="permission_warning_shizuku_desc">Detecta com segurança quando aplicativos protegidos são abertos.</string>
     <string name="permission_warning_device_admin_title">Administrador do dispositivo</string>
     <string name="permission_warning_device_admin_desc">Impede que o App Lock Revived seja desinstalado.</string>
-    <string name="permission_warning_title_suffix"> necessário(a)</string>
     <string name="join_community">Participar da comunidade</string>
     <string name="join_community_desc">Participe da nossa comunidade no Discord para conversar com outros usuários, compartilhar sugestões e ficar por dentro das últimas novidades e recursos.</string>
     <string name="join_discord">Entrar no Discord</string>

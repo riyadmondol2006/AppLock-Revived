@@ -283,7 +283,6 @@
     <string name="permission_warning_shizuku_desc">يكتشف فتح التطبيقات المحمية بأمان.</string>
     <string name="permission_warning_device_admin_title">مسؤول الجهاز</string>
     <string name="permission_warning_device_admin_desc">يمنع إلغاء تثبيت App Lock Revived.</string>
-    <string name="permission_warning_title_suffix"> مطلوب</string>
 
     <string name="join_community">انضم إلى المجتمع</string>
     <string name="join_community_desc">انضم إلى مجتمع Discord الخاص بنا للتواصل مع المستخدمين الآخرين، ومشاركة الملاحظات، والبقاء على اطلاع بأحدث الأخبار والميزات.</string>
