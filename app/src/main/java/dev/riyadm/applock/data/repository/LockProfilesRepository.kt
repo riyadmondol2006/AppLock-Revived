@@ -113,6 +113,28 @@ class LockProfilesRepository(context: Context) {
         true
     }
 
+    /** The profiles as currently stored, bypassing the change listener. */
+    internal fun snapshot(): LockProfilesState = synchronized(lock) { read() }
+
+    /**
+     * Replaces every profile, e.g. from a backup, in a single commit. [activeApps] becomes the
+     * locked-apps set, which is the active profile's list. Changes nothing and returns false if
+     * [activeId] isn't one of [profiles].
+     */
+    internal fun restore(profiles: List<LockProfile>, activeId: String, activeApps: Set<String>): Boolean =
+        synchronized(lock) {
+            val unique = profiles.distinctBy { it.id }
+            if (unique.none { it.id == activeId }) return@synchronized false
+            val apps = activeApps.filter { it.isNotBlank() }.toSet()
+            preferences.edit(commit = true) {
+                putString(KEY_PROFILES, encode(unique.map { if (it.id == activeId) it.copy(lockedApps = apps) else it }))
+                putString(KEY_ACTIVE, activeId)
+                putStringSet(LockedAppsRepository.KEY_LOCKED_APPS, apps)
+            }
+            reload()
+            true
+        }
+
     /** Adds or removes an app in an inactive profile. Use the locked-apps API for the active one. */
     internal fun setStoredMembership(id: String, packageName: String, member: Boolean) {
         if (packageName.isBlank()) return

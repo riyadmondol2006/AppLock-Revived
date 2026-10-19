@@ -229,7 +229,7 @@ class ShizukuAppLockService : Service() {
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long): Boolean {
         if (packageName !in appLockRepository.getLockedApps()) return false
-        if (TrustedNetworkMonitor.isTrusted()) return false
+        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
                 packageName,

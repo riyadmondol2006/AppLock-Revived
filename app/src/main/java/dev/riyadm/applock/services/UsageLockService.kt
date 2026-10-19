@@ -247,7 +247,7 @@ class UsageLockService : Service() {
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long) {
         if (packageName !in appLockRepository.getLockedApps()) return
-        if (TrustedNetworkMonitor.isTrusted()) return
+        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return
 
         if (AppLockManager.isWithinUnlockDuration(
                 packageName,

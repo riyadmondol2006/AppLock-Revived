@@ -55,6 +55,7 @@ fun unlockDurationLabel(minutes: Int): String = when {
 fun UnlockDurationSheet(
     currentDuration: Int,
     onDismiss: () -> Unit,
+    description: String? = null,
     onSelect: (Int) -> Unit
 ) {
     val sheetState = rememberBottomSheetState(SheetValue.Hidden, setOf(SheetValue.Hidden, SheetValue.Expanded))
@@ -77,7 +78,7 @@ fun UnlockDurationSheet(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.settings_unlock_duration_sheet_desc),
+                text = description ?: stringResource(R.string.settings_unlock_duration_sheet_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 8.dp)
