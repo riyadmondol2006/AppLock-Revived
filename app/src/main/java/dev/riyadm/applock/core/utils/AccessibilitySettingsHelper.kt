@@ -3,8 +3,10 @@ package dev.riyadm.applock.core.utils
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import android.util.Log
+import androidx.core.net.toUri
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuRemoteProcess
 
@@ -27,7 +29,40 @@ fun Context.isAccessibilityServiceEnabled(): Boolean {
 fun openAccessibilitySettings(context: Context) {
     val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    context.startActivity(intent)
+    try {
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        Log.e("AccessibilitySettings", "Unable to open accessibility settings", e)
+    }
+}
+
+/**
+ * Android 13+ blocks enabling accessibility for sideloaded apps until the user allows
+ * "restricted settings" from the app's App info page.
+ */
+fun isRestrictedSettingsGuidanceNeeded(): Boolean =
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
+/**
+ * Opens this app's App info page, where battery usage and "Allow restricted settings" live.
+ */
+fun openAppInfoSettings(context: Context) {
+    val intent = Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        "package:${context.packageName}".toUri()
+    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        Log.e("AccessibilitySettings", "Unable to open app details", e)
+        try {
+            context.startActivity(
+                Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        } catch (_: Exception) {
+        }
+    }
 }
 
 fun Context.enableAccessibilityServiceWithShizuku(serviceComponentName: ComponentName): Boolean {
@@ -95,7 +130,7 @@ private fun exec(vararg command: String): List<String> {
             output.addAll(it.readLines())
         }
         errorStream.bufferedReader().use {
-            output.addAll(it.readLines().map { "error: it" })
+            output.addAll(it.readLines().map { line -> "error: $line" })
         }
     }
     return output
