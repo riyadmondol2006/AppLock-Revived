@@ -54,7 +54,7 @@
 
         <activity
             android:name=".features.lockscreen.ui.PasswordOverlayActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode|density"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleInstance"
@@ -65,9 +65,13 @@
 
         <activity
             android:name=".features.lockscreen.ui.TransparentBiometricActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode|density"
             android:excludeFromRecents="true"
             android:exported="false"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Material.NoActionBar" />
 
 
         <activity

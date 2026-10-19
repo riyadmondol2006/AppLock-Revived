@@ -1,10 +1,19 @@
 package dev.riyadm.applock.core.navigation
 
 import android.util.Log
+import android.view.WindowManager
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
-import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -13,21 +22,27 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.riyadm.applock.AppLockApplication
+import dev.riyadm.applock.R
+import dev.riyadm.applock.core.utils.appLockRepository
+import dev.riyadm.applock.data.repository.AppLockRepository
+import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.PreferencesRepository
 import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
 import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
-import dev.riyadm.applock.features.lockscreen.ui.AlphanumericPasswordOverlayScreen
-import dev.riyadm.applock.features.lockscreen.ui.PatternLockScreen
-import dev.riyadm.applock.features.lockscreen.ui.PinPasswordOverlayScreen
+import dev.riyadm.applock.features.lockscreen.ui.LockScreen
+import dev.riyadm.applock.features.lockscreen.ui.LockScreenSpec
+import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
+import dev.riyadm.applock.features.lockscreen.ui.canUseBiometrics
 import dev.riyadm.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
 import dev.riyadm.applock.ui.motion.ExpressiveMotion
+import kotlin.concurrent.thread
 
 @Composable
 fun AppNavHost(navController: NavHostController, startDestination: String) {
@@ -76,52 +91,7 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
         }
 
         composable(Screen.PasswordOverlay.route) {
-            val context = LocalActivity.current as FragmentActivity
-            val lockType = application.appLockRepository.getLockType()
-
-            when (lockType) {
-                PreferencesRepository.LOCK_TYPE_PATTERN -> {
-                    PatternLockScreen(
-                        fromMainActivity = true,
-                        onPatternAttempt = { pattern ->
-                            val isValid = application.appLockRepository.validatePattern(pattern)
-                            if (isValid) {
-                                handleAuthenticationSuccess(navController)
-                            }
-                            isValid
-                        },
-                        onBiometricAuth = {
-                            handleBiometricAuthentication(context, navController)
-                        }
-                    )
-                }
-
-                PreferencesRepository.LOCK_TYPE_PASSWORD -> {
-                    AlphanumericPasswordOverlayScreen(
-                        showBiometricButton = application.appLockRepository.isBiometricAuthEnabled(),
-                        fromMainActivity = true,
-                        onBiometricAuth = {
-                            handleBiometricAuthentication(context, navController)
-                        },
-                        onAuthSuccess = {
-                            handleAuthenticationSuccess(navController)
-                        }
-                    )
-                }
-
-                else -> {
-                    PinPasswordOverlayScreen(
-                        showBiometricButton = application.appLockRepository.isBiometricAuthEnabled(),
-                        fromMainActivity = true,
-                        onBiometricAuth = {
-                            handleBiometricAuthentication(context, navController)
-                        },
-                        onAuthSuccess = {
-                            handleAuthenticationSuccess(navController)
-                        }
-                    )
-                }
-            }
+            InAppLockScreen(navController)
         }
 
         composable(Screen.Settings.route) {
@@ -160,55 +130,80 @@ fun NavController.finishPasswordSetup(isFirstTimeSetup: Boolean) {
     }
 }
 
-private fun handleBiometricAuthentication(
-    context: FragmentActivity,
-    navController: NavHostController
+@Composable
+private fun InAppLockScreen(navController: NavHostController) {
+    val activity = LocalActivity.current as FragmentActivity
+    val repository = remember { activity.appLockRepository() }
+    val biometricUsable = remember {
+        repository.isBiometricAuthEnabled() && activity.canUseBiometrics()
+    }
+    var autoPrompted by rememberSaveable { mutableStateOf(false) }
+    val onSuccess = remember(navController) { { handleAuthenticationSuccess(navController) } }
+    val onBiometric = remember(activity) {
+        { showInAppBiometricPrompt(activity, repository, onSuccess) }
+    }
+
+    // Back on the lock screen leaves the app; it must never pop to the protected screens.
+    BackHandler { activity.finish() }
+
+    DisposableEffect(activity) {
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        onDispose { activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE) }
+    }
+
+    LaunchedEffect(Unit) {
+        if (!autoPrompted && biometricUsable && repository.isBiometricAutoPromptEnabled()) {
+            autoPrompted = true
+            onBiometric()
+        }
+    }
+
+    LockScreen(
+        spec = LockScreenSpec(
+            packageName = activity.packageName,
+            title = stringResource(R.string.app_name),
+            showBiometric = biometricUsable,
+            onBiometric = onBiometric,
+            onSuccess = onSuccess
+        )
+    )
+}
+
+private fun showInAppBiometricPrompt(
+    activity: FragmentActivity,
+    repository: AppLockRepository,
+    onSuccess: () -> Unit
 ) {
     try {
-        val executor = ContextCompat.getMainExecutor(context)
         val biometricPrompt = BiometricPrompt(
-            context,
-            executor,
+            activity,
+            ContextCompat.getMainExecutor(activity),
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
                     Log.w(TAG, "Biometric authentication error: $errString ($errorCode)")
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
                     LogUtils.d(TAG, "Biometric authentication succeeded")
-                    navigateToMain(navController)
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Log.w(TAG, "Biometric authentication failed (not recognized)")
+                    val pkg = activity.packageName
+                    thread(name = "unlock-attempt") {
+                        repository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
+                    }
+                    onSuccess()
                 }
             }
         )
-
-        val promptInfo = createBiometricPromptInfo()
-        biometricPrompt.authenticate(promptInfo)
+        biometricPrompt.authenticate(
+            buildBiometricPromptInfo(activity, activity.getString(R.string.app_name))
+        )
     } catch (e: Exception) {
         Log.e(TAG, "Error during biometric authentication", e)
     }
 }
 
-private fun createBiometricPromptInfo(): BiometricPrompt.PromptInfo {
-    return BiometricPrompt.PromptInfo.Builder()
-        .setTitle(BIOMETRIC_TITLE)
-        .setSubtitle(BIOMETRIC_SUBTITLE)
-        .setNegativeButtonText(BIOMETRIC_NEGATIVE_BUTTON)
-        .setAllowedAuthenticators(
-            BiometricManager.Authenticators.BIOMETRIC_WEAK or
-                    BiometricManager.Authenticators.BIOMETRIC_STRONG
-        )
-        .setConfirmationRequired(false)
-        .build()
-}
-
 private fun handleAuthenticationSuccess(navController: NavHostController) {
+    // Biometric and credential success can race; only leave the lock screen once.
+    if (navController.currentDestination?.route != Screen.PasswordOverlay.route) return
     if (navController.previousBackStackEntry != null) {
         navController.popBackStack()
     } else {
@@ -223,6 +218,3 @@ private fun navigateToMain(navController: NavHostController) {
 }
 
 private const val TAG = "AppNavHost"
-private const val BIOMETRIC_TITLE = "Confirm password"
-private const val BIOMETRIC_SUBTITLE = "Confirm biometric to continue"
-private const val BIOMETRIC_NEGATIVE_BUTTON = "Use PIN"

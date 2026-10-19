@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lock_enter_pin">Enter your PIN</string>
+    <string name="lock_draw_pattern">Draw your pattern</string>
+    <string name="lock_enter_password">Enter your password</string>
+    <string name="lock_wrong_pin">Wrong PIN</string>
+    <string name="lock_wrong_pattern">Wrong pattern</string>
+    <string name="lock_wrong_password">Wrong password</string>
+    <string name="lock_lockout_message">Too many attempts. Try again in %1$s</string>
+    <string name="lock_close_cd">Close and go to the home screen</string>
+    <string name="lock_backspace_cd">Delete</string>
+    <string name="lock_confirm_cd">Unlock</string>
+    <string name="lock_unlock_button">Unlock</string>
+    <string name="lock_use_biometrics">Use biometrics</string>
+    <string name="lock_biometric_subtitle">Use your fingerprint or face to continue</string>
+    <string name="lock_biometric_waiting">Waiting for biometric confirmation</string>
+    <string name="lock_app_icon_cd">%1$s icon</string>
+    <string name="lock_pin_progress_cd">%1$d digits entered</string>
+    <string name="lock_pattern_pad_cd">Pattern pad</string>
+    <string name="lock_show_password_cd">Show password</string>
+    <string name="lock_hide_password_cd">Hide password</string>
+    <string name="lock_admin_title">Disable anti-uninstall</string>
+    <string name="lock_admin_cancel_cd">Cancel</string>
+</resources>
