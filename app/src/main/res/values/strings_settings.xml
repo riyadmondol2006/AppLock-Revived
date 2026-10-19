@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sections -->
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_lock_screen">Lock screen</string>
+    <string name="settings_section_protection">Protection</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_section_backup">Backup &amp; restore</string>
+    <string name="settings_section_updates">Updates</string>
+
+    <!-- Appearance -->
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_dynamic_color_title">Dynamic color</string>
+    <string name="settings_dynamic_color_desc">Use colors from your wallpaper</string>
+    <string name="settings_amoled_title">Pure black</string>
+    <string name="settings_amoled_desc">Use a true black background in dark theme</string>
+    <string name="settings_amoled_desc_needs_dark">Available when dark theme is on</string>
+
+    <!-- Lock screen -->
+    <string name="settings_biometric_desc_available">Use fingerprint or face unlock</string>
+    <string name="settings_biometric_desc_unavailable">No biometrics set up on this device</string>
+    <string name="settings_biometric_auto_prompt_title">Show biometric prompt automatically</string>
+    <string name="settings_biometric_auto_prompt_desc">Open the fingerprint or face prompt as soon as the lock screen appears</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Turn on biometric unlock to use this</string>
+    <string name="settings_scramble_keypad_title">Scramble PIN keypad</string>
+    <string name="settings_scramble_keypad_desc">Shuffle the digits every time so others can\'t learn your PIN from your finger movements</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Only available with a PIN lock</string>
+    <string name="settings_auto_unlock_desc">Unlock as soon as the correct PIN is entered, without pressing confirm</string>
+    <string name="settings_disable_haptics_title">Turn off haptic feedback</string>
+
+    <!-- Security -->
+    <string name="settings_change_pattern_title">Change pattern</string>
+    <string name="settings_change_pattern_desc">Draw a new unlock pattern</string>
+    <string name="settings_change_password_title">Change password</string>
+    <string name="settings_change_password_desc">Set a new password</string>
+    <string name="settings_unlock_duration_until_screen_off">Until the screen turns off</string>
+    <string name="settings_unlock_duration_sheet_desc">How long an app stays unlocked after you unlock it</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Failed attempts before lockout</string>
+    <string name="settings_failed_attempts_desc">Block input for a while after too many wrong tries</string>
+    <string name="settings_failed_attempts_off">Off</string>
+    <string name="settings_lockout_duration_title">Lockout duration</string>
+    <string name="settings_lockout_duration_desc">Doubles each time the lockout repeats</string>
+    <string name="settings_lockout_duration_desc_disabled">Turn on failed-attempt lockout to use this</string>
+    <string name="settings_lockout_seconds_short">%1$d s</string>
+    <string name="settings_lockout_minutes_short">%1$d min</string>
+
+    <!-- Protection -->
+    <string name="settings_auto_lock_new_apps_title">Lock newly installed apps</string>
+    <string name="settings_auto_lock_new_apps_desc">Automatically lock apps right after they are installed</string>
+
+    <!-- Privacy -->
+    <string name="settings_unlock_history_title">Unlock history</string>
+    <string name="settings_unlock_history_desc">Keep an on-device log of unlock attempts. Turning this off deletes the log.</string>
+    <string name="settings_view_unlock_history_title">View unlock history</string>
+    <string name="settings_view_unlock_history_desc">See recent unlocks and failed attempts</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_export_title">Export backup</string>
+    <string name="settings_backup_export_desc">Save locked apps and settings to a file</string>
+    <string name="settings_backup_import_title">Restore from backup</string>
+    <string name="settings_backup_import_desc">Replace locked apps and settings with a backup file</string>
+    <string name="settings_backup_footer">Your PIN, pattern or password is never included in a backup.</string>
+    <string name="settings_backup_export_success">Backup saved</string>
+    <string name="settings_backup_export_failed">Couldn\'t save the backup: %1$s</string>
+    <string name="settings_backup_import_invalid">This file isn\'t an App Lock Revived backup</string>
+    <string name="settings_backup_import_newer_version">This backup was made by a newer version of App Lock Revived. Update the app and try again.</string>
+    <string name="settings_backup_import_failed">Couldn\'t read the backup: %1$s</string>
+    <string name="settings_backup_no_file_picker">No app available to pick files</string>
+    <string name="settings_backup_restore_complete_title">Backup restored</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="one">%1$d locked app restored.</item>
+        <item quantity="other">%1$d locked apps restored.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="one">%1$d setting restored.</item>
+        <item quantity="other">%1$d settings restored.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">Your current PIN, pattern or password was kept as it is.</string>
+    <string name="settings_ok_button">OK</string>
+
+    <!-- Updates -->
+    <string name="settings_update_check_title">Check for updates automatically</string>
+    <string name="settings_update_check_desc">Look for new releases on GitHub</string>
+    <string name="settings_update_check_now_title">Check for updates</string>
+    <string name="settings_update_checking">Checking…</string>
+    <string name="settings_update_current_version">You have version %1$s</string>
+    <string name="settings_update_latest">You\'re on the latest version</string>
+    <string name="settings_update_check_failed">Couldn\'t check for updates. Check your connection and try again.</string>
+    <string name="settings_update_check_footer">This is the only time the app connects to the internet. Nothing about you or your apps is sent.</string>
+
+    <!-- Backend -->
+    <string name="settings_backend_accessibility_title">Accessibility service</string>
+    <string name="settings_backend_accessibility_desc">Standard method that works on most devices</string>
+    <string name="settings_backend_usage_stats_title">Usage statistics</string>
+    <string name="settings_backend_usage_stats_desc">Experimental method using app usage statistics</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Advanced method using Shizuku and internal APIs</string>
+
+    <!-- Advanced -->
+    <string name="settings_logging_title">Debug logging</string>
+    <string name="settings_logging_desc">Record detailed logs for troubleshooting</string>
+    <string name="settings_share_logs">Share logs</string>
+    <string name="settings_share_audit_logs">Share security logs</string>
+
+    <!-- About -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Version %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Free, open source and ad-free</string>
+    <string name="settings_about_developed_by">Developed by Riyad Mondol</string>
+    <string name="settings_about_source_title">Source code</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Releases</string>
+    <string name="settings_about_releases_desc">Changelog and downloads</string>
+    <string name="settings_about_issue_title">Report an issue</string>
+    <string name="settings_about_issue_desc">Found a bug or have an idea? Let us know</string>
+    <string name="settings_about_credits_title">Credits</string>
+    <string name="settings_about_credits_desc">Based on AppLock by Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">License</string>
+    <string name="settings_about_license_desc">MIT License</string>
+    <string name="settings_no_browser">No app available to open links</string>
+
+    <!-- Support sheet -->
+    <string name="settings_support_sheet_title">Enjoying App Lock Revived?</string>
+    <string name="settings_support_sheet_message">App Lock Revived is free, open source and ad-free. You can support it by starring the project on GitHub, reporting bugs or sharing it with friends.</string>
+    <string name="settings_support_sheet_star">Star on GitHub</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">Unlock history</string>
+    <plurals name="history_entry_count">
+        <item quantity="one">%1$d entry</item>
+        <item quantity="other">%1$d entries</item>
+    </plurals>
+    <string name="history_clear_cd">Clear history</string>
+    <string name="history_clear_dialog_title">Clear unlock history?</string>
+    <string name="history_clear_dialog_text">All recorded unlocks and failed attempts will be deleted. This can\'t be undone.</string>
+    <string name="history_clear_confirm">Clear</string>
+    <string name="history_cleared">History cleared</string>
+    <plurals name="history_summary_failed">
+        <item quantity="one">failed attempt in the last 24 hours</item>
+        <item quantity="other">failed attempts in the last 24 hours</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="one">%1$d successful unlock in the same period</item>
+        <item quantity="other">%1$d successful unlocks in the same period</item>
+    </plurals>
+    <string name="history_entry_success">Unlocked with %1$s · %2$s</string>
+    <string name="history_entry_failed">Failed %1$s attempt · %2$s</string>
+    <string name="history_status_success_cd">Unlocked</string>
+    <string name="history_status_failed_cd">Failed attempt</string>
+    <string name="history_method_pin">PIN</string>
+    <string name="history_method_pattern">pattern</string>
+    <string name="history_method_password">password</string>
+    <string name="history_method_biometric">biometrics</string>
+    <string name="history_today">Today</string>
+    <string name="history_yesterday">Yesterday</string>
+    <string name="history_disabled_banner">Unlock history is off. New attempts aren\'t recorded.</string>
+    <string name="history_turn_on">Turn on</string>
+    <string name="history_empty_title">No unlock attempts yet</string>
+    <string name="history_empty_desc">When someone unlocks or tries to unlock a locked app, it shows up here. The history never leaves your device.</string>
+</resources>
