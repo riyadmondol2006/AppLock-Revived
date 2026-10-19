@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings -->
+    <string name="intruder_section_title">Intruder selfie</string>
+    <string name="intruder_switch_title">Intruder selfie</string>
+    <string name="intruder_switch_desc">Take a photo with the front camera when someone enters a wrong PIN, pattern or password</string>
+    <string name="intruder_switch_desc_no_permission">Camera access is off, so no photos are taken. Turn this on to allow it again.</string>
+    <string name="intruder_threshold_title">Take photo after</string>
+    <string name="intruder_threshold_desc">Wrong attempts in a row</string>
+    <string name="intruder_retention_title">Delete photos after</string>
+    <string name="intruder_retention_desc">Older photos are removed automatically</string>
+    <string name="intruder_retention_never">Never</string>
+    <plurals name="intruder_retention_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="intruder_view_title">View intruder photos</string>
+    <string name="intruder_view_empty">No photos yet</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%d photo</item>
+        <item quantity="other">%d photos</item>
+    </plurals>
+    <string name="intruder_footer">Photos stay in App Lock Revived\'s private storage on this phone. They\'re never uploaded or included in backups. Android briefly shows the camera indicator while a photo is taken.</string>
+    <string name="intruder_footer_accessibility">With the Accessibility method, some phones don\'t let the camera run while only the lock overlay is showing. If no photos appear, switch to the Usage stats or Shizuku method.</string>
+
+    <!-- Camera permission -->
+    <string name="intruder_permission_title">Allow camera access</string>
+    <string name="intruder_permission_text">To catch whoever tries to get in, App Lock Revived takes one photo with the front camera after the wrong PIN, pattern or password is entered.</string>
+    <string name="intruder_permission_privacy">The camera is used only at that moment, nothing is shown on screen, and photos never leave your phone.</string>
+    <string name="intruder_permission_continue">Continue</string>
+    <string name="intruder_permission_denied_title">Intruder selfie is off</string>
+    <string name="intruder_permission_denied_text">Without camera access App Lock Revived can\'t take photos, so intruder selfie stays off.</string>
+    <string name="intruder_permission_blocked_text">Camera access is blocked for App Lock Revived. To use intruder selfie, open the app\'s settings and allow Camera under Permissions.</string>
+    <string name="intruder_permission_try_again">Try again</string>
+    <string name="intruder_open_settings">Open settings</string>
+    <string name="intruder_not_now">Not now</string>
+
+    <!-- Notification -->
+    <string name="intruder_channel_name">Intruder alerts</string>
+    <string name="intruder_channel_description">Tells you when a photo was taken after wrong unlock attempts</string>
+    <string name="intruder_notification_title">Someone tried to open %1$s</string>
+    <plurals name="intruder_notification_text">
+        <item quantity="one">A photo was taken after %d wrong attempt</item>
+        <item quantity="other">A photo was taken after %d wrong attempts</item>
+    </plurals>
+    <string name="intruder_notification_public_text">Security alert</string>
+
+    <!-- Photos screen -->
+    <string name="intruder_photos_title">Intruder photos</string>
+    <string name="intruder_delete_all_cd">Delete all photos</string>
+    <string name="intruder_delete_all_title">Delete all photos?</string>
+    <string name="intruder_delete_all_text">All intruder photos will be permanently removed from this phone.</string>
+    <string name="intruder_delete_all_confirm">Delete all</string>
+    <string name="intruder_all_deleted">All photos deleted</string>
+    <string name="intruder_photo_deleted">Photo deleted</string>
+    <string name="intruder_disabled_banner">Intruder selfie is off. Turn it on in Settings to get a photo of anyone who enters the wrong credentials.</string>
+    <string name="intruder_empty_title">No intruders</string>
+    <string name="intruder_empty_desc">When someone gets your PIN, pattern or password wrong, their photo shows up here.</string>
+    <string name="intruder_photo_cd">Photo taken when someone tried to open %1$s, %2$s</string>
+    <plurals name="intruder_attempts_short">
+        <item quantity="one">%d wrong</item>
+        <item quantity="other">%d wrong</item>
+    </plurals>
+    <plurals name="intruder_attempts_long">
+        <item quantity="one">%d wrong attempt</item>
+        <item quantity="other">%d wrong attempts</item>
+    </plurals>
+    <string name="intruder_viewer_details">%1$s · %2$s</string>
+    <string name="intruder_viewer_close_cd">Close photo</string>
+    <string name="intruder_share">Share</string>
+    <string name="intruder_share_title">Share photo</string>
+    <string name="intruder_share_failed">Couldn\'t share the photo</string>
+    <string name="intruder_delete">Delete</string>
+</resources>

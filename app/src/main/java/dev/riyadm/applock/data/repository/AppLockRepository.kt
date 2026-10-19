@@ -2,6 +2,7 @@ package dev.riyadm.applock.data.repository
 
 import android.content.Context
 import dev.riyadm.applock.data.manager.BackendServiceManager
+import dev.riyadm.applock.features.intruder.capture.IntruderCapture
 import dev.riyadm.applock.services.AppLockManager
 
 /**
@@ -151,6 +152,7 @@ class AppLockRepository(private val context: Context) {
         method: UnlockLogRepository.Method
     ): Long {
         if (isUnlockLogEnabled()) unlockLog.add(packageName, success, method)
+        IntruderCapture.onUnlockAttempt(context, packageName, success, method)
         return if (success) {
             preferencesRepository.resetFailedAttempts()
             0L

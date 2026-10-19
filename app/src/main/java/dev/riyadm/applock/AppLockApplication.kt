@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.AppLockRepository
+import dev.riyadm.applock.features.intruder.data.IntruderPhotoStore
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.sui.Sui
 import kotlin.concurrent.thread
@@ -29,6 +30,7 @@ class AppLockApplication : Application() {
         // Purge logs older than 3 days on every app start (run in background to avoid ANR)
         thread(start = true, name = "LogPurge") {
             LogUtils.purgeOldLogs()
+            IntruderPhotoStore.applyRetention(this)
         }
     }
 

@@ -7,4 +7,8 @@
     <files-path
         name="audit_logs"
         path="." />
+
+    <files-path
+        name="intruders"
+        path="intruders/" />
 </paths>
