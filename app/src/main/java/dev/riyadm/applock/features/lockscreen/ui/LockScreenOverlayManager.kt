@@ -134,7 +134,8 @@ class LockScreenOverlayManager(private val context: Context) :
 
         // The window starts as an opaque shield in the lock screen's surface colour. Its first
         // frame is a plain fill, so it covers the app right away; the Compose lock screen is
-        // attached only once that frame is on its way to the display.
+        // attached only once that frame is on its way to the display. The window is opaque, so
+        // the compositor can skip the covered app instead of blending it every frame.
         val requestedAt = SystemClock.uptimeMillis()
         val root = OverlayRootView(context) { onBackPressedDispatcher.onBackPressed() }.apply {
             setViewTreeLifecycleOwner(this@LockScreenOverlayManager)
@@ -233,7 +234,7 @@ class LockScreenOverlayManager(private val context: Context) :
                 WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
                 (if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R)
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS else 0),
-        PixelFormat.TRANSLUCENT
+        PixelFormat.OPAQUE
     ).apply {
         title = "AppLockOverlay"
         @Suppress("DEPRECATION")
@@ -247,9 +248,20 @@ class LockScreenOverlayManager(private val context: Context) :
             layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
-        if (repository.shouldUseMaxBrightness()) {
-            screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL
-        }
+        screenBrightness = lockBrightness()
+    }
+
+    private fun lockBrightness(): Float =
+        if (repository.shouldUseMaxBrightness()) WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL
+        else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+
+    /** Hands brightness back to the system right away, before the window is actually gone. */
+    private fun releaseBrightness() {
+        val root = rootView ?: return
+        val params = layoutParams ?: return
+        if (params.screenBrightness == WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE) return
+        params.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+        updateLayout(root, params)
     }
 
     private fun maybeAutoPromptBiometric() {
@@ -329,7 +341,10 @@ class LockScreenOverlayManager(private val context: Context) :
         params.flags = params.flags or
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        params.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
         updateLayout(root, params)
+        // Stopped pauses the Compose frame clock, so the hidden UI does no per-frame work.
+        lifecycleRegistry.currentState = Lifecycle.State.CREATED
     }
 
     private fun showContent() {
@@ -337,10 +352,12 @@ class LockScreenOverlayManager(private val context: Context) :
         val params = layoutParams ?: return
         if (!hiddenForBiometric) return
         hiddenForBiometric = false
+        lifecycleRegistry.currentState = Lifecycle.State.RESUMED
         root.visibility = View.VISIBLE
         params.flags = params.flags and
                 (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE).inv()
+        params.screenBrightness = lockBrightness()
         updateLayout(root, params)
         root.requestFocus()
     }
@@ -371,6 +388,7 @@ class LockScreenOverlayManager(private val context: Context) :
         if (leaving) return
         leaving = true
         endBiometric()
+        releaseBrightness()
         current.onExit()
         val token = current.token
         mainHandler.postDelayed({
@@ -392,8 +410,9 @@ class LockScreenOverlayManager(private val context: Context) :
         layoutParams = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) unregisterBackCallback(root)
         try {
-            lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-            lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+            if (lifecycleRegistry.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                lifecycleRegistry.currentState = Lifecycle.State.CREATED
+            }
             windowManager.removeViewImmediate(root)
         } catch (e: Exception) {
             Log.e(TAG, "Unable to remove lock overlay", e)

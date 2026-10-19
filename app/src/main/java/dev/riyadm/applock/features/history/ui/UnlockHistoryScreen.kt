@@ -3,12 +3,6 @@ package dev.riyadm.applock.features.history.ui
 import android.content.Context
 import android.content.pm.PackageManager
 import android.text.format.DateUtils
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -92,6 +86,7 @@ import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.applist.ui.AppIconCache
 import dev.riyadm.applock.features.settings.ui.SettingsSectionHeader
 import dev.riyadm.applock.features.settings.ui.settingsItemColors
+import dev.riyadm.applock.ui.motion.rememberSettleProgress
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -105,6 +100,7 @@ private data class AppDisplay(val label: String, val icon: ImageBitmap?)
 private data class DayGroup(val dayStart: Long, val entries: List<UnlockLogRepository.Entry>)
 
 private const val DAY_MS = 24L * 60 * 60 * 1000
+private const val EMPTY_ENTRY_SPIN = 90f
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -489,13 +485,8 @@ private fun HistoryDisabledBanner(onEnable: () -> Unit) {
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun EmptyHistory(modifier: Modifier = Modifier) {
-    val transition = rememberInfiniteTransition(label = "emptyHistory")
-    val rotation by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(24_000, easing = LinearEasing), RepeatMode.Restart),
-        label = "rotation"
-    )
+    // Turns into place once; an idle empty screen renders no frames.
+    val settle = rememberSettleProgress(MaterialTheme.motionScheme.slowSpatialSpec())
     val shape = MaterialShapes.Cookie12Sided.toShape()
 
     Column(
@@ -507,7 +498,7 @@ private fun EmptyHistory(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .size(160.dp)
-                    .graphicsLayer { rotationZ = rotation }
+                    .graphicsLayer { rotationZ = (1f - settle.value) * -EMPTY_ENTRY_SPIN }
                     .clip(shape)
                     .background(MaterialTheme.colorScheme.primaryContainer)
             )

@@ -1,8 +1,12 @@
 package dev.riyadm.applock.ui.motion
 
+import android.animation.ValueAnimator
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -16,6 +20,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -63,6 +68,22 @@ object ExpressiveMotion {
         fadeIn(defaultEffects()) + scaleIn(defaultSpatial(), initialScale = 0.92f)
     val fadeScaleOut: ExitTransition =
         fadeOut(fastEffects()) + scaleOut(fastSpatial(), targetScale = 1.04f)
+}
+
+/** False when the system "Remove animations" setting (animator duration scale 0) is on. */
+@Composable
+fun rememberAnimationsEnabled(): Boolean = remember { ValueAnimator.areAnimatorsEnabled() }
+
+/**
+ * One-shot 0 → 1 entry progress for hero decorations. It plays once when first composed and then
+ * rests, so an idle screen renders no frames. Starts at rest when animations are off.
+ */
+@Composable
+fun rememberSettleProgress(spec: AnimationSpec<Float>): Animatable<Float, AnimationVector1D> {
+    val enabled = rememberAnimationsEnabled()
+    val progress = remember { Animatable(if (enabled) 0f else 1f) }
+    LaunchedEffect(progress) { progress.animateTo(1f, spec) }
+    return progress
 }
 
 /**
