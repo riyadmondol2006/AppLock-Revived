@@ -8,7 +8,8 @@ import dev.riyadm.applock.services.AppLockManager
 
 class DeviceUnlockReceiver(
     private val onDeviceUnlocked: () -> Unit,
-    private val onScreenOff: () -> Unit = {}
+    private val onScreenOff: () -> Unit = {},
+    private val onScreenOn: () -> Unit = {}
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -17,6 +18,8 @@ class DeviceUnlockReceiver(
                 LogUtils.d("DeviceUnlockReceiver", "Device unlocked (ACTION_USER_PRESENT)")
                 onDeviceUnlocked()
             }
+
+            Intent.ACTION_SCREEN_ON -> onScreenOn()
 
             Intent.ACTION_SCREEN_OFF -> {
                 AppLockManager.onScreenOff()

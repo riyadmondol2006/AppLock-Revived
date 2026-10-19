@@ -66,9 +66,11 @@ class UpdateCheckJobService : JobService() {
         /** Schedules the periodic check if it isn't already scheduled. */
         fun schedule(context: Context) {
             val scheduler = context.getSystemService(JobScheduler::class.java) ?: return
-            if (scheduler.getPendingJob(JOB_ID) != null) return
+            // Jobs scheduled before the battery constraint existed are replaced once.
+            if (scheduler.getPendingJob(JOB_ID)?.isRequireBatteryNotLow == true) return
             val job = JobInfo.Builder(JOB_ID, ComponentName(context, UpdateCheckJobService::class.java))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiresBatteryNotLow(true)
                 .setPeriodic(INTERVAL_MS, FLEX_MS)
                 .setPersisted(true)
                 .build()

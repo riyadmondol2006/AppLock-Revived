@@ -30,6 +30,7 @@ import rikka.shizuku.Shizuku
  */
 class ShizukuAppLockService : Service() {
     private val appLockRepository: AppLockRepository by lazy { applicationContext.appLockRepository() }
+    private val config: LockConfig by lazy { LockConfig.get(this) }
     private var shizukuActivityManager: ShizukuActivityManager? = null
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -192,8 +193,8 @@ class ShizukuAppLockService : Service() {
     private fun createShizukuActivityManager(): ShizukuActivityManager {
         return ShizukuActivityManager(
             context = this,
-            appLockRepository = appLockRepository,
             onScreenOff = { previousForegroundPackage = "" },
+            onPaused = { previousForegroundPackage = "" },
             onVisibleTasks = ::onVisibleTasks
         )
     }
@@ -207,7 +208,7 @@ class ShizukuAppLockService : Service() {
             val triggerExclusions = appLockRepository.getTriggerExcludedApps()
             if (previous in triggerExclusions) {
                 LogUtils.d(TAG, "Trigger app $previous is excluded, not locking $packageName")
-                if (appLockRepository.isAppLocked(packageName)) {
+                if (config.isLocked(packageName)) {
                     AppLockManager.markUnlocked(packageName)
                 }
             } else if (packageName !in triggerExclusions) {
@@ -228,7 +229,7 @@ class ShizukuAppLockService : Service() {
     }
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long): Boolean {
-        if (packageName !in appLockRepository.getLockedApps()) return false
+        if (!config.isLocked(packageName)) return false
         if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
