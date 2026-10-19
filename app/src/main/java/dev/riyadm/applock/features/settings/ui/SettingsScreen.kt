@@ -57,6 +57,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import dev.riyadm.applock.AppLockApplication
@@ -68,8 +69,10 @@ import dev.riyadm.applock.core.utils.isAccessibilityServiceEnabled
 import dev.riyadm.applock.core.utils.openAccessibilitySettings
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.BackupRepository
+import dev.riyadm.applock.data.repository.LockProfile
 import dev.riyadm.applock.data.repository.PreferencesRepository
 import dev.riyadm.applock.features.admin.AdminDisableActivity
+import dev.riyadm.applock.features.profiles.ui.profileName
 import dev.riyadm.applock.ui.icons.BrightnessHigh
 import dev.riyadm.applock.ui.icons.Fingerprint
 import dev.riyadm.applock.ui.icons.FingerprintOff
@@ -97,6 +100,9 @@ fun SettingsScreen(navController: NavController) {
     var biometricAvailable by remember { mutableStateOf(repository.isBiometricAuthEnabled()) }
     var resumeCount by remember { mutableIntStateOf(0) }
     var showUnlockDurationSheet by remember { mutableStateOf(false) }
+    val profilesState by repository.profiles.state.collectAsStateWithLifecycle()
+    // Set only when the active profile overrides the global unlock duration.
+    val overridingProfile = profilesState.active.takeIf { it.unlockDurationMinutes != null }
     var showPermissionDialog by remember { mutableStateOf(false) }
     var showDeviceAdminDialog by remember { mutableStateOf(false) }
     var showAccessibilityDialog by remember { mutableStateOf(false) }
@@ -161,6 +167,13 @@ fun SettingsScreen(navController: NavController) {
     if (showUnlockDurationSheet) {
         UnlockDurationSheet(
             currentDuration = state.unlockDuration,
+            description = overridingProfile?.let { profile ->
+                stringResource(
+                    R.string.followups_unlock_duration_sheet_desc_profile,
+                    profileName(profile),
+                    unlockDurationLabel(profile.unlockDurationMinutes ?: 0)
+                )
+            },
             onDismiss = { showUnlockDurationSheet = false },
             onSelect = { state.unlockDuration = it }
         )
@@ -259,6 +272,7 @@ fun SettingsScreen(navController: NavController) {
                 item(key = "security", contentType = "section") {
                     SecuritySection(
                         state = state,
+                        overridingProfile = overridingProfile,
                         onChangeCredential = { navController.navigate(Screen.ChangePassword.route) },
                         onUnlockDurationClick = { showUnlockDurationSheet = true }
                     )
@@ -389,6 +403,7 @@ private fun LockScreenSection(state: SettingsState, biometricAvailable: Boolean)
 @Composable
 private fun SecuritySection(
     state: SettingsState,
+    overridingProfile: LockProfile?,
     onChangeCredential: () -> Unit,
     onUnlockDurationClick: () -> Unit
 ) {
@@ -440,7 +455,13 @@ private fun SecuritySection(
                 shapes = shapes,
                 icon = Timer,
                 title = stringResource(R.string.settings_screen_unlock_duration_title),
-                summary = unlockDurationLabel(state.unlockDuration),
+                summary = if (overridingProfile != null) {
+                    stringResource(
+                        R.string.followups_unlock_duration_by_profile,
+                        unlockDurationLabel(overridingProfile.unlockDurationMinutes ?: 0),
+                        profileName(overridingProfile)
+                    )
+                } else unlockDurationLabel(state.unlockDuration),
                 onClick = onUnlockDurationClick
             )
         }

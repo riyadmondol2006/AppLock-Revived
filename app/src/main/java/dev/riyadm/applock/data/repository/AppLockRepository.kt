@@ -217,6 +217,15 @@ class AppLockRepository(private val context: Context) {
     internal fun replaceAppLists(locked: Set<String>, excluded: Set<String>, antiUninstall: Set<String>) =
         lockedAppsRepository.replaceAll(locked, excluded, antiUninstall)
 
+    /** Restores profiles from a backup; every running unlock is forgotten if the active one changed. */
+    internal fun restoreProfiles(profiles: List<LockProfile>, activeId: String, activeApps: Set<String>): Boolean {
+        val previousActive = this.profiles.snapshot().activeId
+        if (!this.profiles.restore(profiles, activeId, activeApps)) return false
+        if (previousActive != activeId) AppLockManager.lockAllNow()
+        ProfileTileService.requestUpdate(context)
+        return true
+    }
+
     fun setActiveBackend(backend: BackendImplementation) =
         backendServiceManager.setActiveBackend(backend)
 

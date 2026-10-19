@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings: trusted Wi-Fi -->
+    <string name="followups_trusted_two_step_note">Apps set to Two-step always ask, even on a trusted network.</string>
+
+    <!-- Settings: unlock duration when the active lock profile has its own -->
+    <string name="followups_unlock_duration_by_profile">%1$s · set by %2$s profile</string>
+    <string name="followups_unlock_duration_sheet_desc_profile">This is the default for profiles without their own unlock duration. The active %1$s profile uses its own: %2$s. Change it in Lock profiles.</string>
+</resources>

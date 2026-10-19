@@ -73,7 +73,8 @@ fun TrustedNetworksSection(onOpenTrustedNetworks: () -> Unit) {
     Column {
         SettingsGroup(
             title = stringResource(R.string.trusted_section_title),
-            footer = stringResource(R.string.trusted_section_footer)
+            footer = stringResource(R.string.trusted_section_footer) + "\n\n" +
+                stringResource(R.string.followups_trusted_two_step_note)
         ) {
             item { shapes ->
                 val currentProblem = problem

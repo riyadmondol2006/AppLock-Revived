@@ -334,7 +334,7 @@ class AppLockAccessibilityService : AccessibilityService() {
     /** Shows the lock overlay for [packageName] if it is locked and not currently unlocked. */
     private fun maybeLock(packageName: String): Boolean {
         if (packageName !in appLockRepository.getLockedApps()) return false
-        if (TrustedNetworkMonitor.isTrusted()) return false
+        if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return false
         if (AppLockManager.isBiometricAuthInProgress()) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
