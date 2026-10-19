@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -6,9 +7,26 @@ plugins {
     id("dev.rikka.tools.refine") version "4.4.0"
 }
 
+// Release signing comes from environment variables (CI) or an untracked keystore.properties
+// file (local). Without either, release builds fall back to the debug key.
+val keystoreProperties = Properties().apply {
+    val file = rootProject.file("keystore.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+
+fun signingValue(env: String, property: String): String? =
+    System.getenv(env)?.takeIf { it.isNotBlank() } ?: keystoreProperties.getProperty(property)
+
+val releaseStoreFile = signingValue("SIGNING_KEYSTORE_PATH", "storeFile")
+val hasReleaseSigning = releaseStoreFile != null && file(releaseStoreFile).exists()
+
 android {
     namespace = "dev.riyadm.applock"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         applicationId = "dev.riyadm.applock"
@@ -18,6 +36,17 @@ android {
         versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseStoreFile!!)
+                storePassword = signingValue("SIGNING_KEYSTORE_PASSWORD", "storePassword")
+                keyAlias = signingValue("SIGNING_KEY_ALIAS", "keyAlias")
+                keyPassword = signingValue("SIGNING_KEY_PASSWORD", "keyPassword")
+            }
+        }
     }
 
     buildTypes {
@@ -31,7 +60,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName(if (hasReleaseSigning) "release" else "debug")
         }
     }
     compileOptions {
@@ -66,6 +95,7 @@ dependencies {
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.profileinstaller)
 
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
