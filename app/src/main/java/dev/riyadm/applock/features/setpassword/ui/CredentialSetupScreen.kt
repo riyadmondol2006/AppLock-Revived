@@ -2,7 +2,6 @@ package dev.riyadm.applock.features.setpassword.ui
 
 import android.os.Build
 import android.util.Log
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
@@ -64,7 +63,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -104,6 +102,7 @@ import dev.riyadm.applock.core.utils.SecurityUtils
 import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.ui.PatternPad
 import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
+import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -149,10 +148,7 @@ fun CredentialSetupScreen(
     val ownRoute = remember { navController.currentBackStackEntry?.destination?.route }
     val currentEntry by navController.currentBackStackEntryAsState()
 
-    DisposableEffect(activity) {
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        onDispose { activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE) }
-    }
+    SecureWindowEffect()
 
     // Only leave once this screen is on top again, so a lock screen pushed on resume
     // while the credential was being hashed is never popped without authentication.

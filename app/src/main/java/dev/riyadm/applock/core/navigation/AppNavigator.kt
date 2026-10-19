@@ -1,20 +1,18 @@
 package dev.riyadm.applock.core.navigation
 
 import android.util.Log
-import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.biometric.BiometricPrompt
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -23,15 +21,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
-import dev.riyadm.applock.data.repository.UnlockLogRepository
-import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.PreferencesRepository
+import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
-import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
+import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreenSpec
 import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
@@ -41,6 +39,7 @@ import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
+import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.ExpressiveMotion
 import kotlin.concurrent.thread
 
@@ -146,10 +145,7 @@ private fun InAppLockScreen(navController: NavHostController) {
     // Back on the lock screen leaves the app; it must never pop to the protected screens.
     BackHandler { activity.finish() }
 
-    DisposableEffect(activity) {
-        activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        onDispose { activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE) }
-    }
+    SecureWindowEffect()
 
     LaunchedEffect(Unit) {
         if (!autoPrompted && biometricUsable && repository.isBiometricAutoPromptEnabled()) {
