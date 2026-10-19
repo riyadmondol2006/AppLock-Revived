@@ -16,6 +16,7 @@
     <string name="lock_biometric_waiting">Waiting for biometric confirmation</string>
     <string name="lock_app_icon_cd">%1$s icon</string>
     <string name="lock_pin_progress_cd">%1$d digits entered</string>
+    <string name="pin_keypad_clear_action">Clear all</string>
     <string name="lock_pattern_pad_cd">Pattern pad</string>
     <string name="lock_show_password_cd">Show password</string>
     <string name="lock_hide_password_cd">Hide password</string>
