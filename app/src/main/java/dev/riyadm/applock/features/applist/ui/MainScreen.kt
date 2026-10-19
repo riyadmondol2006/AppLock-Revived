@@ -9,7 +9,10 @@ import android.content.pm.PackageManager
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -38,6 +41,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Check
@@ -63,7 +67,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.ContainedLoadingIndicator
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -82,6 +88,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -102,9 +109,10 @@ import dev.riyadm.applock.core.broadcast.AppLockServiceStarter
 import dev.riyadm.applock.core.broadcast.DeviceAdmin
 import dev.riyadm.applock.core.navigation.Screen
 import dev.riyadm.applock.core.ui.ExpressiveEmptyState
-import dev.riyadm.applock.core.ui.InlineSearchBar
+import dev.riyadm.applock.core.ui.ExpressiveSearch
 import dev.riyadm.applock.core.ui.SectionHeader
-import dev.riyadm.applock.core.ui.rememberAppHaptics
+import dev.riyadm.applock.ui.motion.ExpressiveMotion
+import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.openAccessibilitySettings
 import dev.riyadm.applock.data.repository.BackendImplementation
@@ -133,7 +141,10 @@ fun MainScreen(
     val listState = rememberLazyListState()
 
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
-    val searchQuery by mainViewModel.searchQuery.collectAsStateWithLifecycle()
+    val searchResults by mainViewModel.searchResults.collectAsStateWithLifecycle()
+    val lockedPackages by mainViewModel.lockedPackages.collectAsStateWithLifecycle()
+    val textFieldState = rememberTextFieldState()
+    val searchBarState = rememberSearchBarState()
     val selection by mainViewModel.selection.collectAsStateWithLifecycle()
     val selectionMode = selection.isNotEmpty()
 
@@ -166,7 +177,31 @@ fun MainScreen(
         onDispose { runCatching { Shizuku.removeRequestPermissionResultListener(listener) } }
     }
 
+    LaunchedEffect(textFieldState) {
+        snapshotFlow { textFieldState.text.toString() }.collect(mainViewModel::onSearchQueryChange)
+    }
+
     BackHandler(enabled = selectionMode) { mainViewModel.clearSelection() }
+
+    // Stable callbacks so rows can skip recomposition when other rows change
+    val onToggleLock = remember(mainViewModel, haptics) {
+        { app: InstalledApp, locked: Boolean ->
+            haptics.toggle(locked)
+            mainViewModel.setLocked(app.packageName, locked)
+        }
+    }
+    val onSelect = remember(mainViewModel, haptics) {
+        { packageName: String, selected: Boolean ->
+            haptics.tick()
+            mainViewModel.setSelected(packageName, selected)
+        }
+    }
+    val onStartSelection = remember(mainViewModel, haptics) {
+        { app: InstalledApp ->
+            haptics.longPress()
+            mainViewModel.startSelection(app.packageName)
+        }
+    }
 
     fun handlePermission(permission: MissingPermission) {
         when (permission) {
@@ -227,6 +262,11 @@ fun MainScreen(
         topBar = {
             MainTopBar(
                 scrollBehavior = scrollBehavior,
+                subtitle = pluralStringResource(
+                    R.plurals.applist_locked_count,
+                    uiState.lockedCount,
+                    uiState.lockedCount
+                ),
                 onOpenSettings = {
                     navController.navigate(Screen.Settings.route) { launchSingleTop = true }
                 },
@@ -278,10 +318,26 @@ fun MainScreen(
 
                 stickyHeader(key = "controls", contentType = "controls") {
                     ListControls(
-                        query = searchQuery,
-                        onQueryChange = mainViewModel::onSearchQueryChange,
+                        search = {
+                            ExpressiveSearch(
+                                textFieldState = textFieldState,
+                                searchBarState = searchBarState,
+                                placeholder = stringResource(R.string.applist_search_placeholder),
+                                backContentDescription = stringResource(R.string.applist_navigate_back_cd),
+                                clearContentDescription = stringResource(R.string.applist_search_clear_cd),
+                                modifier = Modifier.padding(horizontal = 16.dp)
+                            ) {
+                                SearchResults(
+                                    query = textFieldState.text.toString(),
+                                    results = searchResults,
+                                    lockedPackages = lockedPackages,
+                                    onToggle = onToggleLock
+                                )
+                            }
+                        },
                         filter = uiState.filter,
                         onFilterChange = {
+                            haptics.tick()
                             mainViewModel.setFilter(it)
                             scope.launch { if (listState.firstVisibleItemIndex > 1) listState.scrollToItem(1) }
                         },
@@ -298,7 +354,6 @@ fun MainScreen(
 
                     uiState.isEmpty -> item(key = "empty", contentType = "empty") {
                         EmptyListState(
-                            query = uiState.query,
                             filter = uiState.filter,
                             modifier = Modifier.animateItem()
                         )
@@ -316,15 +371,9 @@ fun MainScreen(
                             locked = true,
                             selection = selection,
                             selectionMode = selectionMode,
-                            onToggle = { app, locked ->
-                                haptics.toggle(locked)
-                                mainViewModel.setLocked(app.packageName, locked)
-                            },
-                            onSelect = mainViewModel::setSelected,
-                            onStartSelection = {
-                                haptics.longPress()
-                                mainViewModel.startSelection(it.packageName)
-                            }
+                            onToggle = onToggleLock,
+                            onSelect = onSelect,
+                            onStartSelection = onStartSelection
                         )
                         appSection(
                             key = "header_other",
@@ -337,24 +386,19 @@ fun MainScreen(
                             locked = false,
                             selection = selection,
                             selectionMode = selectionMode,
-                            onToggle = { app, locked ->
-                                haptics.toggle(locked)
-                                mainViewModel.setLocked(app.packageName, locked)
-                            },
-                            onSelect = mainViewModel::setSelected,
-                            onStartSelection = {
-                                haptics.longPress()
-                                mainViewModel.startSelection(it.packageName)
-                            }
+                            onToggle = onToggleLock,
+                            onSelect = onSelect,
+                            onStartSelection = onStartSelection
                         )
                     }
                 }
             }
 
+            val motion = MaterialTheme.motionScheme
             AnimatedVisibility(
                 visible = selectionMode,
-                enter = slideInVertically { it } + fadeIn(),
-                exit = slideOutVertically { it } + fadeOut(),
+                enter = slideInVertically(motion.defaultSpatialSpec()) { it } + fadeIn(motion.defaultEffectsSpec()),
+                exit = slideOutVertically(motion.fastSpatialSpec()) { it } + fadeOut(motion.fastEffectsSpec()),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .windowInsetsPadding(WindowInsets.navigationBars)
@@ -363,7 +407,10 @@ fun MainScreen(
                 SelectionToolbar(
                     count = selection.size,
                     onClose = mainViewModel::clearSelection,
-                    onSelectAll = mainViewModel::selectAllVisible,
+                    onSelectAll = {
+                        haptics.tick()
+                        mainViewModel.selectAllVisible()
+                    },
                     onLock = { showBulkResult(mainViewModel.lockSelected(true), true) },
                     onUnlock = { showBulkResult(mainViewModel.lockSelected(false), false) }
                 )
@@ -421,6 +468,7 @@ private fun LazyListScope.appSection(
 @Composable
 private fun MainTopBar(
     scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior,
+    subtitle: String,
     onOpenSettings: () -> Unit,
     onOpenTriggerExclusions: () -> Unit,
     onOpenAntiUninstall: () -> Unit,
@@ -434,15 +482,16 @@ private fun MainTopBar(
                 overflow = TextOverflow.Ellipsis
             )
         },
+        subtitle = { Text(text = subtitle, maxLines = 1) },
         actions = {
-            IconButton(onClick = onOpenSettings) {
+            IconButton(onClick = onOpenSettings, shapes = IconButtonDefaults.shapes()) {
                 Icon(
                     Icons.Rounded.Settings,
                     contentDescription = stringResource(R.string.main_screen_settings_cd)
                 )
             }
             Box {
-                IconButton(onClick = { menuExpanded = true }) {
+                IconButton(onClick = { menuExpanded = true }, shapes = IconButtonDefaults.shapes()) {
                     Icon(
                         Icons.Rounded.MoreVert,
                         contentDescription = stringResource(R.string.applist_more_options_cd)
@@ -481,27 +530,21 @@ private fun MainTopBar(
 
 @Composable
 private fun ListControls(
-    query: String,
-    onQueryChange: (String) -> Unit,
+    search: @Composable () -> Unit,
     filter: AppFilter,
     onFilterChange: (AppFilter) -> Unit,
     sort: AppSort,
     onSortChange: (AppSort) -> Unit,
     showSystemFilter: Boolean,
 ) {
+    val spatial = MaterialTheme.motionScheme.fastSpatialSpec<androidx.compose.ui.unit.IntSize>()
     Column(
         Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
             .padding(top = 8.dp, bottom = 4.dp)
     ) {
-        InlineSearchBar(
-            query = query,
-            onQueryChange = onQueryChange,
-            placeholder = stringResource(R.string.applist_search_placeholder),
-            clearContentDescription = stringResource(R.string.applist_search_clear_cd),
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        search()
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -520,7 +563,8 @@ private fun ListControls(
                 val selected = filter == value
                 FilterChip(
                     selected = selected,
-                    onClick = { onFilterChange(value) },
+                    onClick = { if (!selected) onFilterChange(value) },
+                    modifier = Modifier.animateContentSize(spatial),
                     label = { Text(stringResource(label)) },
                     leadingIcon = if (selected) {
                         {
@@ -533,7 +577,6 @@ private fun ListControls(
                     } else null
                 )
             }
-            Spacer(Modifier.weight(1f))
             SortChip(sort = sort, onSortChange = onSortChange)
         }
     }
@@ -547,6 +590,7 @@ private fun SortChip(sort: AppSort, onSortChange: (AppSort) -> Unit) {
         FilterChip(
             selected = sort != AppSort.NAME,
             onClick = { expanded = true },
+            modifier = Modifier.animateContentSize(MaterialTheme.motionScheme.fastSpatialSpec()),
             label = {
                 Text(
                     stringResource(
@@ -598,32 +642,43 @@ private fun SelectionToolbar(
         expanded = true,
         colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(),
         leadingContent = {
-            IconButton(onClick = onClose) {
+            IconButton(onClick = onClose, shapes = IconButtonDefaults.shapes()) {
                 Icon(
                     Icons.Rounded.Close,
                     contentDescription = stringResource(R.string.applist_action_close_selection)
                 )
             }
-            Text(
-                text = pluralStringResource(R.plurals.applist_selected_count, count, count),
-                style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.padding(end = 8.dp)
-            )
+            AnimatedContent(
+                targetState = count,
+                transitionSpec = {
+                    val up = targetState > initialState
+                    val motion = ExpressiveMotion
+                    (slideInVertically(motion.fastSpatial()) { if (up) it else -it } + fadeIn(motion.fastEffects()))
+                        .togetherWith(slideOutVertically(motion.fastSpatial()) { if (up) -it else it } + fadeOut(motion.fastEffects()))
+                },
+                label = "selectedCount"
+            ) { value ->
+                Text(
+                    text = pluralStringResource(R.plurals.applist_selected_count, value, value),
+                    style = MaterialTheme.typography.labelLargeEmphasized,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
         }
     ) {
-        IconButton(onClick = onSelectAll) {
+        IconButton(onClick = onSelectAll, shapes = IconButtonDefaults.shapes()) {
             Icon(
                 Icons.Rounded.SelectAll,
                 contentDescription = stringResource(R.string.applist_action_select_all)
             )
         }
-        IconButton(onClick = onUnlock) {
+        IconButton(onClick = onUnlock, shapes = IconButtonDefaults.shapes()) {
             Icon(
                 Icons.Rounded.LockOpen,
                 contentDescription = stringResource(R.string.applist_action_unlock)
             )
         }
-        FilledIconButton(onClick = onLock) {
+        FilledIconButton(onClick = onLock, shapes = IconButtonDefaults.shapes()) {
             Icon(
                 Icons.Rounded.Lock,
                 contentDescription = stringResource(R.string.applist_action_lock)
@@ -641,7 +696,7 @@ private fun LoadingState(modifier: Modifier = Modifier) {
             .padding(vertical = 64.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoadingIndicator(modifier = Modifier.size(64.dp))
+        ContainedLoadingIndicator(modifier = Modifier.size(72.dp))
         Spacer(Modifier.height(16.dp))
         Text(
             text = stringResource(R.string.applist_loading),
@@ -653,29 +708,66 @@ private fun LoadingState(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun EmptyListState(query: String, filter: AppFilter, modifier: Modifier = Modifier) {
-    when {
-        query.isNotBlank() -> ExpressiveEmptyState(
-            icon = Icons.Rounded.SearchOff,
-            title = stringResource(R.string.applist_empty_search_title, query),
-            description = stringResource(R.string.applist_empty_search_desc),
-            modifier = modifier
-        )
-
-        filter == AppFilter.LOCKED -> ExpressiveEmptyState(
+private fun EmptyListState(filter: AppFilter, modifier: Modifier = Modifier) {
+    if (filter == AppFilter.LOCKED) {
+        ExpressiveEmptyState(
             icon = Icons.Rounded.Lock,
             title = stringResource(R.string.applist_empty_locked_title),
             description = stringResource(R.string.applist_empty_locked_desc),
             polygon = MaterialShapes.Cookie6Sided,
             modifier = modifier
         )
-
-        else -> ExpressiveEmptyState(
+    } else {
+        ExpressiveEmptyState(
             icon = Icons.Rounded.SearchOff,
             title = stringResource(R.string.applist_empty_generic_title),
             description = stringResource(R.string.applist_empty_generic_desc),
             modifier = modifier
         )
+    }
+}
+
+/** Results shown inside the expanded full-screen search. */
+@Composable
+private fun SearchResults(
+    query: String,
+    results: List<InstalledApp>,
+    lockedPackages: Set<String>,
+    onToggle: (InstalledApp, Boolean) -> Unit,
+) {
+    if (query.isBlank()) return
+    if (results.isEmpty()) {
+        ExpressiveEmptyState(
+            icon = Icons.Rounded.SearchOff,
+            title = stringResource(R.string.applist_empty_search_title, query.trim()),
+            description = stringResource(R.string.applist_empty_search_desc)
+        )
+        return
+    }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding(),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp)
+    ) {
+        itemsIndexed(
+            results,
+            key = { _, app -> app.packageName },
+            contentType = { _, _ -> "app" }
+        ) { index, app ->
+            AppSwitchListItem(
+                app = app,
+                checked = app.packageName in lockedPackages,
+                onCheckedChange = { onToggle(app, it) },
+                index = index,
+                count = results.size,
+                switchContentDescription = stringResource(R.string.applist_lock_switch_cd, app.label),
+                modifier = Modifier
+                    .animateItem()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = ListItemDefaults.SegmentedGap)
+            )
+        }
     }
 }
 

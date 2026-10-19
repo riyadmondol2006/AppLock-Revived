@@ -1,45 +1,73 @@
 package dev.riyadm.applock.core.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.ExpandedFullScreenSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarState
+import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.toPath
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Matrix
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
-import dev.riyadm.applock.core.utils.appLockRepository
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 val shapes = mutableListOf(
@@ -55,13 +83,13 @@ val shapes = mutableListOf(
     MaterialShapes.Gem
 ).apply { shuffle() }
 
-/** Remembers a [Shape] for one of the [MaterialShapes] polygons. */
+/** A [Shape] for one of the [MaterialShapes] polygons, remembered across compositions. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun rememberPolygonShape(polygon: RoundedPolygon): Shape =
-    remember(polygon) { polygon.toShape() }
+fun rememberPolygonShape(polygon: RoundedPolygon): Shape = polygon.toShape()
 
 /**
- * An icon sitting on an expressive (e.g. cookie / burst) shaped container,
+ * An icon sitting on an expressive (cookie / burst / clover…) shaped container,
  * used for hero cards and empty states.
  */
 @Composable
@@ -111,6 +139,80 @@ fun ExpressiveIconBadge(
             tint = contentColor,
             modifier = Modifier.size(iconSize)
         )
+    }
+}
+
+/**
+ * Badge whose container morphs between [MaterialShapes] polygons whenever [polygon] changes,
+ * optionally with a slow idle rotation. Shape, rotation and colour are all read in the draw
+ * phase, so the animation never recomposes or re-lays out the badge.
+ */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun MorphingIconBadge(
+    polygon: RoundedPolygon,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    size: Dp = 64.dp,
+    iconSize: Dp = size * 0.44f,
+    rotate: Boolean = false,
+    contentDescription: String? = null,
+) {
+    val motion = MaterialTheme.motionScheme
+    var from by remember { mutableStateOf(polygon) }
+    var to by remember { mutableStateOf(polygon) }
+    val progress = remember { Animatable(1f) }
+    LaunchedEffect(polygon) {
+        if (polygon != to) {
+            from = if (progress.value >= 0.5f) to else from
+            to = polygon
+            progress.snapTo(0f)
+            progress.animateTo(1f, motion.slowSpatialSpec())
+        }
+    }
+    val morph = remember(from, to) { Morph(from, to) }
+    val color by animateColorAsState(containerColor, motion.defaultEffectsSpec(), label = "badge")
+    val rotation = if (rotate) {
+        val transition = rememberInfiniteTransition(label = "badgeRotation")
+        transition.animateFloat(
+            initialValue = 0f,
+            targetValue = 360f,
+            animationSpec = infiniteRepeatable(tween(24_000, easing = LinearEasing), RepeatMode.Restart),
+            label = "rotation"
+        )
+    } else null
+    val path = remember { Path() }
+    val matrix = remember { Matrix() }
+
+    Box(
+        modifier = modifier
+            .size(size)
+            .drawBehind {
+                morph.toPath(progress.value, path)
+                matrix.reset()
+                matrix.scale(this.size.width, this.size.height)
+                path.transform(matrix)
+                rotate(rotation?.value ?: 0f) { drawPath(path, color) }
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        AnimatedContent(
+            targetState = icon,
+            transitionSpec = {
+                (scaleIn(motion.fastSpatialSpec(), initialScale = 0.6f) + fadeIn(motion.fastEffectsSpec()))
+                    .togetherWith(scaleOut(motion.fastSpatialSpec(), targetScale = 0.6f) + fadeOut(motion.fastEffectsSpec()))
+            },
+            label = "badgeIcon"
+        ) { target ->
+            Icon(
+                imageVector = target,
+                contentDescription = contentDescription,
+                tint = contentColor,
+                modifier = Modifier.size(iconSize)
+            )
+        }
     }
 }
 
@@ -172,79 +274,73 @@ fun ExpressiveEmptyState(
     }
 }
 
-/** Inline (non-expanding) pill search field used to filter lists in place. */
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Expressive search: a collapsed pill [SearchBar] that expands into an
+ * [ExpandedFullScreenSearchBar] showing [results]. The query is cleared when search closes.
+ */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun InlineSearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
+fun ExpressiveSearch(
+    textFieldState: TextFieldState,
+    searchBarState: SearchBarState,
     placeholder: String,
+    backContentDescription: String,
     clearContentDescription: String,
     modifier: Modifier = Modifier,
+    results: @Composable ColumnScope.() -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
-    SearchBar(
-        inputField = {
-            SearchBarDefaults.InputField(
-                query = query,
-                onQueryChange = onQueryChange,
-                onSearch = { focusManager.clearFocus() },
-                expanded = false,
-                onExpandedChange = {},
-                placeholder = {
-                    Text(
-                        text = placeholder,
-                        maxLines = 1
-                    )
-                },
-                leadingIcon = {
-                    Icon(Icons.Rounded.Search, contentDescription = null)
-                },
-                trailingIcon = if (query.isNotEmpty()) {
-                    {
-                        IconButton(onClick = { onQueryChange("") }) {
-                            Icon(Icons.Rounded.Close, contentDescription = clearContentDescription)
-                        }
+
+    LaunchedEffect(searchBarState.currentValue) {
+        if (searchBarState.currentValue == SearchBarValue.Collapsed) textFieldState.clearText()
+    }
+
+    val inputField = @Composable {
+        SearchBarDefaults.InputField(
+            textFieldState = textFieldState,
+            searchBarState = searchBarState,
+            onSearch = { focusManager.clearFocus() },
+            placeholder = { Text(placeholder, maxLines = 1) },
+            leadingIcon = {
+                if (searchBarState.currentValue == SearchBarValue.Expanded) {
+                    IconButton(
+                        onClick = { scope.launch { searchBarState.animateToCollapsed() } },
+                        shapes = IconButtonDefaults.shapes()
+                    ) {
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = backContentDescription)
                     }
-                } else null,
-            )
-        },
-        expanded = false,
-        onExpandedChange = {},
+                } else {
+                    Icon(Icons.Rounded.Search, contentDescription = null)
+                }
+            },
+            trailingIcon = {
+                if (textFieldState.text.isNotEmpty()) {
+                    IconButton(
+                        onClick = { textFieldState.clearText() },
+                        shapes = IconButtonDefaults.shapes()
+                    ) {
+                        Icon(Icons.Rounded.Close, contentDescription = clearContentDescription)
+                    }
+                }
+            },
+        )
+    }
+
+    SearchBar(
+        state = searchBarState,
+        inputField = inputField,
         modifier = modifier.fillMaxWidth(),
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         ),
-        tonalElevation = 0.dp,
-        windowInsets = WindowInsets(0, 0, 0, 0),
-        content = {},
     )
-}
-
-/** Haptic feedback that honours the "disable haptics" setting. */
-class AppHaptics internal constructor(
-    private val enabled: Boolean,
-    private val perform: (HapticFeedbackType) -> Unit,
-) {
-    fun toggle(on: Boolean) {
-        if (enabled) perform(if (on) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff)
-    }
-
-    fun longPress() {
-        if (enabled) perform(HapticFeedbackType.LongPress)
-    }
-
-    fun confirm() {
-        if (enabled) perform(HapticFeedbackType.Confirm)
-    }
-}
-
-@Composable
-fun rememberAppHaptics(): AppHaptics {
-    val context = LocalContext.current
-    val haptic = LocalHapticFeedback.current
-    return remember(haptic) {
-        val enabled = !context.appLockRepository().shouldDisableHaptics()
-        AppHaptics(enabled) { haptic.performHapticFeedback(it) }
-    }
+    ExpandedFullScreenSearchBar(
+        state = searchBarState,
+        inputField = inputField,
+        colors = SearchBarDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        content = results,
+    )
 }

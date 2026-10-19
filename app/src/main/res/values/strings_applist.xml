@@ -94,12 +94,21 @@
     <string name="trigger_exclusions_section_excluded">Excluded</string>
     <string name="trigger_exclusions_add_desc">Enter the package name of the app you want to exclude.</string>
     <string name="trigger_exclusions_switch_cd">Exclude %1$s</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="one">%d app excluded</item>
+        <item quantity="other">%d apps excluded</item>
+    </plurals>
 
     <!-- Prevent uninstall -->
     <string name="anti_uninstall_title">Prevent uninstall</string>
     <string name="anti_uninstall_section_protected">Protected</string>
     <string name="anti_uninstall_add_desc">Enter the package name of the app you want to protect from uninstalling.</string>
     <string name="anti_uninstall_switch_cd">Prevent uninstalling %1$s</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="one">%d app protected</item>
+        <item quantity="other">%d apps protected</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku needs an update</string>
     <string name="anti_uninstall_ready_title">Shizuku is connected</string>
     <string name="anti_uninstall_ready_desc">Protected apps can\'t be uninstalled until you turn their switch off here. Shizuku is only needed while changing protection.</string>
     <string name="anti_uninstall_not_installed_title">Shizuku isn\'t installed</string>

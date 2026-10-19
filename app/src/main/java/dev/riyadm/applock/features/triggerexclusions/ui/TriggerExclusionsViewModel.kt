@@ -1,121 +1,48 @@
 package dev.riyadm.applock.features.triggerexclusions.ui
 
-import android.content.Context
-import android.content.pm.ApplicationInfo
+import android.app.Application
+import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dev.riyadm.applock.core.utils.appLockRepository
-import dev.riyadm.applock.features.applist.domain.AppInfo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.getSystemService
+import dev.riyadm.applock.features.applist.ui.PackageToggleViewModel
 
-class TriggerExclusionsViewModel : ViewModel() {
-    private val _allApps = MutableStateFlow<List<AppInfo>>(emptyList())
-    val allApps: StateFlow<List<AppInfo>> = _allApps.asStateFlow()
+class TriggerExclusionsViewModel(application: Application) : PackageToggleViewModel(application) {
 
-    private val _filteredApps = MutableStateFlow<List<AppInfo>>(emptyList())
-    val filteredApps: StateFlow<List<AppInfo>> = _filteredApps.asStateFlow()
-
-    private val _excludedApps = MutableStateFlow<Set<String>>(emptySet())
-    val excludedApps: StateFlow<Set<String>> = _excludedApps.asStateFlow()
-
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-    private val _manualPackageName = MutableStateFlow("")
-    val manualPackageName: StateFlow<String> = _manualPackageName.asStateFlow()
-
-    fun loadApps(context: Context) {
-        viewModelScope.launch {
-            _isLoading.value = true
-
-            val repository = context.appLockRepository()
-            _excludedApps.value = repository.getTriggerExcludedApps()
-
-            val apps = withContext(Dispatchers.IO) {
-                getInstalledApps(context)
-            }
-
-            _allApps.value = apps
-            _filteredApps.value = apps
-            _isLoading.value = false
-        }
+    init {
+        load()
     }
 
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
-        filterApps(query)
+    override fun readChecked(): Set<String> = repository.getTriggerExcludedApps()
+
+    /** Keyboards, launchers and core system UI are the usual candidates, so always list them. */
+    override fun alwaysVisiblePackages(): Set<String> {
+        val app = getApplication<Application>()
+        val result = HashSet(IMPORTANT_SYSTEM_APPS)
+        app.getSystemService<InputMethodManager>()?.enabledInputMethodList
+            ?.mapTo(result) { it.packageName }
+        val home = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+        app.packageManager.queryIntentActivities(home, PackageManager.MATCH_DEFAULT_ONLY)
+            .mapTo(result) { it.activityInfo.packageName }
+        return result
     }
 
-    fun updateManualPackageName(packageName: String) {
-        _manualPackageName.value = packageName
-    }
-
-    private fun filterApps(query: String) {
-        _filteredApps.value = if (query.isEmpty()) {
-            _allApps.value
-        } else {
-            _allApps.value.filter { app ->
-                app.name.contains(query, ignoreCase = true) ||
-                        app.packageName.contains(query, ignoreCase = true)
-            }
-        }
-    }
-
-    fun toggleAppExclusion(context: Context, packageName: String) {
-        val repository = context.appLockRepository()
-        val currentExclusions = _excludedApps.value.toMutableSet()
-
-        if (currentExclusions.contains(packageName)) {
-            repository.removeTriggerExcludedApp(packageName)
-            currentExclusions.remove(packageName)
-        } else {
+    fun setExcluded(packageName: String, excluded: Boolean) {
+        if (excluded) {
             repository.addTriggerExcludedApp(packageName)
-            currentExclusions.add(packageName)
+        } else {
+            repository.removeTriggerExcludedApp(packageName)
         }
-
-        _excludedApps.value = currentExclusions
+        updateChecked(packageName, excluded)
     }
 
-    fun addManualPackage(context: Context, packageName: String) {
-        if (packageName.isNotBlank()) {
-            val repository = context.appLockRepository()
-            repository.addTriggerExcludedApp(packageName.trim())
-
-            val currentExclusions = _excludedApps.value.toMutableSet()
-            currentExclusions.add(packageName.trim())
-            _excludedApps.value = currentExclusions
-
-            _manualPackageName.value = ""
-        }
+    fun addManualPackage(packageName: String) {
+        val name = packageName.trim()
+        if (isValidPackageName(name)) setExcluded(name, true)
     }
 
-    private suspend fun getInstalledApps(context: Context): List<AppInfo> {
-        val packageManager = context.packageManager
-        val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-
-        return installedApps
-            .filter { it.flags and ApplicationInfo.FLAG_SYSTEM == 0 || isImportantSystemApp(it) }
-            .map { appInfo ->
-                AppInfo(
-                    name = packageManager.getApplicationLabel(appInfo).toString(),
-                    packageName = appInfo.packageName,
-                    icon = packageManager.getApplicationIcon(appInfo)
-                )
-            }
-            .sortedBy { it.name.lowercase() }
-    }
-
-    private fun isImportantSystemApp(appInfo: ApplicationInfo): Boolean {
-        val importantSystemApps = setOf(
+    private companion object {
+        val IMPORTANT_SYSTEM_APPS = setOf(
             "com.android.chrome",
             "com.android.vending",
             "com.google.android.gms",
@@ -123,6 +50,5 @@ class TriggerExclusionsViewModel : ViewModel() {
             "com.android.systemui",
             "com.android.launcher3"
         )
-        return appInfo.packageName in importantSystemApps
     }
 }

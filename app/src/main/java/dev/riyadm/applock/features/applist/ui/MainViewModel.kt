@@ -41,7 +41,6 @@ data class AppListUiState(
     val filter: AppFilter = AppFilter.ALL,
     val sort: AppSort = AppSort.NAME,
     val showSystemFilter: Boolean = false,
-    val query: String = "",
 ) {
     val isEmpty: Boolean get() = lockedApps.isEmpty() && otherApps.isEmpty()
 }
@@ -59,7 +58,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     /** null while the first load is running. */
     private val allApps = MutableStateFlow<List<InstalledApp>?>(null)
-    private val lockedPackages = MutableStateFlow(appLockRepository.getLockedApps())
+    private val _lockedPackages = MutableStateFlow(appLockRepository.getLockedApps())
+    val lockedPackages: StateFlow<Set<String>> = _lockedPackages.asStateFlow()
     private val options = MutableStateFlow(
         ListOptions(showSystemApps = appLockRepository.shouldShowSystemApps())
     )
@@ -72,17 +72,43 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val uiState: StateFlow<AppListUiState> = combine(
         allApps,
-        lockedPackages,
-        _searchQuery.debounce { if (it.isEmpty()) 0L else SEARCH_DEBOUNCE_MS },
+        _lockedPackages,
         options,
-    ) { apps, locked, query, opts ->
-        buildState(apps, locked, query.trim(), opts)
+    ) { apps, locked, opts ->
+        buildState(apps, locked, opts)
     }
         .flowOn(Dispatchers.Default)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AppListUiState()
+        )
+
+    /**
+     * Search results don't depend on the locked set, so toggling a result only changes that
+     * row's switch instead of rebuilding the list.
+     */
+    val searchResults: StateFlow<List<InstalledApp>> = combine(
+        allApps,
+        _searchQuery.debounce { if (it.isEmpty()) 0L else SEARCH_DEBOUNCE_MS },
+        options,
+    ) { apps, query, opts ->
+        val trimmed = query.trim()
+        if (apps == null || trimmed.isEmpty()) {
+            emptyList()
+        } else {
+            val locked = _lockedPackages.value
+            apps.filter { app ->
+                (opts.showSystemApps || app.isUserFacing || app.packageName in locked) &&
+                        app.matches(trimmed)
+            }
+        }
+    }
+        .flowOn(Dispatchers.Default)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
         )
 
     private var reloadJob: Job? = null
@@ -119,7 +145,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private fun buildState(
         apps: List<InstalledApp>?,
         locked: Set<String>,
-        query: String,
         opts: ListOptions,
     ): AppListUiState {
         if (apps == null) {
@@ -128,8 +153,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 lockedCount = locked.size,
                 filter = opts.filter,
                 sort = opts.sort,
-                showSystemFilter = opts.showSystemApps,
-                query = query
+                showSystemFilter = opts.showSystemApps
             )
         }
 
@@ -140,8 +164,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val visible = apps.filter { app ->
             val isLocked = app.packageName in locked
             (isLocked || opts.showSystemApps || app.isUserFacing) &&
-                    (filter != AppFilter.SYSTEM || app.isSystem) &&
-                    app.matches(query)
+                    (filter != AppFilter.SYSTEM || app.isSystem)
         }
         val sorted = when (opts.sort) {
             AppSort.NAME -> visible
@@ -156,8 +179,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             lockedCount = apps.count { it.packageName in locked },
             filter = filter,
             sort = opts.sort,
-            showSystemFilter = opts.showSystemApps,
-            query = query
+            showSystemFilter = opts.showSystemApps
         )
     }
 
@@ -170,7 +192,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 Log.e(TAG, "Failed to load apps", e)
                 if (allApps.value == null) allApps.value = emptyList()
             }
-            lockedPackages.value = appLockRepository.getLockedApps()
+            _lockedPackages.value = appLockRepository.getLockedApps()
         }
     }
 
@@ -184,13 +206,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to reload apps", e)
             }
-            lockedPackages.value = appLockRepository.getLockedApps()
+            _lockedPackages.value = appLockRepository.getLockedApps()
         }
     }
 
     /** Re-reads state that other screens (settings, backup import, receivers) may have changed. */
     fun refresh() {
-        lockedPackages.value = appLockRepository.getLockedApps()
+        _lockedPackages.value = appLockRepository.getLockedApps()
         val showSystem = appLockRepository.shouldShowSystemApps()
         options.update { it.copy(showSystemApps = showSystem) }
     }
@@ -213,12 +235,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             appLockRepository.removeLockedApp(packageName)
         }
-        lockedPackages.value = appLockRepository.getLockedApps()
+        _lockedPackages.value = appLockRepository.getLockedApps()
     }
 
     /** Locks or unlocks [packageNames], returning the packages whose state actually changed. */
     fun setLocked(packageNames: Set<String>, locked: Boolean): Set<String> {
-        val current = lockedPackages.value
+        val current = _lockedPackages.value
         val changed = if (locked) packageNames - current else packageNames intersect current
         if (changed.isEmpty()) return changed
         if (locked) {
@@ -226,7 +248,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             changed.forEach(appLockRepository::removeLockedApp)
         }
-        lockedPackages.value = appLockRepository.getLockedApps()
+        _lockedPackages.value = appLockRepository.getLockedApps()
         return changed
     }
 
