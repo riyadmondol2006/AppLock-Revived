@@ -53,6 +53,7 @@ class TransparentBiometricActivity : FragmentActivity() {
     private var token = 0L
     private var lockedPackage: String? = null
     private var appName: String? = null
+    private var credentialFallback = true
     private var authStarted = false
     private var resultDelivered = false
     private lateinit var biometricPrompt: BiometricPrompt
@@ -63,6 +64,7 @@ class TransparentBiometricActivity : FragmentActivity() {
         token = intent.getLongExtra(EXTRA_TOKEN, 0L)
         lockedPackage = intent.getStringExtra(EXTRA_LOCKED_PACKAGE)
         appName = intent.getStringExtra(EXTRA_APP_NAME)
+        credentialFallback = intent.getBooleanExtra(EXTRA_CREDENTIAL_FALLBACK, true)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) setRecentsScreenshotEnabled(false)
@@ -87,7 +89,7 @@ class TransparentBiometricActivity : FragmentActivity() {
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     Log.d(TAG, "Biometric error $errorCode: $errString")
-                    deliver(success = false)
+                    deliver(success = false, errorCode = errorCode)
                     finish()
                 }
 
@@ -153,7 +155,7 @@ class TransparentBiometricActivity : FragmentActivity() {
             return
         }
         try {
-            biometricPrompt.authenticate(buildBiometricPromptInfo(this, appName))
+            biometricPrompt.authenticate(buildBiometricPromptInfo(this, appName, credentialFallback))
         } catch (e: Exception) {
             Log.e(TAG, "Biometric failed to start", e)
             deliver(success = false)
@@ -161,10 +163,10 @@ class TransparentBiometricActivity : FragmentActivity() {
         }
     }
 
-    private fun deliver(success: Boolean) {
+    private fun deliver(success: Boolean, errorCode: Int = 0) {
         if (resultDelivered) return
         resultDelivered = true
-        val handled = LockScreenOverlayManager.dispatchBiometricResult(token, success)
+        val handled = LockScreenOverlayManager.dispatchBiometricResult(token, success, errorCode)
         if (!handled) {
             // The overlay that started this prompt is gone; let the service decide what to show.
             AppLockManager.reportBiometricAuthFinished()
@@ -190,5 +192,6 @@ class TransparentBiometricActivity : FragmentActivity() {
         const val EXTRA_LOCKED_PACKAGE = "locked_package"
         const val EXTRA_APP_NAME = "app_name"
         const val EXTRA_TOKEN = "overlay_token"
+        const val EXTRA_CREDENTIAL_FALLBACK = "credential_fallback"
     }
 }

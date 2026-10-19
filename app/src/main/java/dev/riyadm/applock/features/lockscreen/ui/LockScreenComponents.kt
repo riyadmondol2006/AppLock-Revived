@@ -103,6 +103,7 @@ import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.PreferencesRepository
 import dev.riyadm.applock.data.repository.UnlockLogRepository
+import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
 import dev.riyadm.applock.ui.motion.AppHaptics
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.CoroutineScope
@@ -131,8 +132,40 @@ class LockScreenSpec(
     val closeIcon: ImageVector = Icons.Rounded.Close,
     val closeContentDescription: String? = null,
     val sessionKey: Any = Unit,
+    /** Per-app security level for this session; null keeps the plain credential + biometric flow. */
+    val gate: PolicyUnlockGate? = null,
     val onSuccess: () -> Unit,
 )
+
+/** Whether the credential input may be used right now (hidden until biometrics pass or fail hard). */
+internal val LockScreenSpec.credentialVisible: Boolean
+    get() = gate?.showCredentialInput ?: true
+
+internal val LockScreenSpec.biometricVisible: Boolean
+    get() = showBiometric && (gate?.showBiometricButton ?: true)
+
+/** The hint under the title, following the app's security level. */
+@Composable
+internal fun policyHint(spec: LockScreenSpec, credentialHint: String, nextStepHint: Int): String {
+    spec.subtitle?.let { return it }
+    val gate = spec.gate ?: return credentialHint
+    return when {
+        gate.awaitingCredential -> stringResource(nextStepHint)
+        !gate.showCredentialInput -> stringResource(
+            if (gate.policy.requireBoth) R.string.policy_lock_step_biometric
+            else R.string.policy_lock_biometric_required
+        )
+        else -> credentialHint
+    }
+}
+
+/** Shown instead of the credential input while the policy asks for biometrics first. */
+@Composable
+internal fun BiometricFirstPanel(spec: LockScreenSpec, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (spec.showBiometric) BiometricButton(onClick = spec.onBiometric, compact = false)
+    }
+}
 
 /** Picks the screen for the configured credential type. */
 @Composable
@@ -326,6 +359,8 @@ internal fun LockScreenScaffold(
     val exitSpec = MaterialTheme.motionScheme.fastEffectsSpec<Float>()
     LaunchedEffect(controller.isUnlocked) {
         if (controller.isUnlocked) {
+            // The credential only completes the unlock when the app's policy is satisfied.
+            if (spec.gate?.onCredentialSucceeded() == false) return@LaunchedEffect
             withTimeoutOrNull(SUCCESS_EXIT_MS) { exit.animateTo(1f, exitSpec) }
             onSuccess()
         }
@@ -652,11 +687,19 @@ internal fun Context.canUseBiometrics(): Boolean =
     BiometricManager.from(this).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) ==
             BiometricManager.BIOMETRIC_SUCCESS
 
-internal fun buildBiometricPromptInfo(context: Context, appName: String?): BiometricPrompt.PromptInfo {
-    val negative = when (context.appLockRepository().getLockType()) {
-        PreferencesRepository.LOCK_TYPE_PATTERN -> R.string.use_pattern_button
-        PreferencesRepository.LOCK_TYPE_PASSWORD -> R.string.use_password_button
-        else -> R.string.use_pin_button
+internal fun buildBiometricPromptInfo(
+    context: Context,
+    appName: String?,
+    credentialFallback: Boolean = true,
+): BiometricPrompt.PromptInfo {
+    val negative = when {
+        // Biometrics come first under this app's policy: "Use PIN" would be misleading.
+        !credentialFallback -> R.string.cancel_button
+        else -> when (context.appLockRepository().getLockType()) {
+            PreferencesRepository.LOCK_TYPE_PATTERN -> R.string.use_pattern_button
+            PreferencesRepository.LOCK_TYPE_PASSWORD -> R.string.use_password_button
+            else -> R.string.use_pin_button
+        }
     }
     val name = appName?.takeIf { it.isNotBlank() } ?: context.getString(R.string.this_app)
     return BiometricPrompt.PromptInfo.Builder()

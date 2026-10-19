@@ -11,6 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.riyadm.applock.core.utils.appLockRepository
+import dev.riyadm.applock.data.repository.LockProfile
+import dev.riyadm.applock.data.repository.LockProfilesState
+import dev.riyadm.applock.data.repository.SecurityLevel
 import dev.riyadm.applock.features.applist.domain.AppSearchManager
 import dev.riyadm.applock.features.applist.domain.InstalledApp
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +30,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 enum class AppFilter { ALL, LOCKED, UNLOCKED, SYSTEM }
 
@@ -63,6 +67,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val options = MutableStateFlow(
         ListOptions(showSystemApps = appLockRepository.shouldShowSystemApps())
     )
+
+    /** Lock profiles; the active profile's apps are [lockedPackages]. */
+    val profiles: StateFlow<LockProfilesState> = appLockRepository.profiles.state
+
+    /** Apps with their own security level. */
+    val securityLevels: StateFlow<Map<String, SecurityLevel>> = appLockRepository.appPolicies.levels
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
@@ -125,6 +135,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         loadApps(useCache = false)
+        // Profile switches and other writers (receivers, backup import) change the locked set.
+        viewModelScope.launch {
+            appLockRepository.profiles.state.collect { _lockedPackages.value = it.active.lockedApps }
+        }
         val filter = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
             addAction(Intent.ACTION_PACKAGE_REMOVED)
@@ -256,6 +270,46 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _lockedPackages.value = appLockRepository.getLockedApps()
         return changed
     }
+
+    /** Switches the active profile. Only reachable from the authenticated app UI. */
+    suspend fun switchProfile(profile: LockProfile): Boolean {
+        val switched = withContext(Dispatchers.IO) { appLockRepository.switchProfile(profile.id) }
+        _lockedPackages.value = appLockRepository.getLockedApps()
+        return switched
+    }
+
+    fun setSecurityLevel(packageName: String, level: SecurityLevel) {
+        viewModelScope.launch(Dispatchers.IO) { appLockRepository.appPolicies.setLevel(packageName, level) }
+    }
+
+    fun setProfileMembership(profileId: String, packageName: String, member: Boolean) {
+        appLockRepository.setProfileMembership(profileId, packageName, member)
+        _lockedPackages.value = appLockRepository.getLockedApps()
+    }
+
+    /**
+     * Locks every app shown by default (user apps and system apps with a launcher icon), except
+     * App Lock itself and the home screen. Returns the packages that were newly locked.
+     */
+    suspend fun lockAllUserApps(): Set<String> {
+        val apps = allApps.value ?: return emptySet()
+        val candidates = withContext(Dispatchers.Default) {
+            val excluded = homePackages() + getApplication<Application>().packageName
+            apps.asSequence()
+                .filter { it.isUserFacing && it.packageName !in excluded }
+                .map { it.packageName }
+                .toSet()
+        }
+        return setLocked(candidates, true)
+    }
+
+    private fun homePackages(): Set<String> = runCatching {
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+        getApplication<Application>().packageManager
+            .queryIntentActivities(intent, 0)
+            .mapNotNull { it.activityInfo?.packageName }
+            .toSet()
+    }.getOrDefault(emptySet())
 
     fun startSelection(packageName: String) {
         _selection.value = setOf(packageName)

@@ -20,7 +20,7 @@ class SettingsState(private val repository: AppLockRepository) {
     var scrambleKeypad by pref(repository.isScrambleKeypadEnabled(), repository::setScrambleKeypadEnabled)
     var disableHaptics by pref(repository.shouldDisableHaptics(), repository::setDisableHaptics)
     var autoUnlock by pref(repository.isAutoUnlockEnabled(), repository::setAutoUnlockEnabled)
-    var unlockDuration by pref(repository.getUnlockTimeDuration(), repository::setUnlockTimeDuration)
+    var unlockDuration by pref(repository.getGlobalUnlockTimeDuration(), repository::setUnlockTimeDuration)
     var maxFailedAttempts by pref(repository.getMaxFailedAttempts(), repository::setMaxFailedAttempts)
     var lockoutSeconds by pref(repository.getLockoutDurationSeconds(), repository::setLockoutDurationSeconds)
     var autoLockNewApps by pref(repository.isAutoLockNewAppsEnabled(), repository::setAutoLockNewAppsEnabled)

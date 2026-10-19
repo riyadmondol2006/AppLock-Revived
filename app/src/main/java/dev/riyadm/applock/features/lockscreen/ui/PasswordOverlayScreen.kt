@@ -48,6 +48,8 @@ import dev.riyadm.applock.R
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.UnlockLogRepository
+import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
+import dev.riyadm.applock.features.lockscreen.domain.resolvedLockPolicy
 import dev.riyadm.applock.services.AppLockManager
 import dev.riyadm.applock.ui.components.PinDots
 import dev.riyadm.applock.ui.components.PinKeypad
@@ -72,6 +74,7 @@ class PasswordOverlayActivity : FragmentActivity() {
     private var appName by mutableStateOf("")
     private var session by mutableIntStateOf(0)
     private var biometricUsable by mutableStateOf(false)
+    private var gate by mutableStateOf<PolicyUnlockGate?>(null)
 
     private var autoPromptPending = false
     private var isBiometricShowing = false
@@ -135,6 +138,7 @@ class PasswordOverlayActivity : FragmentActivity() {
                             onBiometric = ::triggerBiometricPrompt,
                             onClose = ::goHome,
                             sessionKey = session,
+                            gate = gate,
                             onSuccess = ::onCredentialVerified
                         )
                     )
@@ -154,6 +158,9 @@ class PasswordOverlayActivity : FragmentActivity() {
         lockedPackage = pkg
         appName = ""
         isUnlocking = false
+        // A new session starts with no factor passed; the policy is resolved once per session.
+        gate = PolicyUnlockGate(resolvedLockPolicy(pkg))
+        biometricUsable = isBiometricUsable()
         session++
         lifecycleScope.launch {
             val label = withContext(Dispatchers.IO) { loadAppLabel(pkg) }
@@ -189,17 +196,16 @@ class PasswordOverlayActivity : FragmentActivity() {
         }
     }
 
-    private fun isBiometricUsable(): Boolean =
-        appLockRepository.isBiometricAuthEnabled() && canUseBiometrics()
+    private fun isBiometricUsable(): Boolean = gate?.policy?.allowBiometric == true
 
-    private fun shouldAutoPrompt(): Boolean =
-        appLockRepository.isBiometricAutoPromptEnabled() && isBiometricUsable()
+    private fun shouldAutoPrompt(): Boolean = gate?.shouldAutoPromptBiometric == true
 
     private val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
             // Cancel, "Use PIN", lockout, dismissal: stay on the credential screen.
             isBiometricShowing = false
             AppLockManager.reportBiometricAuthFinished()
+            gate?.onBiometricError(errorCode)
             Log.d(TAG, "Biometric error $errorCode: $errString")
         }
 
@@ -208,6 +214,11 @@ class PasswordOverlayActivity : FragmentActivity() {
             val pkg = lockedPackage
             thread(name = "unlock-attempt") {
                 appLockRepository.recordUnlockAttempt(pkg, true, UnlockLogRepository.Method.BIOMETRIC)
+            }
+            if (gate?.onBiometricSucceeded() != true) {
+                // Two-step: the credential is still required.
+                AppLockManager.reportBiometricAuthFinished()
+                return
             }
             AppLockManager.temporarilyUnlockAppWithBiometrics(pkg)
             unlockAndFinish()
@@ -219,7 +230,9 @@ class PasswordOverlayActivity : FragmentActivity() {
         isBiometricShowing = true
         AppLockManager.reportBiometricAuthStarted()
         try {
-            biometricPrompt.authenticate(buildBiometricPromptInfo(this, appName))
+            biometricPrompt.authenticate(
+                buildBiometricPromptInfo(this, appName, credentialFallback = gate?.policy?.biometricFirst != true)
+            )
         } catch (e: Exception) {
             Log.e(TAG, "Unable to show biometric prompt", e)
             isBiometricShowing = false
@@ -227,8 +240,9 @@ class PasswordOverlayActivity : FragmentActivity() {
         }
     }
 
+    /** Called by the lock screen only once the app's policy is satisfied. */
     private fun onCredentialVerified() {
-        if (isUnlocking) return
+        if (isUnlocking || gate?.isSatisfied == false) return
         AppLockManager.unlockApp(lockedPackage)
         unlockAndFinish()
     }
@@ -344,9 +358,11 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         controller.onInputChanged(value)
     }
 
+    val credentialVisible = spec.credentialVisible
+
     // The keypad gives haptics on touch down; hardware keys need none.
     val onDigit: (Int) -> Unit = { digit ->
-        if (controller.canInput) {
+        if (controller.canInput && credentialVisible) {
             val base = if (rejecting) "" else pin
             if (base.length < MAX_PIN_LENGTH) updatePin(base + digit)
         }
@@ -358,7 +374,7 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         if (controller.canInput && pin.isNotEmpty()) updatePin("")
     }
     val onSubmit: () -> Unit = submit@{
-        if (!controller.canInput || rejecting) return@submit
+        if (!controller.canInput || rejecting || !credentialVisible) return@submit
         if (pin.length < MIN_PIN_LENGTH) {
             haptics.reject()
             scope.launch { shake.shake() }
@@ -367,7 +383,7 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
         }
     }
 
-    val hint = spec.subtitle ?: stringResource(R.string.lock_enter_pin)
+    val hint = policyHint(spec, stringResource(R.string.lock_enter_pin), R.string.policy_lock_step_pin)
     val wrong = stringResource(R.string.lock_wrong_pin)
 
     LockScreenScaffold(
@@ -392,22 +408,28 @@ fun PinPasswordOverlayScreen(spec: LockScreenSpec, modifier: Modifier = Modifier
                 LockoutIndicator(controller, compact, Modifier.padding(top = 8.dp))
             } else {
                 LockStatusText(text = if (showError) wrong else hint, isError = showError)
-                Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
-                PinDots(
-                    length = pin.length,
-                    isError = showError,
-                    dotSize = if (compact) 14.dp else 16.dp,
-                    modifier = Modifier
-                        .shakeOffset(shake)
-                        .padding(horizontal = 32.dp)
-                )
+                if (credentialVisible) {
+                    Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
+                    PinDots(
+                        length = pin.length,
+                        isError = showError,
+                        dotSize = if (compact) 14.dp else 16.dp,
+                        modifier = Modifier
+                            .shakeOffset(shake)
+                            .padding(horizontal = 32.dp)
+                    )
+                }
             }
-            if (spec.showBiometric) {
+            if (spec.biometricVisible && credentialVisible) {
                 Spacer(Modifier.height(if (compact) 8.dp else 16.dp))
                 BiometricButton(onClick = spec.onBiometric, compact = compact)
             }
         },
-        input = {
+        input = input@{
+            if (!credentialVisible) {
+                BiometricFirstPanel(spec)
+                return@input
+            }
             PinKeypad(
                 digits = digits,
                 enabled = controller.canInput,

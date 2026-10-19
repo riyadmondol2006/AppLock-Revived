@@ -120,7 +120,11 @@ import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.openAccessibilitySettings
 import dev.riyadm.applock.data.repository.BackendImplementation
+import dev.riyadm.applock.data.repository.SecurityLevel
 import dev.riyadm.applock.features.applist.domain.InstalledApp
+import dev.riyadm.applock.features.lockscreen.ui.canUseBiometrics
+import dev.riyadm.applock.features.profiles.ui.ProfileSelector
+import dev.riyadm.applock.features.profiles.ui.displayName
 import dev.riyadm.applock.services.AppLockManager
 import dev.riyadm.applock.features.applist.ui.ProtectionStatus.State
 import dev.riyadm.applock.ui.components.AccessibilityServiceGuideDialog
@@ -154,6 +158,9 @@ fun MainScreen(
     val searchBarState = rememberSearchBarState()
     val selection by mainViewModel.selection.collectAsStateWithLifecycle()
     val selectionMode = selection.isNotEmpty()
+    val profiles by mainViewModel.profiles.collectAsStateWithLifecycle()
+    val securityLevels by mainViewModel.securityLevels.collectAsStateWithLifecycle()
+    var tunedApp by remember { mutableStateOf<InstalledApp?>(null) }
 
     var status by remember { mutableStateOf(context.readProtectionStatus()) }
     var statusCheck by remember { mutableIntStateOf(0) }
@@ -207,6 +214,12 @@ fun MainScreen(
         { app: InstalledApp ->
             haptics.longPress()
             mainViewModel.startSelection(app.packageName)
+        }
+    }
+    val onTune = remember(haptics) {
+        { app: InstalledApp ->
+            haptics.press()
+            tunedApp = app
         }
     }
 
@@ -333,6 +346,28 @@ fun MainScreen(
                     )
                 }
 
+                item(key = "profiles", contentType = "profiles") {
+                    ProfileSelector(
+                        state = profiles,
+                        onSelect = { profile ->
+                            scope.launch {
+                                if (!mainViewModel.switchProfile(profile)) return@launch
+                                haptics.confirm()
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                                snackbarHostState.showSnackbar(
+                                    context.getString(R.string.profiles_switched, profile.displayName(context))
+                                )
+                            }
+                        },
+                        onManage = {
+                            navController.navigate(Screen.Profiles.route) { launchSingleTop = true }
+                        },
+                        onLockAllUserApps = {
+                            scope.launch { showBulkResult(mainViewModel.lockAllUserApps(), true) }
+                        }
+                    )
+                }
+
                 stickyHeader(key = "controls", contentType = "controls") {
                     ListControls(
                         search = {
@@ -356,7 +391,8 @@ fun MainScreen(
                         onFilterChange = {
                             haptics.tick()
                             mainViewModel.setFilter(it)
-                            scope.launch { if (listState.firstVisibleItemIndex > 1) listState.scrollToItem(1) }
+                            // Index of the sticky "controls" header (after the status card and profiles)
+                            scope.launch { if (listState.firstVisibleItemIndex > 2) listState.scrollToItem(2) }
                         },
                         sort = uiState.sort,
                         onSortChange = mainViewModel::setSort,
@@ -390,7 +426,9 @@ fun MainScreen(
                             selectionMode = selectionMode,
                             onToggle = onToggleLock,
                             onSelect = onSelect,
-                            onStartSelection = onStartSelection
+                            onStartSelection = onStartSelection,
+                            securityLevels = securityLevels,
+                            onTune = onTune
                         )
                         appSection(
                             key = "header_other",
@@ -435,6 +473,21 @@ fun MainScreen(
         }
     }
 
+    tunedApp?.let { app ->
+        val biometricAvailable = remember(app) { context.canUseBiometrics() }
+        AppSecuritySheet(
+            app = app,
+            level = securityLevels[app.packageName] ?: SecurityLevel.DEFAULT,
+            profiles = profiles,
+            biometricAvailable = biometricAvailable,
+            onLevelChange = { mainViewModel.setSecurityLevel(app.packageName, it) },
+            onMembershipChange = { profileId, member ->
+                mainViewModel.setProfileMembership(profileId, app.packageName, member)
+            },
+            onDismiss = { tunedApp = null }
+        )
+    }
+
     if (showAccessibilityGuide) {
         AccessibilityServiceGuideDialog(
             onOpenSettings = {
@@ -456,6 +509,8 @@ private fun LazyListScope.appSection(
     onToggle: (InstalledApp, Boolean) -> Unit,
     onSelect: (String, Boolean) -> Unit,
     onStartSelection: (InstalledApp) -> Unit,
+    securityLevels: Map<String, SecurityLevel> = emptyMap(),
+    onTune: ((InstalledApp) -> Unit)? = null,
 ) {
     if (apps.isEmpty()) return
     item(key = key, contentType = "header") {
@@ -472,6 +527,15 @@ private fun LazyListScope.appSection(
             selected = app.packageName in selection,
             onSelectedChange = { onSelect(app.packageName, it) },
             onLongClick = { onStartSelection(app) },
+            trailingAction = if (onTune != null) {
+                {
+                    PolicyTuneButton(
+                        level = securityLevels[app.packageName] ?: SecurityLevel.DEFAULT,
+                        appLabel = app.label,
+                        onClick = { onTune(app) }
+                    )
+                }
+            } else null,
             modifier = Modifier
                 .animateItem()
                 .padding(horizontal = 16.dp)

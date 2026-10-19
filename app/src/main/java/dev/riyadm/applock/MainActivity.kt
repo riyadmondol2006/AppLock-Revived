@@ -1,5 +1,6 @@
 package dev.riyadm.applock
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,10 +28,12 @@ import dev.riyadm.applock.ui.theme.AppLockTheme
 class MainActivity : FragmentActivity() {
 
     private lateinit var navigationManager: NavigationManager
+    private val openProfilesRequested = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        if (savedInstanceState == null) readOpenProfilesExtra(intent)
 
         navigationManager = NavigationManager(this)
 
@@ -49,6 +52,42 @@ class MainActivity : FragmentActivity() {
                 }
 
                 UpdateCheckHost(navController)
+                OpenProfilesHost(navController)
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        readOpenProfilesExtra(intent)
+    }
+
+    private fun readOpenProfilesExtra(intent: Intent?) {
+        if (intent?.getBooleanExtra(EXTRA_OPEN_PROFILES, false) == true) {
+            intent.removeExtra(EXTRA_OPEN_PROFILES)
+            openProfilesRequested.value = true
+        }
+    }
+
+    /**
+     * Opens the profile switcher requested by the Quick Settings tile once the user is past the
+     * in-app lock screen. Every resume puts the lock screen on top, so this never skips it.
+     */
+    @Composable
+    private fun OpenProfilesHost(navController: NavHostController) {
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val route = backStackEntry?.destination?.route
+        val requested by openProfilesRequested
+        LaunchedEffect(requested, route) {
+            // Re-read the destination right before navigating: the lock screen may have been
+            // pushed since this effect was scheduled, and nothing may ever be put on top of it.
+            val current = navController.currentDestination?.route
+            if (!requested || current == null) return@LaunchedEffect
+            if (current == Screen.PasswordOverlay.route || current in INITIAL_SETUP_ROUTES) return@LaunchedEffect
+            openProfilesRequested.value = false
+            if (current != Screen.Profiles.route) {
+                navController.navigate(Screen.Profiles.route) { launchSingleTop = true }
             }
         }
     }
@@ -99,15 +138,17 @@ class MainActivity : FragmentActivity() {
         return repository.getPassword() != null || repository.getPattern() != null
     }
 
-    private companion object {
-        val INITIAL_SETUP_ROUTES = setOf(
+    companion object {
+        const val EXTRA_OPEN_PROFILES = "dev.riyadm.applock.extra.OPEN_PROFILES"
+
+        private val INITIAL_SETUP_ROUTES = setOf(
             Screen.AppIntro.route,
             Screen.SetPassword.route,
             Screen.SetPasswordPattern.route,
             Screen.SetPasswordAlphanumeric.route
         )
 
-        val UPDATE_DIALOG_ROUTES = setOf(
+        private val UPDATE_DIALOG_ROUTES = setOf(
             Screen.Main.route,
             Screen.Settings.route
         )
