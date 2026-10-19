@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "dev.pranav.applock"
+    namespace = "dev.riyadm.applock"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "dev.pranav.applock"
+        applicationId = "dev.riyadm.applock"
         minSdk = 26
         targetSdk = 37
-        versionCode = 251
-        versionName = "2.5.1"
+        versionCode = 300
+        versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlin.compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
     buildFeatures {
         compose = true

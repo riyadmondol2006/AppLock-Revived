@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">قفل التطبيقات</string>
+    <string name="app_name">قفل التطبيقات Revived</string>
     <string name="device_admin_description">يمنع الأشخاص غير المصرح لهم من إلغاء تثبيت التطبيق.</string>
     <string name="accessibility_service_description">يسمح لقفل التطبيقات باكتشاف فتح التطبيقات المحمية وعرض شاشة التحقق بكلمة المرور.</string>
 </resources>

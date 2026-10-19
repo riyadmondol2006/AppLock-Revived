@@ -1,24 +1,24 @@
 [versions]
-agp = "9.2.1"
-annotation = "1.10.0"
+agp = "9.4.1"
+annotation = "1.11.0"
 refine = "4.4.0"
-hiddenapibypass = "6.1"
+hiddenapibypass = "6.2"
 shizuku = "13.1.5"
-biometric = "1.4.0-alpha02"
-fragmentKtx = "1.8.9"
-kotlin = "2.4.0"
-coreKtx = "1.19.0"
+biometric = "1.4.0-alpha07"
+fragmentKtx = "1.9.1"
+kotlin = "2.4.21"
+coreKtx = "1.19.1"
 lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
-composeBom = "2026.06.01"
-material3 = "1.5.0-alpha23"
+composeBom = "2026.09.00"
+material3 = "1.5.0-beta01"
 materialIconsCore = "1.7.8"
-navigationCompose = "2.9.8"
+navigationCompose = "2.10.2"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
-androidx-biometric = { module = "androidx.biometric:biometric-ktx", version.ref = "biometric" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }

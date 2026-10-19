@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "App Lock"
+rootProject.name = "App Lock Revived"
 include(":app")
 include(":appintro")
 include(":hidden-api")
