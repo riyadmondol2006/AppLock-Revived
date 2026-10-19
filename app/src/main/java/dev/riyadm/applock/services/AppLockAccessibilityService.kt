@@ -236,6 +236,12 @@ class AppLockAccessibilityService : AccessibilityService() {
     private fun onWindowStateChanged(event: AccessibilityEvent, packageName: String) {
         if (packageName in launcherPackages()) {
             scheduleWindowScan()
+            // Home/recents reached: the exit is done, so returning to the app (e.g. from its
+            // recents card) is a real reopen and must lock at once, not after the exit check.
+            if (exitedPackages.isNotEmpty()) {
+                exitedPackages.clear()
+                exitSuppressedUntil = 0L
+            }
         }
         if (packageName == this.packageName) return
         if (handleDeviceLocked()) return
