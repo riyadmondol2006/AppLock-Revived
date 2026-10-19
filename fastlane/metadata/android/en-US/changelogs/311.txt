@@ -1,0 +1,3 @@
+App Lock Revived 3.1.1
+• Update notice now appears every time you open the app (checked hourly), plus a background check about twice a day that shows a notification
+• Lower battery use: no polling while the screen is off, cheaper background checks, and no idle animations
