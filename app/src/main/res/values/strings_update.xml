@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_dialog_title">Update available</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">What\'s new</string>
+    <string name="update_dialog_no_notes">No release notes provided.</string>
+    <string name="update_dialog_download">Download</string>
+    <string name="update_dialog_download_size">Download (%1$s)</string>
+    <string name="update_dialog_later">Later</string>
+    <string name="update_dialog_skip">Skip this version</string>
+    <string name="update_dialog_icon_description">App Lock Revived icon</string>
+    <string name="update_dialog_no_browser">No app found to open the download link</string>
+</resources>
