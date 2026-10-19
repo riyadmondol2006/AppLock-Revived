@@ -1,10 +1,10 @@
 package dev.riyadm.appintro
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 
 /**
@@ -41,24 +42,32 @@ fun IntroPageContent(
     isVisible: Boolean = true
 ) {
     val contentVisible = remember { MutableTransitionState(false) }
-
     LaunchedEffect(isVisible) {
         contentVisible.targetState = isVisible
     }
 
+    val motion = MaterialTheme.motionScheme
+    val fade = motion.defaultEffectsSpec<Float>()
+    val exit = fadeOut(motion.fastEffectsSpec())
+    fun staggered(stiffness: Float, divisor: Int): EnterTransition =
+        fadeIn(fade) + slideInVertically(
+            spring(
+                dampingRatio = Spring.DampingRatioLowBouncy,
+                stiffness = stiffness,
+                visibilityThreshold = IntOffset(1, 1)
+            )
+        ) { it / divisor }
+
     if (page.customContent != null) {
         Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
-            AnimatedVisibility(
-                visibleState = contentVisible,
-                enter = fadeIn(tween(300)),
-                exit = fadeOut(tween(200))
-            ) {
+            AnimatedVisibility(visibleState = contentVisible, enter = fadeIn(fade), exit = exit) {
                 page.customContent.invoke()
             }
         }
         return
     }
 
+    val compact = page.content != null
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -69,20 +78,17 @@ fun IntroPageContent(
     ) {
         AnimatedVisibility(
             visibleState = contentVisible,
-            enter = fadeIn(tween(300, delayMillis = 60)) + slideInVertically(
-                spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessMediumLow
-                )
-            ) { it / 2 },
-            exit = fadeOut(tween(150))
+            enter = staggered(Spring.StiffnessMediumLow, 2),
+            exit = exit
         ) {
             Text(
                 text = page.title,
-                style = MaterialTheme.typography.headlineLargeEmphasized,
+                style = if (compact) MaterialTheme.typography.headlineMediumEmphasized
+                else MaterialTheme.typography.displaySmallEmphasized,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .widthIn(max = 560.dp)
                     .fillMaxWidth()
                     .semantics { heading() }
             )
@@ -90,13 +96,8 @@ fun IntroPageContent(
 
         AnimatedVisibility(
             visibleState = contentVisible,
-            enter = fadeIn(tween(300, delayMillis = 140)) + slideInVertically(
-                spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
-            ) { it / 3 },
-            exit = fadeOut(tween(150))
+            enter = staggered(Spring.StiffnessLow, 3),
+            exit = exit
         ) {
             Text(
                 text = page.description.trim(),
@@ -113,21 +114,16 @@ fun IntroPageContent(
         if (page.content != null) {
             AnimatedVisibility(
                 visibleState = contentVisible,
-                enter = fadeIn(tween(300, delayMillis = 220)) + slideInVertically(
-                    spring(
-                        dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
-                ) { it / 4 },
-                exit = fadeOut(tween(150))
+                enter = staggered(Spring.StiffnessVeryLow, 4),
+                exit = exit
             ) {
                 Column(
                     modifier = Modifier
                         .padding(top = 24.dp)
-                        .widthIn(max = 520.dp)
+                        .widthIn(max = 560.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     page.content.invoke(this)
                 }

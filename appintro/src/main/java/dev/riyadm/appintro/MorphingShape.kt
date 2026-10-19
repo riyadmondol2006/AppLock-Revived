@@ -1,6 +1,7 @@
 package dev.riyadm.appintro
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.LinearEasing
@@ -16,28 +17,32 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.toPath
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -46,7 +51,7 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 
 /**
- * A [Shape] drawing a [Morph] at a given progress, scaled from the unit square to the layout size.
+ * A [Shape] drawing a [Morph] at a fixed progress, scaled from the unit square to the layout size.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 class MorphShape(private val morph: Morph, private val progress: Float) : Shape {
@@ -66,36 +71,47 @@ class MorphShape(private val morph: Morph, private val progress: Float) : Shape 
 }
 
 /**
- * Returns a shape that smoothly morphs to [target] whenever it changes.
+ * Draws [morph] at [progress] filling the draw area. Material shapes live in the unit square,
+ * so the canvas is scaled instead of transforming the path. Meant to be called from draw-phase
+ * lambdas so animations never recompose.
  */
-@Composable
-fun rememberMorphingShape(
-    target: RoundedPolygon,
-    animationSpec: AnimationSpec<Float> = spring(
-        dampingRatio = 0.6f,
-        stiffness = Spring.StiffnessMediumLow
-    )
-): Shape {
-    var from by remember { mutableStateOf(target) }
-    var to by remember { mutableStateOf(target) }
-    val progress = remember { Animatable(1f) }
-
-    LaunchedEffect(target) {
-        if (target != to) {
-            from = to
-            to = target
-            progress.snapTo(0f)
-            progress.animateTo(1f, animationSpec)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+fun DrawScope.drawMorph(
+    morph: Morph,
+    progress: Float,
+    color: Color,
+    path: Path,
+    rotation: Float = 0f,
+    scale: Float = 1f
+) {
+    path.rewind()
+    morph.toPath(progress = progress, path = path)
+    rotate(rotation, pivot = center) {
+        scale(scale, pivot = center) {
+            scale(size.width, size.height, pivot = Offset.Zero) {
+                drawPath(path, color)
+            }
         }
     }
-
-    val morph = remember(from, to) { Morph(from, to) }
-    return MorphShape(morph, progress.value)
 }
 
 /**
- * Large expressive hero: an icon sitting on a slowly rotating Material shape which morphs
- * whenever [shape] changes.
+ * Infinite slow rotation for hero shapes. The returned state should only be read in draw.
+ */
+@Composable
+fun rememberHeroRotation(durationMillis: Int = 40_000): State<Float> {
+    val transition = rememberInfiniteTransition(label = "hero rotation")
+    return transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(tween(durationMillis, easing = LinearEasing), RepeatMode.Restart),
+        label = "hero rotation value"
+    )
+}
+
+/**
+ * Icon sitting on a slowly rotating Material shape that springs into a new shape whenever
+ * [shape] changes. All per-frame work happens in the draw phase.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -106,48 +122,64 @@ fun MorphingHero(
     contentColor: Color,
     size: Dp,
     modifier: Modifier = Modifier,
-    backdropShape: RoundedPolygon? = null,
-    rotate: Boolean = true
+    rotate: Boolean = true,
+    morphSpec: AnimationSpec<Float> = spring(
+        dampingRatio = 0.6f,
+        stiffness = Spring.StiffnessMediumLow
+    )
 ) {
-    val morphShape = rememberMorphingShape(shape)
-    val backdropMorphShape = backdropShape?.let { rememberMorphingShape(it) }
+    var from by remember { mutableStateOf(shape) }
+    var to by remember { mutableStateOf(shape) }
+    val progress = remember { Animatable(1f) }
 
-    val rotation = if (rotate) {
-        val transition = rememberInfiniteTransition(label = "hero rotation")
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            animationSpec = infiniteRepeatable(tween(36_000, easing = LinearEasing), RepeatMode.Restart),
-            label = "hero rotation value"
-        ).value
-    } else 0f
-
-    Box(modifier = modifier.size(size), contentAlignment = Alignment.Center) {
-        if (backdropMorphShape != null) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        rotationZ = -rotation * 0.6f
-                        scaleX = 1.18f
-                        scaleY = 1.18f
-                    }
-                    .background(containerColor.copy(alpha = 0.32f), backdropMorphShape)
-            )
+    LaunchedEffect(shape) {
+        if (shape != to) {
+            from = to
+            to = shape
+            progress.snapTo(0f)
+            progress.animateTo(1f, morphSpec)
         }
-        Box(
-            Modifier
-                .fillMaxSize()
-                .graphicsLayer { rotationZ = rotation }
-                .background(containerColor, morphShape)
-        )
+    }
+
+    val morph = remember(from, to) { Morph(from, to) }
+    val path = remember { Path() }
+    val rotation = if (rotate) rememberHeroRotation() else null
+    val motion = MaterialTheme.motionScheme
+    val color by animateColorAsState(
+        containerColor,
+        motion.defaultEffectsSpec(),
+        label = "hero color"
+    )
+    val iconTint by animateColorAsState(
+        contentColor,
+        motion.defaultEffectsSpec(),
+        label = "hero tint"
+    )
+
+    Box(
+        modifier = modifier
+            .size(size)
+            .drawBehind {
+                drawMorph(
+                    morph = morph,
+                    progress = progress.value,
+                    color = color,
+                    path = path,
+                    rotation = rotation?.value ?: 0f
+                )
+            },
+        contentAlignment = Alignment.Center
+    ) {
         AnimatedContent(
             targetState = icon,
             transitionSpec = {
-                (fadeIn(tween(220, delayMillis = 60)) + scaleIn(
+                (fadeIn(motion.defaultEffectsSpec()) + scaleIn(
                     spring(dampingRatio = 0.5f, stiffness = Spring.StiffnessMediumLow),
                     initialScale = 0.4f
-                )).togetherWith(fadeOut(tween(120)) + scaleOut(targetScale = 0.6f))
+                )).togetherWith(
+                    fadeOut(motion.fastEffectsSpec()) +
+                            scaleOut(motion.fastSpatialSpec(), targetScale = 0.6f)
+                )
             },
             label = "hero icon"
         ) { target ->
@@ -155,8 +187,8 @@ fun MorphingHero(
                 Icon(
                     imageVector = target,
                     contentDescription = null,
-                    tint = contentColor,
-                    modifier = Modifier.size(size * 0.38f)
+                    tint = iconTint,
+                    modifier = Modifier.size(size * 0.4f)
                 )
             }
         }
