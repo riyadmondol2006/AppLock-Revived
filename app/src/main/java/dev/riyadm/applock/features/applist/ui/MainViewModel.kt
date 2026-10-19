@@ -217,6 +217,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         options.update { it.copy(showSystemApps = showSystem) }
     }
 
+    fun setShowSystemApps(show: Boolean) {
+        appLockRepository.setShowSystemApps(show)
+        options.update { it.copy(showSystemApps = show) }
+    }
+
     fun onSearchQueryChange(query: String) {
         _searchQuery.value = query
     }

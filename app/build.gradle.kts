@@ -102,7 +102,6 @@ dependencies {
     implementation(libs.refine.runtime)
     compileOnly(project(":hidden-api"))
     implementation(libs.hiddenapibypass)
-    implementation(project(":patternlock"))
 
 
 

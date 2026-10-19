@@ -1,0 +1,9 @@
+com.mrhwsn.composelock.patternlock-pngs-0 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/generated/res/pngs/debug
+com.mrhwsn.composelock.patternlock-updated_navigation_xml-1 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/generated/updated_navigation_xml/debug
+com.mrhwsn.composelock.patternlock-mergeDebugResources-2 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.mrhwsn.composelock.patternlock-mergeDebugResources-3 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.mrhwsn.composelock.patternlock-debug-4 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/intermediates/merged_res/debug/mergeDebugResources
+com.mrhwsn.composelock.patternlock-debug-5 /home/riyadm/Downloads/AppLock-Revived/patternlock/build/intermediates/packaged_res/debug/packageDebugResources
+com.mrhwsn.composelock.patternlock-debug-6 /home/riyadm/Downloads/AppLock-Revived/patternlock/src/debug/res
+com.mrhwsn.composelock.patternlock-main-7 /home/riyadm/Downloads/AppLock-Revived/patternlock/src/main/res
+gradleHome-0 /home/riyadm/.gradle

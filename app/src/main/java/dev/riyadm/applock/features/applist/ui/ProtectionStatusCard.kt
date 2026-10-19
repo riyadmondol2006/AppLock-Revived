@@ -166,7 +166,7 @@ fun ProtectionStatusCard(
                     containerColor = style.badgeContainer,
                     contentColor = style.badgeContent,
                     size = 64.dp,
-                    rotate = state == State.ACTIVE
+                    rotate = false
                 )
                 Spacer(Modifier.width(16.dp))
                 AnimatedContent(

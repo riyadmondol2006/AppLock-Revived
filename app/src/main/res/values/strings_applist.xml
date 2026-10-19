@@ -26,6 +26,7 @@
     <string name="applist_locked_all_now">All apps will ask for authentication again</string>
     <string name="applist_menu_trigger_exclusions">Trigger exclusions</string>
     <string name="applist_menu_prevent_uninstall">Prevent uninstall</string>
+    <string name="applist_menu_show_system_apps">Show system apps</string>
 
     <!-- Search, filters and sorting -->
     <string name="applist_search_placeholder">Search apps or package names</string>

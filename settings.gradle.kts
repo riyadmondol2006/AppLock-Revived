@@ -23,4 +23,3 @@ rootProject.name = "App Lock Revived"
 include(":app")
 include(":appintro")
 include(":hidden-api")
-include(":patternlock")

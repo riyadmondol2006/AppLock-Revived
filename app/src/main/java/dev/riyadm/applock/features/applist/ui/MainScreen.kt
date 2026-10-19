@@ -58,6 +58,8 @@ import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Checkbox
+import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
@@ -281,6 +283,8 @@ fun MainScreen(
                 onOpenAntiUninstall = {
                     navController.navigate(Screen.AntiUninstall.route) { launchSingleTop = true }
                 },
+                showSystemApps = uiState.showSystemFilter,
+                onToggleSystemApps = { mainViewModel.setShowSystemApps(!uiState.showSystemFilter) },
                 onLockAllNow = {
                     AppLockManager.lockAllNow()
                     haptics.confirm()
@@ -484,6 +488,8 @@ private fun MainTopBar(
     onOpenSettings: () -> Unit,
     onOpenTriggerExclusions: () -> Unit,
     onOpenAntiUninstall: () -> Unit,
+    showSystemApps: Boolean,
+    onToggleSystemApps: () -> Unit,
     onLockAllNow: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -536,6 +542,15 @@ private fun MainTopBar(
                         onClick = {
                             menuExpanded = false
                             onOpenAntiUninstall()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.applist_menu_show_system_apps)) },
+                        leadingIcon = { Icon(Icons.Rounded.Android, contentDescription = null) },
+                        trailingIcon = { Checkbox(checked = showSystemApps, onCheckedChange = null) },
+                        onClick = {
+                            menuExpanded = false
+                            onToggleSystemApps()
                         }
                     )
                 }
