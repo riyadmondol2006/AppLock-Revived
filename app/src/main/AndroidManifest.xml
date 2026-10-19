@@ -29,7 +29,7 @@
 
     <application
         android:name=".AppLockApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:allowClearUserData="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"

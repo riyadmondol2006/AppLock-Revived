@@ -13,6 +13,7 @@ class AppLockRepository(private val context: Context) {
     private val preferencesRepository = PreferencesRepository(context)
     private val lockedAppsRepository = LockedAppsRepository(context)
     private val backendServiceManager = BackendServiceManager()
+    val unlockLog = UnlockLogRepository(context)
 
     fun getLockedApps(): Set<String> = lockedAppsRepository.getLockedApps()
     fun addLockedApp(packageName: String) {
@@ -97,6 +98,77 @@ class AppLockRepository(private val context: Context) {
 
     fun isLoggingEnabled(): Boolean = preferencesRepository.isLoggingEnabled()
     fun setLoggingEnabled(enabled: Boolean) = preferencesRepository.setLoggingEnabled(enabled)
+
+    // Appearance
+    fun getThemeMode(): String = preferencesRepository.getThemeMode()
+    fun setThemeMode(mode: String) = preferencesRepository.setThemeMode(mode)
+    fun isDynamicColorEnabled(): Boolean = preferencesRepository.isDynamicColorEnabled()
+    fun setDynamicColorEnabled(enabled: Boolean) =
+        preferencesRepository.setDynamicColorEnabled(enabled)
+
+    fun isAmoledBlackEnabled(): Boolean = preferencesRepository.isAmoledBlackEnabled()
+    fun setAmoledBlackEnabled(enabled: Boolean) =
+        preferencesRepository.setAmoledBlackEnabled(enabled)
+
+    // Lock screen behaviour
+    fun isScrambleKeypadEnabled(): Boolean = preferencesRepository.isScrambleKeypadEnabled()
+    fun setScrambleKeypadEnabled(enabled: Boolean) =
+        preferencesRepository.setScrambleKeypadEnabled(enabled)
+
+    fun isBiometricAutoPromptEnabled(): Boolean =
+        preferencesRepository.isBiometricAutoPromptEnabled()
+
+    fun setBiometricAutoPromptEnabled(enabled: Boolean) =
+        preferencesRepository.setBiometricAutoPromptEnabled(enabled)
+
+    fun isAutoLockNewAppsEnabled(): Boolean = preferencesRepository.isAutoLockNewAppsEnabled()
+    fun setAutoLockNewAppsEnabled(enabled: Boolean) =
+        preferencesRepository.setAutoLockNewAppsEnabled(enabled)
+
+    fun isUnlockLogEnabled(): Boolean = preferencesRepository.isUnlockLogEnabled()
+    fun setUnlockLogEnabled(enabled: Boolean) {
+        preferencesRepository.setUnlockLogEnabled(enabled)
+        if (!enabled) unlockLog.clear()
+    }
+
+    // Brute-force protection
+    fun getMaxFailedAttempts(): Int = preferencesRepository.getMaxFailedAttempts()
+    fun setMaxFailedAttempts(attempts: Int) = preferencesRepository.setMaxFailedAttempts(attempts)
+    fun getLockoutDurationSeconds(): Int = preferencesRepository.getLockoutDurationSeconds()
+    fun setLockoutDurationSeconds(seconds: Int) =
+        preferencesRepository.setLockoutDurationSeconds(seconds)
+
+    fun getRemainingLockoutMs(): Long = preferencesRepository.getRemainingLockoutMs()
+
+    /**
+     * Single entry point for lock screens to report the outcome of a credential attempt.
+     * Handles lockout bookkeeping and the unlock history.
+     * Returns the lockout end timestamp after a failure (0 if no lockout started).
+     */
+    fun recordUnlockAttempt(
+        packageName: String,
+        success: Boolean,
+        method: UnlockLogRepository.Method
+    ): Long {
+        if (isUnlockLogEnabled()) unlockLog.add(packageName, success, method)
+        return if (success) {
+            preferencesRepository.resetFailedAttempts()
+            0L
+        } else if (method == UnlockLogRepository.Method.BIOMETRIC) {
+            // The system biometric prompt has its own throttling
+            0L
+        } else {
+            preferencesRepository.registerFailedAttempt()
+        }
+    }
+
+    // Backup
+    internal fun exportSettings(): Map<String, Any?> = preferencesRepository.exportSettings()
+    internal fun importSettings(values: Map<String, Any?>) =
+        preferencesRepository.importSettings(values)
+
+    internal fun replaceAppLists(locked: Set<String>, excluded: Set<String>, antiUninstall: Set<String>) =
+        lockedAppsRepository.replaceAll(locked, excluded, antiUninstall)
 
     fun setActiveBackend(backend: BackendImplementation) =
         backendServiceManager.setActiveBackend(backend)

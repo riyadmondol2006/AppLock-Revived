@@ -99,6 +99,14 @@ class LockedAppsRepository(context: Context) {
         preferences.edit { putStringSet(KEY_LOCKED_APPS, updated) }
     }
 
+    fun replaceAll(locked: Set<String>, excluded: Set<String>, antiUninstall: Set<String>) {
+        preferences.edit(commit = true) {
+            putStringSet(KEY_LOCKED_APPS, locked.filter { it.isNotBlank() }.toSet())
+            putStringSet(KEY_TRIGGER_EXCLUDED_APPS, excluded.filter { it.isNotBlank() }.toSet())
+            putStringSet(KEY_ANTI_UNINSTALL_APPS, antiUninstall.filter { it.isNotBlank() }.toSet())
+        }
+    }
+
     companion object {
         private const val PREFS_NAME = "app_lock_prefs"
         private const val KEY_LOCKED_APPS = "locked_apps"
