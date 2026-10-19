@@ -78,7 +78,11 @@
             android:name=".services.ShizukuAppLockService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="specialUse|systemExempted" />
+            android:foregroundServiceType="specialUse|systemExempted">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="app_lock" />
+        </service>
 
         <service
             android:name=".services.UsageLockService"
@@ -123,7 +127,6 @@
 
         <receiver
             android:name=".core.broadcast.BootReceiver"
-            android:directBootAware="true"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -133,11 +136,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_UNLOCKED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
         </receiver>
+
+        <service
+            android:name=".core.tile.LockNowTileService"
+            android:exported="true"
+            android:icon="@drawable/baseline_shield_24"
+            android:label="@string/tile_lock_now_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="false" />
+        </service>
 
 
         <provider

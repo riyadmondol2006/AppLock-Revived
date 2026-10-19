@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Quick Settings tile -->
+    <string name="tile_lock_now_label">Lock all now</string>
+    <string name="tile_lock_now_subtitle_active">Protection on</string>
+    <string name="tile_lock_now_subtitle_inactive">Protection off</string>
+    <string name="tile_lock_now_done">All apps locked</string>
+
+    <!-- Auto-lock newly installed apps -->
+    <string name="auto_lock_channel_name">Automatically locked apps</string>
+    <string name="auto_lock_channel_description">Shown when a newly installed app is locked automatically</string>
+    <string name="auto_lock_notification_title">%1$s was locked automatically</string>
+    <string name="auto_lock_notification_text">Tap to manage locked apps</string>
+
+    <!-- Protection services -->
+    <string name="service_channel_name_usage">Protection service (Usage stats)</string>
+    <string name="service_channel_name_shizuku">Protection service (Shizuku)</string>
+    <string name="service_notification_text">Protecting your apps</string>
+    <string name="service_notification_text_shizuku">Protecting your apps with Shizuku</string>
+    <string name="service_notification_waiting_shizuku">Waiting for Shizuku to start…</string>
+    <string name="anti_uninstall_blocked_toast">Turn off anti-uninstall in App Lock Revived to remove this restriction.</string>
+</resources>

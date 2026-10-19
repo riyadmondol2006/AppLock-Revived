@@ -4,18 +4,26 @@ import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.annotation.SuppressLint
 import android.app.admin.DevicePolicyManager
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
+import android.database.ContentObserver
 import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
+import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityNodeInfo
+import android.view.accessibility.AccessibilityWindowInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import dev.riyadm.applock.R
 import dev.riyadm.applock.core.broadcast.DeviceAdmin
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
@@ -30,13 +38,29 @@ import rikka.shizuku.Shizuku
 @SuppressLint("AccessibilityPolicy")
 class AppLockAccessibilityService : AccessibilityService() {
     private val appLockRepository: AppLockRepository by lazy { applicationContext.appLockRepository() }
-    private val keyboardPackages: List<String> by lazy { getKeyboardPackageNames() }
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val appLabel: String by lazy { getString(R.string.app_name) }
 
+    @Volatile
+    private var keyboardPackages: Set<String> = emptySet()
+    private var launcherPackages: Set<String> = emptySet()
+    private var launcherPackagesLoadedAt = 0L
+
+    /** Package of the last application window that came to the foreground. */
     private var lastForegroundPackage = ""
-    private var isRecentsOpen: Boolean = false
+    private var triggeringPackage = ""
 
     private var overlayManager: LockScreenOverlayManager? = null
-    private lateinit var mainHandler: Handler
+
+    /** Package the lock overlay currently protects (also while it is hidden for a biometric prompt). */
+    private var overlayPackage: String? = null
+
+    /** Apps the user backed out of from the lock screen; scans don't re-lock them until reopened. */
+    private val exitedPackages = mutableSetOf<String>()
+    private var exitSuppressedUntil = 0L
+
+    private var receiversRegistered = false
+    private var observerRegistered = false
 
     enum class BiometricState {
         IDLE, AUTH_STARTED
@@ -44,21 +68,70 @@ class AppLockAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val TAG = "AppLockAccessibility"
-        private const val DEVICE_ADMIN_SETTINGS_PACKAGE = "com.android.settings"
-        private const val APP_PACKAGE_PREFIX = "dev.riyadm.applock"
+        private const val SETTINGS_PACKAGE = "com.android.settings"
+        private val PACKAGE_INSTALLER_PACKAGES = setOf(
+            "com.google.android.packageinstaller",
+            "com.android.packageinstaller"
+        )
+        private const val WINDOW_SCAN_DELAY_MS = 150L
+        private const val EXIT_SUPPRESSION_MS = 1_000L
+        private const val EXIT_VERIFY_DELAY_MS = 1_200L
+        private const val LAUNCHER_CACHE_MS = 60_000L
 
         @Volatile
         var isServiceRunning = false
+
+        @Volatile
+        private var instance: AppLockAccessibilityService? = null
+
+        /**
+         * Shows the lock overlay for [packageName] again, e.g. after a biometric prompt started
+         * from the overlay was cancelled. Safe to call from any thread; does nothing if the app
+         * was unlocked meanwhile or is no longer on screen. When the accessibility service is not
+         * running, the lock-screen state is reset so a polling backend re-locks on its next tick.
+         */
+        fun requestRelock(packageName: String) {
+            val service = instance
+            if (service == null) {
+                AppLockManager.reportBiometricAuthFinished()
+                AppLockManager.isLockScreenShown.set(false)
+                return
+            }
+            service.mainHandler.post { service.relock(packageName) }
+        }
+
+        /** Re-evaluates what is on screen, locking anything that is no longer unlocked. */
+        fun recheckForegroundApp() {
+            val service = instance ?: return
+            service.mainHandler.post { service.scanVisibleWindows() }
+        }
+
+        internal fun onAppUnlocked(packageName: String) {
+            val service = instance ?: return
+            service.mainHandler.post {
+                if (service.overlayPackage == packageName) {
+                    service.dismissOverlay()
+                }
+            }
+        }
     }
 
-    private val screenStateReceiver = object: android.content.BroadcastReceiver() {
+    private val screenStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             try {
-                if (intent?.action == Intent.ACTION_SCREEN_OFF) {
-                    LogUtils.d(TAG, "Screen off detected. Resetting AppLock state.")
-                    AppLockManager.isLockScreenShown.set(false)
-                    AppLockManager.clearTemporarilyUnlockedApp()
-                    AppLockManager.appUnlockTimes.clear()
+                when (intent?.action) {
+                    Intent.ACTION_SCREEN_OFF -> {
+                        LogUtils.d(TAG, "Screen off detected. Resetting AppLock state.")
+                        AppLockManager.onScreenOff()
+                        exitedPackages.clear()
+                    }
+
+                    Intent.ACTION_USER_PRESENT -> {
+                        // An app opened from a lock-screen notification is already in the
+                        // foreground once the keyguard goes away, without a new window event.
+                        lastForegroundPackage = ""
+                        scheduleWindowScan()
+                    }
                 }
             } catch (e: Exception) {
                 logError("Error in screenStateReceiver", e)
@@ -66,23 +139,35 @@ class AppLockAccessibilityService : AccessibilityService() {
         }
     }
 
+    private val imeObserver = object : ContentObserver(mainHandler) {
+        override fun onChange(selfChange: Boolean) {
+            refreshKeyboardPackages()
+        }
+    }
+
+    private val windowScanRunnable = Runnable { scanVisibleWindows() }
+
     override fun onCreate() {
         super.onCreate()
         try {
             isServiceRunning = true
-            AppLockManager.currentBiometricState = BiometricState.IDLE
+            AppLockManager.reportBiometricAuthFinished()
             AppLockManager.isLockScreenShown.set(false)
             startPrimaryBackendService()
 
-            mainHandler = Handler(mainLooper)
-
             overlayManager = LockScreenOverlayManager(this)
 
-            val filter = android.content.IntentFilter().apply {
+            val filter = IntentFilter().apply {
                 addAction(Intent.ACTION_SCREEN_OFF)
                 addAction(Intent.ACTION_USER_PRESENT)
             }
-            registerReceiver(screenStateReceiver, filter)
+            ContextCompat.registerReceiver(
+                this,
+                screenStateReceiver,
+                filter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+            receiversRegistered = true
         } catch (e: Exception) {
             logError("Error in onCreate", e)
         }
@@ -102,8 +187,18 @@ class AppLockAccessibilityService : AccessibilityService() {
                 flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
             }
 
+            instance = this
+            isServiceRunning = true
+            refreshKeyboardPackages()
+            registerImeObserver()
+            NewAppAutoLocker.register(this, this)
+
             Log.d(TAG, "Accessibility service connected")
             appLockRepository.setActiveBackend(BackendImplementation.ACCESSIBILITY)
+
+            // A locked app may already be open (e.g. right after boot); check what is on screen.
+            lastForegroundPackage = ""
+            scheduleWindowScan()
         } catch (e: Exception) {
             logError("Error in onServiceConnected", e)
         }
@@ -118,294 +213,368 @@ class AppLockAccessibilityService : AccessibilityService() {
     }
 
     private fun handleAccessibilityEvent(event: AccessibilityEvent) {
-        if (appLockRepository.isAntiUninstallEnabled() &&
-            event.packageName == DEVICE_ADMIN_SETTINGS_PACKAGE
-        ) {
-            checkForDeviceAdminDeactivation(event)
-        }
-
-        if (!appLockRepository.isProtectEnabled()) {
-            return
-        }
-
-        if (event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
-            Log.d(TAG, "Windows changed event received. Checking recents state.")
-            return
-        }
-
-        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
-            if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && event.text == packageManager.getApplicationInfo(
-                    event.packageName.toString(),
-                    0
-                ).loadLabel(packageManager)
-            ) {
-                Log.d(TAG, "Ignoring recents bug event: ${event.text}")
-                return
-            }
-            if (!isRecentsOpen && isRecentlyOpened(event)) {
-                isRecentsOpen = true
-                Log.d(TAG, "Recents opened")
-            }
-            handleWindowStateChanged(event)
-        } else {
-            return
-        }
-
         val packageName = event.packageName?.toString() ?: return
 
-        // Skip if device is locked or app is excluded
-        if (!isValidPackageForLocking(packageName)) {
+        if (appLockRepository.isAntiUninstallEnabled() &&
+            (packageName == SETTINGS_PACKAGE || packageName in PACKAGE_INSTALLER_PACKAGES)
+        ) {
+            checkForDeviceAdminDeactivation(event, packageName)
+        }
+
+        if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+            dismissOverlay()
             return
         }
 
-        try {
-            processPackageLocking(packageName)
-        } catch (e: Exception) {
-            logError("Error processing package locking for $packageName", e)
+        when (event.eventType) {
+            AccessibilityEvent.TYPE_WINDOWS_CHANGED -> scheduleWindowScan()
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> onWindowStateChanged(event, packageName)
+            AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> onWindowContentChanged(event, packageName)
         }
     }
 
-    private fun handleWindowStateChanged(event: AccessibilityEvent) {
-        val isHomeScreen = isHomeScreen(event)
+    private fun onWindowStateChanged(event: AccessibilityEvent, packageName: String) {
+        if (packageName in launcherPackages()) {
+            scheduleWindowScan()
+        }
+        if (packageName == this.packageName) return
+        if (handleDeviceLocked()) return
+        if (isIgnoredPackage(packageName)) return
 
-        when {
-            isHomeScreenTransition(event) -> {
-                LogUtils.d(TAG, "Transitioning to home screen from recents")
-                clearTemporarilyUnlockedAppIfNeeded()
-                isRecentsOpen = false
+        val className = event.className?.toString().orEmpty()
+        if (className.startsWith("android.widget.Toast")) return
+
+        when (windowTypeOf(event.windowId)) {
+            null, AccessibilityWindowInfo.TYPE_APPLICATION -> onForegroundChanged(packageName)
+
+            AccessibilityWindowInfo.TYPE_SYSTEM -> {
+                // Floating windows / overlays drawn by other apps: they never change the
+                // foreground app, but a locked app must not show content in one either.
+                if (packageName !in exitedPackages) maybeLock(packageName)
             }
 
-            isHomeScreen -> {
-                LogUtils.d(TAG, "On home screen")
-                clearTemporarilyUnlockedAppIfNeeded()
+            else -> Unit // keyboards, split-screen divider, other accessibility overlays
+        }
+    }
+
+    private fun onWindowContentChanged(event: AccessibilityEvent, packageName: String) {
+        if (packageName in launcherPackages() && isLauncherPaneChange(event)) {
+            scheduleWindowScan()
+        }
+        if (packageName == this.packageName || isIgnoredPackage(packageName)) return
+        if (packageName in exitedPackages) return
+        if (packageName !in appLockRepository.getLockedApps()) return
+        if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return
+        if (handleDeviceLocked()) return
+
+        // Stale events from an app that just left the screen must not lock the new foreground.
+        if (packageName != lastForegroundPackage && packageName != overlayPackage) {
+            val snapshot = visibleWindows()
+            if (packageName !in snapshot.appPackages && packageName !in snapshot.floatingPackages) return
+        }
+        maybeLock(packageName)
+    }
+
+    private fun onForegroundChanged(packageName: String) {
+        val previous = lastForegroundPackage
+        lastForegroundPackage = packageName
+        if (previous != packageName) triggeringPackage = previous
+
+        if (packageName in exitedPackages && SystemClock.uptimeMillis() >= exitSuppressedUntil) {
+            exitedPackages.remove(packageName)
+        }
+
+        val triggerExcluded = appLockRepository.getTriggerExcludedApps()
+        if (previous != packageName && previous in triggerExcluded) {
+            // Opened from a trigger-excluded app: don't lock it for this session.
+            if (appLockRepository.isAppLocked(packageName)) {
+                AppLockManager.markUnlocked(packageName)
             }
+            return
+        }
+
+        val unlocked = AppLockManager.unlockedAppsSnapshot() - packageName
+        val overlay = overlayPackage
+        if ((unlocked.isNotEmpty() && packageName !in triggerExcluded) || (overlay != null && overlay != packageName)) {
+            val snapshot = visibleWindows()
+            if (snapshot.complete) {
+                if (packageName !in triggerExcluded) {
+                    unlocked.filter { it !in snapshot.appPackages }
+                        .forEach(AppLockManager::revokeTemporaryUnlock)
+                }
+                if (overlay != null && overlay != packageName && overlay !in snapshot.appPackages) {
+                    dismissOverlay()
+                }
+            }
+            // Windows that are animating out are still listed; look again once they settle.
+            scheduleWindowScan()
+        }
+
+        if (packageName !in exitedPackages) {
+            maybeLock(packageName)
         }
     }
 
-    @SuppressLint("InlinedApi")
-    private fun isRecentlyOpened(event: AccessibilityEvent): Boolean {
-        return (event.packageName == getSystemDefaultLauncherPackageName() &&
-                event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_APPEARED) && event.className == "" ||
-                (event.text.toString().lowercase().contains("recent apps"))
-    }
-
-    private fun isHomeScreen(event: AccessibilityEvent): Boolean {
-        return event.packageName == getSystemDefaultLauncherPackageName() &&
-                event.className == "com.android.launcher3.uioverrides.QuickstepLauncher" &&
-                event.text.toString().lowercase().contains("home screen")
-    }
-
-    @SuppressLint("InlinedApi")
-    private fun isHomeScreenTransition(event: AccessibilityEvent): Boolean {
-        return event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_DISAPPEARED &&
-                event.packageName == getSystemDefaultLauncherPackageName()
-    }
-
-    private fun clearTemporarilyUnlockedAppIfNeeded(newPackage: String? = null) {
-        val shouldClear = newPackage == null ||
-                (newPackage != AppLockManager.temporarilyUnlockedApp &&
-                        newPackage !in appLockRepository.getTriggerExcludedApps())
-
-        if (shouldClear) {
-            LogUtils.d(TAG, "Clearing temporarily unlocked app")
-            AppLockManager.clearTemporarilyUnlockedApp()
-        }
-    }
-
-    private fun isValidPackageForLocking(packageName: String): Boolean {
-        // Check if device is locked
-        if (applicationContext.isDeviceLocked()) {
-            AppLockManager.appUnlockTimes.clear()
-            AppLockManager.clearTemporarilyUnlockedApp()
-            return false
-        }
-
-        // Check if accessibility should handle locking
-        if (!shouldAccessibilityHandleLocking()) {
-            return false
-        }
-
-        // Skip excluded packages
-        if (packageName == APP_PACKAGE_PREFIX ||
-            packageName in keyboardPackages ||
-            packageName in EXCLUDED_APPS
+    /** Shows the lock overlay for [packageName] if it is locked and not currently unlocked. */
+    private fun maybeLock(packageName: String): Boolean {
+        if (packageName !in appLockRepository.getLockedApps()) return false
+        if (AppLockManager.isBiometricAuthInProgress()) return false
+        if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
+        if (AppLockManager.isWithinUnlockDuration(
+                packageName,
+                appLockRepository.getUnlockTimeDuration(),
+                System.currentTimeMillis()
+            )
         ) {
             return false
         }
-
-        // Skip known recents classes
+        showLockScreenOverlay(packageName)
         return true
     }
 
-    private fun processPackageLocking(packageName: String) {
-        val currentForegroundPackage = packageName
-        val triggeringPackage = lastForegroundPackage
-        lastForegroundPackage = currentForegroundPackage
-
-        // Skip if triggering package is excluded
-        if (triggeringPackage in appLockRepository.getTriggerExcludedApps()) {
+    private fun relock(packageName: String) {
+        AppLockManager.reportBiometricAuthFinished()
+        if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+            AppLockManager.isLockScreenShown.set(false)
             return
         }
+        if (AppLockManager.isAppTemporarilyUnlocked(packageName)) {
+            if (overlayPackage == packageName) dismissOverlay()
+            return
+        }
+        val snapshot = visibleWindows()
+        val onScreen = packageName == lastForegroundPackage ||
+                packageName in snapshot.appPackages ||
+                packageName in snapshot.floatingPackages
+        if (onScreen) {
+            exitedPackages.remove(packageName)
+            if (!maybeLock(packageName)) {
+                AppLockManager.isLockScreenShown.set(false)
+            }
+        } else {
+            dismissOverlay()
+        }
+    }
 
-        // Fix for "Lock Immediately" not working when switching between apps
-        val unlockedApp = AppLockManager.temporarilyUnlockedApp
-        if (unlockedApp.isNotEmpty() &&
-            unlockedApp != currentForegroundPackage &&
-            currentForegroundPackage !in appLockRepository.getTriggerExcludedApps()
-        ) {
-            LogUtils.d(
-                TAG,
-                "Switched from unlocked app $unlockedApp to $currentForegroundPackage."
-            )
-            AppLockManager.setRecentlyLeftApp(unlockedApp)
-            AppLockManager.clearTemporarilyUnlockedApp()
+    private fun showLockScreenOverlay(packageName: String) {
+        val manager = overlayManager ?: return
+        val current = overlayPackage
+        if (current != null && current != packageName) {
+            // A different locked app came to the front while the overlay was up (e.g. rapid
+            // recents switching): retarget so unlocking can't reveal the wrong app.
+            manager.removeOverlay()
+        }
+        if (current != packageName) {
+            LogUtils.d(TAG, "Showing overlay for: $packageName")
         }
 
-        checkAndLockApp(currentForegroundPackage, triggeringPackage, System.currentTimeMillis())
+        overlayPackage = packageName
+        AppLockManager.isLockScreenShown.set(true)
+        manager.showOverlay(
+            lockedPackageName = packageName,
+            triggeringPackageName = triggeringPackage,
+            onUnlock = {
+                if (overlayPackage == packageName) overlayPackage = null
+                AppLockManager.unlockApp(packageName)
+                AppLockManager.isLockScreenShown.set(false)
+            },
+            onExit = {
+                if (overlayPackage == packageName) overlayPackage = null
+                exitedPackages.add(packageName)
+                exitSuppressedUntil = SystemClock.uptimeMillis() + EXIT_SUPPRESSION_MS
+                performGlobalAction(GLOBAL_ACTION_HOME)
+                mainHandler.postDelayed({
+                    AppLockManager.isLockScreenShown.set(false)
+                    verifyLeftAfterExit(packageName)
+                }, EXIT_VERIFY_DELAY_MS)
+            }
+        )
+    }
+
+    /** If going home after "close" didn't work, the app is still focused: lock it again. */
+    private fun verifyLeftAfterExit(packageName: String) {
+        try {
+            val activePackage = rootInActiveWindow?.packageName?.toString()
+            if (activePackage == packageName) {
+                exitedPackages.remove(packageName)
+                maybeLock(packageName)
+            }
+        } catch (e: Exception) {
+            logError("Error verifying exit", e)
+        }
+    }
+
+    private fun dismissOverlay() {
+        if (overlayPackage == null) return
+        overlayPackage = null
+        overlayManager?.removeOverlay()
+        AppLockManager.isLockScreenShown.set(false)
+    }
+
+    private fun scheduleWindowScan() {
+        mainHandler.removeCallbacks(windowScanRunnable)
+        mainHandler.postDelayed(windowScanRunnable, WINDOW_SCAN_DELAY_MS)
+    }
+
+    /**
+     * Reconciles lock state with what is actually on screen. Handles multi-window, freeform and
+     * picture-in-picture (every visible app window is checked, not only the focused one), apps
+     * already open when the service connects or the keyguard goes away, and overlays left behind
+     * after the protected app went away.
+     */
+    private fun scanVisibleWindows() {
+        try {
+            if (!appLockRepository.isProtectEnabled() || !shouldAccessibilityHandleLocking()) {
+                dismissOverlay()
+                return
+            }
+            if (handleDeviceLocked()) return
+
+            val overlay = overlayPackage
+            if (overlay != null && AppLockManager.isAppTemporarilyUnlocked(overlay)) {
+                dismissOverlay()
+            }
+
+            val snapshot = visibleWindows()
+            if (lastForegroundPackage.isEmpty()) {
+                val active = try {
+                    rootInActiveWindow?.packageName?.toString()
+                } catch (_: Exception) {
+                    null
+                }
+                if (active != null && active != packageName && !isIgnoredPackage(active)) {
+                    onForegroundChanged(active)
+                }
+            }
+
+            if (!snapshot.complete) return
+
+            val foreground = lastForegroundPackage
+            val inExcludedApp = foreground in appLockRepository.getTriggerExcludedApps() &&
+                    foreground in snapshot.appPackages
+            if (!inExcludedApp) {
+                AppLockManager.unlockedAppsSnapshot()
+                    .filter { it !in snapshot.appPackages && it !in snapshot.floatingPackages }
+                    .forEach(AppLockManager::revokeTemporaryUnlock)
+            }
+
+            val currentOverlay = overlayPackage
+            if (currentOverlay != null &&
+                currentOverlay !in snapshot.appPackages &&
+                currentOverlay !in snapshot.floatingPackages &&
+                currentOverlay != foreground
+            ) {
+                dismissOverlay()
+            }
+
+            if (overlayPackage == null && !AppLockManager.isBiometricAuthInProgress()) {
+                for (pkg in snapshot.appPackages) {
+                    if (pkg == packageName || isIgnoredPackage(pkg) || pkg in exitedPackages) continue
+                    if (maybeLock(pkg)) break
+                }
+            } else if (overlayPackage != null) {
+                // Re-show after a cancelled biometric prompt; no-op while it is already visible.
+                overlayPackage?.let { maybeLock(it) }
+            }
+        } catch (e: Exception) {
+            logError("Error scanning windows", e)
+        }
+    }
+
+    private class WindowSnapshot(
+        val appPackages: List<String>,
+        val floatingPackages: Set<String>,
+        val complete: Boolean
+    )
+
+    private fun visibleWindows(): WindowSnapshot {
+        return try {
+            val appPackages = mutableListOf<String>()
+            val floating = mutableSetOf<String>()
+            var complete = true
+            var sawApplication = false
+            for (window in windows) {
+                when (window.type) {
+                    AccessibilityWindowInfo.TYPE_APPLICATION -> {
+                        sawApplication = true
+                        val pkg = window.root?.packageName?.toString()
+                        if (pkg == null) {
+                            complete = false
+                        } else if (pkg !in appPackages) {
+                            appPackages.add(pkg)
+                        }
+                    }
+
+                    AccessibilityWindowInfo.TYPE_SYSTEM -> {
+                        window.root?.packageName?.toString()?.let(floating::add)
+                    }
+                }
+            }
+            WindowSnapshot(appPackages, floating, complete && sawApplication)
+        } catch (e: Exception) {
+            logError("Error reading windows", e)
+            WindowSnapshot(emptyList(), emptySet(), false)
+        }
+    }
+
+    private fun windowTypeOf(windowId: Int): Int? {
+        if (windowId < 0) return null
+        return try {
+            windows.firstOrNull { it.id == windowId }?.type
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun handleDeviceLocked(): Boolean {
+        if (!applicationContext.isDeviceLocked()) return false
+        AppLockManager.appUnlockTimes.clear()
+        AppLockManager.clearTemporarilyUnlockedApp()
+        return true
+    }
+
+    private fun isIgnoredPackage(packageName: String): Boolean {
+        return packageName == this.packageName ||
+                packageName in keyboardPackages ||
+                packageName in EXCLUDED_APPS
     }
 
     private fun shouldAccessibilityHandleLocking(): Boolean {
         return appLockRepository.getBackendImplementation() == BackendImplementation.ACCESSIBILITY
     }
 
-    private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long) {
-        // Return early if lock screen is already shown or biometric auth is in progress
-        if (AppLockManager.currentBiometricState == BiometricState.AUTH_STARTED) {
-            return
-        }
-
-        // Return if package is not locked
-        if (packageName !in appLockRepository.getLockedApps()) {
-            return
-        }
-
-        // Return if app is temporarily unlocked
-        if (AppLockManager.isAppTemporarilyUnlocked(packageName)) {
-            return
-        }
-
-        AppLockManager.clearTemporarilyUnlockedApp()
-
-        val unlockDurationMinutes = appLockRepository.getUnlockTimeDuration()
-        val unlockTimestamp = AppLockManager.appUnlockTimes[packageName] ?: 0L
-
-        LogUtils.d(
-            TAG,
-            "checkAndLockApp: pkg=$packageName, duration=$unlockDurationMinutes min, unlockTime=$unlockTimestamp, currentTime=$currentTime, isLockScreenShown=${AppLockManager.isLockScreenShown.get()}"
-        )
-
-        if (unlockDurationMinutes > 0 && unlockTimestamp > 0) {
-            if (unlockDurationMinutes >= 10_000) {
-                return
-            }
-
-            val durationMillis = unlockDurationMinutes.toLong() * 60L * 1000L
-
-            val elapsedMillis = currentTime - unlockTimestamp
-
-            LogUtils.d(
-                TAG,
-                "Grace period check: elapsed=${elapsedMillis}ms (${elapsedMillis / 1000}s), duration=${durationMillis}ms (${durationMillis / 1000}s)"
-            )
-
-            if (elapsedMillis < durationMillis) {
-                return
-            }
-
-            LogUtils.d(TAG, "Unlock grace period expired for $packageName. Clearing timestamp.")
-            AppLockManager.appUnlockTimes.remove(packageName)
-            AppLockManager.clearTemporarilyUnlockedApp()
-        }
-
-        if (AppLockManager.isLockScreenShown.get() ||
-            AppLockManager.currentBiometricState == BiometricState.AUTH_STARTED
-        ) {
-            LogUtils.d(TAG, "Lock screen already shown or biometric auth in progress, skipping")
-            return
-        }
-
-        showLockScreenOverlay(packageName, triggeringPackage)
+    @SuppressLint("InlinedApi")
+    private fun isLauncherPaneChange(event: AccessibilityEvent): Boolean {
+        val types = event.contentChangeTypes
+        return types and AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_APPEARED != 0 ||
+                types and AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_DISAPPEARED != 0
     }
 
-    private fun showLockScreenOverlay(packageName: String, triggeringPackage: String) {
-        if (AppLockManager.isLockScreenShown.get()) return
-
-        LogUtils.d(TAG, "Showing overlay for: $packageName")
-
-        mainHandler.post {
-            AppLockManager.isLockScreenShown.set(true)
-            overlayManager?.showOverlay(
-                lockedPackageName = packageName,
-                triggeringPackageName = triggeringPackage,
-                onUnlock = {
-                    AppLockManager.isLockScreenShown.set(false)
-                    AppLockManager.unlockApp(packageName)
-                },
-                onExit = {
-                    performGlobalAction(GLOBAL_ACTION_HOME)
-                    Thread.sleep(200)
-                    AppLockManager.isLockScreenShown.set(false)
-                }
-            )
-        }
-    }
-
-    //private fun showLockScreenOverlay(packageName: String, triggeringPackage: String) {
-    //    LogUtils.d(TAG, "Locked app detected: $packageName. Showing overlay.")
-    //    AppLockManager.isLockScreenShown.set(true)
-    //
-    //    val intent = Intent(this, PasswordOverlayActivity::class.java).apply {
-    //        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-    //                Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS or
-    //                Intent.FLAG_ACTIVITY_NO_ANIMATION or
-    //                Intent.FLAG_FROM_BACKGROUND or
-    //                Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-    //        putExtra("locked_package", packageName)
-    //        putExtra("triggering_package", triggeringPackage)
-    //    }
-    //
-    //    try {
-    //        startActivity(intent)
-    //    } catch (e: Exception) {
-    //        logError("Failed to start password overlay", e)
-    //        AppLockManager.isLockScreenShown.set(false)
-    //    }
-    //}
-
-    private fun checkForDeviceAdminDeactivation(event: AccessibilityEvent) {
-        Log.d(TAG, "Checking for device admin deactivation for event: $event")
-
-        // Check if user is trying to deactivate the accessibility service
-        if (isDeactivationAttempt(event)) {
+    private fun checkForDeviceAdminDeactivation(event: AccessibilityEvent, packageName: String) {
+        if (isDeactivationAttempt(event, packageName)) {
             Log.d(TAG, "Blocking accessibility service deactivation")
             blockDeactivationAttempt()
             return
         }
 
-        // Check if on device admin page and our app is visible
-        val isDeviceAdminPage = isDeviceAdminPage(event)
-        //val isOurAppVisible = findNodeWithTextContaining(rootNode, "App Lock") != null ||
-        //        findNodeWithTextContaining(rootNode, "AppLock") != null
-
-        LogUtils.d(TAG, "User is on device admin page: $isDeviceAdminPage, $event")
-
-        if (!isDeviceAdminPage) {
-            return
+        if (packageName == SETTINGS_PACKAGE && isDeviceAdminPage(event)) {
+            blockDeviceAdminDeactivation()
         }
-
-        blockDeviceAdminDeactivation()
     }
 
-    private fun isDeactivationAttempt(event: AccessibilityEvent): Boolean {
-        val isAccessibilitySettings = event.className in ACCESSIBILITY_SETTINGS_CLASSES &&
-                event.text.any { it.contains("App Lock") }
-        val isSubSettings = event.className == "com.android.settings.SubSettings" &&
-                event.text.any { it.contains("App Lock") }
-        val isAlertDialog =
-            event.packageName == "com.google.android.packageinstaller" && event.className == "android.app.AlertDialog" && event.text.toString()
-                .lowercase().contains("App Lock")
+    private fun mentionsThisApp(event: AccessibilityEvent): Boolean {
+        val texts = event.text.mapNotNull { it?.toString() } +
+                listOfNotNull(event.contentDescription?.toString())
+        return texts.any { it.contains(appLabel, ignoreCase = true) || it.contains("App Lock", ignoreCase = true) }
+    }
 
-        return isAccessibilitySettings || isSubSettings || isAlertDialog
+    private fun isDeactivationAttempt(event: AccessibilityEvent, packageName: String): Boolean {
+        val className = event.className?.toString() ?: return false
+        val isSettingsPage = packageName == SETTINGS_PACKAGE &&
+                (className in ACCESSIBILITY_SETTINGS_CLASSES || className == "com.android.settings.SubSettings")
+        val isInstallerDialog = packageName in PACKAGE_INSTALLER_PACKAGES &&
+                className == "android.app.AlertDialog"
+        return (isSettingsPage || isInstallerDialog) && mentionsThisApp(event)
     }
 
     @SuppressLint("InlinedApi")
@@ -420,13 +589,12 @@ class AppLockAccessibilityService : AccessibilityService() {
     }
 
     private fun isDeviceAdminPage(event: AccessibilityEvent): Boolean {
-        val hasDeviceAdminDescription = event.contentDescription?.toString()?.lowercase()
-            ?.contains("Device admin app") == true &&
-                event.className == "android.widget.FrameLayout"
-
+        val className = event.className?.toString().orEmpty()
+        val hasDeviceAdminDescription =
+            event.contentDescription?.toString()?.contains("Device admin app", ignoreCase = true) == true &&
+                    className == "android.widget.FrameLayout"
         val isAdminConfigClass =
-            event.className!!.contains("DeviceAdminAdd") || event.className!!.contains("DeviceAdminSettings")
-
+            className.contains("DeviceAdminAdd") || className.contains("DeviceAdminSettings")
         return hasDeviceAdminDescription || isAdminConfigClass
     }
 
@@ -440,13 +608,8 @@ class AppLockAccessibilityService : AccessibilityService() {
                 performGlobalAction(GLOBAL_ACTION_BACK)
                 performGlobalAction(GLOBAL_ACTION_BACK)
                 performGlobalAction(GLOBAL_ACTION_HOME)
-                Thread.sleep(100)
-                performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
-                Toast.makeText(
-                    this,
-                    "Disable anti-uninstall from AppLock settings to remove this restriction.",
-                    Toast.LENGTH_LONG
-                ).show()
+                mainHandler.postDelayed({ performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN) }, 100)
+                Toast.makeText(this, R.string.anti_uninstall_blocked_toast, Toast.LENGTH_LONG).show()
                 Log.w(TAG, "Blocked device admin deactivation attempt.")
             }
         } catch (e: Exception) {
@@ -454,86 +617,73 @@ class AppLockAccessibilityService : AccessibilityService() {
         }
     }
 
-    private fun findNodeWithTextContaining(
-        node: AccessibilityNodeInfo,
-        text: String
-    ): AccessibilityNodeInfo? {
-        return try {
-            if (node.text?.toString()?.contains(text, ignoreCase = true) == true) {
-                return node
-            }
-
-            for (i in 0 until node.childCount) {
-                val child = node.getChild(i) ?: continue
-                val result = findNodeWithTextContaining(child, text)
-                if (result != null) return result
-            }
-            null
+    private fun registerImeObserver() {
+        if (observerRegistered) return
+        try {
+            contentResolver.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false, imeObserver
+            )
+            contentResolver.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false, imeObserver
+            )
+            observerRegistered = true
         } catch (e: Exception) {
-            logError("Error finding node with text: $text", e)
-            null
+            logError("Error registering IME observer", e)
         }
     }
 
-    private fun getKeyboardPackageNames(): List<String> {
-        return try {
-            getSystemService<InputMethodManager>()?.enabledInputMethodList?.map { it.packageName }
-                ?: emptyList()
+    private fun refreshKeyboardPackages() {
+        keyboardPackages = try {
+            getSystemService<InputMethodManager>()?.enabledInputMethodList
+                ?.map { it.packageName }?.toSet() ?: emptySet()
         } catch (e: Exception) {
             logError("Error getting keyboard package names", e)
-            emptyList()
+            emptySet()
         }
     }
 
-    fun getSystemDefaultLauncherPackageName(): String {
-        return try {
-            val packageManager = packageManager
-            val homeIntent = Intent(Intent.ACTION_MAIN).apply {
-                addCategory(Intent.CATEGORY_HOME)
-            }
-
-            val resolveInfoList: List<ResolveInfo> = packageManager.queryIntentActivities(
-                homeIntent,
-                PackageManager.MATCH_DEFAULT_ONLY
-            )
-
-            val systemLauncher = resolveInfoList.find { resolveInfo ->
-                val isSystemApp = (resolveInfo.activityInfo.applicationInfo.flags and
-                        android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
-                val isOurApp = resolveInfo.activityInfo.packageName == packageName
-
-                isSystemApp && !isOurApp
-            }
-
-            systemLauncher?.activityInfo?.packageName?.also {
-                if (it.isEmpty()) {
-                    Log.w(TAG, "Could not find a clear system launcher package name.")
-                }
-            } ?: ""
-        } catch (e: Exception) {
-            logError("Error getting system default launcher package", e)
-            ""
+    private fun launcherPackages(): Set<String> {
+        val now = SystemClock.uptimeMillis()
+        if (launcherPackages.isNotEmpty() && now - launcherPackagesLoadedAt < LAUNCHER_CACHE_MS) {
+            return launcherPackages
         }
+        launcherPackages = try {
+            val homeIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+            val defaultHome = packageManager
+                .resolveActivity(homeIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                ?.activityInfo?.packageName
+            val systemHome = packageManager
+                .queryIntentActivities(homeIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                .firstOrNull {
+                    (it.activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0 &&
+                            it.activityInfo.packageName != packageName
+                }?.activityInfo?.packageName
+            setOfNotNull(defaultHome, systemHome)
+                .filter { it != packageName && it != "android" }
+                .toSet()
+        } catch (e: Exception) {
+            logError("Error getting launcher packages", e)
+            emptySet()
+        }
+        launcherPackagesLoadedAt = now
+        return launcherPackages
     }
 
     private fun startPrimaryBackendService() {
         try {
             AppLockManager.stopAllOtherServices(this, AppLockAccessibilityService::class.java)
 
-            when (appLockRepository.getBackendImplementation()) {
-                BackendImplementation.SHIZUKU -> {
-                    Log.d(TAG, "Starting Shizuku service as primary backend")
-                    startService(Intent(this, ShizukuAppLockService::class.java))
-                }
+            val serviceClass = when (appLockRepository.getBackendImplementation()) {
+                BackendImplementation.SHIZUKU -> ShizukuAppLockService::class.java
+                BackendImplementation.USAGE_STATS -> UsageLockService::class.java
+                else -> null
+            } ?: return
 
-                BackendImplementation.USAGE_STATS -> {
-                    Log.d(TAG, "Starting Experimental service as primary backend")
-                    startService(Intent(this, UsageLockService::class.java))
-                }
-
-                else -> {
-                    Log.d(TAG, "Accessibility service is the primary backend.")
-                }
+            val intent = Intent(this, serviceClass)
+            try {
+                startService(intent)
+            } catch (_: IllegalStateException) {
+                ContextCompat.startForegroundService(this, intent)
             }
         } catch (e: Exception) {
             logError("Error starting primary backend service", e)
@@ -541,17 +691,15 @@ class AppLockAccessibilityService : AccessibilityService() {
     }
 
     override fun onInterrupt() {
-        try {
-            LogUtils.d(TAG, "Accessibility service interrupted")
-        } catch (e: Exception) {
-            logError("Error in onInterrupt", e)
-        }
+        LogUtils.d(TAG, "Accessibility service interrupted")
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
         return try {
             Log.d(TAG, "Accessibility service unbound")
             isServiceRunning = false
+            if (instance === this) instance = null
+            dismissOverlay()
 
             if (Shizuku.pingBinder() && appLockRepository.isAntiUninstallEnabled()) {
                 enableAccessibilityServiceWithShizuku(ComponentName(packageName, javaClass.name))
@@ -566,29 +714,34 @@ class AppLockAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         try {
-            super.onDestroy()
             isServiceRunning = false
+            if (instance === this) instance = null
             LogUtils.d(TAG, "Accessibility service destroyed")
 
+            mainHandler.removeCallbacksAndMessages(null)
             overlayManager?.removeOverlay()
+            overlayPackage = null
 
-            try {
-                unregisterReceiver(screenStateReceiver)
-            } catch (_: IllegalArgumentException) {
-                // Ignore if not registered
-                Log.w(TAG, "Receiver not registered or already unregistered")
+            if (receiversRegistered) {
+                try {
+                    unregisterReceiver(screenStateReceiver)
+                } catch (_: IllegalArgumentException) {
+                }
+                receiversRegistered = false
             }
+            if (observerRegistered) {
+                contentResolver.unregisterContentObserver(imeObserver)
+                observerRegistered = false
+            }
+            NewAppAutoLocker.unregister(this, this)
 
             AppLockManager.isLockScreenShown.set(false)
         } catch (e: Exception) {
             logError("Error in onDestroy", e)
         }
+        super.onDestroy()
     }
 
-    /**
-     * Logs errors silently without crashing the service.
-     * Only logs to debug level to avoid unnecessary noise in production.
-     */
     private fun logError(message: String, throwable: Throwable? = null) {
         Log.e(TAG, message, throwable)
     }

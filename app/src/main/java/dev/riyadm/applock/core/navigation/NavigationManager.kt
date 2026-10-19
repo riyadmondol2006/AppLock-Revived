@@ -21,10 +21,12 @@ class NavigationManager(private val context: Context) {
     }
 
     /**
-     * Checks if password verification should be skipped for the given route.
+     * Checks if password verification should be skipped for the given route. Intro and
+     * set-password screens only skip it during first-time setup; once a credential exists,
+     * resuming on them must ask for it, or anyone could reset it.
      */
     fun shouldSkipPasswordCheck(currentRoute: String?): Boolean {
-        return currentRoute in ROUTES_THAT_SKIP_PASSWORD_CHECK
+        return currentRoute in ROUTES_THAT_SKIP_PASSWORD_CHECK && !isPasswordSet()
     }
 
     private fun shouldShowAppIntro(): Boolean {
@@ -50,7 +52,9 @@ class NavigationManager(private val context: Context) {
 
         private val ROUTES_THAT_SKIP_PASSWORD_CHECK = setOf(
             Screen.AppIntro.route,
-            Screen.SetPassword.route
+            Screen.SetPassword.route,
+            Screen.SetPasswordPattern.route,
+            Screen.SetPasswordAlphanumeric.route
         )
     }
 }
