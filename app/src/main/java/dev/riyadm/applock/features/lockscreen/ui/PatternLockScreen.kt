@@ -1,262 +1,261 @@
 package dev.riyadm.applock.features.lockscreen.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.mrhwsn.composelock.Dot
-import com.mrhwsn.composelock.LockCallback
-import com.mrhwsn.composelock.PatternLock
+import androidx.compose.ui.util.lerp
 import dev.riyadm.applock.R
-import dev.riyadm.applock.core.utils.appLockRepository
-import dev.riyadm.applock.core.utils.vibrate
-import dev.riyadm.applock.ui.icons.Fingerprint
+import dev.riyadm.applock.data.repository.UnlockLogRepository
+import kotlinx.coroutines.delay
+import kotlin.math.abs
+import kotlin.math.ceil
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun PatternLockScreen(
-    modifier: Modifier = Modifier,
-    fromMainActivity: Boolean = false,
-    showCloseButton: Boolean = false,
-    onClose: () -> Unit = {},
-    lockedAppName: String? = null,
-    triggeringPackageName: String? = null,
-    onPatternAttempt: ((pattern: String) -> Boolean)? = null,
-    onBiometricAuth: (() -> Unit)? = null
-) {
-    val appLockRepository = LocalContext.current.appLockRepository()
-    val context = LocalContext.current
-    val windowInfo = LocalWindowInfo.current
+fun PatternLockScreen(spec: LockScreenSpec, modifier: Modifier = Modifier) {
+    val controller = rememberUnlockController(spec.packageName, UnlockLogRepository.Method.PATTERN)
+    val haptics = controller.haptics
+    val padState = remember(spec.sessionKey) { PatternPadState() }
+    var showError by remember { mutableStateOf(false) }
+    var rejecting by remember { mutableStateOf(false) }
+    val shake = remember { Animatable(0f) }
 
-    val screenWidth = windowInfo.containerSize.width
-    val screenHeight = windowInfo.containerSize.height
-    val isLandscape = screenWidth > screenHeight
+    LaunchedEffect(controller.failureCount) {
+        if (controller.failureCount == 0) return@LaunchedEffect
+        showError = true
+        rejecting = true
+        shake.shake()
+        delay(PATTERN_ERROR_HOLD_MS)
+        padState.clear()
+        rejecting = false
+    }
 
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surface
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            var showError by remember { mutableStateOf(false) }
+    val hint = spec.subtitle ?: stringResource(R.string.lock_draw_pattern)
+    val wrong = stringResource(R.string.lock_wrong_pattern)
 
-            @Suppress("ASSIGNED_BUT_NOT_ACCESSED_WARNING")
-            var errorShakeOffset by remember { mutableStateOf(0f) }
-
-            val shakeAnimation by animateFloatAsState(
-                targetValue = errorShakeOffset,
-                animationSpec = tween(400, easing = FastOutSlowInEasing),
-                label = "shake"
-            )
-
-            val patternIds = remember { mutableStateOf<List<Int>>(emptyList()) }
-
-            val lockCallback = object: LockCallback {
-                override fun onStart(dot: Dot) {
-                    showError = false
-                    if (!appLockRepository.shouldDisableHaptics()) {
-                        vibrate(context, 10)
-                    }
-                }
-
-                override fun onDotConnected(dot: Dot) {
-                    if (!appLockRepository.shouldDisableHaptics()) {
-                        vibrate(context, 10)
-                    }
-                }
-
-                override fun onResult(result: List<Dot>) {
-                    patternIds.value = result.map { it.id }
-                    val patternString = result.joinToString("") { it.id.toString() }
-
-                    val isValid = onPatternAttempt?.invoke(patternString) ?: false
-                    if (!isValid) {
-                        showError = true
-                        errorShakeOffset = 10f
-                    }
-                }
-            }
-
-            if (isLandscape) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                        .padding(horizontal = 24.dp, vertical = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(24.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = if (!fromMainActivity && !lockedAppName.isNullOrEmpty())
-                                    "Continue to $lockedAppName"
-                                else
-                                    stringResource(R.string.enter_pattern_to_continue),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                textAlign = TextAlign.Center
-                            )
-
-                            if (showError) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = stringResource(R.string.incorrect_pattern_try_again),
-                                    color = MaterialTheme.colorScheme.error,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-
-                        if (appLockRepository.isBiometricAuthEnabled() && onBiometricAuth != null) {
-                            FilledTonalIconButton(
-                                onClick = { onBiometricAuth() },
-                                modifier = Modifier.size(44.dp),
-                                shape = RoundedCornerShape(40),
-                            ) {
-                                Icon(
-                                    imageVector = Fingerprint,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(10.dp),
-                                    contentDescription = stringResource(R.string.biometric_authentication_cd),
-                                    tint = MaterialTheme.colorScheme.surfaceTint
-                                )
-                            }
-                        }
-                    }
-
-                    PatternLock(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .graphicsLayer(translationX = shakeAnimation),
-                        dimension = 3,
-                        sensitivity = 50f,
-                        dotsColor = MaterialTheme.colorScheme.primary,
-                        dotsSize = 14f,
-                        linesColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                        linesStroke = 6f,
-                        animationDuration = 120,
-                        callback = lockCallback
-                    )
-                }
+    LockScreenScaffold(
+        spec = spec,
+        controller = controller,
+        modifier = modifier,
+        status = { compact ->
+            if (controller.isLockedOut) {
+                LockoutIndicator(controller, compact, Modifier.padding(top = 8.dp))
             } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                        .padding(vertical = 24.dp, horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    LaunchedEffect(Unit) {
-                        if (appLockRepository.isBiometricAuthEnabled() && onBiometricAuth != null) {
-                            onBiometricAuth()
-                        }
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = if (!fromMainActivity && !lockedAppName.isNullOrEmpty())
-                                "Continue to $lockedAppName"
-                            else
-                                stringResource(R.string.enter_pattern_to_continue),
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            textAlign = TextAlign.Center
-                        )
-
-                        if (showError) {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = stringResource(R.string.incorrect_pattern_try_again),
-                                color = MaterialTheme.colorScheme.error,
-                                style = MaterialTheme.typography.labelLarge,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        if (appLockRepository.isBiometricAuthEnabled() && onBiometricAuth != null) {
-                            FilledTonalIconButton(
-                                onClick = { onBiometricAuth() },
-                                modifier = Modifier.size(44.dp),
-                                shape = RoundedCornerShape(40),
-                            ) {
-                                Icon(
-                                    imageVector = Fingerprint,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(10.dp),
-                                    contentDescription = stringResource(R.string.biometric_authentication_cd),
-                                    tint = MaterialTheme.colorScheme.surfaceTint
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
-
-                        PatternLock(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
-                                .graphicsLayer(translationX = shakeAnimation),
-                            dimension = 3,
-                            sensitivity = 50f,
-                            dotsColor = MaterialTheme.colorScheme.primary,
-                            dotsSize = 16f,
-                            linesColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                            linesStroke = 7f,
-                            animationDuration = 120,
-                            callback = lockCallback
-                        )
-                    }
-                }
+                LockStatusText(text = if (showError) wrong else hint, isError = showError)
             }
-
-            if (showCloseButton) {
-                IconButton(
-                    onClick = onClose,
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .padding(start = 8.dp, top = 8.dp)
-                        .align(Alignment.TopStart)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
+            if (spec.showBiometric) {
+                Spacer(Modifier.height(if (compact) 8.dp else 16.dp))
+                BiometricButton(onClick = spec.onBiometric, compact = compact)
             }
+        },
+        input = {
+            PatternPad(
+                state = padState,
+                enabled = controller.canInput && !rejecting,
+                isError = rejecting,
+                onStart = {
+                    showError = false
+                    haptics.tick()
+                },
+                onDotAdded = { haptics.tick() },
+                onPatternComplete = { ids ->
+                    if (ids.size < MIN_PATTERN_DOTS) {
+                        padState.clear()
+                    } else {
+                        controller.submit(ids.joinToString(""))
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .widthIn(max = 380.dp)
+                    .aspectRatio(1f, matchHeightConstraintsFirst = true)
+                    .shakeOffset(shake)
+            )
         }
+    )
+}
+
+@Stable
+internal class PatternPadState {
+    val selected = mutableStateListOf<Int>()
+    var pointer by mutableStateOf(Offset.Unspecified)
+
+    fun clear() {
+        selected.clear()
+        pointer = Offset.Unspecified
     }
 }
+
+/**
+ * 3x3 pattern input. Dot ids are column-major (id = col * 3 + row + 1) to stay
+ * compatible with patterns saved by the previous pattern library.
+ *
+ * Hit targets scale with the pad (not fixed pixels), the pointer path between two
+ * events is sampled so fast swipes don't skip dots, and callbacks are always the
+ * latest ones (the old library captured stale state).
+ */
+@Composable
+internal fun PatternPad(
+    state: PatternPadState,
+    enabled: Boolean,
+    isError: Boolean,
+    onStart: () -> Unit,
+    onDotAdded: () -> Unit,
+    onPatternComplete: (List<Int>) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+    val accent = animateColorAsState(
+        targetValue = if (isError) colors.error else colors.primary,
+        animationSpec = MaterialTheme.motionScheme.defaultEffectsSpec(),
+        label = "patternAccent"
+    )
+    val idleDot = colors.onSurfaceVariant.copy(alpha = 0.55f)
+    val currentOnStart by rememberUpdatedState(onStart)
+    val currentOnDot by rememberUpdatedState(onDotAdded)
+    val currentOnComplete by rememberUpdatedState(onPatternComplete)
+
+    val dotProgress: List<State<Float>> = List(DOTS) { index ->
+        animateFloatAsState(
+            targetValue = if ((index + 1) in state.selected) 1f else 0f,
+            animationSpec = spring(dampingRatio = 0.45f, stiffness = 600f),
+            label = "dot$index"
+        )
+    }
+    val description = stringResource(R.string.lock_pattern_pad_cd)
+
+    Box(
+        modifier = modifier
+            .semantics { contentDescription = description }
+            .pointerInput(enabled) {
+                if (!enabled) return@pointerInput
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    val cell = size.width / GRID.toFloat()
+                    val hitRadius = cell * HIT_RADIUS_FRACTION
+                    val step = cell * 0.2f
+
+                    fun center(col: Int, row: Int) =
+                        Offset(cell * (col + 0.5f), (size.height / GRID.toFloat()) * (row + 0.5f))
+
+                    fun hitTest(position: Offset) {
+                        val col = (position.x / cell).toInt()
+                        val row = (position.y / (size.height / GRID.toFloat())).toInt()
+                        if (col !in 0 until GRID || row !in 0 until GRID) return
+                        if ((center(col, row) - position).getDistance() > hitRadius) return
+                        val id = col * GRID + row + 1
+                        if (id in state.selected) return
+                        val last = state.selected.lastOrNull()
+                        if (last != null) {
+                            val lastCol = (last - 1) / GRID
+                            val lastRow = (last - 1) % GRID
+                            if (abs(col - lastCol) % 2 == 0 && abs(row - lastRow) % 2 == 0) {
+                                val midId = ((col + lastCol) / 2) * GRID + (row + lastRow) / 2 + 1
+                                if (midId != id && midId !in state.selected) {
+                                    state.selected.add(midId)
+                                }
+                            }
+                        }
+                        if (state.selected.isEmpty()) currentOnStart() else currentOnDot()
+                        state.selected.add(id)
+                    }
+
+                    state.clear()
+                    hitTest(down.position)
+                    state.pointer = down.position
+                    down.consume()
+                    var previous = down.position
+
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                        if (!change.pressed) {
+                            change.consume()
+                            break
+                        }
+                        val position = change.position
+                        val distance = (position - previous).getDistance()
+                        val samples = ceil(distance / step).toInt().coerceAtLeast(1)
+                        for (i in 1..samples) {
+                            val t = i / samples.toFloat()
+                            hitTest(Offset(lerp(previous.x, position.x, t), lerp(previous.y, position.y, t)))
+                        }
+                        previous = position
+                        state.pointer = position
+                        change.consume()
+                    }
+
+                    state.pointer = Offset.Unspecified
+                    if (state.selected.isNotEmpty()) currentOnComplete(state.selected.toList())
+                }
+            }
+            .drawBehind {
+                val cellW = size.width / GRID
+                val cellH = size.height / GRID
+                fun centerOf(id: Int): Offset {
+                    val col = (id - 1) / GRID
+                    val row = (id - 1) % GRID
+                    return Offset(cellW * (col + 0.5f), cellH * (row + 0.5f))
+                }
+
+                val lineColor = accent.value.copy(alpha = 0.8f)
+                val stroke = 6.dp.toPx()
+                val path = state.selected
+                for (i in 0 until path.size - 1) {
+                    drawLine(lineColor, centerOf(path[i]), centerOf(path[i + 1]), stroke, StrokeCap.Round)
+                }
+                val pointer = state.pointer
+                if (path.isNotEmpty() && pointer != Offset.Unspecified) {
+                    drawLine(lineColor, centerOf(path.last()), pointer, stroke, StrokeCap.Round)
+                }
+
+                val baseRadius = 6.dp.toPx()
+                val selectedRadius = 11.dp.toPx()
+                val haloRadius = minOf(cellW, cellH) * 0.3f
+                for (index in 0 until DOTS) {
+                    val p = dotProgress[index].value
+                    val center = centerOf(index + 1)
+                    if (p > 0.01f) {
+                        drawCircle(accent.value.copy(alpha = 0.16f * p.coerceIn(0f, 1f)), haloRadius * p, center)
+                    }
+                    val color = if (p > 0.01f) accent.value else idleDot
+                    drawCircle(color, baseRadius + (selectedRadius - baseRadius) * p, center)
+                }
+            }
+    )
+}
+
+private const val GRID = 3
+private const val DOTS = GRID * GRID
+private const val HIT_RADIUS_FRACTION = 0.36f
+private const val MIN_PATTERN_DOTS = 2
+private const val PATTERN_ERROR_HOLD_MS = 350L
