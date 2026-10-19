@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -117,9 +119,12 @@ import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.openAccessibilitySettings
 import dev.riyadm.applock.data.repository.BackendImplementation
 import dev.riyadm.applock.features.applist.domain.InstalledApp
+import dev.riyadm.applock.services.AppLockManager
 import dev.riyadm.applock.features.applist.ui.ProtectionStatus.State
 import dev.riyadm.applock.ui.components.AccessibilityServiceGuideDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import rikka.shizuku.Shizuku
 
@@ -158,11 +163,11 @@ fun MainScreen(
     }
 
     LaunchedEffect(statusCheck) {
-        status = context.readProtectionStatus()
+        status = withContext(Dispatchers.IO) { context.readProtectionStatus() }
         // Services connect asynchronously right after a permission is granted
         if (status.state == State.SERVICE_STOPPED) {
             delay(1_500)
-            status = context.readProtectionStatus()
+            status = withContext(Dispatchers.IO) { context.readProtectionStatus() }
         }
     }
 
@@ -275,6 +280,14 @@ fun MainScreen(
                 },
                 onOpenAntiUninstall = {
                     navController.navigate(Screen.AntiUninstall.route) { launchSingleTop = true }
+                },
+                onLockAllNow = {
+                    AppLockManager.lockAllNow()
+                    haptics.confirm()
+                    scope.launch {
+                        snackbarHostState.currentSnackbarData?.dismiss()
+                        snackbarHostState.showSnackbar(context.getString(R.string.applist_locked_all_now))
+                    }
                 }
             )
         }
@@ -451,7 +464,6 @@ private fun LazyListScope.appSection(
             onCheckedChange = { onToggle(app, it) },
             index = index,
             count = apps.size,
-            switchContentDescription = stringResource(R.string.applist_lock_switch_cd, app.label),
             selectionMode = selectionMode,
             selected = app.packageName in selection,
             onSelectedChange = { onSelect(app.packageName, it) },
@@ -472,6 +484,7 @@ private fun MainTopBar(
     onOpenSettings: () -> Unit,
     onOpenTriggerExclusions: () -> Unit,
     onOpenAntiUninstall: () -> Unit,
+    onLockAllNow: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
     LargeFlexibleTopAppBar(
@@ -501,6 +514,14 @@ private fun MainTopBar(
                     expanded = menuExpanded,
                     onDismissRequest = { menuExpanded = false }
                 ) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.applist_menu_lock_all_now)) },
+                        leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = null) },
+                        onClick = {
+                            menuExpanded = false
+                            onLockAllNow()
+                        }
+                    )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.applist_menu_trigger_exclusions)) },
                         leadingIcon = { Icon(Icons.Rounded.Block, contentDescription = null) },
@@ -761,7 +782,6 @@ private fun SearchResults(
                 onCheckedChange = { onToggle(app, it) },
                 index = index,
                 count = results.size,
-                switchContentDescription = stringResource(R.string.applist_lock_switch_cd, app.label),
                 modifier = Modifier
                     .animateItem()
                     .padding(horizontal = 16.dp)

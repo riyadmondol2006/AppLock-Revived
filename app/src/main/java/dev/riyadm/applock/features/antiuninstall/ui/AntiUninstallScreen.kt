@@ -21,7 +21,7 @@ import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.GppMaybe
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.VerifiedUser
@@ -118,16 +118,12 @@ fun AntiUninstallScreen(
         }
     }
 
-    val switchDescription = remember(context) {
-        { label: String -> context.getString(R.string.anti_uninstall_switch_cd, label) }
-    }
 
     PackageToggleScreen(
         title = stringResource(R.string.anti_uninstall_title),
         subtitle = pluralStringResource(R.plurals.anti_uninstall_count, checked.size, checked.size),
         viewModel = viewModel,
         checkedSectionTitle = stringResource(R.string.anti_uninstall_section_protected),
-        switchContentDescription = switchDescription,
         checkedThumbIcon = Icons.Rounded.Shield,
         addPackageDescription = stringResource(R.string.anti_uninstall_add_desc),
         onBack = { navController.navigateUp() },
@@ -222,13 +218,13 @@ private fun shizukuStyle(state: ShizukuState): ShizukuStyle = when (state) {
 
     ShizukuState.NOT_RUNNING -> ShizukuStyle(
         R.string.anti_uninstall_not_running_title, R.string.anti_uninstall_not_running_desc,
-        R.string.anti_uninstall_action_open, Icons.Rounded.OpenInNew,
+        R.string.anti_uninstall_action_open, Icons.AutoMirrored.Rounded.OpenInNew,
         MaterialShapes.Clover4Leaf, Icons.Rounded.GppMaybe, false
     )
 
     ShizukuState.OUTDATED -> ShizukuStyle(
         R.string.anti_uninstall_outdated_title, R.string.anti_uninstall_shizuku_old,
-        R.string.anti_uninstall_action_open, Icons.Rounded.OpenInNew,
+        R.string.anti_uninstall_action_open, Icons.AutoMirrored.Rounded.OpenInNew,
         MaterialShapes.Clover4Leaf, Icons.Rounded.GppMaybe, false
     )
 

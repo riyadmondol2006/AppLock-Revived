@@ -74,23 +74,20 @@ class AntiUninstallViewModel(application: Application) : PackageToggleViewModel(
 
     private suspend fun syncWithSystem() {
         val apps = allApps.value ?: return
-        val blocked = withContext(Dispatchers.IO) {
-            buildSet {
-                for (app in apps) {
-                    when (UninstallBlocker.isBlocked(app.packageName)) {
-                        true -> add(app.packageName)
-                        null -> return@withContext null
-                        false -> Unit
-                    }
-                }
+        val blocked: Set<String> = withContext(Dispatchers.IO) {
+            val result = HashSet<String>()
+            for (app in apps) {
+                val isBlocked = UninstallBlocker.isBlocked(app.packageName) ?: return@withContext null
+                if (isBlocked) result.add(app.packageName)
             }
+            result
         } ?: return
         val installed = apps.mapTo(HashSet()) { it.packageName }
         val stored = repository.getAntiUninstallApps()
         // Keep manually added, not-installed packages; mirror the system for everything else.
-        val merged = stored.filterNotTo(HashSet()) { it in installed } + blocked
-        (stored - merged).forEach(repository::removeAntiUninstallApp)
-        (merged - stored).forEach(repository::addAntiUninstallApp)
+        val merged: Set<String> = stored.filterNotTo(HashSet()) { it in installed } + blocked
+        (stored - merged).forEach { repository.removeAntiUninstallApp(it) }
+        (merged - stored).forEach { repository.addAntiUninstallApp(it) }
         _checked.value = merged
     }
 
@@ -150,7 +147,7 @@ class AntiUninstallViewModel(application: Application) : PackageToggleViewModel(
                     UninstallBlocker.isBlocked(pkg) == true && UninstallBlocker.setBlocked(pkg, false)
                 }
             }
-            repository.getAntiUninstallApps().forEach(repository::removeAntiUninstallApp)
+            repository.getAntiUninstallApps().forEach { repository.removeAntiUninstallApp(it) }
             _checked.value = emptySet()
             _isWorking.value = false
             events.send(AntiUninstallEvent.RemovedAll(released))

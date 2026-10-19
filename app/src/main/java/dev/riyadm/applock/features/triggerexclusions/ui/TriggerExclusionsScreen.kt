@@ -17,8 +17,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
@@ -38,17 +36,12 @@ fun TriggerExclusionsScreen(
     viewModel: TriggerExclusionsViewModel = viewModel()
 ) {
     val checked by viewModel.checked.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-    val switchDescription = remember(context) {
-        { label: String -> context.getString(R.string.trigger_exclusions_switch_cd, label) }
-    }
 
     PackageToggleScreen(
         title = stringResource(R.string.trigger_exclusions_title),
         subtitle = pluralStringResource(R.plurals.trigger_exclusions_count, checked.size, checked.size),
         viewModel = viewModel,
         checkedSectionTitle = stringResource(R.string.trigger_exclusions_section_excluded),
-        switchContentDescription = switchDescription,
         checkedThumbIcon = Icons.Rounded.Block,
         addPackageDescription = stringResource(R.string.trigger_exclusions_add_desc),
         onBack = { navController.navigateUp() },

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -84,7 +86,6 @@ fun PackageToggleScreen(
     subtitle: String,
     viewModel: PackageToggleViewModel,
     checkedSectionTitle: String,
-    switchContentDescription: (String) -> String,
     checkedThumbIcon: ImageVector,
     addPackageDescription: String,
     onBack: () -> Unit,
@@ -105,6 +106,8 @@ fun PackageToggleScreen(
     val textFieldState = rememberTextFieldState()
     val searchBarState = rememberSearchBarState()
     var showAddDialog by rememberSaveable { mutableStateOf(false) }
+    val installedTitle = stringResource(R.string.applist_section_installed)
+    val manualTitle = stringResource(R.string.applist_section_manual)
 
     LaunchedEffect(textFieldState) {
         snapshotFlow { textFieldState.text.toString() }.collect(viewModel::onSearchQueryChange)
@@ -197,7 +200,6 @@ fun PackageToggleScreen(
                             checked = checked,
                             enabled = togglesEnabled,
                             pendingPackages = pendingPackages,
-                            switchContentDescription = switchContentDescription,
                             checkedThumbIcon = checkedThumbIcon,
                             onToggle = toggle
                         )
@@ -249,7 +251,7 @@ fun PackageToggleScreen(
             } else {
                 if (uiState.manualPackages.isNotEmpty()) {
                     item(key = "header_manual", contentType = "header") {
-                        SectionHeader(stringResource(R.string.applist_section_manual), Modifier.animateItem())
+                        SectionHeader(manualTitle, Modifier.animateItem())
                     }
                     itemsIndexed(
                         uiState.manualPackages,
@@ -277,18 +279,16 @@ fun PackageToggleScreen(
                     checked = true,
                     enabled = togglesEnabled,
                     pendingPackages = pendingPackages,
-                    switchContentDescription = switchContentDescription,
                     checkedThumbIcon = checkedThumbIcon,
                     onToggle = toggle
                 )
                 toggleSection(
                     key = "header_other",
-                    title = stringResource(R.string.applist_section_installed),
+                    title = installedTitle,
                     apps = uiState.otherApps,
                     checked = false,
                     enabled = togglesEnabled,
                     pendingPackages = pendingPackages,
-                    switchContentDescription = switchContentDescription,
                     checkedThumbIcon = checkedThumbIcon,
                     onToggle = toggle
                 )
@@ -315,7 +315,6 @@ private fun LazyListScope.toggleSection(
     checked: Boolean,
     enabled: Boolean,
     pendingPackages: Set<String>,
-    switchContentDescription: (String) -> String,
     checkedThumbIcon: ImageVector,
     onToggle: (String, Boolean) -> Unit,
 ) {
@@ -331,7 +330,6 @@ private fun LazyListScope.toggleSection(
             index = index,
             count = apps.size,
             enabled = enabled && app.packageName !in pendingPackages,
-            switchContentDescription = switchContentDescription(app.label),
             checkedThumbIcon = checkedThumbIcon,
             modifier = Modifier
                 .animateItem()
@@ -348,7 +346,6 @@ private fun PackageSearchResults(
     checked: Set<String>,
     enabled: Boolean,
     pendingPackages: Set<String>,
-    switchContentDescription: (String) -> String,
     checkedThumbIcon: ImageVector,
     onToggle: (String, Boolean) -> Unit,
 ) {
@@ -375,7 +372,6 @@ private fun PackageSearchResults(
                 index = index,
                 count = results.size,
                 enabled = enabled && app.packageName !in pendingPackages,
-                switchContentDescription = switchContentDescription(app.label),
                 checkedThumbIcon = checkedThumbIcon,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)

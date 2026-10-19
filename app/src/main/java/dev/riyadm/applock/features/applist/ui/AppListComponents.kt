@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.style.TextOverflow
@@ -103,7 +102,6 @@ fun AppSwitchListItem(
     onCheckedChange: (Boolean) -> Unit,
     index: Int,
     count: Int,
-    switchContentDescription: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     checkedThumbIcon: ImageVector = Icons.Rounded.Lock,
@@ -142,16 +140,12 @@ fun AppSwitchListItem(
             content = headline,
         )
     } else {
-        val stateText = if (checked) {
-            stringResource(R.string.applist_filter_locked)
-        } else null
         SegmentedListItem(
             onClick = { onCheckedChange(!checked) },
             shapes = shapes,
             modifier = modifier.semantics {
                 role = Role.Switch
                 toggleableState = ToggleableState(checked)
-                if (stateText != null) stateDescription = stateText
             },
             enabled = enabled,
             leadingContent = leading,
@@ -165,7 +159,7 @@ fun AppSwitchListItem(
                         {
                             Icon(
                                 imageVector = checkedThumbIcon,
-                                contentDescription = switchContentDescription,
+                                contentDescription = null,
                                 modifier = Modifier.size(SwitchDefaults.IconSize)
                             )
                         }

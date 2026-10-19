@@ -22,6 +22,8 @@
 
     <!-- Home: top bar -->
     <string name="applist_more_options_cd">More options</string>
+    <string name="applist_menu_lock_all_now">Lock all now</string>
+    <string name="applist_locked_all_now">All apps will ask for authentication again</string>
     <string name="applist_menu_trigger_exclusions">Trigger exclusions</string>
     <string name="applist_menu_prevent_uninstall">Prevent uninstall</string>
 
@@ -40,7 +42,6 @@
     <string name="applist_section_locked">Locked</string>
     <string name="applist_section_other">Other apps</string>
     <string name="applist_section_count">%1$s · %2$d</string>
-    <string name="applist_lock_switch_cd">Lock %1$s</string>
     <string name="applist_select_action_label">Select</string>
     <string name="applist_system_supporting">System · %1$s</string>
     <string name="applist_remove_package_cd">Remove %1$s</string>
@@ -93,7 +94,6 @@
     <string name="trigger_exclusions_hero_desc">Switching from these apps to a locked app won\'t show the lock screen. Useful for keyboards, launchers and floating overlays.</string>
     <string name="trigger_exclusions_section_excluded">Excluded</string>
     <string name="trigger_exclusions_add_desc">Enter the package name of the app you want to exclude.</string>
-    <string name="trigger_exclusions_switch_cd">Exclude %1$s</string>
     <plurals name="trigger_exclusions_count">
         <item quantity="one">%d app excluded</item>
         <item quantity="other">%d apps excluded</item>
@@ -103,7 +103,6 @@
     <string name="anti_uninstall_title">Prevent uninstall</string>
     <string name="anti_uninstall_section_protected">Protected</string>
     <string name="anti_uninstall_add_desc">Enter the package name of the app you want to protect from uninstalling.</string>
-    <string name="anti_uninstall_switch_cd">Prevent uninstalling %1$s</string>
     <plurals name="anti_uninstall_count">
         <item quantity="one">%d app protected</item>
         <item quantity="other">%d apps protected</item>
