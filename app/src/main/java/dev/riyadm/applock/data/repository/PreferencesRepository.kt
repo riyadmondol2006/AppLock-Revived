@@ -32,6 +32,8 @@ class PreferencesRepository(context: Context) {
         if (stored.isNullOrBlank()) return false
 
         val sanitizedInput = SecurityUtils.sanitizePassword(input)
+        // Input made only of control characters sanitizes to nothing; never accept it.
+        if (sanitizedInput.isEmpty()) return false
 
         if (SecurityUtils.isHashed(stored)) {
             val valid = SecurityUtils.verifyPassword(sanitizedInput, stored)
@@ -266,7 +268,10 @@ class PreferencesRepository(context: Context) {
 
     /** Remaining lockout in milliseconds, or 0 if input is allowed. */
     fun getRemainingLockoutMs(): Long {
-        val remaining = getLockoutUntil() - System.currentTimeMillis()
+        val until = getLockoutUntil()
+        val now = System.currentTimeMillis()
+        if (until <= now) return 0L
+        val remaining = until - now
         // Guard against the clock being moved back to escape a lockout
         val cap = getLockoutDurationSeconds().coerceAtLeast(0) * 1000L * 16
         return remaining.coerceIn(0L, cap)

@@ -68,9 +68,9 @@ jobs:
         run: |
           chmod +x gradlew
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            ./gradlew assembleDebug
+            ./gradlew testDebugUnitTest assembleDebug
           else
-            ./gradlew assembleDebug assembleRelease
+            ./gradlew testDebugUnitTest assembleDebug assembleRelease
           fi
 
       - name: Rename APKs

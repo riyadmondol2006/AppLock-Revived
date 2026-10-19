@@ -210,10 +210,11 @@ class CredentialUpgradeTest {
     }
 
     @Test
-    fun passwordWithOnlyControlChars_stillValidatesWithSameKeystrokes() {
-        repo.setPassword("\n\t")
-        assertThat(repo.validatePassword("\n\t")).isTrue()
-        assertThat(repo.validatePassword("1234")).isFalse()
+    fun inputOfOnlyControlChars_isRejected() {
+        repo.setPassword("1234")
+        assertThat(repo.validatePassword("\n\t")).isFalse()
+        assertThat(repo.validatePassword("")).isFalse()
+        assertThat(repo.validatePassword("1234")).isTrue()
     }
 
     @Test
