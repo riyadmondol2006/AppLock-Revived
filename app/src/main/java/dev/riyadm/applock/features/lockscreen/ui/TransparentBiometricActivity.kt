@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -19,9 +20,10 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.withResumed
 import dev.riyadm.applock.R
@@ -69,6 +72,7 @@ class TransparentBiometricActivity : FragmentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) setRecentsScreenshotEnabled(false)
         enableEdgeToEdge()
+        window.setBackgroundDrawable(LockShield.surfaceColor(this).toDrawable())
 
         if (savedInstanceState != null || token == 0L || lockedPackage == null) {
             deliver(success = false)
@@ -132,7 +136,15 @@ class TransparentBiometricActivity : FragmentActivity() {
                             textAlign = TextAlign.Center
                         )
                         Spacer(Modifier.height(24.dp))
-                        LoadingIndicator(modifier = Modifier.size(48.dp))
+                        // Static: the prompt covers this backdrop, so a spinner would only burn frames.
+                        Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = Icons.Rounded.Fingerprint,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                     }
                 }
                 LaunchedEffect(Unit) {

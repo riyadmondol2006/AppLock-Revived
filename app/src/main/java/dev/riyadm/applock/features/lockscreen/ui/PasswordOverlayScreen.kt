@@ -179,20 +179,19 @@ class PasswordOverlayActivity : FragmentActivity() {
     }
 
     private fun setupWindow() {
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_SECURE or
-                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        )
+        // No FLAG_KEEP_SCREEN_ON: a lock screen left alone should time out like any other screen.
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) window.setHideOverlayWindows(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) setRecentsScreenshotEnabled(false)
-        applyBrightness()
+        setMaxBrightness(appLockRepository.shouldUseMaxBrightness())
     }
 
-    private fun applyBrightness() {
-        if (!appLockRepository.shouldUseMaxBrightness()) return
-        window.attributes = window.attributes.apply {
-            screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL
-        }
+    /** The "maximum brightness" option only applies while the lock screen is in front. */
+    private fun setMaxBrightness(enabled: Boolean) {
+        val target = if (enabled) WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL
+        else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+        if (window.attributes.screenBrightness == target) return
+        window.attributes = window.attributes.apply { screenBrightness = target }
     }
 
     private fun isBiometricUsable(): Boolean = gate?.policy?.allowBiometric == true
@@ -246,12 +245,14 @@ class PasswordOverlayActivity : FragmentActivity() {
 
     private fun unlockAndFinish() {
         isUnlocking = true
+        setMaxBrightness(false)
         finish()
     }
 
     /** Leaving without authenticating always goes home; finishing here would reveal the app. */
     private fun goHome() {
         if (isUnlocking) return
+        setMaxBrightness(false)
         try {
             startActivity(homeIntent())
         } catch (e: Exception) {
@@ -262,6 +263,7 @@ class PasswordOverlayActivity : FragmentActivity() {
     override fun onResume() {
         super.onResume()
         AppLockManager.isLockScreenShown.set(true)
+        if (!isUnlocking) setMaxBrightness(appLockRepository.shouldUseMaxBrightness())
         biometricUsable = isBiometricUsable()
         if (autoPromptPending) {
             autoPromptPending = false
@@ -272,6 +274,7 @@ class PasswordOverlayActivity : FragmentActivity() {
     override fun onPause() {
         super.onPause()
         if (!isChangingConfigurations && !isBiometricShowing) {
+            setMaxBrightness(false)
             AppLockManager.isLockScreenShown.set(false)
         }
     }

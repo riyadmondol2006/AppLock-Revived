@@ -1,17 +1,13 @@
 package dev.riyadm.appintro
 
+import android.animation.ValueAnimator
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -49,6 +45,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
+import kotlinx.coroutines.launch
 
 /**
  * A [Shape] drawing a [Morph] at a fixed progress, scaled from the unit square to the layout size.
@@ -95,23 +92,30 @@ fun DrawScope.drawMorph(
     }
 }
 
-/**
- * Infinite slow rotation for hero shapes. The returned state should only be read in draw.
- */
+private val HeroSettleSpec: AnimationSpec<Float> =
+    spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessVeryLow)
+
+/** Starts [sweepDegrees] off and turns into place once; at rest from the start when animations are off. */
 @Composable
-fun rememberHeroRotation(durationMillis: Int = 40_000): State<Float> {
-    val transition = rememberInfiniteTransition(label = "hero rotation")
-    return transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(durationMillis, easing = LinearEasing), RepeatMode.Restart),
-        label = "hero rotation value"
-    )
+private fun rememberEntrySpin(sweepDegrees: Float): Animatable<Float, AnimationVector1D> {
+    val animate = remember { ValueAnimator.areAnimatorsEnabled() }
+    val spin = remember { Animatable(if (animate) -sweepDegrees else 0f) }
+    LaunchedEffect(spin) { spin.animateTo(0f, HeroSettleSpec) }
+    return spin
 }
 
 /**
- * Icon sitting on a slowly rotating Material shape that springs into a new shape whenever
- * [shape] changes. All per-frame work happens in the draw phase.
+ * Entry rotation for hero shapes: turns into place once and then rests, so an idle screen
+ * renders no frames. The returned state should only be read in draw.
+ */
+@Composable
+fun rememberHeroRotation(sweepDegrees: Float = HERO_ENTRY_SWEEP): State<Float> =
+    rememberEntrySpin(sweepDegrees).asState()
+
+/**
+ * Icon sitting on a Material shape that springs into a new shape whenever [shape] changes,
+ * with a turn on entry and on every change (finite, so the idle hero draws nothing).
+ * All per-frame work happens in the draw phase.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -132,10 +136,13 @@ fun MorphingHero(
     var to by remember { mutableStateOf(shape) }
     val progress = remember { Animatable(1f) }
 
+    val spin = rememberEntrySpin(if (rotate) HERO_ENTRY_SWEEP else 0f)
+
     LaunchedEffect(shape) {
         if (shape != to) {
             from = to
             to = shape
+            if (rotate) launch { spin.animateTo(spin.targetValue + HERO_CHANGE_TURN, morphSpec) }
             progress.snapTo(0f)
             progress.animateTo(1f, morphSpec)
         }
@@ -143,7 +150,6 @@ fun MorphingHero(
 
     val morph = remember(from, to) { Morph(from, to) }
     val path = remember { Path() }
-    val rotation = if (rotate) rememberHeroRotation() else null
     val motion = MaterialTheme.motionScheme
     val color by animateColorAsState(
         containerColor,
@@ -165,7 +171,7 @@ fun MorphingHero(
                     progress = progress.value,
                     color = color,
                     path = path,
-                    rotation = rotation?.value ?: 0f
+                    rotation = spin.value
                 )
             },
         contentAlignment = Alignment.Center
@@ -194,3 +200,6 @@ fun MorphingHero(
         }
     }
 }
+
+private const val HERO_ENTRY_SWEEP = 60f
+private const val HERO_CHANGE_TURN = 45f

@@ -11,13 +11,7 @@ import android.util.LruCache
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -52,6 +46,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Android
+import androidx.compose.material.icons.rounded.BrokenImage
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.DeleteSweep
@@ -123,6 +118,7 @@ import dev.riyadm.applock.features.intruder.data.IntruderPhoto
 import dev.riyadm.applock.features.intruder.data.IntruderPhotoStore
 import dev.riyadm.applock.features.intruder.data.IntruderSettings
 import dev.riyadm.applock.ui.components.SecureWindowEffect
+import dev.riyadm.applock.ui.motion.rememberSettleProgress
 import dev.riyadm.applock.ui.motion.pressScale
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import kotlinx.coroutines.Dispatchers
@@ -133,6 +129,7 @@ import java.io.File
 private const val TAG = "IntruderPhotos"
 private const val THUMBNAIL_EDGE_PX = 480
 private const val FULL_EDGE_PX = 2048
+private const val EMPTY_ENTRY_SPIN = 90f
 
 @Immutable
 private data class AppDisplay(val label: String, val icon: ImageBitmap?)
@@ -587,8 +584,12 @@ private fun PhotoImage(
     modifier: Modifier = Modifier,
     loadingColor: Color = MaterialTheme.colorScheme.primary
 ) {
+    var failed by remember(file, maxEdge) { mutableStateOf(false) }
     val bitmap by produceState(IntruderThumbnails.peek(file, maxEdge), file, maxEdge) {
-        if (value == null) value = withContext(Dispatchers.IO) { IntruderThumbnails.load(file, maxEdge) }
+        if (value == null) {
+            value = withContext(Dispatchers.IO) { IntruderThumbnails.load(file, maxEdge) }
+            failed = value == null
+        }
     }
     val alpha by animateFloatAsState(
         targetValue = if (bitmap != null) 1f else 0f,
@@ -605,6 +606,14 @@ private fun PhotoImage(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { this.alpha = alpha }
+            )
+        } else if (failed) {
+            // A photo that can't be decoded must not leave a loader spinning forever.
+            Icon(
+                imageVector = Icons.Rounded.BrokenImage,
+                contentDescription = contentDescription,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(40.dp)
             )
         } else {
             LoadingIndicator(color = loadingColor, modifier = Modifier.size(40.dp))
@@ -663,13 +672,8 @@ private fun DisabledBanner() {
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun EmptyState(modifier: Modifier = Modifier) {
-    val transition = rememberInfiniteTransition(label = "intruderEmpty")
-    val rotation by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(24_000, easing = LinearEasing), RepeatMode.Restart),
-        label = "rotation"
-    )
+    // Turns into place once; an idle empty screen renders no frames.
+    val settle = rememberSettleProgress(MaterialTheme.motionScheme.slowSpatialSpec())
     val shape = MaterialShapes.Cookie12Sided.toShape()
 
     Column(
@@ -681,7 +685,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .size(160.dp)
-                    .graphicsLayer { rotationZ = rotation }
+                    .graphicsLayer { rotationZ = (1f - settle.value) * -EMPTY_ENTRY_SPIN }
                     .clip(shape)
                     .background(MaterialTheme.colorScheme.tertiaryContainer)
             )

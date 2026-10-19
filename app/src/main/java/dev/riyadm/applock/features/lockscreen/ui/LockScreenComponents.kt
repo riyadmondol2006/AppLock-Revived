@@ -8,14 +8,8 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -106,6 +100,7 @@ import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.lockscreen.domain.PolicyUnlockGate
 import dev.riyadm.applock.ui.motion.AppHaptics
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
+import dev.riyadm.applock.ui.motion.rememberSettleProgress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -205,8 +200,6 @@ class UnlockController internal constructor(
         private set
     var remainingLockoutMs by mutableLongStateOf(0L)
         private set
-    var lockoutEndsAt by mutableLongStateOf(0L)
-        private set
     var lockoutTotalMs by mutableLongStateOf(0L)
         private set
     var failureCount by mutableIntStateOf(0)
@@ -226,13 +219,11 @@ class UnlockController internal constructor(
         val remaining = repository.getRemainingLockoutMs()
         if (remaining <= 0L) {
             remainingLockoutMs = 0L
-            lockoutEndsAt = 0L
             lockoutTotalMs = 0L
             return
         }
         if (remaining > lockoutTotalMs) lockoutTotalMs = remaining
         remainingLockoutMs = remaining
-        lockoutEndsAt = System.currentTimeMillis() + remaining
     }
 
     fun submit(input: String) {
@@ -331,7 +322,8 @@ internal fun rememberUnlockController(
     LaunchedEffect(controller, controller.isLockedOut) {
         controller.refreshLockout()
         while (controller.isLockedOut) {
-            delay(250)
+            // Wake only when the displayed second changes.
+            delay((controller.remainingLockoutMs - 1) % 1000 + 1)
             controller.refreshLockout()
         }
     }
@@ -562,18 +554,22 @@ internal fun LockoutIndicator(controller: UnlockController, compact: Boolean, mo
         derivedStateOf { ((controller.remainingLockoutMs + 999) / 1000).toInt() }
     }
     val time = formatLockoutTime(seconds)
+    val total = controller.lockoutTotalMs
+    // Steps once per countdown tick; the ring rests (no moving wave) in between.
+    val progress by animateFloatAsState(
+        targetValue = if (total <= 0L) 0f
+        else (controller.remainingLockoutMs.toFloat() / total).coerceIn(0f, 1f),
+        animationSpec = MaterialTheme.motionScheme.slowEffectsSpec(),
+        label = "lockoutProgress"
+    )
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(contentAlignment = Alignment.Center) {
             CircularWavyProgressIndicator(
-                progress = {
-                    val total = controller.lockoutTotalMs
-                    if (total <= 0L) 0f
-                    else ((controller.lockoutEndsAt - System.currentTimeMillis()).toFloat() / total)
-                        .coerceIn(0f, 1f)
-                },
+                progress = { progress },
                 modifier = Modifier.size(if (compact) 56.dp else 72.dp),
                 color = MaterialTheme.colorScheme.error,
-                trackColor = MaterialTheme.colorScheme.errorContainer
+                trackColor = MaterialTheme.colorScheme.errorContainer,
+                waveSpeed = 0.dp
             )
             Text(
                 text = time,
@@ -604,8 +600,8 @@ private object LockIconCache {
 }
 
 /**
- * The locked app's icon inside a slowly rotating, breathing cookie shape.
- * All animated values are read in the draw phase only.
+ * The locked app's icon inside a cookie shape that spins and morphs into place once, then rests,
+ * so the idle lock screen renders no frames. Animated values are read in the draw phase only.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -634,23 +630,8 @@ internal fun AppIconBadge(
         }
     }
 
-    val transition = rememberInfiniteTransition(label = "badge")
-    val rotation = transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(36_000, easing = LinearEasing)),
-        label = "badgeRotation"
-    )
-    val breath = transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            tween(3_200, easing = FastOutSlowInEasing),
-            RepeatMode.Reverse
-        ),
-        label = "badgeMorph"
-    )
-    val morph = remember { Morph(MaterialShapes.Cookie9Sided, MaterialShapes.Cookie12Sided) }
+    val settle = rememberSettleProgress(MaterialTheme.motionScheme.slowSpatialSpec())
+    val morph = remember { Morph(MaterialShapes.Cookie12Sided, MaterialShapes.Cookie9Sided) }
     val path = remember { Path() }
     val matrix = remember { Matrix() }
     val container = MaterialTheme.colorScheme.primaryContainer
@@ -659,9 +640,9 @@ internal fun AppIconBadge(
         modifier = modifier
             .size(size)
             .drawBehind {
-                val p = breath.value
+                val p = settle.value
                 path.rewind()
-                morph.toPath(p, path)
+                morph.toPath(p.coerceIn(0f, 1f), path)
                 matrix.reset()
                 val scale = 0.94f + 0.06f * p
                 val w = this.size.width * scale
@@ -669,7 +650,7 @@ internal fun AppIconBadge(
                 matrix.translate((this.size.width - w) / 2f, (this.size.height - h) / 2f)
                 matrix.scale(w, h)
                 path.transform(matrix)
-                rotate(rotation.value) { drawPath(path, container) }
+                rotate((1f - p) * -BADGE_ENTRY_SPIN) { drawPath(path, container) }
             },
         contentAlignment = Alignment.Center
     ) {
@@ -733,3 +714,4 @@ internal const val MIN_PIN_LENGTH = 4
 internal const val MAX_PIN_LENGTH = 32
 private const val ICON_FRACTION = 0.6f
 private const val SUCCESS_EXIT_MS = 220L
+private const val BADGE_ENTRY_SPIN = 60f

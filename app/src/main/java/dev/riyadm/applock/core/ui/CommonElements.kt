@@ -3,12 +3,6 @@ package dev.riyadm.applock.core.ui
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -68,6 +62,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
+import dev.riyadm.applock.ui.motion.rememberSettleProgress
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -145,7 +140,7 @@ fun ExpressiveIconBadge(
 
 /**
  * Badge whose container morphs between [MaterialShapes] polygons whenever [polygon] changes,
- * optionally with a slow idle rotation. Shape, rotation and colour are all read in the draw
+ * optionally turning into place on entry (once, so it never animates while idle). Shape, rotation and colour are all read in the draw
  * phase, so the animation never recomposes or re-lays out the badge.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -175,15 +170,7 @@ fun MorphingIconBadge(
     }
     val morph = remember(from, to) { Morph(from, to) }
     val color by animateColorAsState(containerColor, motion.defaultEffectsSpec(), label = "badge")
-    val rotation = if (rotate) {
-        val transition = rememberInfiniteTransition(label = "badgeRotation")
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            animationSpec = infiniteRepeatable(tween(24_000, easing = LinearEasing), RepeatMode.Restart),
-            label = "rotation"
-        )
-    } else null
+    val settle = if (rotate) rememberSettleProgress(motion.slowSpatialSpec()) else null
     val path = remember { Path() }
     val matrix = remember { Matrix() }
 
@@ -195,7 +182,8 @@ fun MorphingIconBadge(
                 matrix.reset()
                 matrix.scale(this.size.width, this.size.height)
                 path.transform(matrix)
-                rotate(rotation?.value ?: 0f) { drawPath(path, color) }
+                val turn = settle?.let { (1f - it.value) * -BADGE_ENTRY_SPIN } ?: 0f
+                rotate(turn) { drawPath(path, color) }
             },
         contentAlignment = Alignment.Center
     ) {
@@ -345,3 +333,5 @@ fun ExpressiveSearch(
         content = results,
     )
 }
+
+private const val BADGE_ENTRY_SPIN = 60f
