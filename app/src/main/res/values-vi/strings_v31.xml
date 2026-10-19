@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Extra protection settings -->
+    <string name="hardening_section_title">Bảo vệ bổ sung</string>
+    <string name="hardening_close_apps_title">Đóng ứng dụng bị khóa khi tắt màn hình</string>
+    <string name="hardening_close_apps_desc_shizuku">Dùng Shizuku để buộc dừng ứng dụng bị khóa khi tắt màn hình hoặc khi bạn dùng Khóa tất cả ngay. Các ứng dụng này sẽ ngừng phát nội dung và không nhận thông báo cho đến khi bạn mở lại. Ứng dụng hệ thống, màn hình chính và bàn phím không bao giờ bị đóng.</string>
+    <string name="hardening_close_apps_desc_background">Đóng các ứng dụng bị khóa đang chạy nền khi tắt màn hình hoặc khi bạn dùng Khóa tất cả ngay. Ứng dụng bạn đang dùng có thể vẫn chạy; với Shizuku, mọi ứng dụng bị khóa đều được đóng. Ứng dụng hệ thống, màn hình chính và bàn phím không bao giờ bị đóng.</string>
+    <string name="hardening_close_apps_desc_unavailable">Cần Shizuku: từ Android 14, ứng dụng chỉ có thể đóng ứng dụng khác thông qua Shizuku. Khi bật Shizuku, các ứng dụng bị khóa sẽ bị buộc dừng khi tắt màn hình và không nhận thông báo cho đến khi bạn mở lại.</string>
+    <string name="hardening_pattern_size_title">Kích thước hình mở khóa</string>
+    <string name="hardening_pattern_size_desc">Kích thước lưới hình mở khóa trên màn hình khóa và khi đặt hình mở khóa</string>
+    <string name="hardening_pattern_size_small">Nhỏ</string>
+    <string name="hardening_pattern_size_medium">Vừa</string>
+    <string name="hardening_pattern_size_large">Lớn</string>
+    <string name="hardening_history_retention_title">Giữ lịch sử mở khóa trong</string>
+    <string name="hardening_history_retention_desc">Mục cũ hơn sẽ tự động bị xóa. Giữ tối đa 200 mục.</string>
+    <string name="hardening_history_retention_desc_disabled">Bật lịch sử mở khóa để chọn thời gian lưu giữ</string>
+    <plurals name="hardening_retention_days">
+        <item quantity="other">%d ngày</item>
+    </plurals>
+
+    <!-- Encrypted backups -->
+    <string name="backup_export_desc_recommend">Lưu ứng dụng bị khóa và cài đặt vào một tệp. Nên bảo vệ tệp bằng mật khẩu.</string>
+    <string name="backup_protect_title">Bảo vệ bản sao lưu</string>
+    <string name="backup_protect_text">Mã hóa tệp bằng mật khẩu. Nếu không có mật khẩu, bất kỳ ai có được tệp đều có thể xem bạn khóa những ứng dụng nào và App Lock Revived được thiết lập ra sao.</string>
+    <string name="backup_password_label">Mật khẩu</string>
+    <string name="backup_password_confirm_label">Xác nhận mật khẩu</string>
+    <plurals name="backup_password_too_short">
+        <item quantity="other">Dùng ít nhất %1$d ký tự</item>
+    </plurals>
+    <string name="backup_password_mismatch">Mật khẩu không khớp</string>
+    <string name="backup_password_forget_warning">Nếu quên mật khẩu này, bản sao lưu sẽ không thể khôi phục.</string>
+    <string name="backup_encrypt_and_export">Mã hóa và xuất</string>
+    <string name="backup_export_unencrypted">Xuất không cần mật khẩu</string>
+    <string name="backup_export_success_encrypted">Đã lưu bản sao lưu được mã hóa</string>
+    <string name="backup_export_interrupted">Quá trình xuất bị gián đoạn nên chưa lưu gì. Vui lòng thử lại.</string>
+    <string name="backup_unlock_title">Bản sao lưu có mật khẩu</string>
+    <string name="backup_unlock_text">Nhập mật khẩu bạn đã chọn khi tạo bản sao lưu này.</string>
+    <string name="backup_unlock_restore">Khôi phục</string>
+    <string name="backup_wrong_password">Sai mật khẩu, hoặc tệp bị hỏng. Chưa khôi phục gì.</string>
+    <string name="backup_show_password_cd">Hiện mật khẩu</string>
+    <string name="backup_hide_password_cd">Ẩn mật khẩu</string>
+
+    <!-- Intruder selfie: settings -->
+    <string name="intruder_section_title">Ảnh chụp kẻ xâm nhập</string>
+    <string name="intruder_switch_title">Ảnh chụp kẻ xâm nhập</string>
+    <string name="intruder_switch_desc">Chụp ảnh bằng camera trước khi ai đó nhập sai mã PIN, hình mở khóa hoặc mật khẩu</string>
+    <string name="intruder_switch_desc_no_permission">Quyền truy cập camera đang tắt nên không chụp ảnh nào. Bật lại để cho phép.</string>
+    <string name="intruder_threshold_title">Chụp ảnh sau</string>
+    <string name="intruder_threshold_desc">Số lần nhập sai liên tiếp</string>
+    <string name="intruder_retention_title">Xóa ảnh sau</string>
+    <string name="intruder_retention_desc">Ảnh cũ hơn sẽ tự động bị xóa</string>
+    <string name="intruder_retention_never">Không bao giờ</string>
+    <plurals name="intruder_retention_days">
+        <item quantity="other">%d ngày</item>
+    </plurals>
+    <string name="intruder_view_title">Xem ảnh kẻ xâm nhập</string>
+    <string name="intruder_view_empty">Chưa có ảnh nào</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="other">%d ảnh</item>
+    </plurals>
+    <string name="intruder_footer">Ảnh được lưu trong bộ nhớ riêng của App Lock Revived trên điện thoại này. Ảnh không bao giờ được tải lên hay đưa vào bản sao lưu. Android sẽ hiện biểu tượng camera thoáng qua khi chụp ảnh.</string>
+    <string name="intruder_footer_accessibility">Với phương thức Dịch vụ trợ năng, một số điện thoại không cho camera hoạt động khi chỉ có lớp khóa đang hiển thị. Nếu không có ảnh nào xuất hiện, hãy chuyển sang phương thức Thống kê sử dụng hoặc Shizuku.</string>
+
+    <!-- Intruder selfie: camera permission -->
+    <string name="intruder_permission_title">Cho phép truy cập camera</string>
+    <string name="intruder_permission_text">Để bắt được người cố vào ứng dụng, App Lock Revived sẽ chụp một ảnh bằng camera trước sau khi nhập sai mã PIN, hình mở khóa hoặc mật khẩu.</string>
+    <string name="intruder_permission_privacy">Camera chỉ được dùng đúng thời điểm đó, không hiển thị gì trên màn hình, và ảnh không bao giờ rời khỏi điện thoại của bạn.</string>
+    <string name="intruder_permission_continue">Tiếp tục</string>
+    <string name="intruder_permission_denied_title">Ảnh chụp kẻ xâm nhập đang tắt</string>
+    <string name="intruder_permission_denied_text">Không có quyền truy cập camera, App Lock Revived không thể chụp ảnh nên tính năng này vẫn tắt.</string>
+    <string name="intruder_permission_blocked_text">App Lock Revived đang bị chặn quyền truy cập camera. Để dùng ảnh chụp kẻ xâm nhập, hãy mở cài đặt của ứng dụng và cho phép Camera trong mục Quyền.</string>
+    <string name="intruder_permission_try_again">Thử lại</string>
+    <string name="intruder_open_settings">Mở cài đặt</string>
+    <string name="intruder_not_now">Để sau</string>
+
+    <!-- Intruder selfie: notification -->
+    <string name="intruder_channel_name">Cảnh báo kẻ xâm nhập</string>
+    <string name="intruder_channel_description">Thông báo khi có ảnh được chụp sau các lần mở khóa sai</string>
+    <string name="intruder_notification_title">Có người cố mở %1$s</string>
+    <plurals name="intruder_notification_text">
+        <item quantity="other">Đã chụp ảnh sau %d lần nhập sai</item>
+    </plurals>
+    <string name="intruder_notification_public_text">Cảnh báo bảo mật</string>
+
+    <!-- Intruder photos screen -->
+    <string name="intruder_photos_title">Ảnh kẻ xâm nhập</string>
+    <string name="intruder_delete_all_cd">Xóa tất cả ảnh</string>
+    <string name="intruder_delete_all_title">Xóa tất cả ảnh?</string>
+    <string name="intruder_delete_all_text">Tất cả ảnh kẻ xâm nhập sẽ bị xóa vĩnh viễn khỏi điện thoại này.</string>
+    <string name="intruder_delete_all_confirm">Xóa tất cả</string>
+    <string name="intruder_all_deleted">Đã xóa tất cả ảnh</string>
+    <string name="intruder_photo_deleted">Đã xóa ảnh</string>
+    <string name="intruder_disabled_banner">Ảnh chụp kẻ xâm nhập đang tắt. Bật trong Cài đặt để nhận ảnh của bất kỳ ai nhập sai thông tin đăng nhập.</string>
+    <string name="intruder_empty_title">Chưa có kẻ xâm nhập</string>
+    <string name="intruder_empty_desc">Khi ai đó nhập sai mã PIN, hình mở khóa hoặc mật khẩu của bạn, ảnh của họ sẽ xuất hiện ở đây.</string>
+    <string name="intruder_photo_cd">Ảnh được chụp khi có người cố mở %1$s, %2$s</string>
+    <plurals name="intruder_attempts_short">
+        <item quantity="other">%d lần sai</item>
+    </plurals>
+    <plurals name="intruder_attempts_long">
+        <item quantity="other">%d lần nhập sai</item>
+    </plurals>
+    <string name="intruder_viewer_details">%1$s · %2$s</string>
+    <string name="intruder_viewer_close_cd">Đóng ảnh</string>
+    <string name="intruder_share">Chia sẻ</string>
+    <string name="intruder_share_title">Chia sẻ ảnh</string>
+    <string name="intruder_share_failed">Không thể chia sẻ ảnh</string>
+    <string name="intruder_delete">Xóa</string>
+
+    <!-- Profile names -->
+    <string name="profiles_name_home">Nhà</string>
+    <string name="profiles_name_work">Công việc</string>
+    <string name="profiles_name_guest">Khách</string>
+    <string name="profiles_name_custom">Tùy chỉnh</string>
+
+    <!-- Home screen: profile selector -->
+    <string name="profiles_selector_title">Hồ sơ khóa</string>
+    <string name="profiles_manage_cd">Quản lý hồ sơ</string>
+    <string name="profiles_switched">Đã chuyển sang %1$s</string>
+    <string name="profiles_lock_all_user_apps">Khóa tất cả ứng dụng</string>
+
+    <!-- Profiles screen -->
+    <string name="profiles_title">Hồ sơ khóa</string>
+    <string name="profiles_subtitle">Đang dùng: %1$s</string>
+    <string name="profiles_intro">Mỗi hồ sơ là một danh sách ứng dụng bị khóa riêng. Chỉ hồ sơ đang dùng được áp dụng, và khi chuyển hồ sơ luôn cần nhập mã PIN, hình mở khóa hoặc mật khẩu của bạn trước.</string>
+    <string name="profiles_section_profiles">Hồ sơ</string>
+    <string name="profiles_active_badge">Đang dùng</string>
+    <plurals name="profiles_app_count">
+        <item quantity="other">%d ứng dụng</item>
+    </plurals>
+    <string name="profiles_summary">%1$s · %2$s</string>
+    <string name="profiles_unlock_follow_global">Thời gian mở khóa theo cài đặt</string>
+    <string name="profiles_unlock_override">Mở khóa: %1$s</string>
+    <string name="profiles_new">Hồ sơ mới</string>
+    <string name="profiles_activate">Kích hoạt</string>
+    <string name="profiles_rename">Đổi tên</string>
+    <string name="profiles_delete">Xóa</string>
+    <string name="profiles_unlock_duration">Thời gian mở khóa</string>
+    <string name="profiles_unlock_duration_global">Giống cài đặt (%1$s)</string>
+    <string name="profiles_unlock_duration_sheet_desc">Các ứng dụng trong hồ sơ này sẽ ở trạng thái đã mở khóa trong bao lâu sau khi bạn mở khóa chúng.</string>
+    <string name="profiles_name_label">Tên hồ sơ</string>
+    <string name="profiles_create_title">Hồ sơ mới</string>
+    <string name="profiles_create_desc">Bắt đầu với các ứng dụng đang bị khóa trong %1$s. Bạn có thể thay đổi sau khi chuyển sang hồ sơ này.</string>
+    <string name="profiles_create_confirm">Tạo</string>
+    <string name="profiles_rename_title">Đổi tên hồ sơ</string>
+    <string name="profiles_save">Lưu</string>
+    <string name="profiles_delete_title">Xóa %1$s?</string>
+    <string name="profiles_delete_text">Danh sách ứng dụng bị khóa của hồ sơ này sẽ bị xóa. Các hồ sơ khác không bị ảnh hưởng.</string>
+    <string name="profiles_guest_hint">Mẹo: trước khi đưa điện thoại cho người khác, hãy kích hoạt Khách và dùng “Khóa tất cả ứng dụng”, rồi chỉ mở khóa những ứng dụng họ được phép dùng.</string>
+    <string name="profiles_options_cd">Tùy chọn cho %1$s</string>
+
+    <!-- Per-app security sheet -->
+    <string name="policy_tune_cd">Tùy chọn bảo mật cho %1$s</string>
+    <string name="policy_sheet_section_method">Cách mở khóa</string>
+    <string name="policy_sheet_section_profiles">Bị khóa trong hồ sơ</string>
+    <string name="policy_level_default">Mặc định</string>
+    <string name="policy_level_default_desc">Theo cài đặt sinh trắc học</string>
+    <string name="policy_level_biometric">Chỉ sinh trắc học</string>
+    <string name="policy_level_biometric_desc">Vân tay hoặc khuôn mặt. Dùng mã PIN, hình mở khóa hoặc mật khẩu nếu sinh trắc học không khả dụng</string>
+    <string name="policy_level_credential">Chỉ dùng mã mở khóa</string>
+    <string name="policy_level_credential_desc">Luôn hỏi mã PIN, hình mở khóa hoặc mật khẩu</string>
+    <string name="policy_level_two_step">Hai bước</string>
+    <string name="policy_level_two_step_desc">Sinh trắc học, rồi đến mã PIN, hình mở khóa hoặc mật khẩu. Cả hai đều bắt buộc</string>
+    <string name="policy_biometric_unavailable">Sinh trắc học chưa được thiết lập trên thiết bị này, nên ứng dụng này sẽ hỏi mã PIN, hình mở khóa hoặc mật khẩu của bạn.</string>
+    <string name="policy_sheet_footer">Dùng mã PIN, hình mở khóa hoặc mật khẩu hiện có và sinh trắc học đã đăng ký trên thiết bị này.</string>
+
+    <!-- Lock screen (two-step and biometric-only) -->
+    <string name="policy_lock_step_biometric">Bước 1/2: xác minh bằng sinh trắc học</string>
+    <string name="policy_lock_step_pin">Bây giờ hãy nhập mã PIN</string>
+    <string name="policy_lock_step_pattern">Bây giờ hãy vẽ hình mở khóa</string>
+    <string name="policy_lock_step_password">Bây giờ hãy nhập mật khẩu</string>
+    <string name="policy_lock_biometric_required">Dùng vân tay hoặc khuôn mặt để mở khóa</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_profile_label">Hồ sơ khóa</string>
+
+    <!-- Lock screen keypad -->
+    <string name="pin_keypad_clear_action">Xóa tất cả</string>
+
+    <!-- Settings: trusted Wi-Fi -->
+    <string name="trusted_section_title">Nơi đáng tin cậy</string>
+    <string name="trusted_wifi_title">Wi-Fi đáng tin cậy</string>
+    <string name="trusted_wifi_desc_off">Cho phép ứng dụng bị khóa mở mà không hỏi khi bạn dùng mạng Wi-Fi đáng tin cậy</string>
+    <string name="trusted_wifi_desc_on">Đang bật. App Lock Revived vẫn yêu cầu mã PIN, hình mở khóa hoặc mật khẩu của bạn</string>
+    <string name="trusted_wifi_desc_problem">Đang bật nhưng tạm dừng: %1$s</string>
+    <string name="trusted_networks_title">Mạng đáng tin cậy</string>
+    <string name="trusted_networks_summary_none">Chưa thêm mạng nào</string>
+    <plurals name="trusted_networks_summary_count">
+        <item quantity="other">%d mạng</item>
+    </plurals>
+    <string name="trusted_networks_summary_relaxed">%1$s · Nới lỏng trên “%2$s”</string>
+    <string name="trusted_section_footer">Việc khóa chỉ được nới lỏng khi màn hình đã mở khóa và điện thoại kết nối với mạng đáng tin cậy. Ngay khi bạn ngắt kết nối hoặc tham gia mạng khác, mọi ứng dụng sẽ khóa lại.</string>
+
+    <string name="trusted_enable_dialog_title">Tin cậy các mạng Wi-Fi?</string>
+    <string name="trusted_enable_dialog_text">Khi bạn kết nối với mạng đáng tin cậy, ứng dụng bị khóa sẽ mở mà không hỏi mã PIN, hình mở khóa, mật khẩu hoặc sinh trắc học. Bất kỳ ai cầm điện thoại đang mở khóa của bạn ở đó đều có thể mở chúng.</string>
+    <string name="trusted_enable_dialog_supporting">Để nhận diện mạng, App Lock Revived cần quyền truy cập vị trí, vì Android coi tên Wi-Fi là dữ liệu vị trí. Tên mạng chỉ được so sánh trên thiết bị của bạn và không bao giờ rời khỏi thiết bị.</string>
+    <string name="trusted_enable_dialog_confirm">Bật</string>
+
+    <!-- Trusted networks screen -->
+    <string name="trusted_screen_subtitle_relaxed">Nới lỏng trên “%1$s”</string>
+    <string name="trusted_screen_subtitle_on">Đang bật · ứng dụng khóa bình thường ở đây</string>
+    <string name="trusted_screen_subtitle_off">Wi-Fi đáng tin cậy đang tắt</string>
+    <string name="trusted_master_switch">Dùng Wi-Fi đáng tin cậy</string>
+    <string name="trusted_current_header">Mạng hiện tại</string>
+    <string name="trusted_current_not_connected">Chưa kết nối Wi-Fi</string>
+    <string name="trusted_current_unknown">Đã kết nối Wi-Fi</string>
+    <string name="trusted_current_unknown_desc">Không thể đọc tên mạng cho đến khi quyền truy cập vị trí được khắc phục</string>
+    <string name="trusted_current_trusted">Đáng tin cậy. Ứng dụng bị khóa sẽ mở mà không hỏi ở đây</string>
+    <string name="trusted_current_trusted_paused">Đáng tin cậy, nhưng tạm dừng cho đến khi khắc phục sự cố ở trên</string>
+    <string name="trusted_current_trusted_off">Đã lưu là đáng tin cậy. Bật Wi-Fi đáng tin cậy để sử dụng</string>
+    <string name="trusted_current_not_trusted">Không đáng tin cậy. Ứng dụng khóa bình thường</string>
+    <string name="trusted_current_open">Mạng mở: không thể tin cậy vì bất kỳ ai cũng có thể tạo mạng cùng tên</string>
+    <string name="trusted_current_router">Bộ định tuyến %1$s</string>
+    <string name="trusted_match_router_title">Chỉ bộ định tuyến này</string>
+    <string name="trusted_match_router_desc">Cũng kiểm tra địa chỉ phần cứng (BSSID) của bộ định tuyến. An toàn hơn, nhưng sẽ ngừng hoạt động nếu bạn thay bộ định tuyến hoặc có nhiều điểm truy cập</string>
+    <string name="trusted_match_router_desc_recommended">Khuyến nghị: phiên bản Android này không thể xác định mạng có được bảo vệ bằng mật khẩu hay không</string>
+    <string name="trusted_add_current">Tin cậy mạng này</string>
+    <string name="trusted_added">Đã tin cậy “%1$s”</string>
+    <string name="trusted_removed">Đã xóa “%1$s”</string>
+    <string name="trusted_undo">Hoàn tác</string>
+    <string name="trusted_saved_header">Mạng đã lưu</string>
+    <string name="trusted_saved_empty">Các mạng bạn tin cậy sẽ hiện ở đây. Kết nối với một mạng rồi nhấn “Tin cậy mạng này”.</string>
+    <string name="trusted_saved_any_router">Mọi bộ định tuyến có tên này</string>
+    <string name="trusted_saved_exact_router">Chỉ bộ định tuyến %1$s</string>
+    <string name="trusted_saved_connected">Đang kết nối</string>
+    <string name="trusted_remove_cd">Xóa %1$s</string>
+    <string name="trusted_screen_footer">Khóa của chính App Lock Revived không bao giờ được nới lỏng, và không có gì được nới lỏng khi điện thoại bị khóa. Mạng mở không thể tin cậy. Bất kỳ ai cũng có thể thiết lập mạng cùng tên và cùng địa chỉ bộ định tuyến, nên chỉ tin cậy các mạng được bảo vệ bằng mật khẩu mà chỉ bạn biết.</string>
+
+    <!-- Trusted Wi-Fi problems -->
+    <string name="trusted_problem_location_title">Cần quyền truy cập vị trí</string>
+    <string name="trusted_problem_location_desc">Android chỉ hiển thị tên mạng Wi-Fi đang kết nối cho ứng dụng có quyền truy cập vị trí.</string>
+    <string name="trusted_problem_precise_title">Cần vị trí chính xác</string>
+    <string name="trusted_problem_precise_desc">Khi chỉ có vị trí gần đúng, Android sẽ ẩn tên Wi-Fi. Hãy chuyển sang vị trí chính xác.</string>
+    <string name="trusted_problem_background_title">Cho phép vị trí mọi lúc</string>
+    <string name="trusted_problem_background_desc">App Lock Revived kiểm tra mạng khi các ứng dụng khác đang mở. Nếu không chọn “%1$s”, Android sẽ ẩn tên Wi-Fi khỏi ứng dụng khi đó.</string>
+    <string name="trusted_problem_location_off_title">Vị trí đang tắt</string>
+    <string name="trusted_problem_location_off_desc">Android ẩn tên Wi-Fi khi vị trí bị tắt trên toàn bộ điện thoại.</string>
+    <string name="trusted_problem_ssid_title">Không có tên mạng</string>
+    <string name="trusted_problem_ssid_desc">Hiện Android không chia sẻ tên mạng này, nên mạng được coi là không đáng tin cậy.</string>
+    <string name="trusted_problem_short_location">cần quyền truy cập vị trí</string>
+    <string name="trusted_problem_short_background">cần quyền vị trí “mọi lúc”</string>
+    <string name="trusted_problem_short_location_off">vị trí đang tắt</string>
+    <string name="trusted_problem_short_ssid">không có tên mạng</string>
+    <string name="trusted_problem_footer">Cho đến khi sự cố này được khắc phục, mọi mạng đều được coi là không đáng tin cậy và ứng dụng khóa bình thường.</string>
+    <string name="trusted_action_allow">Cho phép</string>
+    <string name="trusted_action_turn_on_location">Bật vị trí</string>
+    <string name="trusted_action_open_settings">Mở cài đặt ứng dụng</string>
+    <string name="trusted_background_default_label">Cho phép mọi lúc</string>
+
+    <!-- Trusted Wi-Fi dialogs -->
+    <string name="trusted_location_dialog_title">Cho phép truy cập vị trí?</string>
+    <string name="trusted_location_dialog_text">Android coi tên mạng Wi-Fi là dữ liệu vị trí, nên App Lock Revived cần vị trí chính xác để biết bạn đang ở mạng nào. Ứng dụng không yêu cầu vị trí GPS của bạn, và không có gì được gửi đi đâu cả.</string>
+    <string name="trusted_background_dialog_title">Cho phép vị trí mọi lúc?</string>
+    <string name="trusted_background_dialog_text">App Lock Revived quyết định có khóa một ứng dụng hay không khi ứng dụng đó đang hiển thị, nên nó đọc tên mạng ở chế độ nền. Ở màn hình tiếp theo, hãy chọn “%1$s”.</string>
+    <string name="trusted_background_dialog_supporting">Nếu không có tùy chọn này, hãy mở cài đặt của App Lock Revived, vào Quyền › Vị trí và chọn “%1$s”. Bạn có thể tắt bất cứ lúc nào; khi đó ứng dụng sẽ khóa bình thường ở mọi nơi.</string>
+    <string name="trusted_dialog_continue">Tiếp tục</string>
+    <string name="trusted_permission_denied">Quyền truy cập vị trí đã bị từ chối. Hãy mở cài đặt ứng dụng để cho phép.</string>
+
+    <!-- Home screen status card -->
+    <string name="trusted_status_relaxed_title">Bảo vệ đang được nới lỏng</string>
+    <string name="trusted_status_relaxed_desc">Đang ở Wi-Fi đáng tin cậy “%1$s”. Ứng dụng sẽ khóa lại ngay khi bạn rời mạng này</string>
+
+    <!-- Automation -->
+    <string name="automation_section_title">Tự động hóa</string>
+    <string name="automation_enable_title">Cho phép ứng dụng tự động hóa</string>
+    <string name="automation_enable_desc">Cho phép các ứng dụng như Tasker hoặc MacroDroid khóa tất cả ứng dụng hoặc bật bảo vệ, sau khi bạn cấp quyền cho chúng</string>
+    <string name="automation_allow_disable_title">Cho phép tự động hóa tắt bảo vệ</string>
+    <string name="automation_allow_disable_desc">Mặc định là tắt. Chỉ bật khi bạn tin tưởng mọi ứng dụng tự động hóa mà bạn đã cấp quyền</string>
+    <string name="automation_allow_disable_needs_master">Hãy bật “Cho phép ứng dụng tự động hóa” trước</string>
+    <string name="automation_disable_dialog_title">Cho phép tự động hóa tắt bảo vệ?</string>
+    <string name="automation_disable_dialog_text">Khi đó, bất kỳ ứng dụng nào được cấp quyền tự động hóa đều có thể tắt App Lock Revived mà không cần mã PIN, hình mở khóa, mật khẩu hoặc sinh trắc học, khiến mọi ứng dụng bị khóa đều mở. Một lỗi hoặc ứng dụng tự động hóa bị xâm nhập cũng có thể làm điều tương tự.</string>
+    <string name="automation_disable_dialog_confirm">Cho phép</string>
+    <string name="automation_last_command_title">Lệnh gần nhất</string>
+    <string name="automation_last_command_none">Chưa nhận lệnh nào</string>
+    <string name="automation_last_command_value">%1$s · %2$s · %3$s</string>
+    <string name="automation_last_command_from">%1$s · %2$s · %3$s · từ %4$s</string>
+    <string name="automation_outcome_applied">đã thực hiện</string>
+    <string name="automation_outcome_disabled">đã bỏ qua, tự động hóa đang tắt</string>
+    <string name="automation_outcome_not_allowed">đã bỏ qua, không được phép</string>
+    <string name="automation_outcome_invalid">đã bỏ qua</string>
+    <string name="automation_action_lock_all">Khóa tất cả ngay</string>
+    <string name="automation_action_enable">Bật bảo vệ</string>
+    <string name="automation_action_disable">Tắt bảo vệ</string>
+    <string name="automation_howto_title">Cách thiết lập</string>
+    <string name="automation_howto_desc">Nhấn để sao chép quyền và hành động</string>
+    <string name="automation_howto_sheet_title">Thiết lập tự động hóa</string>
+    <string name="automation_howto_sheet_text">1. Ứng dụng tự động hóa phải yêu cầu quyền bên dưới, và bạn phải cấp quyền đó (Cài đặt › Ứng dụng › ứng dụng tự động hóa › Quyền).\n2. Gửi một broadcast với một trong các hành động bên dưới và gói dev.riyadm.applock. Không cần thêm extra nào.</string>
+    <string name="automation_howto_permission">Quyền</string>
+    <string name="automation_howto_package">Gói</string>
+    <string name="automation_howto_actions">Hành động</string>
+    <string name="automation_howto_copy_all">Sao chép tất cả</string>
+    <string name="automation_howto_copied">Đã sao chép vào bộ nhớ tạm</string>
+    <string name="automation_howto_copy_cd">Sao chép %1$s</string>
+    <string name="automation_howto_note">Việc tắt bảo vệ chỉ hoạt động khi “Cho phép tự động hóa tắt bảo vệ” được bật. Lệnh sẽ bị bỏ qua khi “Cho phép ứng dụng tự động hóa” đang tắt.</string>
+    <string name="automation_howto_clipboard_label">Tự động hóa App Lock Revived</string>
+    <string name="automation_permission_label">điều khiển App Lock Revived</string>
+    <string name="automation_permission_description">Cho phép ứng dụng khóa tất cả ứng dụng ngay lập tức và bật bảo vệ của App Lock Revived, hoặc tắt nếu bạn đã cho phép trong cài đặt của App Lock Revived.</string>
+</resources>
