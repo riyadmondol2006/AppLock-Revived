@@ -163,7 +163,7 @@ To ship an update, bump `versionCode` and `versionName`, add a changelog file, a
 ## Credits
 
 - Original app: [AppLock](https://github.com/aload0/AppLock) by **Pranav Purwar (aload0)** and contributors
-- Revived and maintained by **[Riyad Mondol](https://github.com/riyadmondol2006)**
+- Revived and maintained by **[Riyad M](https://github.com/riyadmondol2006)**
 - [Shizuku](https://github.com/RikkaApps/Shizuku), [HiddenApiBypass](https://github.com/LSPosed/AndroidHiddenApiBypass)
 - [Google Sans Flex](https://github.com/googlefonts/googlesans-flex), licensed under the SIL Open Font License 1.1 ([art/GoogleSansFlex-OFL.txt](art/GoogleSansFlex-OFL.txt))
 
@@ -171,4 +171,4 @@ Found a bug or have an idea? [Open an issue](https://github.com/riyadmondol2006/
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Original work © 2023-2025 Pranav Purwar; modifications © 2026 Riyad Mondol.
+MIT. See [LICENSE](LICENSE). Original work © 2023-2025 Pranav Purwar; modifications © 2026 Riyad M.

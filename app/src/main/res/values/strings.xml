@@ -181,7 +181,7 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Enable experimental features for Shizuku backend (e.g., lock specific activities). May cause instability.</string>
     <string name="settings_screen_about_title">About</string>
     <string name="settings_screen_developer_title">Developer</string>
-    <string name="settings_screen_developer_name">Riyad Mondol</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
     <string name="settings_screen_source_code_title">Source Code</string>
     <string name="settings_screen_source_code_desc">View the source code on GitHub</string>
     <string name="settings_screen_support_development_title">Support Development</string>
