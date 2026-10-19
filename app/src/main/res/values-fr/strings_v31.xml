@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- strings_trusted.xml: automation -->
+    <string name="automation_action_disable">Désactiver la protection</string>
+    <string name="automation_action_enable">Activer la protection</string>
+    <string name="automation_action_lock_all">Tout verrouiller maintenant</string>
+    <string name="automation_allow_disable_desc">Désactivé par défaut. N\'activez cette option que si vous faites confiance à toutes les applications d\'automatisation auxquelles vous avez accordé l\'autorisation</string>
+    <string name="automation_allow_disable_needs_master">Activez d\'abord « Autoriser les applications d\'automatisation »</string>
+    <string name="automation_allow_disable_title">Autoriser l\'automatisation à désactiver la protection</string>
+    <string name="automation_disable_dialog_confirm">Autoriser</string>
+    <string name="automation_disable_dialog_text">Toute application à laquelle vous avez accordé l\'autorisation d\'automatisation pourrait alors désactiver App Lock Revived sans votre code PIN, schéma, mot de passe ni votre biométrie, et laisser toutes les applications verrouillées ouvertes. Un bug ou une application d\'automatisation compromise pourrait faire de même.</string>
+    <string name="automation_disable_dialog_title">Permettre à l\'automatisation de désactiver la protection ?</string>
+    <string name="automation_enable_desc">Permet à des applications comme Tasker ou MacroDroid de verrouiller toutes les applications ou d\'activer la protection, une fois que vous leur avez accordé l\'autorisation.</string>
+    <string name="automation_enable_title">Autoriser les applications d\'automatisation</string>
+    <string name="automation_howto_actions">Actions</string>
+    <string name="automation_howto_clipboard_label">Automatisation App Lock Revived</string>
+    <string name="automation_howto_copied">Copié dans le presse-papiers</string>
+    <string name="automation_howto_copy_all">Tout copier</string>
+    <string name="automation_howto_copy_cd">Copier %1$s</string>
+    <string name="automation_howto_desc">Appuyez pour copier l\'autorisation et les actions</string>
+    <string name="automation_howto_note">La désactivation de la protection ne fonctionne que si « Autoriser l\'automatisation à désactiver la protection » est activé. Les commandes sont ignorées tant que « Autoriser les applications d\'automatisation » est désactivé.</string>
+    <string name="automation_howto_package">Package</string>
+    <string name="automation_howto_permission">Autorisation</string>
+    <string name="automation_howto_sheet_text">1. L\'application d\'automatisation doit demander l\'autorisation ci-dessous, et vous devez la lui accorder (Paramètres &gt; Applications &gt; l\'application d\'automatisation &gt; Autorisations).\n2. Envoyez une diffusion (broadcast) avec l\'une des actions ci-dessous et le package dev.riyadm.applock. Aucun extra n\'est nécessaire.</string>
+    <string name="automation_howto_sheet_title">Configuration de l\'automatisation</string>
+    <string name="automation_howto_title">Comment la configurer</string>
+    <string name="automation_last_command_from">%1$s · %2$s · %3$s · depuis %4$s</string>
+    <string name="automation_last_command_none">Aucune commande reçue pour l\'instant</string>
+    <string name="automation_last_command_title">Dernière commande</string>
+    <string name="automation_last_command_value">%1$s · %2$s · %3$s</string>
+    <string name="automation_outcome_applied">effectuée</string>
+    <string name="automation_outcome_disabled">ignorée, automatisation désactivée</string>
+    <string name="automation_outcome_invalid">ignorée</string>
+    <string name="automation_outcome_not_allowed">ignorée, non autorisée</string>
+    <string name="automation_permission_description">Permet à l\'application de verrouiller immédiatement toutes les applications et d\'activer la protection d\'App Lock Revived, ou de la désactiver si vous l\'avez autorisé dans les paramètres d\'App Lock Revived.</string>
+    <string name="automation_permission_label">contrôler App Lock Revived</string>
+    <string name="automation_section_title">Automatisation</string>
+
+    <!-- strings_hardening.xml: backup -->
+    <string name="backup_encrypt_and_export">Chiffrer et exporter</string>
+    <string name="backup_export_desc_recommend">Enregistrez les applications verrouillées et les paramètres dans un fichier. Il est recommandé de le protéger par un mot de passe.</string>
+    <string name="backup_export_interrupted">L\'exportation a été interrompue, rien n\'a été enregistré. Veuillez réessayer.</string>
+    <string name="backup_export_success_encrypted">Sauvegarde chiffrée enregistrée</string>
+    <string name="backup_export_unencrypted">Exporter sans mot de passe</string>
+    <string name="backup_hide_password_cd">Masquer le mot de passe</string>
+    <string name="backup_password_confirm_label">Confirmer le mot de passe</string>
+    <string name="backup_password_forget_warning">Si vous oubliez ce mot de passe, la sauvegarde ne pourra pas être restaurée.</string>
+    <string name="backup_password_label">Mot de passe</string>
+    <string name="backup_password_mismatch">Les mots de passe ne correspondent pas</string>
+    <plurals name="backup_password_too_short">
+        <item quantity="one">Utilisez au moins %1$d caractère</item>
+        <item quantity="other">Utilisez au moins %1$d caractères</item>
+    </plurals>
+    <string name="backup_protect_text">Chiffrez le fichier avec un mot de passe. Sans lui, toute personne qui obtient le fichier peut voir quelles applications vous verrouillez et comment App Lock Revived est configurée.</string>
+    <string name="backup_protect_title">Protéger votre sauvegarde</string>
+    <string name="backup_show_password_cd">Afficher le mot de passe</string>
+    <string name="backup_unlock_restore">Restaurer</string>
+    <string name="backup_unlock_text">Saisissez le mot de passe que vous avez choisi lors de la création de cette sauvegarde.</string>
+    <string name="backup_unlock_title">Sauvegarde protégée par mot de passe</string>
+    <string name="backup_wrong_password">Mot de passe incorrect, ou fichier endommagé. Aucune donnée n\'a été restaurée.</string>
+
+    <!-- strings_hardening.xml: extra protection -->
+    <string name="hardening_close_apps_desc_background">Ferme les applications verrouillées qui tournent en arrière-plan lorsque l\'écran s\'éteint ou lorsque vous utilisez « Tout verrouiller maintenant ». L\'application que vous utilisiez peut continuer à tourner ; avec Shizuku, chaque application verrouillée est fermée. Les applications système, le lanceur et le clavier ne sont jamais fermés.</string>
+    <string name="hardening_close_apps_desc_shizuku">Utilise Shizuku pour forcer l\'arrêt des applications verrouillées lorsque l\'écran s\'éteint ou lorsque vous utilisez « Tout verrouiller maintenant ». Elles arrêtent la lecture de contenus multimédias et ne reçoivent plus de notifications tant que vous ne les ouvrez pas à nouveau. Les applications système, le lanceur et le clavier ne sont jamais fermés.</string>
+    <string name="hardening_close_apps_desc_unavailable">Nécessite Shizuku : depuis Android 14, les applications ne peuvent fermer d\'autres applications que via Shizuku. Avec Shizuku, les applications verrouillées sont arrêtées de force lorsque l\'écran s\'éteint et ne reçoivent plus de notifications tant que vous ne les ouvrez pas à nouveau.</string>
+    <string name="hardening_close_apps_title">Fermer les applications verrouillées lorsque l\'écran s\'éteint</string>
+    <string name="hardening_history_retention_desc">Les entrées les plus anciennes sont supprimées automatiquement. 200 entrées au maximum sont conservées.</string>
+    <string name="hardening_history_retention_desc_disabled">Activez l\'historique des déverrouillages pour choisir sa durée de conservation</string>
+    <string name="hardening_history_retention_title">Conserver l\'historique des déverrouillages pendant</string>
+    <string name="hardening_pattern_size_desc">Taille de la grille de schéma sur l\'écran de verrouillage et lors de la définition d\'un schéma</string>
+    <string name="hardening_pattern_size_large">Grande</string>
+    <string name="hardening_pattern_size_medium">Moyenne</string>
+    <string name="hardening_pattern_size_small">Petite</string>
+    <string name="hardening_pattern_size_title">Taille du schéma</string>
+    <plurals name="hardening_retention_days">
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <string name="hardening_section_title">Protection renforcée</string>
+
+    <!-- strings_intruder.xml -->
+    <string name="intruder_all_deleted">Toutes les photos ont été supprimées</string>
+    <plurals name="intruder_attempts_long">
+        <item quantity="one">%d tentative incorrecte</item>
+        <item quantity="other">%d tentatives incorrectes</item>
+    </plurals>
+    <plurals name="intruder_attempts_short">
+        <item quantity="one">%d échec</item>
+        <item quantity="other">%d échecs</item>
+    </plurals>
+    <string name="intruder_channel_description">Vous indique qu\'une photo a été prise après des tentatives de déverrouillage incorrectes</string>
+    <string name="intruder_channel_name">Alertes d\'intrusion</string>
+    <string name="intruder_delete">Supprimer</string>
+    <string name="intruder_delete_all_cd">Supprimer toutes les photos</string>
+    <string name="intruder_delete_all_confirm">Tout supprimer</string>
+    <string name="intruder_delete_all_text">Toutes les photos d\'intrus seront définitivement supprimées de ce téléphone.</string>
+    <string name="intruder_delete_all_title">Supprimer toutes les photos ?</string>
+    <string name="intruder_disabled_banner">La selfie d\'intrus est désactivée. Activez-la dans les paramètres pour obtenir une photo de toute personne qui saisit de mauvais identifiants.</string>
+    <string name="intruder_empty_desc">Lorsqu\'une personne se trompe dans votre code PIN, votre schéma ou votre mot de passe, sa photo apparaît ici.</string>
+    <string name="intruder_empty_title">Aucun intrus</string>
+    <string name="intruder_footer">Les photos restent dans le stockage privé d\'App Lock Revived sur ce téléphone. Elles ne sont jamais envoyées ni incluses dans les sauvegardes. Android affiche brièvement l\'indicateur de la caméra pendant la prise de vue.</string>
+    <string name="intruder_footer_accessibility">Avec la méthode Accessibilité, certains téléphones n\'autorisent pas la caméra à fonctionner lorsque seul l\'écran de verrouillage est affiché. Si aucune photo n\'apparaît, passez à la méthode Statistiques d\'utilisation ou Shizuku.</string>
+    <string name="intruder_not_now">Pas maintenant</string>
+    <string name="intruder_notification_public_text">Alerte de sécurité</string>
+    <plurals name="intruder_notification_text">
+        <item quantity="one">Une photo a été prise après %d tentative incorrecte</item>
+        <item quantity="other">Une photo a été prise après %d tentatives incorrectes</item>
+    </plurals>
+    <string name="intruder_notification_title">Quelqu\'un a tenté d\'ouvrir %1$s</string>
+    <string name="intruder_open_settings">Ouvrir les paramètres</string>
+    <string name="intruder_permission_blocked_text">L\'accès à la caméra est bloqué pour App Lock Revived. Pour utiliser la selfie d\'intrus, ouvrez les paramètres de l\'application et autorisez la caméra dans « Autorisations ».</string>
+    <string name="intruder_permission_continue">Continuer</string>
+    <string name="intruder_permission_denied_text">Sans accès à la caméra, App Lock Revived ne peut pas prendre de photos : la selfie d\'intrus reste désactivée.</string>
+    <string name="intruder_permission_denied_title">La selfie d\'intrus est désactivée</string>
+    <string name="intruder_permission_privacy">La caméra n\'est utilisée qu\'à ce moment précis, rien n\'est affiché à l\'écran et les photos ne quittent jamais votre téléphone.</string>
+    <string name="intruder_permission_text">Pour identifier la personne qui tente d\'entrer, App Lock Revived prend une photo avec la caméra frontale après la saisie d\'un code PIN, d\'un schéma ou d\'un mot de passe incorrect.</string>
+    <string name="intruder_permission_title">Autoriser l\'accès à la caméra</string>
+    <string name="intruder_permission_try_again">Réessayer</string>
+    <string name="intruder_photo_cd">Photo prise lorsque quelqu\'un a tenté d\'ouvrir %1$s, %2$s</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%d photo</item>
+        <item quantity="other">%d photos</item>
+    </plurals>
+    <string name="intruder_photo_deleted">Photo supprimée</string>
+    <string name="intruder_photos_title">Photos d\'intrus</string>
+    <plurals name="intruder_retention_days">
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <string name="intruder_retention_desc">Les photos les plus anciennes sont supprimées automatiquement</string>
+    <string name="intruder_retention_never">Jamais</string>
+    <string name="intruder_retention_title">Supprimer les photos après</string>
+    <string name="intruder_section_title">Selfie d\'intrus</string>
+    <string name="intruder_share">Partager</string>
+    <string name="intruder_share_failed">Impossible de partager la photo</string>
+    <string name="intruder_share_title">Partager la photo</string>
+    <string name="intruder_switch_desc">Prendre une photo avec la caméra frontale lorsque quelqu\'un saisit un code PIN, un schéma ou un mot de passe incorrect</string>
+    <string name="intruder_switch_desc_no_permission">L\'accès à la caméra est désactivé, aucune photo n\'est donc prise. Activez cette option pour l\'autoriser à nouveau.</string>
+    <string name="intruder_switch_title">Selfie d\'intrus</string>
+    <string name="intruder_threshold_desc">Tentatives incorrectes consécutives</string>
+    <string name="intruder_threshold_title">Prendre une photo après</string>
+    <string name="intruder_view_empty">Aucune photo pour l\'instant</string>
+    <string name="intruder_view_title">Afficher les photos d\'intrus</string>
+    <string name="intruder_viewer_close_cd">Fermer la photo</string>
+    <string name="intruder_viewer_details">%1$s · %2$s</string>
+
+    <!-- strings_lock.xml -->
+    <string name="pin_keypad_clear_action">Tout effacer</string>
+
+    <!-- strings_profiles.xml: security levels -->
+    <string name="policy_biometric_unavailable">La biométrie n\'est pas configurée sur cet appareil, cette application demandera donc votre code PIN, schéma ou mot de passe.</string>
+    <string name="policy_level_biometric">Biométrie uniquement</string>
+    <string name="policy_level_biometric_desc">Empreinte digitale ou visage. Utilise votre code PIN, schéma ou mot de passe si la biométrie est indisponible</string>
+    <string name="policy_level_credential">Code PIN, schéma ou mot de passe</string>
+    <string name="policy_level_credential_desc">Demande toujours votre code PIN, schéma ou mot de passe</string>
+    <string name="policy_level_default">Par défaut</string>
+    <string name="policy_level_default_desc">Suit les paramètres de biométrie</string>
+    <string name="policy_level_two_step">Double vérification</string>
+    <string name="policy_level_two_step_desc">Biométrie, puis code PIN, schéma ou mot de passe. Les deux sont obligatoires</string>
+    <string name="policy_lock_biometric_required">Utilisez votre empreinte digitale ou votre visage pour déverrouiller</string>
+    <string name="policy_lock_step_biometric">Étape 1 sur 2 : vérifiez avec la biométrie</string>
+    <string name="policy_lock_step_password">Saisissez maintenant votre mot de passe</string>
+    <string name="policy_lock_step_pattern">Tracez maintenant votre schéma</string>
+    <string name="policy_lock_step_pin">Saisissez maintenant votre code PIN</string>
+    <string name="policy_sheet_footer">Utilise votre code PIN, schéma ou mot de passe existant ainsi que la biométrie enregistrée sur cet appareil.</string>
+    <string name="policy_sheet_section_method">Méthode de déverrouillage</string>
+    <string name="policy_sheet_section_profiles">Verrouillée dans les profils</string>
+    <string name="policy_tune_cd">Options de sécurité pour %1$s</string>
+
+    <!-- strings_profiles.xml: lock profiles -->
+    <string name="profiles_activate">Activer</string>
+    <string name="profiles_active_badge">Actif</string>
+    <plurals name="profiles_app_count">
+        <item quantity="one">%d application</item>
+        <item quantity="other">%d applications</item>
+    </plurals>
+    <string name="profiles_create_confirm">Créer</string>
+    <string name="profiles_create_desc">Commence avec les applications verrouillées dans %1$s. Vous pourrez les modifier après être passé à ce profil.</string>
+    <string name="profiles_create_title">Nouveau profil</string>
+    <string name="profiles_delete">Supprimer</string>
+    <string name="profiles_delete_text">Sa liste d\'applications verrouillées sera supprimée. Vos autres profils ne sont pas affectés.</string>
+    <string name="profiles_delete_title">Supprimer %1$s ?</string>
+    <string name="profiles_guest_hint">Astuce : activez le profil Invité et utilisez « Verrouiller toutes les applications » avant de confier votre téléphone à quelqu\'un, puis déverrouillez uniquement les applications auxquelles cette personne peut accéder.</string>
+    <string name="profiles_intro">Chaque profil possède sa propre liste d\'applications verrouillées. Seul le profil actif est appliqué, et changer de profil demande toujours d\'abord votre code PIN, schéma ou mot de passe.</string>
+    <string name="profiles_lock_all_user_apps">Verrouiller toutes les applications</string>
+    <string name="profiles_manage_cd">Gérer les profils</string>
+    <string name="profiles_name_custom">Personnalisé</string>
+    <string name="profiles_name_guest">Invité</string>
+    <string name="profiles_name_home">Maison</string>
+    <string name="profiles_name_label">Nom du profil</string>
+    <string name="profiles_name_work">Travail</string>
+    <string name="profiles_new">Nouveau profil</string>
+    <string name="profiles_options_cd">Options pour %1$s</string>
+    <string name="profiles_rename">Renommer</string>
+    <string name="profiles_rename_title">Renommer le profil</string>
+    <string name="profiles_save">Enregistrer</string>
+    <string name="profiles_section_profiles">Profils</string>
+    <string name="profiles_selector_title">Profil de verrouillage</string>
+    <string name="profiles_subtitle">Actif : %1$s</string>
+    <string name="profiles_summary">%1$s · %2$s</string>
+    <string name="profiles_switched">Passé à %1$s</string>
+    <string name="profiles_title">Profils de verrouillage</string>
+    <string name="profiles_unlock_duration">Durée de déverrouillage</string>
+    <string name="profiles_unlock_duration_global">Identique aux paramètres (%1$s)</string>
+    <string name="profiles_unlock_duration_sheet_desc">Durée pendant laquelle les applications de ce profil restent déverrouillées après que vous les avez déverrouillées.</string>
+    <string name="profiles_unlock_follow_global">Durée de déverrouillage des paramètres</string>
+    <string name="profiles_unlock_override">Déverrouillage : %1$s</string>
+    <string name="tile_profile_label">Profil de verrouillage</string>
+
+    <!-- strings_trusted.xml: trusted Wi-Fi -->
+    <string name="trusted_action_allow">Autoriser</string>
+    <string name="trusted_action_open_settings">Ouvrir les paramètres de l\'application</string>
+    <string name="trusted_action_turn_on_location">Activer la localisation</string>
+    <string name="trusted_add_current">Faire confiance à ce réseau</string>
+    <string name="trusted_added">« %1$s » est maintenant de confiance</string>
+    <string name="trusted_background_default_label">Autoriser tout le temps</string>
+    <string name="trusted_background_dialog_supporting">Si l\'option n\'est pas proposée, ouvrez les paramètres d\'App Lock Revived, allez dans Autorisations &gt; Localisation et choisissez « %1$s ». Vous pouvez désactiver cela à tout moment ; les applications se verrouillent alors normalement partout.</string>
+    <string name="trusted_background_dialog_text">App Lock Revived décide s\'il faut verrouiller une application pendant qu\'elle est à l\'écran, il lit donc le nom du réseau en arrière-plan. Sur l\'écran suivant, choisissez « %1$s ».</string>
+    <string name="trusted_background_dialog_title">Autoriser la localisation tout le temps ?</string>
+    <string name="trusted_current_header">Réseau actuel</string>
+    <string name="trusted_current_not_connected">Non connecté au Wi-Fi</string>
+    <string name="trusted_current_not_trusted">Non considéré comme de confiance. Les applications se verrouillent normalement</string>
+    <string name="trusted_current_open">Réseau ouvert : il ne peut pas être considéré comme de confiance, car n\'importe qui peut créer un réseau portant le même nom</string>
+    <string name="trusted_current_router">Routeur %1$s</string>
+    <string name="trusted_current_trusted">De confiance. Les applications verrouillées s\'ouvrent ici sans demander</string>
+    <string name="trusted_current_trusted_off">Enregistré comme de confiance. Activez le Wi-Fi de confiance pour l\'utiliser</string>
+    <string name="trusted_current_trusted_paused">De confiance, mais en pause jusqu\'à ce que le problème ci-dessus soit résolu</string>
+    <string name="trusted_current_unknown">Connecté au Wi-Fi</string>
+    <string name="trusted_current_unknown_desc">Le nom du réseau ne peut pas être lu tant que l\'accès à la localisation n\'est pas corrigé</string>
+    <string name="trusted_dialog_continue">Continuer</string>
+    <string name="trusted_enable_dialog_confirm">Activer</string>
+    <string name="trusted_enable_dialog_supporting">Pour reconnaître le réseau, App Lock Revived a besoin de l\'accès à la localisation, car Android considère les noms de réseaux Wi-Fi comme des données de localisation. Le nom est comparé uniquement sur votre appareil et n\'en sort jamais.</string>
+    <string name="trusted_enable_dialog_text">Lorsque vous êtes connecté à un réseau de confiance, vos applications verrouillées s\'ouvrent sans demander votre code PIN, schéma, mot de passe ni votre biométrie. Toute personne qui prend votre téléphone déverrouillé à cet endroit peut les ouvrir.</string>
+    <string name="trusted_enable_dialog_title">Faire confiance aux réseaux Wi-Fi ?</string>
+    <string name="trusted_location_dialog_text">Android considère les noms des réseaux Wi-Fi comme des données de localisation. App Lock Revived a donc besoin de la localisation précise pour savoir à quel réseau vous êtes connecté. L\'application ne demande jamais votre position GPS, et rien n\'est envoyé nulle part.</string>
+    <string name="trusted_location_dialog_title">Autoriser l\'accès à la localisation ?</string>
+    <string name="trusted_master_switch">Utiliser le Wi-Fi de confiance</string>
+    <string name="trusted_match_router_desc">Vérifie aussi l\'adresse matérielle du routeur (BSSID). Plus sûr, mais cesse de fonctionner si votre routeur est remplacé ou si vous avez plusieurs points d\'accès</string>
+    <string name="trusted_match_router_desc_recommended">Recommandé : cette version d\'Android ne peut pas savoir si un réseau est protégé par un mot de passe</string>
+    <string name="trusted_match_router_title">Uniquement ce routeur précis</string>
+    <plurals name="trusted_networks_summary_count">
+        <item quantity="one">%d réseau</item>
+        <item quantity="other">%d réseaux</item>
+    </plurals>
+    <string name="trusted_networks_summary_none">Aucun réseau ajouté pour l\'instant</string>
+    <string name="trusted_networks_summary_relaxed">%1$s · Assoupli sur « %2$s »</string>
+    <string name="trusted_networks_title">Réseaux de confiance</string>
+    <string name="trusted_permission_denied">L\'accès à la localisation a été refusé. Ouvrez les paramètres de l\'application pour l\'autoriser.</string>
+    <string name="trusted_problem_background_desc">App Lock Revived vérifie le réseau pendant que d\'autres applications sont ouvertes. Sans « %1$s », Android masque alors le nom du Wi-Fi.</string>
+    <string name="trusted_problem_background_title">Autoriser la localisation tout le temps</string>
+    <string name="trusted_problem_footer">Tant que ce problème n\'est pas résolu, tous les réseaux sont considérés comme non fiables et les applications se verrouillent normalement.</string>
+    <string name="trusted_problem_location_desc">Android ne révèle le nom du réseau Wi-Fi connecté qu\'aux applications ayant accès à la localisation.</string>
+    <string name="trusted_problem_location_off_desc">Android masque les noms des réseaux Wi-Fi lorsque la localisation est désactivée sur tout le téléphone.</string>
+    <string name="trusted_problem_location_off_title">La localisation est désactivée</string>
+    <string name="trusted_problem_location_title">Accès à la localisation requis</string>
+    <string name="trusted_problem_precise_desc">Avec la localisation approximative seulement, Android masque le nom du Wi-Fi. Passez à la localisation précise.</string>
+    <string name="trusted_problem_precise_title">Localisation précise requise</string>
+    <string name="trusted_problem_short_background">accès à la localisation « tout le temps » requis</string>
+    <string name="trusted_problem_short_location">accès à la localisation requis</string>
+    <string name="trusted_problem_short_location_off">localisation désactivée</string>
+    <string name="trusted_problem_short_ssid">nom du réseau indisponible</string>
+    <string name="trusted_problem_ssid_desc">Android ne partage pas actuellement le nom de ce réseau, il n\'est donc pas considéré comme de confiance.</string>
+    <string name="trusted_problem_ssid_title">Nom du réseau indisponible</string>
+    <string name="trusted_remove_cd">Supprimer %1$s</string>
+    <string name="trusted_removed">« %1$s » supprimé</string>
+    <string name="trusted_saved_any_router">Tout routeur portant ce nom</string>
+    <string name="trusted_saved_connected">Connecté maintenant</string>
+    <string name="trusted_saved_empty">Les réseaux de confiance apparaîtront ici. Connectez-vous à l\'un d\'eux et appuyez sur « Faire confiance à ce réseau ».</string>
+    <string name="trusted_saved_exact_router">Uniquement le routeur %1$s</string>
+    <string name="trusted_saved_header">Réseaux enregistrés</string>
+    <string name="trusted_screen_footer">La protection propre d\'App Lock Revived n\'est jamais assouplie, et rien ne l\'est lorsque votre téléphone est verrouillé. Les réseaux ouverts ne peuvent pas être considérés comme de confiance. N\'importe qui peut créer un réseau portant le même nom et la même adresse de routeur. Ne faites donc confiance qu\'aux réseaux protégés par un mot de passe que vous gardez privé.</string>
+    <string name="trusted_screen_subtitle_off">Le Wi-Fi de confiance est désactivé</string>
+    <string name="trusted_screen_subtitle_on">Activé · les applications se verrouillent normalement ici</string>
+    <string name="trusted_screen_subtitle_relaxed">Assoupli sur « %1$s »</string>
+    <string name="trusted_section_footer">Le verrouillage n\'est assoupli que lorsque l\'écran est déverrouillé et que le téléphone est connecté à un réseau de confiance. Dès que vous vous déconnectez ou rejoignez un autre réseau, toutes les applications se verrouillent à nouveau.</string>
+    <string name="trusted_section_title">Lieux de confiance</string>
+    <string name="trusted_status_relaxed_desc">Sur le Wi-Fi de confiance « %1$s ». Les applications se verrouillent à nouveau dès que vous le quittez</string>
+    <string name="trusted_status_relaxed_title">Protection assouplie</string>
+    <string name="trusted_undo">Annuler</string>
+    <string name="trusted_wifi_desc_off">Permet aux applications verrouillées de s\'ouvrir sans demande lorsque vous êtes connecté à un réseau Wi-Fi de confiance</string>
+    <string name="trusted_wifi_desc_on">Activé. App Lock Revived demande toujours votre code PIN, schéma ou mot de passe</string>
+    <string name="trusted_wifi_desc_problem">Activé, mais en pause : %1$s</string>
+    <string name="trusted_wifi_title">Wi-Fi de confiance</string>
+</resources>
