@@ -1,0 +1,9 @@
+App Lock Revived 3.0.0
+
+• All-new Material 3 Expressive design with Google Sans Flex, springy motion and predictive back
+• Light/dark/system theme, dynamic color and pure black mode
+• Brute-force lockout, scrambled PIN keypad, automatic biometric prompt
+• Unlock history, backup & restore, auto-lock new apps, "Lock all now" tile
+• In-app update notifications
+• Stronger credential hashing (PBKDF2), screenshots blocked on lock screens
+• Fixed lock bypasses (biometric cancel, back/close, recents, multi-window) and reliability issues after reboot

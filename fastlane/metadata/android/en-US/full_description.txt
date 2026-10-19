@@ -1,27 +1,23 @@
-Secure your sensitive apps with powerful biometric protection using AppLock!
+App Lock Revived is an open-source app locker for Android, rebuilt with Google's Material 3 Expressive design. It is a maintained fork of AppLock by Pranav Purwar.
 
-AppLock is a modern, open-source privacy tool designed to keep your sensitive apps safe. With a beautiful Material 3 Expressive interface and robust biometric security, AppLock ensures your data stays private — always on your device, never in the cloud.
+<b>Locking</b>
+* Lock any app with a PIN, pattern or password
+* Fingerprint and face unlock, with an optional automatic prompt
+* Accessibility, Usage stats or Shizuku detection, no root required
+* Unlock duration, auto-lock for newly installed apps and a "Lock all now" Quick Settings tile
+* Anti-uninstall protection
 
-Features:
+<b>Security</b>
+* Brute-force lockout that doubles the cooldown after repeated wrong attempts
+* Scrambled PIN keypad
+* Screenshots blocked on lock screens
+* PBKDF2-hashed credentials
+* On-device unlock history
 
-* **Material You Design**: Seamlessly adapts to your system theme
-* **Biometric Unlock**: Use face unlock, fingerprint or PIN for fast, secure access
-* **Anti-uninstall**: Prevents unauthorized removal
-* **Unlock Timer**: Optional timer to keep apps unlocked for fixed time period after unlocking
-* **No Root required**: Works on all devices without root access
-* **One-tap protection**: Lock any app instantly
-* **Real-time monitoring**: Protects apps as they launch
-* **100% offline**: No ads, no trackers, no data collection
+<b>Design</b>
+* Material 3 Expressive throughout, with Google Sans Flex typography and spring motion
+* Light, dark and system theme, dynamic color and pure black mode
+* Themed adaptive icon
 
-Perfect for:
-
-* Privacy-conscious users wanting to secure sensitive apps
-* Securing banking, messaging, and social apps
-* Parents restricting access for children
-* Professionals protecting work apps
-
-App Lock is designed to be lightweight and efficient, with minimal battery impact. It runs entirely offline, ensuring your data remains private and secure.
-
-Built with Jetpack Compose and Material 3 for a smooth, intuitive experience. AppLock is free, open-source, and respects your privacy — always.
-
-Source code and issue tracker: https://github.com/PranavPurwar/AppLock
+<b>Privacy</b>
+Everything stays on your device. There are no ads, trackers or accounts. The only network request is an optional check for new releases on GitHub, and you can turn it off.

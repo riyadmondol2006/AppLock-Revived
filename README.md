@@ -1,156 +1,174 @@
 <div align="center">
-  <img src="fastlane/metadata/android/en-US/images/featureGraphic.png" alt="AppLock Android Privacy Security" width="600" />
+  <img src="fastlane/metadata/android/en-US/images/icon.png" alt="App Lock Revived icon" width="128" />
 </div>
 
-<h1 align="center">App Lock</h1>
-<p align="center"><b>Open Source Android App Locker & Privacy Guard</b></p>
+<h1 align="center">App Lock Revived</h1>
+<p align="center"><b>Open-source Android app locker, rebuilt with Material 3 Expressive</b></p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   </a>
-  <a href="https://github.com/aload0/AppLock/releases">
-    <img src="https://img.shields.io/github/v/release/aload0/AppLock?label=Release" alt="Latest Release">
+  <a href="https://github.com/riyadmondol2006/AppLock-Revived/releases/latest">
+    <img src="https://img.shields.io/github/v/release/riyadmondol2006/AppLock-Revived?label=Release" alt="Latest release">
   </a>
-  <a href="https://apt.izzysoft.de/packages/dev.pranav.applock">
-    <img src="https://img.shields.io/badge/IzzyOnDroid-Available-brightgreen" alt="IzzyOnDroid">
+  <a href="https://github.com/riyadmondol2006/AppLock-Revived/actions/workflows/android.yml">
+    <img src="https://github.com/riyadmondol2006/AppLock-Revived/actions/workflows/android.yml/badge.svg" alt="Android CI">
   </a>
+  <img src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 8.0+">
 </p>
 
 <p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="30%" alt="App List"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%" alt="Settings"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%" alt="Password Screen"/>
-</p>
-
-<p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%" alt="Set Password"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="30%" alt="Unlock time"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="30%" alt="Unlock time"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="30%" alt="Home screen with protection status and locked apps"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%" alt="Lock screen shown over a locked app"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%" alt="Settings: appearance and lock screen options"/>
 </p>
 <p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7.png" width="30%" alt="Set Password"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%" alt="Creating a PIN"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="30%" alt="Unlock history"/>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="30%" alt="About screen"/>
 </p>
 
 ---
 
-## Overview
+## About
 
-AppLock is a modern, open-source Android app locker designed to protect your privacy and sensitive
-data. Lock any app, prevent unauthorized access, and enjoy a seamless Material You experience. No
-root required.
+App Lock Revived is a maintained fork of [AppLock by Pranav Purwar (aload0)](https://github.com/aload0/AppLock).
+It locks any app behind a PIN, pattern, password or biometrics, with no root, no ads and no tracking.
+Version 3.0 is a full redesign in Google's Material 3 Expressive style, plus security hardening,
+a batch of bug fixes for long-standing upstream issues, and features users kept asking for.
 
-<br/>
-
-> [!CAUTION]
-> Google Play Protect is blocking some people from installing/updating App Lock because it uses Overlay Permission. It uses a false pretext of "this app may try to access sensitive information"
-> without any base or information. If this happens to you, consider disabling Play Protect temporarily as mentioned [here](https://www.airdroid.com/quick-guides/disable-google-play-protect).
->
-> You may enable it back later after you install the app. We understand this introduces unnecessary friction but there's nothing we can do about it. Google does not like it
-> when other developers try to fill the gaps they create themselves.
-
-<br/>
-
-> [!NOTE]
-> You may confirm that the app is completely secure
->
-> VirusTotal Analysis: [v1.5.0 Analysis](https://www.virustotal.com/gui/url/ead3a434b961ce332b49398d73a10598b2cee6d665c54bb4a66c825794465d72)
-> 
-> Exodus Privacy: [Privacy Report](https://reports.exodus-privacy.eu.org/en/reports/dev.pranav.applock/latest)
-
-<br/>
+Package name: `dev.riyadm.applock`. It installs alongside the original app.
 
 ## Features
 
-- Material You design, adapts to your theme
-- Biometric and PIN authentication
-- Fingerprint, Face Unlock, and PIN support
-- Lock any app on your device
-- Anti-uninstall protection
-- Anti-uninstall protection for user apps
-- Unlock timeout for convenience
-- No root required
-- One-tap app locking
-- All data stays on your device
-- Real-time background protection
-- Lightweight and fast
+**Locking**
+- Lock any app with PIN, pattern or alphanumeric password
+- Fingerprint / face unlock, with an optional automatic biometric prompt
+- Three detection methods: Accessibility service, Usage stats, or Shizuku
+- Unlock duration: re-lock immediately, after a few minutes, or when the screen turns off
+- Lock newly installed apps automatically
+- "Lock all now" Quick Settings tile
+- Anti-uninstall protection (device admin)
+- Trigger exclusions (apps that never trigger a lock, such as keyboards)
 
-<br/>
+**Security**
+- Brute-force protection: input is blocked after repeated wrong attempts, and the cooldown doubles each time
+- Scrambled PIN keypad option against shoulder-surfing
+- Screenshots and screen recording blocked on lock screens (`FLAG_SECURE`)
+- Credentials hashed with PBKDF2-HMAC-SHA256; patterns are no longer stored in plain text
+- On-device unlock history showing which app, when, which method, and success or failure
+
+**Design**
+- Material 3 Expressive throughout: flexible app bars, segmented lists, button groups, shape morphing, wavy progress
+- Google Sans Flex variable typography
+- Spring-based motion, predictive back, haptics (can be turned off)
+- Light / dark / system theme, dynamic color, and pure black (AMOLED) mode
+- Adaptive launcher icon, including Android 13+ themed icon
+
+**Convenience**
+- Backup and restore of locked apps and settings to a JSON file (your PIN/pattern/password is never exported)
+- In-app update notice when a new release is published on GitHub
+- Search, filters (locked / unlocked / system), sorting and multi-select on the app list
+
+## What's new in 3.0
+
+- **New UI:** every screen rebuilt with Material 3 Expressive (Compose Material3 1.5).
+- **Bypass fixes from upstream issues:**
+  - Cancelling the biometric prompt left apps unlocked (#228, #245, #220, #138)
+  - Back + close revealed the app (#233)
+  - Rapid recents switching (#190)
+  - Multi-window and floating windows (#108, #61)
+  - Notification-triggered locks (#150, #163)
+  - Locked apps briefly visible when returning from recents
+- **Reliability fixes:**
+  - Crashes that disabled the accessibility service after reboot (#227, #250)
+  - Service silently stopping (#178, #194)
+  - Overlay re-triggering (#80)
+  - Shizuku crashes (#184)
+  - Prevent-uninstall lockout (#213)
+  - Old passwords not accepted after updating (#215)
+- **Security hardening:** PBKDF2 hashing, hashed patterns, brute-force lockout, `FLAG_SECURE`. Android
+  auto-backup is disabled so credential hashes never leave the device.
+- **Platform and tooling:** Android SDK 37.2, AGP 9.4, Gradle 9.8, Kotlin 2.4, Compose 1.13.
 
 ## Download
 
-The app is available for download via F-Droid, IzzyOnDroid aswell
-as [Github Releases](https://github.com/PranavPurwar/AppLock/releases/latest).
+Get the latest signed APK from [GitHub Releases](https://github.com/riyadmondol2006/AppLock-Revived/releases/latest).
+The app checks for new releases on its own and offers the update in a dialog. You can turn this off in
+**Settings → Updates**.
 
-<a href="https://f-droid.org/packages/dev.pranav.applock/">
-    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="F-Droid" height="100"/>
-  </a>
-<a href="https://apt.izzysoft.de/packages/dev.pranav.applock">
-    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="IzzyOnDroid" height="100"/>
-  </a>
+> [!NOTE]
+> Android 13+ blocks Accessibility for sideloaded apps by default. If the toggle is greyed out, open
+> **App info → ⋮ → Allow restricted settings**, then enable the service. The app walks you through this
+> during setup.
 
-Beta Builds can be
-found [here](https://github.com/PranavPurwar/AppLock/raw/refs/heads/master/app/debug/app-debug.apk)
+> [!CAUTION]
+> Google Play Protect may warn about apps that use the overlay permission. App Lock Revived needs it to draw the
+> lock screen. You can review the source code here.
 
-<br/>
+## Privacy
 
-## Use Cases
+- Everything stays on your device. There are no analytics, ads, trackers or accounts.
+- The only network request is the optional update check, which reads the public
+  [GitHub releases API](https://api.github.com/repos/riyadmondol2006/AppLock-Revived/releases/latest). Nothing about
+  you or your apps is sent. Disable it in **Settings → Updates** and the app never goes online.
+- Backups contain the list of locked apps and settings only, never your PIN, pattern or password.
 
-- Shared devices
+## Building
+
+Requirements: JDK 21 and the Android SDK with platform 37.2.
+
+```bash
+git clone https://github.com/riyadmondol2006/AppLock-Revived.git
+cd AppLock-Revived
+./gradlew assembleDebug        # app/build/outputs/apk/debug
+./gradlew assembleRelease      # signed with the debug key unless a release key is configured
+```
+
+To sign release builds locally, create an untracked `keystore.properties` in the project root:
+
+```properties
+storeFile=/path/to/release.jks
+storePassword=...
+keyAlias=...
+keyPassword=...
+```
+
+## Continuous integration and releases
+
+[`.github/workflows/android.yml`](.github/workflows/android.yml) builds every push and pull request.
+On pushes to `master` it also builds a **signed release APK**. When `versionName` in `app/build.gradle.kts`
+changes, it publishes a GitHub Release tagged `v<versionName>` with the APK attached. The release notes come
+from `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt` when that file exists.
+
+Add these repository secrets (**Settings → Secrets and variables → Actions**):
+
+| Secret | Value |
+|---|---|
+| `SIGNING_KEYSTORE_BASE64` | Your keystore, base64-encoded: `base64 -w0 release.jks` |
+| `SIGNING_KEYSTORE_PASSWORD` | Keystore password |
+| `SIGNING_KEY_ALIAS` | Key alias |
+| `SIGNING_KEY_PASSWORD` | Key password |
+
+To ship an update, bump `versionCode` and `versionName`, add a changelog file, and push to `master`.
+
+## Use cases
+
+- Shared devices and kids using your phone
 - Parental controls
-- Protecting work apps
+- Protecting work, banking, gallery and chat apps
 - General privacy
 
-<br/>
+## Credits
 
-## Support Development
+- Original app: [AppLock](https://github.com/aload0/AppLock) by **Pranav Purwar (aload0)** and contributors
+- Revived and maintained by **[Riyad Mondol](https://github.com/riyadmondol2006)**
+- [Shizuku](https://github.com/RikkaApps/Shizuku), [HiddenApiBypass](https://github.com/LSPosed/AndroidHiddenApiBypass)
+- [Google Sans Flex](https://github.com/googlefonts/googlesans-flex), licensed under the SIL Open Font License 1.1 ([art/GoogleSansFlex-OFL.txt](art/GoogleSansFlex-OFL.txt))
 
-If you find AppLock useful, please consider supporting its development with a small donation.
-Every contribution matters.
-
-**OpenCollective:** https://opencollective.com/invokevirtual
-
-**Bitcoin (BTC):** `bc1qec5ccz85qn90a6zxnqnes0rx274cv6vw7j5x4g`
-
-**Ethereum (ETH):** `0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816`
-
-**Solana (SOL):** `7FxTAJLmhXFp6wxVbUTpf8jDmzEX1CKVMdE8oLPNQvyb`
-
-**Litecoin (LTC):** `ltc1q3pqyj5ge5rdmqr00w03x4tlhm6rhcc6wrfyx8k`
-
-**Monero (XMR):**
-`44w9JtiXxwifyH5CU6Ln1BNViyWNz4z7pEZ4nqbCvUejiK3yEjdyAv6bAofXX2Eh6Fbe3DXJ6eCX6YWKh9SF15fyKBjeJ5H`
-
-<br/>
-
-**UPI (India):** `pranavpurwar@fam`
-
-<img src="https://github.com/PranavPurwar/Reef/raw/refs/heads/main/upi.jpeg" width="200" />
-
----
+Found a bug or have an idea? [Open an issue](https://github.com/riyadmondol2006/AppLock-Revived/issues).
 
 ## License
 
-```text
-MIT License
-
-Copyright (c) 2023-2025 Pranav Purwar
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+MIT. See [LICENSE](LICENSE). Original work © 2023-2025 Pranav Purwar; modifications © 2026 Riyad Mondol.
