@@ -57,7 +57,10 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import dev.riyadm.appintro.AppIntro
 import dev.riyadm.appintro.IntroPage
@@ -80,6 +83,7 @@ import dev.riyadm.applock.ui.icons.Accessibility
 import dev.riyadm.applock.ui.icons.BatterySaver
 import dev.riyadm.applock.ui.icons.Display
 import dev.riyadm.applock.ui.motion.rememberAppHaptics
+import kotlinx.coroutines.delay
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 
@@ -91,6 +95,7 @@ enum class AppUsageMethod {
 
 private const val TAG = "AppIntroScreen"
 private const val SHIZUKU_REQUEST_CODE = 423
+private const val PERMISSION_POLL_MS = 1_000L
 
 private fun Context.isIgnoringBatteryOptimizations(): Boolean {
     val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -230,6 +235,18 @@ fun AppIntroScreen(navController: NavController) {
     LifecycleResumeEffect(Unit) {
         refreshPermissions()
         onPauseOrDispose { }
+    }
+
+    // Grants can also arrive without leaving the app (quick settings, system dialogs),
+    // so keep the status rows current while onboarding is in front.
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            while (true) {
+                delay(PERMISSION_POLL_MS)
+                refreshPermissions()
+            }
+        }
     }
 
     DisposableEffect(Unit) {

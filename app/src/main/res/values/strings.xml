@@ -9,24 +9,24 @@
     <string name="incorrect_pass_try_again">Incorrect password. Please try again.</string>
     <string name="password_verified_admin">Password verified, you can now disable admin permission</string>
     <string name="choose_app_detection">Choose App Detection Method</string>
-    <string name="app_detection_desc">Select how you want AppLock to detect when protected apps are launched.</string>
+    <string name="app_detection_desc">Select how you want App Lock Revived to detect when protected apps are launched.</string>
     <string name="notif_perm">Notification Permission</string>
-    <string name="notif_perm_desc">AppLock needs permission to show notifications to keep you informed and keep running in background properly. Tap \'Next\' to grant permission.</string>
+    <string name="notif_perm_desc">App Lock Revived needs permission to show notifications to keep you informed and keep running in background properly. Tap \'Next\' to grant permission.</string>
     <string name="notif_perm_granted">Notification permission is automatically granted on your Android version.</string>
-    <string name="welc_applock">Welcome to AppLock</string>
-    <string name="welcome_desc">Protect your apps and privacy with AppLock. We\'ll guide you through a quick setup.</string>
+    <string name="welc_applock">Welcome to App Lock Revived</string>
+    <string name="welcome_desc">Protect your apps and privacy with App Lock Revived. We\'ll guide you through a quick setup.</string>
     <string name="secure_apps">Secure Your Apps</string>
     <string name="secure_apps_desc">Keep your private apps protected with advanced locking mechanisms</string>
     <string name="display_over_apps">Display Over Other Apps</string>
-    <string name="display_over_apps_desc">AppLock needs permission to display over other apps to show the lock screen. Tap \'Next\' and enable the permission.</string>
+    <string name="display_over_apps_desc">App Lock Revived needs permission to display over other apps to show the lock screen. Tap \'Next\' and enable the permission.</string>
 
     <!-- AppIntroScreen -->
-    <string name="notification_permission_required_desc">Notification permission is required for AppLock to function properly.</string>
+    <string name="notification_permission_required_desc">Notification permission is required for App Lock Revived to function properly.</string>
     <string name="shizuku_permission_granted">Shizuku permission granted</string>
     <string name="shizuku_permission_required_desc">Shizuku permission is required for advanced features.</string>
-    <string name="allow_display_over_other_apps">Please allow AppLock to display over other apps.</string>
+    <string name="allow_display_over_other_apps">Please allow App Lock Revived to display over other apps.</string>
     <string name="disable_battery_optimization_title">Disable Battery Optimization</string>
-    <string name="disable_battery_optimization_desc">To ensure AppLock runs reliably in the background, please disable battery optimizations for the app. Tap \'Next\' to open settings.</string>
+    <string name="disable_battery_optimization_desc">To ensure App Lock Revived runs reliably in the background, please disable battery optimizations for the app. Tap \'Next\' to open settings.</string>
     <string name="accessibility_service_title">Accessibility Service</string>
     <string name="accessibility_service_card_desc">Standard method that works on most devices. Requires accessibility permission. May have slight delays on some OEMs.</string>
     <string name="usage_stats_title">Usage Stats</string>
@@ -35,7 +35,7 @@
     <string name="shizuku_service_card_desc">Advanced method with better performance and superior experience. Requires Shizuku app installed and enabled via ADB.</string>
     <string name="can_change_later_in_settings">You can change this later in settings</string>
     <string name="app_intro_accessibility_desc">
-Accessibility service is required for AppLock to function properly.
+Accessibility service is required for App Lock Revived to function properly.
 
 If you get the message \"Restricted Setting\", please manually go to Settings > Apps > App Lock > Upper Right menu, and press \"Allow restricted settings\".
 
@@ -54,7 +54,7 @@ Shizuku provides advanced features like locking system apps and more.
 Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant permission.
     </string>
     <string name="app_intro_complete_privacy_title">Complete Privacy</string>
-    <string name="app_intro_complete_privacy_desc">Your data never leaves your device. AppLock protects your privacy at all times.</string>
+    <string name="app_intro_complete_privacy_desc">Your data never leaves your device. App Lock Revived protects your privacy at all times.</string>
     <string name="all_permissions_required">All permissions are required to proceed.</string>
     <string name="next_button">Next</string>
     <string name="get_started_button">Get Started</string>
@@ -131,7 +131,6 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="settings_screen_title">Settings</string>
     <string name="settings_screen_back_cd">Back</string>
     <string name="settings_screen_support_development_dialog_title">Support Development</string>
-    <string name="support_development_text">Hi, I\'m Pranav, the developer of App Lock. I\'m a student developer passionate about creating useful apps. If you find it helpful, please consider supporting its development with a small donation. Any amount is greatly appreciated and helps me continue to improve the app and work on new features. Thank you for your support!</string>
     <string name="settings_screen_support_development_donate_button">Donate</string>
     <string name="settings_screen_permission_required_dialog_title">Permission Required</string>
     <string name="settings_screen_permission_required_dialog_text">To enable Anti-Uninstall, App Lock requires two permissions: Device Administrator and Accessibility Service. These are necessary to prevent unauthorized uninstallation and ensure robust protection. Would you like to proceed with granting these permissions?</string>
@@ -166,11 +165,11 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="settings_screen_change_pin_title">Change PIN</string>
     <string name="settings_screen_change_pin_desc">Update your current PIN</string>
     <string name="settings_screen_anti_uninstall_title">Anti-Uninstall Protection</string>
-    <string name="settings_screen_anti_uninstall_desc">Prevent unauthorized uninstallation of App Lock</string>
+    <string name="settings_screen_anti_uninstall_desc">Prevent unauthorized uninstallation of App Lock Revived</string>
     <string name="settings_screen_haptic_feedback_title">Haptic Feedback</string>
     <string name="settings_screen_haptic_feedback_desc">Disable haptic feedback on key presses</string>
     <string name="settings_screen_backend_implementation_title">Backend Implementation</string>
-    <string name="settings_screen_backend_implementation_desc">Select the method AppLock uses to detect foreground apps</string>
+    <string name="settings_screen_backend_implementation_desc">Select the method App Lock Revived uses to detect foreground apps</string>
     <string name="settings_screen_backend_implementation_accessibility_title">Accessibility Service</string>
     <string name="settings_screen_backend_implementation_accessibility_desc">Standard method, may have slight delays on some OEMs.</string>
     <string name="settings_screen_backend_implementation_usage_stats_title">Usage Stats</string>
@@ -182,7 +181,7 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Enable experimental features for Shizuku backend (e.g., lock specific activities). May cause instability.</string>
     <string name="settings_screen_about_title">About</string>
     <string name="settings_screen_developer_title">Developer</string>
-    <string name="settings_screen_developer_name">Pranav Purwar</string>
+    <string name="settings_screen_developer_name">Riyad Mondol</string>
     <string name="settings_screen_source_code_title">Source Code</string>
     <string name="settings_screen_source_code_desc">View the source code on GitHub</string>
     <string name="settings_screen_support_development_title">Support Development</string>
@@ -299,7 +298,7 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="permission_warning_shizuku_title">Shizuku Permission</string>
     <string name="permission_warning_shizuku_desc">Securely detects when protected apps are launched.</string>
     <string name="permission_warning_device_admin_title">Device Admin</string>
-    <string name="permission_warning_device_admin_desc">Prevents AppLock from being uninstalled.</string>
+    <string name="permission_warning_device_admin_desc">Prevents App Lock Revived from being uninstalled.</string>
     <string name="permission_warning_title_suffix"> Required</string>
 
     <string name="join_community">Join Community</string>
@@ -307,13 +306,4 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="join_discord">Join Discord</string>
     <string name="maybe_later">Maybe Later</string>
 
-    <string name="donate">Donate</string>
-    <string name="donate_subtitle">Keep AppLock free and ad-free forever</string>
-    <string name="donate_dialog_title">Support Development</string>
-    <string name="donate_dialog_message">
-        Hi, I’m Pranav. I’m a student developer building AppLock in my spare time to keep it private and ad-free for everyone.
-        Juggling this project with my studies is a challenge, but your support makes it possible.
-        If AppLock has helped you, please consider a small donation—any amount means the world to me and keeps this project alive.
-        Thank you for believing in my work!
-    </string>
 </resources>

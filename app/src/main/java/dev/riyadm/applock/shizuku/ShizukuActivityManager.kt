@@ -20,7 +20,6 @@ import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.BackendImplementation
 import androidx.core.content.ContextCompat
 import dev.riyadm.applock.services.isDeviceLocked
-import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
@@ -154,25 +153,5 @@ private fun getTasksWrapper(): List<ActivityManager.RunningTaskInfo> = when {
 private fun List<ActivityManager.RunningTaskInfo>.filterVisible(): List<ActivityManager.RunningTaskInfo> {
     return filter {
         it.isRunning && it.isVisible
-    }
-}
-
-fun TaskInfo.isFreeform(): Boolean {
-    try {
-        return HiddenApiBypass.invoke(TaskInfo::class.java, this, "isFreeform") as Boolean
-    } catch (e: Throwable) {
-        e.printStackTrace()
-        return false
-    }
-}
-
-fun TaskInfo.isFocused(): Boolean {
-    try {
-        return HiddenApiBypass.getInstanceFields(TaskInfo::class.java)
-            .firstOrNull { it.name == "isFocused" }!!
-            .getBoolean(this)
-    } catch (e: Throwable) {
-        e.printStackTrace()
-        return false
     }
 }

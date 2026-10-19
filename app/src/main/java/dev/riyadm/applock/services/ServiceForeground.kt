@@ -68,6 +68,8 @@ internal object ServiceForeground {
     }
 
     private fun canUseSystemExempted(context: Context): Boolean {
+        // The systemExempted type (and its exact-alarm requirement) only exists on Android 14+.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) return false
         return try {
             val dpm = context.getSystemService<DevicePolicyManager>()
             val adminActive = dpm?.isAdminActive(ComponentName(context, DeviceAdmin::class.java)) == true

@@ -2,6 +2,7 @@ package dev.riyadm.applock.ui.theme
 
 import android.content.Context
 import android.os.Build
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
@@ -14,12 +15,15 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.PreferencesRepository
 
@@ -94,6 +98,19 @@ fun AppLockTheme(
     if (useDark && AppearanceSettings.amoledBlack) colorScheme = colorScheme.toAmoled()
 
     val shapes = Shapes(largeIncreased = RoundedCornerShape(36.0.dp))
+
+    // enableEdgeToEdge() follows the system dark mode; keep bar icons readable when the
+    // in-app theme differs from it.
+    val window = LocalActivity.current?.window
+    val view = LocalView.current
+    if (window != null && !view.isInEditMode) {
+        SideEffect {
+            WindowCompat.getInsetsController(window, view).apply {
+                isAppearanceLightStatusBars = !useDark
+                isAppearanceLightNavigationBars = !useDark
+            }
+        }
+    }
 
     MaterialExpressiveTheme(
         colorScheme = colorScheme,

@@ -75,6 +75,11 @@ android {
         aidl = true
     }
 
+    lint {
+        // New strings fall back to English until they are translated.
+        warning += setOf("MissingTranslation", "LocalContextGetResourceValueCall")
+    }
+
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false

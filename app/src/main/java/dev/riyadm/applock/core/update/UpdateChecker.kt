@@ -129,6 +129,8 @@ object UpdateChecker {
             connection.setRequestProperty("Accept", "application/vnd.github+json")
             connection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28")
             connection.setRequestProperty("User-Agent", "AppLock-Revived-Android")
+            // 404: the repository has no published release yet, which means "up to date".
+            if (connection.responseCode == HttpURLConnection.HTTP_NOT_FOUND) return JSONObject()
             if (connection.responseCode != HttpURLConnection.HTTP_OK) {
                 Log.w(TAG, "Unexpected response: ${connection.responseCode}")
                 return null
