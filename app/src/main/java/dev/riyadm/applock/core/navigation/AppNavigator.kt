@@ -30,6 +30,7 @@ import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
 import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
+import dev.riyadm.applock.features.profiles.ui.ProfilesScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreenSpec
 import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
@@ -107,6 +108,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.UnlockHistory.route) {
             UnlockHistoryScreen(navController)
+        }
+
+        composable(Screen.Profiles.route) {
+            ProfilesScreen(navController)
         }
     }
 }

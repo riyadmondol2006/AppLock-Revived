@@ -108,8 +108,10 @@ class LockedAppsRepository(context: Context) {
     }
 
     companion object {
-        private const val PREFS_NAME = "app_lock_prefs"
-        private const val KEY_LOCKED_APPS = "locked_apps"
+        internal const val PREFS_NAME = "app_lock_prefs"
+
+        /** The active lock profile's apps; see [LockProfilesRepository]. */
+        internal const val KEY_LOCKED_APPS = "locked_apps"
         private const val KEY_TRIGGER_EXCLUDED_APPS = "trigger_excluded_apps"
         private const val KEY_ANTI_UNINSTALL_APPS = "anti_uninstall_apps"
     }

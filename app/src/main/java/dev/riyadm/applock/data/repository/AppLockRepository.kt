@@ -1,6 +1,7 @@
 package dev.riyadm.applock.data.repository
 
 import android.content.Context
+import dev.riyadm.applock.core.tile.ProfileTileService
 import dev.riyadm.applock.data.manager.BackendServiceManager
 import dev.riyadm.applock.services.AppLockManager
 
@@ -14,6 +15,12 @@ class AppLockRepository(private val context: Context) {
     private val lockedAppsRepository = LockedAppsRepository(context)
     private val backendServiceManager = BackendServiceManager()
     val unlockLog = UnlockLogRepository(context)
+    val profiles = LockProfilesRepository(context)
+    val appPolicies = AppPolicyRepository(
+        context,
+        globalBiometricEnabled = ::isBiometricAuthEnabled,
+        globalAutoPrompt = ::isBiometricAutoPromptEnabled
+    )
 
     fun getLockedApps(): Set<String> = lockedAppsRepository.getLockedApps()
     fun addLockedApp(packageName: String) {
@@ -81,7 +88,12 @@ class AppLockRepository(private val context: Context) {
     fun isProtectEnabled(): Boolean = preferencesRepository.isProtectEnabled()
 
     fun setUnlockTimeDuration(minutes: Int) = preferencesRepository.setUnlockTimeDuration(minutes)
-    fun getUnlockTimeDuration(): Int = preferencesRepository.getUnlockTimeDuration()
+
+    /** Unlock duration in effect: the active profile's override, else the global setting. */
+    fun getUnlockTimeDuration(): Int =
+        profiles.activeUnlockDurationOverride() ?: preferencesRepository.getUnlockTimeDuration()
+
+    fun getGlobalUnlockTimeDuration(): Int = preferencesRepository.getUnlockTimeDuration()
     fun setAutoUnlockEnabled(enabled: Boolean) = preferencesRepository.setAutoUnlockEnabled(enabled)
     fun isAutoUnlockEnabled(): Boolean = preferencesRepository.isAutoUnlockEnabled()
 
@@ -159,6 +171,30 @@ class AppLockRepository(private val context: Context) {
             0L
         } else {
             preferencesRepository.registerFailedAttempt()
+        }
+    }
+
+    // Per-app security level and lock profiles
+    fun policyFor(packageName: String): AppLockPolicy = appPolicies.policyFor(packageName)
+
+    fun getActiveProfile(): LockProfile = profiles.active()
+
+    /**
+     * Activates a profile and forgets every running unlock, so all apps of the new profile ask
+     * for authentication again. Only call this from authenticated UI.
+     */
+    fun switchProfile(id: String): Boolean {
+        if (profiles.switchTo(id) == null) return false
+        AppLockManager.lockAllNow()
+        ProfileTileService.requestUpdate(context)
+        return true
+    }
+
+    fun setProfileMembership(profileId: String, packageName: String, member: Boolean) {
+        if (profileId == profiles.active().id) {
+            if (member) addLockedApp(packageName) else removeLockedApp(packageName)
+        } else {
+            profiles.setStoredMembership(profileId, packageName, member)
         }
     }
 

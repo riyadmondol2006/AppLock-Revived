@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Profile names -->
+    <string name="profiles_name_home">Home</string>
+    <string name="profiles_name_work">Work</string>
+    <string name="profiles_name_guest">Guest</string>
+    <string name="profiles_name_custom">Custom</string>
+
+    <!-- Home screen: profile selector -->
+    <string name="profiles_selector_title">Lock profile</string>
+    <string name="profiles_manage_cd">Manage profiles</string>
+    <string name="profiles_switched">Switched to %1$s</string>
+    <string name="profiles_lock_all_user_apps">Lock all apps</string>
+
+    <!-- Profiles screen -->
+    <string name="profiles_title">Lock profiles</string>
+    <string name="profiles_subtitle">Active: %1$s</string>
+    <string name="profiles_intro">Each profile is its own list of locked apps. Only the active profile is enforced, and switching always asks for your credential first.</string>
+    <string name="profiles_section_profiles">Profiles</string>
+    <string name="profiles_active_badge">Active</string>
+    <plurals name="profiles_app_count">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="profiles_summary">%1$s · %2$s</string>
+    <string name="profiles_unlock_follow_global">Unlock duration from settings</string>
+    <string name="profiles_unlock_override">Unlock: %1$s</string>
+    <string name="profiles_new">New profile</string>
+    <string name="profiles_activate">Activate</string>
+    <string name="profiles_rename">Rename</string>
+    <string name="profiles_delete">Delete</string>
+    <string name="profiles_unlock_duration">Unlock duration</string>
+    <string name="profiles_unlock_duration_global">Same as settings (%1$s)</string>
+    <string name="profiles_unlock_duration_sheet_desc">How long apps of this profile stay unlocked after you unlock them.</string>
+    <string name="profiles_name_label">Profile name</string>
+    <string name="profiles_create_title">New profile</string>
+    <string name="profiles_create_desc">Starts with the apps locked in %1$s. You can change them after switching to it.</string>
+    <string name="profiles_create_confirm">Create</string>
+    <string name="profiles_rename_title">Rename profile</string>
+    <string name="profiles_save">Save</string>
+    <string name="profiles_delete_title">Delete %1$s?</string>
+    <string name="profiles_delete_text">Its list of locked apps is removed. Your other profiles aren\'t affected.</string>
+    <string name="profiles_guest_hint">Tip: activate Guest and use “Lock all apps” before handing your phone to someone, then unlock only what they may use.</string>
+    <string name="profiles_options_cd">Options for %1$s</string>
+
+    <!-- Per-app security sheet -->
+    <string name="policy_tune_cd">Security options for %1$s</string>
+    <string name="policy_sheet_section_method">How to unlock</string>
+    <string name="policy_sheet_section_profiles">Locked in profiles</string>
+    <string name="policy_level_default">Default</string>
+    <string name="policy_level_default_desc">Follow the biometric settings</string>
+    <string name="policy_level_biometric">Biometric only</string>
+    <string name="policy_level_biometric_desc">Fingerprint or face. Uses your credential if biometrics are unavailable</string>
+    <string name="policy_level_credential">Credential only</string>
+    <string name="policy_level_credential_desc">Always ask for your PIN, pattern or password</string>
+    <string name="policy_level_two_step">Two-step</string>
+    <string name="policy_level_two_step_desc">Biometrics, then your credential. Both are required</string>
+    <string name="policy_biometric_unavailable">Biometrics aren\'t set up on this device, so this app will ask for your credential.</string>
+    <string name="policy_sheet_footer">Uses your existing PIN, pattern or password and the biometrics enrolled on this device.</string>
+
+    <!-- Lock screen (two-step and biometric-only) -->
+    <string name="policy_lock_step_biometric">Step 1 of 2: verify with biometrics</string>
+    <string name="policy_lock_step_pin">Now enter your PIN</string>
+    <string name="policy_lock_step_pattern">Now draw your pattern</string>
+    <string name="policy_lock_step_password">Now enter your password</string>
+    <string name="policy_lock_biometric_required">Use your fingerprint or face to unlock</string>
+    <string name="policy_lock_use_biometric">Use biometrics</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_profile_label">Lock profile</string>
+</resources>

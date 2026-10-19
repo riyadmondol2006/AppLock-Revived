@@ -3,6 +3,7 @@ package dev.riyadm.applock.features.applist.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -109,6 +110,7 @@ fun AppSwitchListItem(
     selected: Boolean = false,
     onSelectedChange: (Boolean) -> Unit = {},
     onLongClick: (() -> Unit)? = null,
+    trailingAction: (@Composable () -> Unit)? = null,
 ) {
     val shapes = ListItemDefaults.segmentedShapes(index = index, count = count)
     val colors = appListItemColors()
@@ -151,20 +153,23 @@ fun AppSwitchListItem(
             leadingContent = leading,
             supportingContent = supporting,
             trailingContent = {
-                Switch(
-                    checked = checked,
-                    onCheckedChange = null,
-                    enabled = enabled,
-                    thumbContent = if (checked) {
-                        {
-                            Icon(
-                                imageVector = checkedThumbIcon,
-                                contentDescription = null,
-                                modifier = Modifier.size(SwitchDefaults.IconSize)
-                            )
-                        }
-                    } else null
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    trailingAction?.invoke()
+                    Switch(
+                        checked = checked,
+                        onCheckedChange = null,
+                        enabled = enabled,
+                        thumbContent = if (checked) {
+                            {
+                                Icon(
+                                    imageVector = checkedThumbIcon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(SwitchDefaults.IconSize)
+                                )
+                            }
+                        } else null
+                    )
+                }
             },
             onLongClick = onLongClick,
             onLongClickLabel = if (onLongClick != null) {
