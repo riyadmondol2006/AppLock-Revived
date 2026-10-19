@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="fastlane/metadata/android/en-US/images/icon.png" alt="App Lock Revived icon" width="128" />
+  <img src="fastlane/metadata/android/en-US/images/icon.png" alt="App Lock Revived icon" width="160" />
 </div>
 
 <h1 align="center">App Lock Revived</h1>
@@ -19,16 +19,21 @@
   <img src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 8.0+">
 </p>
 
-<p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="30%" alt="Home screen with protection status and locked apps"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%" alt="Lock screen shown over a locked app"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%" alt="Settings: appearance and lock screen options"/>
-</p>
-<p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%" alt="Creating a PIN"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="30%" alt="Unlock history"/>
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="30%" alt="About screen"/>
-</p>
+## Screenshots
+
+<table align="center">
+  <tr>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="220" alt="Home"/><br/><sub><b>Home</b></sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="220" alt="Lock screen"/><br/><sub><b>Lock screen</b></sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="220" alt="Settings"/><br/><sub><b>Settings</b></sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="220" alt="Create a PIN"/><br/><sub><b>Create a PIN</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="220" alt="Unlock history"/><br/><sub><b>Unlock history</b></sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="220" alt="About"/><br/><sub><b>About</b></sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7.png" width="220" alt="Welcome"/><br/><sub><b>Welcome</b></sub></td>
+  </tr>
+</table>
 
 ---
 
