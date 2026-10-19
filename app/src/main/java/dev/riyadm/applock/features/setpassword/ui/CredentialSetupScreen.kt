@@ -1,5 +1,6 @@
 package dev.riyadm.applock.features.setpassword.ui
 
+import kotlinx.coroutines.delay
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -92,10 +93,9 @@ import androidx.compose.ui.unit.min
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import com.mrhwsn.composelock.Dot
-import com.mrhwsn.composelock.LockCallback
-import com.mrhwsn.composelock.PatternLock
 import dev.riyadm.appintro.MorphingHero
+import dev.riyadm.applock.features.lockscreen.ui.PatternPad
+import dev.riyadm.applock.features.lockscreen.ui.PatternPadState
 import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.navigation.Screen
@@ -650,46 +650,28 @@ private fun PatternInput(
     onResult: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val density = LocalDensity.current
-    val currentOnStart by rememberUpdatedState(onStart)
-    val currentOnDot by rememberUpdatedState(onDot)
-    val currentOnResult by rememberUpdatedState(onResult)
-    val currentEnabled by rememberUpdatedState(enabled)
-    val dotColor by animateColorAsState(
-        if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
-        MaterialTheme.motionScheme.defaultEffectsSpec(),
-        label = "pattern dots"
-    )
-    val lineColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+    val padState = remember { PatternPadState() }
+    val scope = rememberCoroutineScope()
 
     BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
         val side = min(maxWidth, if (maxHeight.value.isFinite()) maxHeight else maxWidth)
-        Surface(
-            shape = MaterialTheme.shapes.extraLarge,
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
+        PatternPad(
+            state = padState,
+            enabled = enabled,
+            isError = isError,
+            onStart = onStart,
+            onDotAdded = onDot,
+            onPatternComplete = { ids ->
+                onResult(ids.joinToString(""))
+                scope.launch {
+                    delay(PATTERN_CLEAR_DELAY_MS)
+                    padState.clear()
+                }
+            },
             modifier = Modifier
                 .widthIn(max = side)
                 .aspectRatio(1f)
-        ) {
-            PatternLock(
-                modifier = Modifier.fillMaxSize(),
-                dimension = 3,
-                sensitivity = with(density) { 40.dp.toPx() },
-                dotsColor = dotColor,
-                dotsSize = with(density) { 7.dp.toPx() },
-                linesColor = lineColor.copy(alpha = 0.8f),
-                linesStroke = with(density) { 6.dp.toPx() },
-                animationDuration = 120,
-                callback = object : LockCallback {
-                    override fun onStart(dot: Dot) = currentOnStart()
-                    override fun onDotConnected(dot: Dot) = currentOnDot()
-                    override fun onResult(result: List<Dot>) {
-                        if (!currentEnabled) return
-                        currentOnResult(result.joinToString("") { it.id.toString() })
-                    }
-                }
-            )
-        }
+        )
     }
 }
 
@@ -758,3 +740,5 @@ private fun PasswordInput(
         }
     }
 }
+
+private const val PATTERN_CLEAR_DELAY_MS = 350L
