@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App intro -->
+    <string name="intro_welcome_title">Welcome to App Lock Revived</string>
+    <string name="intro_welcome_desc">Protect your apps and your privacy. We\'ll walk you through a quick setup. It only takes a minute.</string>
+    <string name="intro_page_indicator">Step %1$d of %2$d</string>
+    <string name="intro_back">Back</string>
+    <string name="intro_allow_button">Allow</string>
+    <string name="intro_status_granted">Allowed</string>
+    <string name="intro_status_not_granted">Not allowed yet</string>
+    <string name="intro_open_app_info">Open App info</string>
+    <string name="intro_battery_title">Keep App Lock running</string>
+    <string name="intro_battery_desc">Android may stop App Lock Revived in the background to save battery. When that happens, apps stop being locked after a reboot or after a few minutes. Allow it to run without battery restrictions.</string>
+    <string name="intro_battery_oem_hint">On some phones (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) also open App info, set battery usage to \"Unrestricted\" and turn on autostart if available.</string>
+    <string name="intro_accessibility_desc">App Lock Revived uses the accessibility service only to notice when a protected app is opened. Tap Allow, find App Lock Revived in the list and turn it on.</string>
+    <string name="intro_shizuku_not_running">Shizuku isn\'t running. Start it in the Shizuku app, then tap Allow again.</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">Seeing \"Restricted setting\"?</string>
+    <string name="ob_restricted_settings_desc">Android blocks accessibility for apps installed from outside an app store until you allow it.</string>
+    <string name="ob_restricted_settings_steps">1. Tap Open App info below\n2. Tap ⋮ in the top corner\n3. Choose Allow restricted settings and confirm\n4. Come back and turn on the service</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. Tap Open settings\n2. Find App Lock Revived (it may be under Downloaded apps or Installed apps)\n3. Turn it on and tap Allow</string>
+    <string name="ob_usage_stats_dialog_title">Grant usage access</string>
+    <string name="ob_usage_stats_dialog_text">You\'ve chosen Usage Stats mode, but App Lock Revived needs usage access to detect when protected apps are opened.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">Set up lock</string>
+    <string name="setup_title_change">Change lock</string>
+    <string name="setup_type_pin">PIN</string>
+    <string name="setup_type_pattern">Pattern</string>
+    <string name="setup_type_password">Password</string>
+    <string name="setup_create_pin">Create a PIN</string>
+    <string name="setup_confirm_pin">Confirm your PIN</string>
+    <string name="setup_verify_pin">Enter your current PIN</string>
+    <string name="setup_create_pattern">Draw a pattern</string>
+    <string name="setup_confirm_pattern">Draw it again</string>
+    <string name="setup_verify_pattern">Draw your current pattern</string>
+    <string name="setup_create_password">Create a password</string>
+    <string name="setup_confirm_password">Confirm your password</string>
+    <string name="setup_verify_password">Enter your current password</string>
+    <string name="setup_hint_pin">Use at least 4 digits</string>
+    <string name="setup_hint_pattern">Connect at least 4 dots</string>
+    <string name="setup_hint_password">Use at least 4 characters</string>
+    <string name="setup_hint_confirm">Enter it once more to confirm</string>
+    <string name="setup_hint_verify">Confirm it\'s you before changing your lock</string>
+    <string name="setup_pattern_too_short">Connect at least 4 dots</string>
+    <string name="setup_patterns_dont_match">Patterns don\'t match. Try again.</string>
+    <string name="setup_continue">Continue</string>
+    <string name="setup_confirm">Confirm</string>
+    <string name="setup_delete">Delete</string>
+    <string name="setup_show_password">Show password</string>
+    <string name="setup_hide_password">Hide password</string>
+    <string name="setup_use_keyboard">Use keyboard instead</string>
+    <string name="setup_use_keypad">Use number pad</string>
+    <string name="setup_digits_entered">%1$d digits entered</string>
+</resources>
