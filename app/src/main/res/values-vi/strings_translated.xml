@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">Ngăn người khác gỡ cài đặt ứng dụng khi chưa được phép.</string>
+    <string name="accessibility_service_description">Cho phép App Lock Revived phát hiện khi ứng dụng được bảo vệ được mở và hiển thị màn hình xác minh mật khẩu.</string>
+
+    <string name="unlock_to_disable_admin">Nhập mật khẩu để tắt quyền quản trị.</string>
+    <string name="incorrect_pin_try_again">Mã PIN không đúng. Vui lòng thử lại.</string>
+    <string name="incorrect_pass_try_again">Mật khẩu không đúng. Vui lòng thử lại.</string>
+    <string name="password_verified_admin">Đã xác minh mật khẩu, giờ bạn có thể tắt quyền quản trị</string>
+    <string name="choose_app_detection">Chọn cách phát hiện ứng dụng</string>
+    <string name="app_detection_desc">Chọn cách App Lock Revived phát hiện khi ứng dụng được bảo vệ được mở.</string>
+    <string name="notif_perm">Quyền thông báo</string>
+    <string name="notif_perm_desc">App Lock Revived cần quyền hiển thị thông báo để giúp bạn nắm thông tin và hoạt động ổn định ở chế độ nền. Nhấn \'Tiếp\' để cấp quyền.</string>
+    <string name="notif_perm_granted">Quyền thông báo được cấp tự động trên phiên bản Android của bạn.</string>
+    <string name="welc_applock">Chào mừng bạn đến với App Lock Revived</string>
+    <string name="welcome_desc">Bảo vệ ứng dụng và quyền riêng tư của bạn với App Lock Revived. Chúng tôi sẽ hướng dẫn bạn thiết lập nhanh.</string>
+    <string name="secure_apps">Bảo mật ứng dụng</string>
+    <string name="secure_apps_desc">Giữ các ứng dụng riêng tư của bạn được bảo vệ bằng cơ chế khóa nâng cao</string>
+    <string name="display_over_apps">Hiển thị trên các ứng dụng khác</string>
+    <string name="display_over_apps_desc">App Lock Revived cần quyền hiển thị trên các ứng dụng khác để hiện màn hình khóa. Nhấn \'Tiếp\' và bật quyền này.</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">App Lock Revived cần quyền thông báo để hoạt động đúng cách.</string>
+    <string name="shizuku_permission_granted">Đã cấp quyền Shizuku</string>
+    <string name="shizuku_permission_required_desc">Cần quyền Shizuku cho các tính năng nâng cao.</string>
+    <string name="allow_display_over_other_apps">Vui lòng cho phép App Lock Revived hiển thị trên các ứng dụng khác.</string>
+    <string name="disable_battery_optimization_title">Tắt tối ưu hóa pin</string>
+    <string name="disable_battery_optimization_desc">Để App Lock Revived chạy ổn định ở chế độ nền, vui lòng tắt tối ưu hóa pin cho ứng dụng. Nhấn \'Tiếp\' để mở cài đặt.</string>
+    <string name="accessibility_service_title">Dịch vụ trợ năng</string>
+    <string name="accessibility_service_card_desc">Phương thức tiêu chuẩn, hoạt động trên hầu hết thiết bị. Cần quyền trợ năng. Có thể chậm trễ đôi chút trên một số thiết bị OEM.</string>
+    <string name="usage_stats_title">Thống kê sử dụng</string>
+    <string name="usage_stats_card_desc">Phương thức thử nghiệm dùng thống kê sử dụng của hệ thống. Hoạt động tốt hơn trên một số thiết bị.</string>
+    <string name="shizuku_service_title">Dịch vụ Shizuku</string>
+    <string name="shizuku_service_card_desc">Phương thức nâng cao, hiệu năng tốt hơn và trải nghiệm vượt trội. Cần cài đặt và bật ứng dụng Shizuku qua ADB.</string>
+    <string name="can_change_later_in_settings">Bạn có thể thay đổi điều này sau trong cài đặt</string>
+    <string name="app_intro_accessibility_desc">
+Dịch vụ trợ năng là bắt buộc để App Lock Revived hoạt động đúng cách.
+
+Nếu bạn thấy thông báo \"Cài đặt bị hạn chế\", hãy vào Cài đặt > Ứng dụng > App Lock > menu góc trên bên phải, rồi nhấn \"Cho phép cài đặt bị hạn chế\".
+
+Nhấn \'Tiếp\' để bật.
+    </string>
+    <string name="app_intro_usage_stats_title">Quyền thống kê sử dụng</string>
+    <string name="app_intro_usage_stats_desc">
+Quyền này cần thiết để phát hiện khi ứng dụng bị khóa được mở.
+
+Nếu bạn thấy thông báo \"Cài đặt bị hạn chế\", hãy vào Cài đặt > Ứng dụng > App Lock > menu góc trên bên phải, rồi nhấn \"Cho phép cài đặt bị hạn chế\".
+
+Nhấn \'Tiếp\' để bật.</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku cung cấp các tính năng nâng cao như khóa ứng dụng hệ thống và nhiều hơn nữa.
+
+Hãy đảm bảo bạn đã cài đặt và bật Shizuku qua ADB. Nhấn \'Tiếp\' để cấp quyền.
+    </string>
+    <string name="app_intro_complete_privacy_title">Quyền riêng tư tuyệt đối</string>
+    <string name="app_intro_complete_privacy_desc">Dữ liệu của bạn không bao giờ rời khỏi thiết bị. App Lock Revived bảo vệ quyền riêng tư của bạn mọi lúc.</string>
+    <string name="all_permissions_required">Cần cấp tất cả quyền để tiếp tục.</string>
+    <string name="next_button">Tiếp</string>
+    <string name="get_started_button">Bắt đầu</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">Ứng dụng</string>
+    <string name="this_app">ứng dụng này</string>
+    <string name="unlock_app_title">Mở khóa %1$s</string>
+    <string name="confirm_biometric_subtitle">Xác nhận sinh trắc học để tiếp tục</string>
+    <string name="use_pin_button">Dùng mã PIN</string>
+    <string name="enter_password_to_continue">Nhập mật khẩu để tiếp tục</string>
+    <string name="biometric_authentication_cd">Xác thực sinh trắc học</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">Vui lòng đặt mã PIN để tiếp tục</string>
+    <string name="authenticate_to_reset_pin_title">Xác thực để đặt lại mã PIN</string>
+    <string name="use_device_pin_pattern_password_subtitle">Dùng mã PIN, hình mở khóa hoặc mật khẩu của thiết bị</string>
+    <string name="enter_current_pin_title">Nhập mã PIN hiện tại</string>
+    <string name="confirm_pin_title">Xác nhận mã PIN</string>
+    <string name="set_new_pin_title">Đặt mã PIN mới</string>
+    <string name="create_pin_explanation">Vui lòng tạo mã PIN để bảo vệ các ứng dụng bị khóa. Mã PIN này sẽ được yêu cầu mỗi khi bạn truy cập một ứng dụng bị khóa.</string>
+    <string name="enter_current_pin_label">Nhập mã PIN hiện tại</string>
+    <string name="confirm_new_pin_label">Xác nhận mã PIN mới</string>
+    <string name="create_new_pin_label">Tạo mã PIN mới</string>
+    <string name="tooltip_enter_current_pin">Nhập mã PIN hiện tại để tiếp tục</string>
+    <string name="tooltip_confirm_pin">Vui lòng nhập lại cùng mã PIN để xác nhận</string>
+    <string name="tooltip_create_pin_min_length">Tạo mã PIN gồm ít nhất 4 chữ số</string>
+    <string name="information_cd">Thông tin</string>
+    <string name="pins_dont_match_error">Mã PIN không khớp. Thử lại.</string>
+    <string name="pin_min_length_error">Mã PIN phải có ít nhất 4 chữ số</string>
+    <string name="re_enter_new_pin_confirm_label">Nhập lại mã PIN mới để xác nhận</string>
+    <string name="reset_using_device_password_button">Đặt lại bằng mật khẩu thiết bị</string>
+    <string name="cancel_button">Hủy</string>
+    <string name="start_over_button">Làm lại</string>
+    <string name="password_set_successfully_toast">Đã đặt mật khẩu thành công</string>
+    <string name="use_pattern_button">Dùng hình mở khóa</string>
+    <string name="use_password_button">Dùng mật khẩu</string>
+    <string name="use_pin_instead">Dùng mã PIN</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">Đặt mật khẩu</string>
+    <string name="create_alphanumeric_password_label">Tạo mật khẩu</string>
+    <string name="confirm_alphanumeric_password_label">Xác nhận mật khẩu</string>
+    <string name="enter_current_password_label">Nhập mật khẩu hiện tại</string>
+    <string name="password_hint">Nhập mật khẩu</string>
+    <string name="password_too_short_error">Mật khẩu phải có ít nhất 4 ký tự</string>
+    <string name="password_too_long_error">Mật khẩu có tối đa 64 ký tự</string>
+    <string name="passwords_dont_match_error">Mật khẩu không khớp</string>
+    <string name="incorrect_password_try_again">Mật khẩu không đúng. Vui lòng thử lại.</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">Đã bật chống gỡ cài đặt</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku không khả dụng. Vui lòng cài đặt và cấu hình Shizuku.</string>
+    <string name="main_screen_overlay_permission_dialog_title">Cần quyền hiển thị trên ứng dụng khác</string>
+    <string name="main_screen_overlay_permission_dialog_text">Vui lòng cấp cho ứng dụng quyền vẽ lớp phủ trong cài đặt. Quyền này cần thiết để ứng dụng hiển thị màn hình khóa.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">Mở cài đặt</string>
+    <string name="main_screen_shizuku_manual_permission_toast">Vui lòng cấp quyền Shizuku thủ công</string>
+    <string name="main_screen_device_admin_explanation">App Lock cần quyền quản trị thiết bị để ngăn gỡ cài đặt. Quyền này không ảnh hưởng đến chức năng của thiết bị bạn.</string>
+    <string name="main_screen_join_community_dialog_title">Tham gia cộng đồng</string>
+    <string name="main_screen_join_community_dialog_text">Tham gia cộng đồng Discord của chúng tôi để nhận cập nhật và hỗ trợ.</string>
+    <string name="main_screen_join_community_join_discord_button">Tham gia Discord</string>
+    <string name="main_screen_join_community_dismiss_button">Bỏ qua</string>
+    <string name="main_screen_support_development_dialog_title">Ủng hộ phát triển</string>
+    <string name="main_screen_support_development_donate_button">Quyên góp</string>
+    <string name="main_screen_app_protection_cd">Bảo vệ ứng dụng</string>
+    <string name="main_screen_settings_cd">Cài đặt</string>
+    <string name="main_screen_loading_applications_text">Đang tải ứng dụng…</string>
+    <string name="main_screen_search_apps_placeholder">Tìm ứng dụng</string>
+    <string name="main_screen_search_cd">Tìm kiếm</string>
+    <string name="main_screen_empty_search_title">Không tìm thấy ứng dụng</string>
+    <string name="main_screen_empty_search_subtitle">Thử điều chỉnh từ khóa tìm kiếm</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">Cài đặt</string>
+    <string name="settings_screen_back_cd">Quay lại</string>
+    <string name="settings_screen_support_development_dialog_title">Ủng hộ phát triển</string>
+    <string name="settings_screen_support_development_donate_button">Quyên góp</string>
+    <string name="settings_screen_permission_required_dialog_title">Cần cấp quyền</string>
+    <string name="settings_screen_permission_required_dialog_text">Để bật Chống gỡ cài đặt, App Lock cần hai quyền: Quản trị thiết bị và Dịch vụ trợ năng. Các quyền này cần thiết để ngăn gỡ cài đặt trái phép và đảm bảo bảo vệ vững chắc. Bạn có muốn tiếp tục cấp các quyền này không?</string>
+    <string name="settings_screen_permission_required_proceed_button">Tiếp tục</string>
+    <string name="settings_screen_device_admin_dialog_title">Quyền quản trị thiết bị</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock cần quyền quản trị thiết bị để ngăn gỡ cài đặt trái phép. Vui lòng cấp quyền này ở màn hình tiếp theo. Quyền này không ảnh hưởng đến chức năng bình thường của thiết bị bạn.</string>
+    <string name="settings_screen_device_admin_grant_button">Cấp quyền</string>
+    <string name="settings_screen_accessibility_dialog_title">Quyền dịch vụ trợ năng</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock cũng cần quyền Dịch vụ trợ năng để theo dõi các lần gỡ cài đặt và kích hoạt lại quyền quản trị thiết bị nếu bị tắt. Điều này giúp tính năng Chống gỡ cài đặt luôn hiệu quả. Vui lòng bật Dịch vụ trợ năng cho App Lock trong cài đặt.</string>
+    <string name="settings_screen_accessibility_open_settings_button">Mở cài đặt</string>
+    <string name="settings_screen_lock_screen_customization_title">Tùy chỉnh màn hình khóa</string>
+    <string name="settings_screen_max_brightness_title">Độ sáng tối đa</string>
+    <string name="settings_screen_max_brightness_desc">Hiển thị màn hình khóa ở độ sáng tối đa để dễ nhìn</string>
+    <string name="settings_screen_biometric_auth_title">Sinh trắc học</string>
+    <string name="settings_screen_biometric_auth_desc">Dùng vân tay hoặc mở khóa bằng khuôn mặt nếu có</string>
+    <string name="settings_screen_biometric_auth_unavailable">Xác thực sinh trắc học không khả dụng trên thiết bị này.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">Tự động hiện xác thực sinh trắc học</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">Tự động hiện xác thực sinh trắc học trên màn hình khóa</string>
+    <string name="settings_screen_app_locking_behavior_title">Hành vi khóa ứng dụng</string>
+    <string name="settings_screen_unlock_behavior_title">Hành vi mở khóa</string>
+    <string name="settings_screen_unlock_behavior_desc">Tắt tùy chọn này nếu việc mở khóa làm ứng dụng khởi động lại</string>
+    <string name="settings_screen_unlock_behavior_option_close">Đóng màn hình khóa</string>
+    <string name="settings_screen_unlock_behavior_option_launch">Đóng màn hình khóa và mở ứng dụng</string>
+    <string name="settings_screen_auto_unlock_title">Tự động mở khóa</string>
+    <string name="settings_screen_auto_unlock_desc">Mở khóa ứng dụng ngay khi nhập đúng mã PIN</string>
+    <string name="settings_screen_unlock_duration_title">Thời gian mở khóa</string>
+    <string name="settings_screen_unlock_duration_desc">Giữ ứng dụng ở trạng thái đã mở khóa trong một khoảng thời gian sau lần mở khóa đầu tiên</string>
+    <string name="settings_screen_unlock_duration_dialog_title">Đặt thời gian mở khóa</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">Ứng dụng sẽ tiếp tục ở trạng thái mở khóa trong khoảng thời gian này sau lần mở khóa đầu tiên. Chọn 0 giây để tắt.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">giây</string>
+    <string name="settings_screen_security_title">Bảo mật</string>
+    <string name="settings_screen_change_pin_title">Đổi mã PIN</string>
+    <string name="settings_screen_change_pin_desc">Cập nhật mã PIN hiện tại của bạn</string>
+    <string name="settings_screen_anti_uninstall_title">Bảo vệ chống gỡ cài đặt</string>
+    <string name="settings_screen_anti_uninstall_desc">Ngăn gỡ cài đặt App Lock Revived trái phép</string>
+    <string name="settings_screen_haptic_feedback_title">Phản hồi xúc giác</string>
+    <string name="settings_screen_haptic_feedback_desc">Tắt phản hồi xúc giác khi nhấn phím</string>
+    <string name="settings_screen_backend_implementation_title">Phương thức phát hiện</string>
+    <string name="settings_screen_backend_implementation_desc">Chọn phương thức App Lock Revived dùng để phát hiện ứng dụng đang chạy</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">Dịch vụ trợ năng</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">Phương thức tiêu chuẩn, có thể chậm trễ đôi chút trên một số thiết bị OEM.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">Thống kê sử dụng</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">Phương thức thử nghiệm, hoạt động tốt hơn trên một số thiết bị.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">Phương thức nâng cao, cần thiết lập Shizuku qua ADB.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku không khả dụng hoặc quyền bị từ chối.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Tính năng thử nghiệm của Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Bật tính năng thử nghiệm cho phương thức Shizuku (ví dụ: khóa các activity cụ thể). Có thể gây bất ổn định.</string>
+    <string name="settings_screen_about_title">Giới thiệu</string>
+    <string name="settings_screen_developer_title">Nhà phát triển</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">Mã nguồn</string>
+    <string name="settings_screen_source_code_desc">Xem mã nguồn trên GitHub</string>
+    <string name="settings_screen_support_development_title">Ủng hộ phát triển</string>
+    <string name="settings_screen_support_development_desc">Giúp hỗ trợ việc phát triển ứng dụng này</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">Vui lòng cho phép ứng dụng bỏ qua tối ưu hóa pin.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">Không tìm thấy cài đặt cụ thể. Vui lòng xóa ứng dụng khỏi danh sách hạn chế pin.</string>
+    <string name="utils_battery_settings_not_found_toast">Không thể mở bất kỳ cài đặt pin nào.</string>
+    <string name="utils_usage_permission_error_log">Lỗi khi kiểm tra quyền sử dụng: </string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">Cấp quyền Shizuku</string>
+    <string name="shizuku_permission_dialog_text_1">Bạn đã bật chế độ Shizuku, nhưng ứng dụng cần thêm quyền để hoạt động đúng cách.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">Nhấn \'Cấp quyền\' để mở cài đặt và cấp các quyền cần thiết.</string>
+    <string name="grant_permission_button">Cấp quyền</string>
+    <string name="open_settings_button">Mở cài đặt</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">Cần quyền quản trị thiết bị</string>
+    <string name="device_admin_permission_dialog_text">Bạn đã bật chế độ chống gỡ cài đặt. Chế độ này cần quyền quản trị thiết bị để bảo vệ ứng dụng.</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">Cần quyền trợ năng</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">Bạn đã bật chế độ chống gỡ cài đặt, nhưng ứng dụng cần quyền trợ năng để thực thi chế độ này.</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">Cần xác minh mật khẩu</string>
+    <string name="admin_password_verification_dialog_text">Vui lòng nhập mật khẩu khóa ứng dụng để tắt quyền quản trị</string>
+    <string name="password_label">Mật khẩu</string>
+    <string name="password_empty_error">Mật khẩu không được để trống</string>
+    <string name="incorrect_password_error">Mật khẩu không đúng</string>
+    <string name="verify_button">Xác minh</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">Bật dịch vụ trợ năng</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock cần quyền trợ năng để phát hiện khi ứng dụng được bảo vệ được mở.</string>
+    <string name="accessibility_guide_dialog_text_2">Vui lòng làm theo các bước sau:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. Nhấn \'Mở cài đặt\' bên dưới\n
+2. Bật công tắc sang BẬT\n
+3. Nhấn \'Cho phép\' trong hộp thoại xác nhận.
+    </string>
+    <string name="accessibility_guide_open_settings_button">Mở cài đặt</string>
+    <string name="settings_screen_about_and_support_title">Giới thiệu &amp; hỗ trợ</string>
+    <string name="settings_screen_join_community_title">Tham gia cộng đồng</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d phút</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">Khóa ngay</string>
+    <string name="settings_screen_biometric_auth_desc_available">Dùng vân tay hoặc mở khóa bằng khuôn mặt để mở khóa ứng dụng</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">Chưa thiết lập hoặc không khả dụng sinh trắc học.
+    </string>
+    <string name="settings_screen_shizuku_permission_granted">Đã cấp quyền Shizuku</string>
+    <string name="settings_screen_shizuku_permission_required_desc">Cần quyền Shizuku cho các tính năng nâng cao.
+    </string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku chưa chạy</string>
+    <string name="settings_screen_usage_permission_toast">Vui lòng cấp quyền truy cập dữ liệu sử dụng.
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">Chọn thời gian ứng dụng sẽ tiếp tục mở khóa sau khi nhập mã PIN:
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">Khóa ngay</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d phút</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 giờ</string>
+    <string name="settings_screen_permission_required_dialog_text_1">Để bật bảo vệ chống gỡ cài đặt, App Lock cần hai quyền:
+    </string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. Quản trị thiết bị - Ngăn gỡ cài đặt\n2. Dịch vụ trợ năng - Theo dõi việc sử dụng ứng dụng\n\nCác quyền này giúp bảo vệ ứng dụng khỏi bị gỡ bỏ mà bạn không hay biết.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock cần quyền quản trị thiết bị để ngăn gỡ cài đặt.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_2">Quyền này cho phép ứng dụng:\n• Tự ngăn việc bị gỡ cài đặt\n• Bảo vệ cài đặt khóa ứng dụng của bạn\n\nQuyền này sẽ không ảnh hưởng đến chức năng bình thường của thiết bị bạn.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock cần quyền Dịch vụ trợ năng để theo dõi việc sử dụng ứng dụng.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_2">Quyền này cho phép ứng dụng:\n• Phát hiện khi ứng dụng được mở\n• Hiển thị màn hình khóa khi cần\n• Cung cấp bảo vệ ứng dụng liền mạch
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_3">Quyền riêng tư của bạn được bảo vệ - không thu thập hay chia sẻ dữ liệu nào.
+    </string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">Nâng cao</string>
+    <string name="settings_screen_fallback_selection_dialog_title">Chọn phương thức thay thế</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">Chọn phương thức thay thế để dùng khi phương thức chính không hoạt động:
+    </string>
+    <string name="confirm_button">Xác nhận</string>
+    <string name="enable_button">Bật</string>
+    <string name="settings_screen_advanced_title">Nâng cao</string>
+    <string name="settings_screen_export_logs_title">Xuất nhật ký</string>
+    <string name="settings_screen_export_logs_desc">Xuất nhật ký ứng dụng để gỡ lỗi.</string>
+    <string name="settings_Screen_export_audit">Xuất nhật ký bảo mật</string>
+    <string name="settings_screen_export_audit_desc">Xuất nhật ký bảo mật để xem xét.</string>
+    <string name="settings_screen_export_logs_success">Đã xuất nhật ký</string>
+    <string name="settings_screen_export_logs_error">Không thể xuất nhật ký</string>
+    <string name="settings_screen_version_template">Phiên bản %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">Vẽ hình mở khóa để tiếp tục</string>
+    <string name="incorrect_pattern_try_again">Hình mở khóa không đúng. Vui lòng thử lại.</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">Hiển thị trên ứng dụng khác</string>
+    <string name="permission_warning_overlay_desc">Hiển thị màn hình khóa trên các ứng dụng được bảo vệ.</string>
+    <string name="permission_warning_accessibility_title">Dịch vụ trợ năng</string>
+    <string name="permission_warning_accessibility_desc">Phát hiện khi ứng dụng được bảo vệ được mở.</string>
+    <string name="permission_warning_usage_stats_title">Truy cập dữ liệu sử dụng</string>
+    <string name="permission_warning_usage_stats_desc">Phát hiện khi ứng dụng được bảo vệ được mở.</string>
+    <string name="permission_warning_shizuku_title">Quyền Shizuku</string>
+    <string name="permission_warning_shizuku_desc">Phát hiện an toàn khi ứng dụng được bảo vệ được mở.</string>
+    <string name="permission_warning_device_admin_title">Quản trị thiết bị</string>
+    <string name="permission_warning_device_admin_desc">Ngăn App Lock Revived bị gỡ cài đặt.</string>
+
+    <string name="join_community">Tham gia cộng đồng</string>
+    <string name="join_community_desc">Tham gia cộng đồng Discord của chúng tôi để kết nối với người dùng khác, chia sẻ phản hồi và cập nhật tin tức và tính năng mới nhất.</string>
+    <string name="join_discord">Tham gia Discord</string>
+    <string name="maybe_later">Để sau</string>
+
+    <!-- strings_applist.xml -->
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">Bảo vệ đang bật</string>
+    <string name="applist_status_paused_title">Bảo vệ đang tạm dừng</string>
+    <string name="applist_status_paused_desc">Các ứng dụng bị khóa sẽ mở mà không cần hỏi. Nhấn để tiếp tục.</string>
+    <string name="applist_status_setup_title">Bảo vệ cần được chú ý</string>
+    <string name="applist_status_setup_desc">Cần %1$s. Nhấn để sửa.</string>
+    <string name="applist_status_stopped_title">Dịch vụ khóa không chạy</string>
+    <string name="applist_status_stopped_desc">Nhấn để khởi động lại dịch vụ %1$s.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Chống gỡ cài đặt: cần %1$s</string>
+    <string name="applist_status_fix">Sửa</string>
+    <string name="applist_status_switch_cd">Bảo vệ</string>
+    <string name="applist_backend_accessibility">Trợ năng</string>
+    <string name="applist_backend_usage_stats">Truy cập dữ liệu sử dụng</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="other">%d ứng dụng đã khóa</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">Tùy chọn khác</string>
+    <string name="applist_menu_lock_all_now">Khóa tất cả ngay</string>
+    <string name="applist_locked_all_now">Tất cả ứng dụng sẽ yêu cầu xác thực lại</string>
+    <string name="applist_menu_trigger_exclusions">Loại trừ kích hoạt</string>
+    <string name="applist_menu_prevent_uninstall">Ngăn gỡ cài đặt</string>
+    <string name="applist_menu_show_system_apps">Hiện ứng dụng hệ thống</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">Tìm ứng dụng hoặc tên gói</string>
+    <string name="applist_search_clear_cd">Xóa tìm kiếm</string>
+    <string name="applist_filter_all">Tất cả</string>
+    <string name="applist_filter_locked">Đã khóa</string>
+    <string name="applist_filter_unlocked">Chưa khóa</string>
+    <string name="applist_filter_system">Hệ thống</string>
+    <string name="applist_sort_cd">Thứ tự sắp xếp</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">Mới cài đặt gần đây</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">Đã khóa</string>
+    <string name="applist_section_other">Ứng dụng khác</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Chọn</string>
+    <string name="applist_system_supporting">Hệ thống · %1$s</string>
+    <string name="applist_remove_package_cd">Xóa %1$s</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">Đang tải ứng dụng…</string>
+    <string name="applist_empty_search_title">Không có ứng dụng nào khớp với “%1$s”</string>
+    <string name="applist_empty_search_desc">Thử tên hoặc tên gói khác.</string>
+    <string name="applist_empty_locked_title">Chưa có ứng dụng bị khóa</string>
+    <string name="applist_empty_locked_desc">Bật công tắc bên cạnh một ứng dụng để khóa ứng dụng đó.</string>
+    <string name="applist_empty_generic_title">Không có gì để hiển thị</string>
+    <string name="applist_empty_generic_desc">Thử bộ lọc khác.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="other">Đã chọn %d</item>
+    </plurals>
+    <string name="applist_action_lock">Khóa đã chọn</string>
+    <string name="applist_action_unlock">Mở khóa đã chọn</string>
+    <string name="applist_action_select_all">Chọn tất cả</string>
+    <string name="applist_action_close_selection">Hủy chọn</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="other">Đã khóa %d ứng dụng</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="other">Đã mở khóa %d ứng dụng</item>
+    </plurals>
+    <string name="applist_undo">Hoàn tác</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">Quay lại</string>
+    <string name="applist_show_system_apps">Ứng dụng hệ thống</string>
+    <string name="applist_add_package_cd">Thêm gói thủ công</string>
+    <string name="applist_add_package_title">Thêm gói thủ công</string>
+    <string name="applist_package_name_label">Tên gói</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">Nhập tên gói hợp lệ</string>
+    <string name="applist_add">Thêm</string>
+    <string name="applist_cancel">Hủy</string>
+    <string name="applist_manual_package_desc">Chưa cài đặt · đã thêm thủ công</string>
+    <string name="applist_section_manual">Đã thêm thủ công</string>
+    <string name="applist_section_installed">Ứng dụng đã cài đặt</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">Loại trừ kích hoạt</string>
+    <string name="trigger_exclusions_hero_title">Các ứng dụng không bao giờ kích hoạt khóa</string>
+    <string name="trigger_exclusions_hero_desc">Chuyển từ các ứng dụng này sang một ứng dụng bị khóa sẽ không hiện màn hình khóa. Hữu ích cho bàn phím, trình khởi chạy và lớp phủ nổi.</string>
+    <string name="trigger_exclusions_section_excluded">Đã loại trừ</string>
+    <string name="trigger_exclusions_add_desc">Nhập tên gói của ứng dụng bạn muốn loại trừ.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="other">%d ứng dụng đã loại trừ</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">Ngăn gỡ cài đặt</string>
+    <string name="anti_uninstall_section_protected">Đã bảo vệ</string>
+    <string name="anti_uninstall_add_desc">Nhập tên gói của ứng dụng bạn muốn bảo vệ khỏi việc bị gỡ cài đặt.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="other">%d ứng dụng đã được bảo vệ</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku cần được cập nhật</string>
+    <string name="anti_uninstall_ready_title">Shizuku đã kết nối</string>
+    <string name="anti_uninstall_ready_desc">Ứng dụng được bảo vệ không thể bị gỡ cài đặt cho đến khi bạn tắt công tắc của ứng dụng đó tại đây. Shizuku chỉ cần khi bạn thay đổi cách bảo vệ.</string>
+    <string name="anti_uninstall_not_installed_title">Chưa cài đặt Shizuku</string>
+    <string name="anti_uninstall_not_installed_desc">Cần Shizuku (hoặc Sui trên thiết bị đã root) để chặn gỡ cài đặt mà không cần root. Hãy cài đặt để thay đổi cách bảo vệ.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku chưa chạy</string>
+    <string name="anti_uninstall_not_running_desc">Mở Shizuku và khởi động bằng gỡ lỗi không dây hoặc root, rồi quay lại. Cách bảo vệ hiện tại của bạn vẫn được giữ nguyên.</string>
+    <string name="anti_uninstall_permission_title">Cần quyền Shizuku</string>
+    <string name="anti_uninstall_permission_desc">Cho phép App Lock Revived dùng Shizuku để thay đổi ứng dụng nào có thể bị gỡ cài đặt.</string>
+    <string name="anti_uninstall_action_install">Cài đặt Shizuku</string>
+    <string name="anti_uninstall_action_open">Mở Shizuku</string>
+    <string name="anti_uninstall_action_grant">Cấp quyền</string>
+    <string name="anti_uninstall_action_retry">Kiểm tra lại</string>
+    <string name="anti_uninstall_needs_shizuku">Hãy khởi động Shizuku trước để thay đổi bảo vệ chống gỡ cài đặt</string>
+    <string name="anti_uninstall_toggle_failed">Không thể thay đổi bảo vệ chống gỡ cài đặt cho %1$s</string>
+    <string name="anti_uninstall_shizuku_old">Phiên bản Shizuku này quá cũ. Vui lòng cập nhật Shizuku.</string>
+    <string name="anti_uninstall_remove_all">Gỡ bảo vệ khỏi tất cả ứng dụng</string>
+    <string name="anti_uninstall_remove_all_title">Gỡ toàn bộ bảo vệ?</string>
+    <string name="anti_uninstall_remove_all_desc">Mọi ứng dụng trên thiết bị này đang bị chặn gỡ cài đặt sẽ được phép gỡ cài đặt trở lại, kể cả các ứng dụng được bảo vệ ngoài danh sách này.</string>
+    <string name="anti_uninstall_remove_all_confirm">Gỡ</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="other">Đã gỡ bảo vệ khỏi %d ứng dụng</item>
+    </plurals>
+
+    <!-- strings_lock.xml -->
+    <string name="lock_enter_pin">Nhập mã PIN</string>
+    <string name="lock_draw_pattern">Vẽ hình mở khóa</string>
+    <string name="lock_enter_password">Nhập mật khẩu</string>
+    <string name="lock_wrong_pin">Sai mã PIN</string>
+    <string name="lock_wrong_pattern">Sai hình mở khóa</string>
+    <string name="lock_wrong_password">Sai mật khẩu</string>
+    <string name="lock_lockout_message">Quá nhiều lần thử. Thử lại sau %1$s</string>
+    <string name="lock_close_cd">Đóng và về màn hình chính</string>
+    <string name="lock_backspace_cd">Xóa</string>
+    <string name="lock_confirm_cd">Mở khóa</string>
+    <string name="lock_unlock_button">Mở khóa</string>
+    <string name="lock_use_biometrics">Dùng sinh trắc học</string>
+    <string name="lock_biometric_subtitle">Dùng vân tay hoặc khuôn mặt để tiếp tục</string>
+    <string name="lock_biometric_waiting">Đang chờ xác nhận sinh trắc học</string>
+    <string name="lock_app_icon_cd">Biểu tượng %1$s</string>
+    <string name="lock_pin_progress_cd">Đã nhập %1$d chữ số</string>
+    <string name="lock_pattern_pad_cd">Bảng hình mở khóa</string>
+    <string name="lock_show_password_cd">Hiện mật khẩu</string>
+    <string name="lock_hide_password_cd">Ẩn mật khẩu</string>
+    <string name="lock_admin_title">Tắt chống gỡ cài đặt</string>
+    <string name="lock_admin_cancel_cd">Hủy</string>
+
+    <!-- strings_services.xml -->
+    <!-- Quick Settings tile -->
+    <string name="tile_lock_now_label">Khóa tất cả ngay</string>
+    <string name="tile_lock_now_subtitle_active">Đang bật bảo vệ</string>
+    <string name="tile_lock_now_subtitle_inactive">Đang tắt bảo vệ</string>
+    <string name="tile_lock_now_done">Đã khóa tất cả ứng dụng</string>
+
+    <!-- Auto-lock newly installed apps -->
+    <string name="auto_lock_channel_name">Ứng dụng được khóa tự động</string>
+    <string name="auto_lock_channel_description">Hiển thị khi một ứng dụng mới được cài đặt và tự động khóa</string>
+    <string name="auto_lock_notification_title">%1$s đã được khóa tự động</string>
+    <string name="auto_lock_notification_text">Nhấn để quản lý ứng dụng bị khóa</string>
+
+    <!-- Protection services -->
+    <string name="service_channel_name_usage">Dịch vụ bảo vệ (Thống kê sử dụng)</string>
+    <string name="service_channel_name_shizuku">Dịch vụ bảo vệ (Shizuku)</string>
+    <string name="service_notification_text">Đang bảo vệ ứng dụng của bạn</string>
+    <string name="service_notification_text_shizuku">Đang bảo vệ ứng dụng của bạn bằng Shizuku</string>
+    <string name="service_notification_waiting_shizuku">Đang chờ Shizuku khởi động…</string>
+    <string name="anti_uninstall_blocked_toast">Tắt chống gỡ cài đặt trong App Lock Revived để xóa hạn chế này.</string>
+
+    <!-- strings_update.xml -->
+    <string name="update_dialog_title">Có bản cập nhật</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">Có gì mới</string>
+    <string name="update_dialog_no_notes">Không có ghi chú phát hành.</string>
+    <string name="update_dialog_download">Tải xuống</string>
+    <string name="update_dialog_download_size">Tải xuống (%1$s)</string>
+    <string name="update_dialog_later">Để sau</string>
+    <string name="update_dialog_skip">Bỏ qua phiên bản này</string>
+    <string name="update_dialog_icon_description">Biểu tượng App Lock Revived</string>
+    <string name="update_dialog_no_browser">Không tìm thấy ứng dụng để mở liên kết tải xuống</string>
+
+    <!-- strings_settings.xml -->
+    <!-- Sections -->
+    <string name="settings_section_appearance">Giao diện</string>
+    <string name="settings_section_lock_screen">Màn hình khóa</string>
+    <string name="settings_section_protection">Bảo vệ</string>
+    <string name="settings_section_privacy">Quyền riêng tư</string>
+    <string name="settings_section_backup">Sao lưu &amp; khôi phục</string>
+    <string name="settings_section_updates">Cập nhật</string>
+
+    <!-- Appearance -->
+    <string name="settings_theme_title">Chủ đề</string>
+    <string name="settings_theme_system">Theo hệ thống</string>
+    <string name="settings_theme_light">Sáng</string>
+    <string name="settings_theme_dark">Tối</string>
+    <string name="settings_dynamic_color_title">Màu động</string>
+    <string name="settings_dynamic_color_desc">Dùng màu từ hình nền của bạn</string>
+    <string name="settings_amoled_title">Đen tuyệt đối</string>
+    <string name="settings_amoled_desc">Dùng nền đen thật trong chủ đề tối</string>
+    <string name="settings_amoled_desc_needs_dark">Khả dụng khi bật chủ đề tối</string>
+
+    <!-- Lock screen -->
+    <string name="settings_biometric_desc_available">Dùng vân tay hoặc mở khóa bằng khuôn mặt</string>
+    <string name="settings_biometric_desc_unavailable">Chưa thiết lập sinh trắc học trên thiết bị này</string>
+    <string name="settings_biometric_auto_prompt_title">Tự động hiện xác thực sinh trắc học</string>
+    <string name="settings_biometric_auto_prompt_desc">Hiện lời nhắc vân tay hoặc khuôn mặt ngay khi màn hình khóa xuất hiện</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Bật mở khóa sinh trắc học để sử dụng tính năng này</string>
+    <string name="settings_scramble_keypad_title">Xáo trộn bàn phím PIN</string>
+    <string name="settings_scramble_keypad_desc">Xáo trộn các chữ số mỗi lần để người khác không thể đoán mã PIN của bạn qua chuyển động ngón tay</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Chỉ khả dụng khi khóa bằng mã PIN</string>
+    <string name="settings_auto_unlock_desc">Mở khóa ngay khi nhập đúng mã PIN, không cần nhấn xác nhận</string>
+    <string name="settings_disable_haptics_title">Tắt phản hồi xúc giác</string>
+
+    <!-- Security -->
+    <string name="settings_change_pattern_title">Đổi hình mở khóa</string>
+    <string name="settings_change_pattern_desc">Vẽ hình mở khóa mới</string>
+    <string name="settings_change_password_title">Đổi mật khẩu</string>
+    <string name="settings_change_password_desc">Đặt mật khẩu mới</string>
+    <string name="settings_unlock_duration_until_screen_off">Đến khi màn hình tắt</string>
+    <string name="settings_unlock_duration_sheet_desc">Ứng dụng sẽ ở trạng thái mở khóa trong bao lâu sau khi bạn mở khóa</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="other">%1$d phút</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Số lần thử sai trước khi bị khóa</string>
+    <string name="settings_failed_attempts_desc">Tạm chặn nhập liệu sau khi nhập sai quá nhiều lần</string>
+    <string name="settings_failed_attempts_off">Tắt</string>
+    <string name="settings_lockout_duration_title">Thời gian khóa</string>
+    <string name="settings_lockout_duration_desc">Tăng gấp đôi mỗi khi việc khóa lặp lại</string>
+    <string name="settings_lockout_duration_desc_disabled">Bật khóa khi thử sai để sử dụng tính năng này</string>
+    <string name="settings_lockout_seconds_short">%1$d giây</string>
+    <string name="settings_lockout_minutes_short">%1$d phút</string>
+
+    <!-- Protection -->
+    <string name="settings_auto_lock_new_apps_title">Khóa ứng dụng mới cài đặt</string>
+    <string name="settings_auto_lock_new_apps_desc">Tự động khóa ứng dụng ngay sau khi được cài đặt</string>
+
+    <!-- Privacy -->
+    <string name="settings_unlock_history_title">Lịch sử mở khóa</string>
+    <string name="settings_unlock_history_desc">Lưu nhật ký các lần thử mở khóa trên thiết bị. Tắt tính năng này sẽ xóa nhật ký.</string>
+    <string name="settings_view_unlock_history_title">Xem lịch sử mở khóa</string>
+    <string name="settings_view_unlock_history_desc">Xem các lần mở khóa gần đây và các lần thử sai</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_export_title">Xuất bản sao lưu</string>
+    <string name="settings_backup_export_desc">Lưu ứng dụng bị khóa và cài đặt vào một tệp</string>
+    <string name="settings_backup_import_title">Khôi phục từ bản sao lưu</string>
+    <string name="settings_backup_import_desc">Thay thế ứng dụng bị khóa và cài đặt bằng tệp sao lưu</string>
+    <string name="settings_backup_footer">Mã PIN, hình mở khóa hoặc mật khẩu của bạn không bao giờ được đưa vào bản sao lưu.</string>
+    <string name="settings_backup_export_success">Đã lưu bản sao lưu</string>
+    <string name="settings_backup_export_failed">Không thể lưu bản sao lưu: %1$s</string>
+    <string name="settings_backup_import_invalid">Tệp này không phải là bản sao lưu của App Lock Revived</string>
+    <string name="settings_backup_import_newer_version">Bản sao lưu này được tạo bởi phiên bản App Lock Revived mới hơn. Hãy cập nhật ứng dụng rồi thử lại.</string>
+    <string name="settings_backup_import_failed">Không thể đọc bản sao lưu: %1$s</string>
+    <string name="settings_backup_no_file_picker">Không có ứng dụng nào để chọn tệp</string>
+    <string name="settings_backup_restore_complete_title">Đã khôi phục bản sao lưu</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="other">Đã khôi phục %1$d ứng dụng bị khóa.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="other">Đã khôi phục %1$d cài đặt.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">Mã PIN, hình mở khóa hoặc mật khẩu hiện tại của bạn được giữ nguyên.</string>
+    <string name="settings_ok_button">OK</string>
+
+    <!-- Updates -->
+    <string name="settings_update_check_title">Tự động kiểm tra cập nhật</string>
+    <string name="settings_update_check_desc">Tìm các bản phát hành mới trên GitHub</string>
+    <string name="settings_update_check_now_title">Kiểm tra cập nhật</string>
+    <string name="settings_update_checking">Đang kiểm tra…</string>
+    <string name="settings_update_current_version">Bạn đang dùng phiên bản %1$s</string>
+    <string name="settings_update_latest">Bạn đang dùng phiên bản mới nhất</string>
+    <string name="settings_update_check_failed">Không thể kiểm tra cập nhật. Hãy kiểm tra kết nối và thử lại.</string>
+    <string name="settings_update_check_footer">Đây là lần duy nhất ứng dụng kết nối internet. Không có thông tin nào về bạn hoặc ứng dụng của bạn được gửi đi.</string>
+
+    <!-- Backend -->
+    <string name="settings_backend_accessibility_title">Dịch vụ trợ năng</string>
+    <string name="settings_backend_accessibility_desc">Phương thức tiêu chuẩn, hoạt động trên hầu hết thiết bị</string>
+    <string name="settings_backend_usage_stats_title">Thống kê sử dụng</string>
+    <string name="settings_backend_usage_stats_desc">Phương thức thử nghiệm dùng thống kê sử dụng ứng dụng</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Phương thức nâng cao dùng Shizuku và các API nội bộ</string>
+
+    <!-- Advanced -->
+    <string name="settings_logging_title">Ghi nhật ký gỡ lỗi</string>
+    <string name="settings_logging_desc">Ghi nhật ký chi tiết để khắc phục sự cố</string>
+    <string name="settings_share_logs">Chia sẻ nhật ký</string>
+    <string name="settings_share_audit_logs">Chia sẻ nhật ký bảo mật</string>
+
+    <!-- About -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Phiên bản %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Miễn phí, mã nguồn mở và không quảng cáo</string>
+    <string name="settings_about_developed_by">Phát triển bởi Riyad M</string>
+    <string name="settings_about_source_title">Mã nguồn</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Bản phát hành</string>
+    <string name="settings_about_releases_desc">Nhật ký thay đổi và tải xuống</string>
+    <string name="settings_about_issue_title">Báo cáo sự cố</string>
+    <string name="settings_about_issue_desc">Tìm thấy lỗi hoặc có ý tưởng? Hãy cho chúng tôi biết</string>
+    <string name="settings_about_credits_title">Ghi công</string>
+    <string name="settings_about_credits_desc">Dựa trên AppLock của Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">Giấy phép</string>
+    <string name="settings_about_license_desc">Giấy phép MIT</string>
+    <string name="settings_no_browser">Không có ứng dụng nào để mở liên kết</string>
+
+    <!-- Support sheet -->
+    <string name="settings_support_sheet_title">Bạn thấy App Lock Revived hữu ích?</string>
+    <string name="settings_support_sheet_message">App Lock Revived miễn phí, mã nguồn mở và không quảng cáo. Bạn có thể ủng hộ bằng cách đánh dấu sao dự án trên GitHub, báo cáo lỗi hoặc chia sẻ với bạn bè.</string>
+    <string name="settings_support_sheet_star">Đánh dấu sao trên GitHub</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">Lịch sử mở khóa</string>
+    <plurals name="history_entry_count">
+        <item quantity="other">%1$d mục</item>
+    </plurals>
+    <string name="history_clear_cd">Xóa lịch sử</string>
+    <string name="history_clear_dialog_title">Xóa lịch sử mở khóa?</string>
+    <string name="history_clear_dialog_text">Mọi lần mở khóa và lần thử sai đã ghi lại sẽ bị xóa. Không thể hoàn tác.</string>
+    <string name="history_clear_confirm">Xóa</string>
+    <string name="history_cleared">Đã xóa lịch sử</string>
+    <plurals name="history_summary_failed">
+        <item quantity="other">lần thử sai trong 24 giờ qua</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="other">%1$d lần mở khóa thành công trong cùng khoảng thời gian</item>
+    </plurals>
+    <string name="history_entry_success">Đã mở khóa bằng %1$s · %2$s</string>
+    <string name="history_entry_failed">Thử %1$s thất bại · %2$s</string>
+    <string name="history_status_success_cd">Đã mở khóa</string>
+    <string name="history_status_failed_cd">Thử sai</string>
+    <string name="history_method_pin">PIN</string>
+    <string name="history_method_pattern">hình mở khóa</string>
+    <string name="history_method_password">mật khẩu</string>
+    <string name="history_method_biometric">sinh trắc học</string>
+    <string name="history_today">Hôm nay</string>
+    <string name="history_yesterday">Hôm qua</string>
+    <string name="history_disabled_banner">Lịch sử mở khóa đang tắt. Các lần thử mới sẽ không được ghi lại.</string>
+    <string name="history_turn_on">Bật</string>
+    <string name="history_empty_title">Chưa có lần thử mở khóa nào</string>
+    <string name="history_empty_desc">Khi ai đó mở khóa hoặc cố gắng mở khóa một ứng dụng bị khóa, lần đó sẽ hiển thị tại đây. Lịch sử không bao giờ rời khỏi thiết bị của bạn.</string>
+
+    <!-- strings_onboarding.xml -->
+    <!-- App intro -->
+    <string name="intro_welcome_title">Chào mừng bạn đến với App Lock Revived</string>
+    <string name="intro_welcome_desc">Bảo vệ ứng dụng và quyền riêng tư của bạn. Chúng tôi sẽ hướng dẫn bạn thiết lập nhanh, chỉ mất một phút.</string>
+    <string name="intro_page_indicator">Bước %1$d / %2$d</string>
+    <string name="intro_back">Quay lại</string>
+    <string name="intro_allow_button">Cho phép</string>
+    <string name="intro_status_granted">Đã cho phép</string>
+    <string name="intro_status_not_granted">Chưa cho phép</string>
+    <string name="intro_open_app_info">Mở thông tin ứng dụng</string>
+    <string name="intro_battery_title">Giữ App Lock chạy</string>
+    <string name="intro_battery_desc">Android có thể dừng App Lock Revived ở chế độ nền để tiết kiệm pin. Khi điều đó xảy ra, các ứng dụng sẽ ngừng bị khóa sau khi khởi động lại hoặc sau vài phút. Hãy cho phép ứng dụng chạy mà không bị hạn chế pin.</string>
+    <string name="intro_battery_oem_hint">Trên một số điện thoại (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…), cũng hãy mở Thông tin ứng dụng, đặt mức sử dụng pin thành \"Không hạn chế\" và bật tự khởi động nếu có.</string>
+    <string name="intro_accessibility_desc">App Lock Revived chỉ dùng dịch vụ trợ năng để biết khi nào một ứng dụng được bảo vệ được mở. Nhấn Cho phép, tìm App Lock Revived trong danh sách và bật lên.</string>
+    <string name="intro_shizuku_not_running">Shizuku chưa chạy. Hãy khởi động Shizuku trong ứng dụng Shizuku, rồi nhấn Cho phép lần nữa.</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">Thấy thông báo \"Cài đặt bị hạn chế\"?</string>
+    <string name="ob_restricted_settings_desc">Android chặn dịch vụ trợ năng cho các ứng dụng cài từ ngoài cửa hàng ứng dụng cho đến khi bạn cho phép.</string>
+    <string name="ob_restricted_settings_steps">1. Nhấn Mở thông tin ứng dụng bên dưới\n2. Nhấn ⋮ ở góc trên\n3. Chọn Cho phép cài đặt bị hạn chế và xác nhận\n4. Quay lại và bật dịch vụ</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. Nhấn Mở cài đặt\n2. Tìm App Lock Revived (có thể nằm trong Ứng dụng đã tải xuống hoặc Ứng dụng đã cài đặt)\n3. Bật lên và nhấn Cho phép</string>
+    <string name="ob_usage_stats_dialog_title">Cấp quyền truy cập dữ liệu sử dụng</string>
+    <string name="ob_usage_stats_dialog_text">Bạn đã chọn chế độ Thống kê sử dụng, nhưng App Lock Revived cần quyền truy cập dữ liệu sử dụng để phát hiện khi ứng dụng được bảo vệ được mở.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">Thiết lập khóa</string>
+    <string name="setup_title_change">Đổi khóa</string>
+    <string name="setup_type_pin">Mã PIN</string>
+    <string name="setup_type_pattern">Hình mở khóa</string>
+    <string name="setup_type_password">Mật khẩu</string>
+    <string name="setup_create_pin">Tạo mã PIN</string>
+    <string name="setup_confirm_pin">Xác nhận mã PIN</string>
+    <string name="setup_verify_pin">Nhập mã PIN hiện tại</string>
+    <string name="setup_create_pattern">Vẽ hình mở khóa</string>
+    <string name="setup_confirm_pattern">Vẽ lại</string>
+    <string name="setup_verify_pattern">Vẽ hình mở khóa hiện tại</string>
+    <string name="setup_create_password">Tạo mật khẩu</string>
+    <string name="setup_confirm_password">Xác nhận mật khẩu</string>
+    <string name="setup_verify_password">Nhập mật khẩu hiện tại</string>
+    <string name="setup_hint_pin">Dùng ít nhất 4 chữ số</string>
+    <string name="setup_hint_pattern">Nối ít nhất 4 điểm</string>
+    <string name="setup_hint_password">Dùng ít nhất 4 ký tự</string>
+    <string name="setup_hint_confirm">Nhập lại một lần nữa để xác nhận</string>
+    <string name="setup_hint_verify">Xác nhận đúng là bạn trước khi đổi khóa</string>
+    <string name="setup_pattern_too_short">Nối ít nhất 4 điểm</string>
+    <string name="setup_patterns_dont_match">Hình mở khóa không khớp. Thử lại.</string>
+    <string name="setup_continue">Tiếp tục</string>
+    <string name="setup_confirm">Xác nhận</string>
+    <string name="setup_delete">Xóa</string>
+    <string name="setup_show_password">Hiện mật khẩu</string>
+    <string name="setup_hide_password">Ẩn mật khẩu</string>
+    <string name="setup_use_keyboard">Dùng bàn phím thay thế</string>
+    <string name="setup_use_keypad">Dùng bàn phím số</string>
+    <string name="setup_digits_entered">Đã nhập %1$d chữ số</string>
+</resources>

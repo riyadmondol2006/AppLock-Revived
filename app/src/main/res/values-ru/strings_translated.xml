@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">Не позволяет посторонним удалить приложение.</string>
+    <string name="accessibility_service_description">Позволяет App Lock определять, когда открываются защищённые приложения, и показывать проверку пароля.</string>
+
+    <string name="unlock_to_disable_admin">Введите пароль, чтобы отключить права администратора.</string>
+    <string name="incorrect_pin_try_again">Неверный PIN-код. Попробуйте ещё раз.</string>
+    <string name="incorrect_pass_try_again">Неверный пароль. Попробуйте ещё раз.</string>
+    <string name="password_verified_admin">Пароль подтверждён. Теперь можно отключить права администратора</string>
+    <string name="choose_app_detection">Выберите способ обнаружения приложений</string>
+    <string name="app_detection_desc">Выберите, как App Lock Revived будет определять запуск защищённых приложений.</string>
+    <string name="notif_perm">Разрешение на уведомления</string>
+    <string name="notif_perm_desc">App Lock Revived нужно разрешение на показ уведомлений, чтобы информировать вас и корректно работать в фоне. Нажмите «Далее», чтобы выдать разрешение.</string>
+    <string name="notif_perm_granted">На вашей версии Android разрешение на уведомления выдаётся автоматически.</string>
+    <string name="welc_applock">Добро пожаловать в App Lock Revived</string>
+    <string name="welcome_desc">Защитите приложения и конфиденциальность с App Lock Revived. Мы проведём вас через быструю настройку.</string>
+    <string name="secure_apps">Защитите приложения</string>
+    <string name="secure_apps_desc">Надёжно защищайте личные приложения с помощью продвинутых методов блокировки</string>
+    <string name="display_over_apps">Отображение поверх других приложений</string>
+    <string name="display_over_apps_desc">App Lock Revived нужно разрешение на отображение поверх других приложений, чтобы показывать экран блокировки. Нажмите «Далее» и включите разрешение.</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">Для корректной работы App Lock Revived нужно разрешение на уведомления.</string>
+    <string name="shizuku_permission_granted">Разрешение Shizuku выдано</string>
+    <string name="shizuku_permission_required_desc">Для расширенных функций нужно разрешение Shizuku.</string>
+    <string name="allow_display_over_other_apps">Разрешите App Lock Revived отображаться поверх других приложений.</string>
+    <string name="disable_battery_optimization_title">Отключить оптимизацию батареи</string>
+    <string name="disable_battery_optimization_desc">Чтобы App Lock Revived надёжно работал в фоне, отключите для приложения оптимизацию батареи. Нажмите «Далее», чтобы открыть настройки.</string>
+    <string name="accessibility_service_title">Служба специальных возможностей</string>
+    <string name="accessibility_service_card_desc">Стандартный способ, который работает на большинстве устройств. Требует разрешения специальных возможностей. На некоторых устройствах возможны небольшие задержки.</string>
+    <string name="usage_stats_title">Статистика использования</string>
+    <string name="usage_stats_card_desc">Экспериментальный способ, использующий системную статистику использования. На некоторых устройствах работает лучше.</string>
+    <string name="shizuku_service_title">Служба Shizuku</string>
+    <string name="shizuku_service_card_desc">Продвинутый способ с лучшей производительностью и удобством. Требует установленного приложения Shizuku, включённого через ADB.</string>
+    <string name="can_change_later_in_settings">Это можно изменить позже в настройках</string>
+    <string name="app_intro_accessibility_desc">
+Службе специальных возможностей нужна для корректной работы App Lock Revived.
+
+Если появится сообщение «Ограниченные настройки», вручную откройте Настройки &gt; Приложения &gt; App Lock &gt; меню в правом верхнем углу и нажмите «Разрешить ограниченные настройки».
+
+Нажмите «Далее», чтобы включить службу.
+    </string>
+    <string name="app_intro_usage_stats_title">Разрешение на статистику использования</string>
+    <string name="app_intro_usage_stats_desc">
+Это разрешение нужно, чтобы определять запуск заблокированных приложений.
+
+Если появится сообщение «Ограниченные настройки», вручную откройте Настройки &gt; Приложения &gt; App Lock &gt; меню в правом верхнем углу и нажмите «Разрешить ограниченные настройки».
+
+Нажмите «Далее», чтобы включить разрешение.</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku открывает расширенные возможности, например блокировку системных приложений и не только.
+
+Убедитесь, что Shizuku установлен и включён через ADB. Нажмите «Далее», чтобы выдать разрешение.
+    </string>
+    <string name="app_intro_complete_privacy_title">Полная конфиденциальность</string>
+    <string name="app_intro_complete_privacy_desc">Ваши данные никогда не покидают устройство. App Lock Revived защищает вашу конфиденциальность постоянно.</string>
+    <string name="all_permissions_required">Для продолжения нужно выдать все разрешения.</string>
+    <string name="next_button">Далее</string>
+    <string name="get_started_button">Начать</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">Приложение</string>
+    <string name="this_app">это приложение</string>
+    <string name="unlock_app_title">Разблокировать %1$s</string>
+    <string name="confirm_biometric_subtitle">Подтвердите биометрию, чтобы продолжить</string>
+    <string name="use_pin_button">Использовать PIN-код</string>
+    <string name="enter_password_to_continue">Введите пароль, чтобы продолжить</string>
+    <string name="biometric_authentication_cd">Биометрическая аутентификация</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">Установите PIN-код, чтобы продолжить</string>
+    <string name="authenticate_to_reset_pin_title">Подтвердите личность, чтобы сбросить PIN-код</string>
+    <string name="use_device_pin_pattern_password_subtitle">Используйте PIN-код, графический ключ или пароль устройства</string>
+    <string name="enter_current_pin_title">Введите текущий PIN-код</string>
+    <string name="confirm_pin_title">Подтвердите PIN-код</string>
+    <string name="set_new_pin_title">Новый PIN-код</string>
+    <string name="create_pin_explanation">Создайте PIN-код для защиты заблокированных приложений. Он будет запрашиваться каждый раз, когда вы попытаетесь открыть заблокированное приложение.</string>
+    <string name="enter_current_pin_label">Введите текущий PIN-код</string>
+    <string name="confirm_new_pin_label">Подтвердите новый PIN-код</string>
+    <string name="create_new_pin_label">Создайте новый PIN-код</string>
+    <string name="tooltip_enter_current_pin">Введите текущий PIN-код, чтобы продолжить</string>
+    <string name="tooltip_confirm_pin">Введите тот же PIN-код ещё раз для подтверждения</string>
+    <string name="tooltip_create_pin_min_length">Создайте PIN-код из 4 цифр и более</string>
+    <string name="information_cd">Информация</string>
+    <string name="pins_dont_match_error">PIN-коды не совпадают. Попробуйте снова.</string>
+    <string name="pin_min_length_error">PIN-код должен содержать не менее 4 цифр</string>
+    <string name="re_enter_new_pin_confirm_label">Повторите новый PIN-код для подтверждения</string>
+    <string name="reset_using_device_password_button">Сбросить с помощью пароля устройства</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="start_over_button">Начать заново</string>
+    <string name="password_set_successfully_toast">Пароль успешно установлен</string>
+    <string name="use_pattern_button">Использовать графический ключ</string>
+    <string name="use_password_button">Использовать пароль</string>
+    <string name="use_pin_instead">Использовать PIN-код</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">Установка пароля</string>
+    <string name="create_alphanumeric_password_label">Создайте пароль</string>
+    <string name="confirm_alphanumeric_password_label">Подтвердите пароль</string>
+    <string name="enter_current_password_label">Введите текущий пароль</string>
+    <string name="password_hint">Введите пароль</string>
+    <string name="password_too_short_error">Пароль должен содержать не менее 4 символов</string>
+    <string name="password_too_long_error">Пароль должен содержать не более 64 символов</string>
+    <string name="passwords_dont_match_error">Пароли не совпадают</string>
+    <string name="incorrect_password_try_again">Неверный пароль. Попробуйте ещё раз.</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">Защита от удаления включена</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku недоступен. Установите и настройте Shizuku.</string>
+    <string name="main_screen_overlay_permission_dialog_title">Нужно разрешение на отображение поверх приложений</string>
+    <string name="main_screen_overlay_permission_dialog_text">Разрешите приложению отображаться поверх других окон в настройках. Это нужно, чтобы показывать экран блокировки.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">Открыть настройки</string>
+    <string name="main_screen_shizuku_manual_permission_toast">Выдайте разрешение Shizuku вручную</string>
+    <string name="main_screen_device_admin_explanation">App Lock нужны права администратора устройства, чтобы защитить приложение от удаления. Это не влияет на работу устройства.</string>
+    <string name="main_screen_join_community_dialog_title">Присоединяйтесь к сообществу</string>
+    <string name="main_screen_join_community_dialog_text">Присоединяйтесь к нашему сообществу в Discord, чтобы получать обновления и помощь.</string>
+    <string name="main_screen_join_community_join_discord_button">Присоединиться к Discord</string>
+    <string name="main_screen_join_community_dismiss_button">Закрыть</string>
+    <string name="main_screen_support_development_dialog_title">Поддержите разработку</string>
+    <string name="main_screen_support_development_donate_button">Пожертвовать</string>
+    <string name="main_screen_app_protection_cd">Защита приложений</string>
+    <string name="main_screen_settings_cd">Настройки</string>
+    <string name="main_screen_loading_applications_text">Загрузка приложений…</string>
+    <string name="main_screen_search_apps_placeholder">Поиск приложений</string>
+    <string name="main_screen_search_cd">Поиск</string>
+    <string name="main_screen_empty_search_title">Приложения не найдены</string>
+    <string name="main_screen_empty_search_subtitle">Попробуйте изменить запрос</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">Настройки</string>
+    <string name="settings_screen_back_cd">Назад</string>
+    <string name="settings_screen_support_development_dialog_title">Поддержите разработку</string>
+    <string name="settings_screen_support_development_donate_button">Пожертвовать</string>
+    <string name="settings_screen_permission_required_dialog_title">Нужно разрешение</string>
+    <string name="settings_screen_permission_required_dialog_text">Для включения защиты от удаления App Lock нужны два разрешения: администратор устройства и служба специальных возможностей. Они необходимы, чтобы предотвратить несанкционированное удаление и обеспечить надёжную защиту. Выдать эти разрешения?</string>
+    <string name="settings_screen_permission_required_proceed_button">Продолжить</string>
+    <string name="settings_screen_device_admin_dialog_title">Разрешение администратора устройства</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock нужны права администратора устройства, чтобы предотвратить несанкционированное удаление. Выдайте разрешение на следующем экране. Это не повлияет на обычную работу устройства.</string>
+    <string name="settings_screen_device_admin_grant_button">Выдать разрешение</string>
+    <string name="settings_screen_accessibility_dialog_title">Разрешение службы специальных возможностей</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock также нужно разрешение службы специальных возможностей, чтобы отслеживать попытки удаления приложения и повторно активировать администратора устройства, если его отключили. Так защита от удаления остаётся эффективной. Включите службу специальных возможностей для App Lock в настройках.</string>
+    <string name="settings_screen_accessibility_open_settings_button">Открыть настройки</string>
+    <string name="settings_screen_lock_screen_customization_title">Настройка экрана блокировки</string>
+    <string name="settings_screen_max_brightness_title">Максимальная яркость</string>
+    <string name="settings_screen_max_brightness_desc">Показывать экран блокировки на максимальной яркости для лучшей читаемости</string>
+    <string name="settings_screen_biometric_auth_title">Биометрия</string>
+    <string name="settings_screen_biometric_auth_desc">Использовать разблокировку по отпечатку пальца или лицу, если доступно</string>
+    <string name="settings_screen_biometric_auth_unavailable">Биометрия недоступна на этом устройстве.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">Автоматический запрос биометрии</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">Автоматически показывать запрос биометрии на экране блокировки</string>
+    <string name="settings_screen_app_locking_behavior_title">Поведение блокировки приложений</string>
+    <string name="settings_screen_unlock_behavior_title">Поведение при разблокировке</string>
+    <string name="settings_screen_unlock_behavior_desc">Отключите, если при разблокировке приложение перезапускается</string>
+    <string name="settings_screen_unlock_behavior_option_close">Закрыть экран блокировки</string>
+    <string name="settings_screen_unlock_behavior_option_launch">Закрыть экран блокировки и открыть приложение</string>
+    <string name="settings_screen_auto_unlock_title">Автоматическая разблокировка</string>
+    <string name="settings_screen_auto_unlock_desc">Разблокировать приложение сразу после ввода правильного PIN-кода</string>
+    <string name="settings_screen_unlock_duration_title">Время разблокировки</string>
+    <string name="settings_screen_unlock_duration_desc">Держать приложения разблокированными заданное время после первой разблокировки</string>
+    <string name="settings_screen_unlock_duration_dialog_title">Время разблокировки</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">Приложения останутся разблокированными на это время после первой разблокировки. Выберите 0 секунд, чтобы отключить.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">сек.</string>
+    <string name="settings_screen_security_title">Безопасность</string>
+    <string name="settings_screen_change_pin_title">Сменить PIN-код</string>
+    <string name="settings_screen_change_pin_desc">Обновить текущий PIN-код</string>
+    <string name="settings_screen_anti_uninstall_title">Защита от удаления</string>
+    <string name="settings_screen_anti_uninstall_desc">Защитить App Lock Revived от несанкционированного удаления</string>
+    <string name="settings_screen_haptic_feedback_title">Тактильная отдача</string>
+    <string name="settings_screen_haptic_feedback_desc">Отключить вибрацию при нажатии клавиш</string>
+    <string name="settings_screen_backend_implementation_title">Способ обнаружения</string>
+    <string name="settings_screen_backend_implementation_desc">Выберите способ, которым App Lock Revived определяет открытые приложения</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">Служба специальных возможностей</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">Стандартный способ, на некоторых устройствах возможны небольшие задержки.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">Статистика использования</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">Экспериментальный способ, на некоторых устройствах работает лучше.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">Продвинутый способ, требует настройки Shizuku через ADB.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku недоступен или разрешение не выдано.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Экспериментальные функции Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Включить экспериментальные функции для бэкенда Shizuku (например, блокировку отдельных активностей). Возможна нестабильная работа.</string>
+    <string name="settings_screen_about_title">О приложении</string>
+    <string name="settings_screen_developer_title">Разработчик</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">Исходный код</string>
+    <string name="settings_screen_source_code_desc">Смотреть исходный код на GitHub</string>
+    <string name="settings_screen_support_development_title">Поддержите разработку</string>
+    <string name="settings_screen_support_development_desc">Помогите развивать это приложение</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">Разрешите нашему приложению игнорировать оптимизацию батареи.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">Не удалось найти нужные настройки. Удалите приложение из ограничений батареи.</string>
+    <string name="utils_battery_settings_not_found_toast">Не удалось открыть настройки батареи.</string>
+    <string name="utils_usage_permission_error_log">Ошибка проверки разрешения на статистику использования: </string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">Выдайте разрешение Shizuku</string>
+    <string name="shizuku_permission_dialog_text_1">Вы включили режим Shizuku, но приложению для работы нужны дополнительные разрешения.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">Нажмите «Выдать разрешение», чтобы открыть настройки и выдать необходимые разрешения.</string>
+    <string name="grant_permission_button">Выдать разрешение</string>
+    <string name="open_settings_button">Открыть настройки</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">Нужны права администратора устройства</string>
+    <string name="device_admin_permission_dialog_text">Вы включили режим защиты от удаления. Для защиты приложения нужны права администратора устройства.</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">Нужно разрешение специальных возможностей</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">Вы включили режим защиты от удаления, но для его работы приложению нужны разрешения специальных возможностей.</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">Нужно подтвердить пароль</string>
+    <string name="admin_password_verification_dialog_text">Введите пароль App Lock, чтобы отключить права администратора</string>
+    <string name="password_label">Пароль</string>
+    <string name="password_empty_error">Пароль не может быть пустым</string>
+    <string name="incorrect_password_error">Неверный пароль</string>
+    <string name="verify_button">Проверить</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">Включите службу специальных возможностей</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock нужно разрешение специальных возможностей, чтобы определять открытие защищённых приложений.</string>
+    <string name="accessibility_guide_dialog_text_2">Выполните следующие шаги:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. Нажмите «Открыть настройки» ниже\n
+2. Включите переключатель\n
+3. Нажмите «Разрешить» в окне подтверждения.
+    </string>
+    <string name="accessibility_guide_open_settings_button">Открыть настройки</string>
+    <string name="settings_screen_about_and_support_title">О приложении и поддержка</string>
+    <string name="settings_screen_join_community_title">Сообщество</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d мин</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">Блокировать сразу</string>
+    <string name="settings_screen_biometric_auth_desc_available">Используйте отпечаток пальца или разблокировку по лицу для открытия приложений</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">Биометрия не настроена или недоступна.</string>
+    <string name="settings_screen_shizuku_permission_granted">Разрешение Shizuku выдано</string>
+    <string name="settings_screen_shizuku_permission_required_desc">Для расширенных функций нужно разрешение Shizuku.</string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku не запущен</string>
+    <string name="settings_screen_usage_permission_toast">Выдайте разрешение на доступ к статистике использования.</string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">Выберите, как долго приложения должны оставаться разблокированными после ввода PIN-кода:</string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">Блокировать сразу</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d мин</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 час</string>
+    <string name="settings_screen_permission_required_dialog_text_1">Чтобы включить защиту от удаления, App Lock нужны два разрешения:</string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. Администратор устройства — не даёт удалить приложение\n2. Служба специальных возможностей — отслеживает использование приложений\n\nЭти разрешения защищают приложение от удаления без вашего ведома.</string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock нужны права администратора устройства, чтобы предотвратить удаление.</string>
+    <string name="settings_screen_device_admin_dialog_text_2">Это разрешение позволяет приложению:\n• защищать себя от удаления\n• защищать настройки блокировки\n\nОно не влияет на обычную работу устройства.</string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock нужно разрешение службы специальных возможностей для отслеживания использования приложений.</string>
+    <string name="settings_screen_accessibility_dialog_text_2">Это разрешение позволяет приложению:\n• определять открытие приложений\n• показывать экран блокировки при необходимости\n• обеспечивать надёжную защиту приложений</string>
+    <string name="settings_screen_accessibility_dialog_text_3">Ваша конфиденциальность защищена — данные не собираются и не передаются.</string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">Расширенные</string>
+    <string name="settings_screen_fallback_selection_dialog_title">Выберите резервный способ</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">Выберите резервный способ, который будет использоваться, если основной не сработает:</string>
+    <string name="confirm_button">Подтвердить</string>
+    <string name="enable_button">Включить</string>
+    <string name="settings_screen_advanced_title">Дополнительно</string>
+    <string name="settings_screen_export_logs_title">Экспорт журналов</string>
+    <string name="settings_screen_export_logs_desc">Экспортировать журналы приложения для отладки.</string>
+    <string name="settings_Screen_export_audit">Экспорт журналов безопасности</string>
+    <string name="settings_screen_export_audit_desc">Экспортировать журналы безопасности для проверки.</string>
+    <string name="settings_screen_export_logs_success">Журналы экспортированы</string>
+    <string name="settings_screen_export_logs_error">Не удалось экспортировать журналы</string>
+    <string name="settings_screen_version_template">Версия %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">Нарисуйте графический ключ, чтобы продолжить</string>
+    <string name="incorrect_pattern_try_again">Неверный графический ключ. Попробуйте ещё раз.</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">Отображение поверх других приложений</string>
+    <string name="permission_warning_overlay_desc">Показывает экран блокировки поверх защищённых приложений.</string>
+    <string name="permission_warning_accessibility_title">Служба специальных возможностей</string>
+    <string name="permission_warning_accessibility_desc">Определяет запуск защищённых приложений.</string>
+    <string name="permission_warning_usage_stats_title">Доступ к статистике использования</string>
+    <string name="permission_warning_usage_stats_desc">Определяет запуск защищённых приложений.</string>
+    <string name="permission_warning_shizuku_title">Разрешение Shizuku</string>
+    <string name="permission_warning_shizuku_desc">Надёжно определяет запуск защищённых приложений.</string>
+    <string name="permission_warning_device_admin_title">Администратор устройства</string>
+    <string name="permission_warning_device_admin_desc">Не даёт удалить App Lock Revived.</string>
+
+    <string name="join_community">Сообщество</string>
+    <string name="join_community_desc">Присоединяйтесь к нашему сообществу в Discord, общайтесь с другими пользователями, делитесь отзывами и первыми узнавайте о новостях и функциях.</string>
+    <string name="join_discord">Присоединиться к Discord</string>
+    <string name="maybe_later">Позже</string>
+
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">Защита включена</string>
+    <string name="applist_status_paused_title">Защита приостановлена</string>
+    <string name="applist_status_paused_desc">Заблокированные приложения открываются без запроса. Нажмите, чтобы возобновить.</string>
+    <string name="applist_status_setup_title">Защита требует внимания</string>
+    <string name="applist_status_setup_desc">Требуется: %1$s. Нажмите, чтобы исправить.</string>
+    <string name="applist_status_stopped_title">Служба блокировки не работает</string>
+    <string name="applist_status_stopped_desc">Нажмите, чтобы перезапустить службу «%1$s».</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Защита от удаления: требуется %1$s</string>
+    <string name="applist_status_fix">Исправить</string>
+    <string name="applist_status_switch_cd">Защита</string>
+    <string name="applist_backend_accessibility">Специальные возможности</string>
+    <string name="applist_backend_usage_stats">Статистика использования</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="one">Заблокировано: %d приложение</item>
+        <item quantity="few">Заблокировано: %d приложения</item>
+        <item quantity="many">Заблокировано: %d приложений</item>
+        <item quantity="other">Заблокировано: %d приложения</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">Ещё</string>
+    <string name="applist_menu_lock_all_now">Заблокировать все</string>
+    <string name="applist_locked_all_now">Все приложения снова запросят аутентификацию</string>
+    <string name="applist_menu_trigger_exclusions">Исключения срабатывания</string>
+    <string name="applist_menu_prevent_uninstall">Защита от удаления</string>
+    <string name="applist_menu_show_system_apps">Показывать системные приложения</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">Поиск по названию или пакету</string>
+    <string name="applist_search_clear_cd">Очистить поиск</string>
+    <string name="applist_filter_all">Все</string>
+    <string name="applist_filter_locked">Заблокированные</string>
+    <string name="applist_filter_unlocked">Разблокированные</string>
+    <string name="applist_filter_system">Системные</string>
+    <string name="applist_sort_cd">Порядок сортировки</string>
+    <string name="applist_sort_name">А–Я</string>
+    <string name="applist_sort_recent">По дате установки</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">Заблокированные</string>
+    <string name="applist_section_other">Другие приложения</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Выбрать</string>
+    <string name="applist_system_supporting">Системное · %1$s</string>
+    <string name="applist_remove_package_cd">Удалить %1$s</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">Загрузка приложений…</string>
+    <string name="applist_empty_search_title">Нет приложений по запросу «%1$s»</string>
+    <string name="applist_empty_search_desc">Попробуйте другое название или пакет.</string>
+    <string name="applist_empty_locked_title">Заблокированных приложений пока нет</string>
+    <string name="applist_empty_locked_desc">Включите переключатель рядом с приложением, чтобы заблокировать его.</string>
+    <string name="applist_empty_generic_title">Нечего показать</string>
+    <string name="applist_empty_generic_desc">Попробуйте другой фильтр.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="one">Выбрано: %d</item>
+        <item quantity="few">Выбрано: %d</item>
+        <item quantity="many">Выбрано: %d</item>
+        <item quantity="other">Выбрано: %d</item>
+    </plurals>
+    <string name="applist_action_lock">Заблокировать выбранные</string>
+    <string name="applist_action_unlock">Разблокировать выбранные</string>
+    <string name="applist_action_select_all">Выбрать все</string>
+    <string name="applist_action_close_selection">Отменить выбор</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="one">Заблокировано: %d приложение</item>
+        <item quantity="few">Заблокировано: %d приложения</item>
+        <item quantity="many">Заблокировано: %d приложений</item>
+        <item quantity="other">Заблокировано: %d приложения</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="one">Разблокировано: %d приложение</item>
+        <item quantity="few">Разблокировано: %d приложения</item>
+        <item quantity="many">Разблокировано: %d приложений</item>
+        <item quantity="other">Разблокировано: %d приложения</item>
+    </plurals>
+    <string name="applist_undo">Отменить</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">Назад</string>
+    <string name="applist_show_system_apps">Системные приложения</string>
+    <string name="applist_add_package_cd">Добавить пакет вручную</string>
+    <string name="applist_add_package_title">Добавить пакет вручную</string>
+    <string name="applist_package_name_label">Имя пакета</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">Введите корректное имя пакета</string>
+    <string name="applist_add">Добавить</string>
+    <string name="applist_cancel">Отмена</string>
+    <string name="applist_manual_package_desc">Не установлено · добавлено вручную</string>
+    <string name="applist_section_manual">Добавлено вручную</string>
+    <string name="applist_section_installed">Установленные приложения</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">Исключения срабатывания</string>
+    <string name="trigger_exclusions_hero_title">Приложения, которые никогда не запускают блокировку</string>
+    <string name="trigger_exclusions_hero_desc">Переход из этих приложений в заблокированное не покажет экран блокировки. Удобно для клавиатур, лаунчеров и плавающих окон.</string>
+    <string name="trigger_exclusions_section_excluded">Исключённые</string>
+    <string name="trigger_exclusions_add_desc">Введите имя пакета приложения, которое нужно исключить.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="one">Исключено: %d приложение</item>
+        <item quantity="few">Исключено: %d приложения</item>
+        <item quantity="many">Исключено: %d приложений</item>
+        <item quantity="other">Исключено: %d приложения</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">Защита от удаления</string>
+    <string name="anti_uninstall_section_protected">Защищённые</string>
+    <string name="anti_uninstall_add_desc">Введите имя пакета приложения, которое нужно защитить от удаления.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="one">Защищено: %d приложение</item>
+        <item quantity="few">Защищено: %d приложения</item>
+        <item quantity="many">Защищено: %d приложений</item>
+        <item quantity="other">Защищено: %d приложения</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Нужно обновить Shizuku</string>
+    <string name="anti_uninstall_ready_title">Shizuku подключён</string>
+    <string name="anti_uninstall_ready_desc">Защищённые приложения нельзя удалить, пока вы не выключите их переключатель здесь. Shizuku нужен только для изменения защиты.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku не установлен</string>
+    <string name="anti_uninstall_not_installed_desc">Для блокировки удаления без root-доступа нужен Shizuku (или Sui на устройствах с root). Установите его, чтобы менять защиту.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku не запущен</string>
+    <string name="anti_uninstall_not_running_desc">Откройте Shizuku и запустите его через беспроводную отладку или root, затем вернитесь сюда. Текущая защита останется в силе.</string>
+    <string name="anti_uninstall_permission_title">Нужно разрешение Shizuku</string>
+    <string name="anti_uninstall_permission_desc">Разрешите App Lock Revived использовать Shizuku, чтобы менять список приложений, которые можно удалить.</string>
+    <string name="anti_uninstall_action_install">Установить Shizuku</string>
+    <string name="anti_uninstall_action_open">Открыть Shizuku</string>
+    <string name="anti_uninstall_action_grant">Выдать разрешение</string>
+    <string name="anti_uninstall_action_retry">Проверить снова</string>
+    <string name="anti_uninstall_needs_shizuku">Сначала запустите Shizuku, чтобы изменить защиту от удаления</string>
+    <string name="anti_uninstall_toggle_failed">Не удалось изменить защиту от удаления для %1$s</string>
+    <string name="anti_uninstall_shizuku_old">Эта версия Shizuku слишком старая. Обновите Shizuku.</string>
+    <string name="anti_uninstall_remove_all">Снять защиту со всех приложений</string>
+    <string name="anti_uninstall_remove_all_title">Снять всю защиту?</string>
+    <string name="anti_uninstall_remove_all_desc">Все приложения на этом устройстве, которые нельзя удалить, снова смогут быть удалены, включая приложения, защищённые вне этого списка.</string>
+    <string name="anti_uninstall_remove_all_confirm">Снять</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="one">Защита снята с приложений: %d</item>
+        <item quantity="few">Защита снята с приложений: %d</item>
+        <item quantity="many">Защита снята с приложений: %d</item>
+        <item quantity="other">Защита снята с приложений: %d</item>
+    </plurals>
+
+    <!-- Lock screen -->
+    <string name="lock_enter_pin">Введите PIN-код</string>
+    <string name="lock_draw_pattern">Нарисуйте графический ключ</string>
+    <string name="lock_enter_password">Введите пароль</string>
+    <string name="lock_wrong_pin">Неверный PIN-код</string>
+    <string name="lock_wrong_pattern">Неверный графический ключ</string>
+    <string name="lock_wrong_password">Неверный пароль</string>
+    <string name="lock_lockout_message">Слишком много попыток. Повторите через %1$s</string>
+    <string name="lock_close_cd">Закрыть и перейти на главный экран</string>
+    <string name="lock_backspace_cd">Удалить</string>
+    <string name="lock_confirm_cd">Разблокировать</string>
+    <string name="lock_unlock_button">Разблокировать</string>
+    <string name="lock_use_biometrics">Использовать биометрию</string>
+    <string name="lock_biometric_subtitle">Используйте отпечаток пальца или лицо, чтобы продолжить</string>
+    <string name="lock_biometric_waiting">Ожидание подтверждения биометрии</string>
+    <string name="lock_app_icon_cd">Значок %1$s</string>
+    <string name="lock_pin_progress_cd">Введено цифр: %1$d</string>
+    <string name="lock_pattern_pad_cd">Поле для графического ключа</string>
+    <string name="lock_show_password_cd">Показать пароль</string>
+    <string name="lock_hide_password_cd">Скрыть пароль</string>
+    <string name="lock_admin_title">Отключить защиту от удаления</string>
+    <string name="lock_admin_cancel_cd">Отмена</string>
+
+    <!-- App intro -->
+    <string name="intro_welcome_title">Добро пожаловать в App Lock Revived</string>
+    <string name="intro_welcome_desc">Защитите приложения и свою конфиденциальность. Мы проведём вас через быструю настройку. Это займёт не больше минуты.</string>
+    <string name="intro_page_indicator">Шаг %1$d из %2$d</string>
+    <string name="intro_back">Назад</string>
+    <string name="intro_allow_button">Разрешить</string>
+    <string name="intro_status_granted">Разрешено</string>
+    <string name="intro_status_not_granted">Пока не разрешено</string>
+    <string name="intro_open_app_info">Открыть сведения о приложении</string>
+    <string name="intro_battery_title">Держите App Lock запущенным</string>
+    <string name="intro_battery_desc">Android может остановить App Lock Revived в фоне, чтобы сэкономить заряд. Тогда после перезагрузки или через несколько минут приложения перестанут блокироваться. Разрешите работу без ограничений батареи.</string>
+    <string name="intro_battery_oem_hint">На некоторых телефонах (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) также откройте сведения о приложении, выберите «Без ограничений» в расходе батареи и включите автозапуск, если он есть.</string>
+    <string name="intro_accessibility_desc">App Lock Revived использует службу специальных возможностей только для того, чтобы определять открытие защищённого приложения. Нажмите «Разрешить», найдите App Lock Revived в списке и включите его.</string>
+    <string name="intro_shizuku_not_running">Shizuku не запущен. Запустите его в приложении Shizuku, затем снова нажмите «Разрешить».</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">Видите «Ограниченные настройки»?</string>
+    <string name="ob_restricted_settings_desc">Android блокирует службы специальных возможностей для приложений, установленных не из магазина, пока вы не разрешите их.</string>
+    <string name="ob_restricted_settings_steps">1. Нажмите «Открыть сведения о приложении» ниже\n2. Нажмите ⋮ в правом верхнем углу\n3. Выберите «Разрешить ограниченные настройки» и подтвердите\n4. Вернитесь и включите службу</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. Нажмите «Открыть настройки»\n2. Найдите App Lock Revived (он может быть в разделе «Загруженные» или «Установленные приложения»)\n3. Включите его и нажмите «Разрешить»</string>
+    <string name="ob_usage_stats_dialog_title">Разрешите доступ к статистике</string>
+    <string name="ob_usage_stats_dialog_text">Вы выбрали режим статистики использования, но App Lock Revived нужен доступ к статистике, чтобы определять открытие защищённых приложений.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">Настройка блокировки</string>
+    <string name="setup_title_change">Смена блокировки</string>
+    <string name="setup_type_pin">PIN-код</string>
+    <string name="setup_type_pattern">Графический ключ</string>
+    <string name="setup_type_password">Пароль</string>
+    <string name="setup_create_pin">Создайте PIN-код</string>
+    <string name="setup_confirm_pin">Подтвердите PIN-код</string>
+    <string name="setup_verify_pin">Введите текущий PIN-код</string>
+    <string name="setup_create_pattern">Нарисуйте графический ключ</string>
+    <string name="setup_confirm_pattern">Нарисуйте его ещё раз</string>
+    <string name="setup_verify_pattern">Нарисуйте текущий графический ключ</string>
+    <string name="setup_create_password">Создайте пароль</string>
+    <string name="setup_confirm_password">Подтвердите пароль</string>
+    <string name="setup_verify_password">Введите текущий пароль</string>
+    <string name="setup_hint_pin">Используйте не менее 4 цифр</string>
+    <string name="setup_hint_pattern">Соедините не менее 4 точек</string>
+    <string name="setup_hint_password">Используйте не менее 4 символов</string>
+    <string name="setup_hint_confirm">Введите ещё раз для подтверждения</string>
+    <string name="setup_hint_verify">Подтвердите, что это вы, прежде чем менять блокировку</string>
+    <string name="setup_pattern_too_short">Соедините не менее 4 точек</string>
+    <string name="setup_patterns_dont_match">Графические ключи не совпадают. Попробуйте снова.</string>
+    <string name="setup_continue">Продолжить</string>
+    <string name="setup_confirm">Подтвердить</string>
+    <string name="setup_delete">Удалить</string>
+    <string name="setup_show_password">Показать пароль</string>
+    <string name="setup_hide_password">Скрыть пароль</string>
+    <string name="setup_use_keyboard">Использовать клавиатуру</string>
+    <string name="setup_use_keypad">Использовать цифровую панель</string>
+    <string name="setup_digits_entered">Введено цифр: %1$d</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_lock_now_label">Заблокировать все</string>
+    <string name="tile_lock_now_subtitle_active">Защита включена</string>
+    <string name="tile_lock_now_subtitle_inactive">Защита выключена</string>
+    <string name="tile_lock_now_done">Все приложения заблокированы</string>
+
+    <!-- Auto-lock newly installed apps -->
+    <string name="auto_lock_channel_name">Автоматически заблокированные приложения</string>
+    <string name="auto_lock_channel_description">Показывается, когда новое установленное приложение блокируется автоматически</string>
+    <string name="auto_lock_notification_title">%1$s заблокировано автоматически</string>
+    <string name="auto_lock_notification_text">Нажмите, чтобы управлять заблокированными приложениями</string>
+
+    <!-- Protection services -->
+    <string name="service_channel_name_usage">Служба защиты (статистика использования)</string>
+    <string name="service_channel_name_shizuku">Служба защиты (Shizuku)</string>
+    <string name="service_notification_text">Защищаем ваши приложения</string>
+    <string name="service_notification_text_shizuku">Защищаем ваши приложения с помощью Shizuku</string>
+    <string name="service_notification_waiting_shizuku">Ожидание запуска Shizuku…</string>
+    <string name="anti_uninstall_blocked_toast">Отключите защиту от удаления в App Lock Revived, чтобы снять это ограничение.</string>
+
+    <!-- Updates -->
+    <string name="update_dialog_title">Доступно обновление</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">Что нового</string>
+    <string name="update_dialog_no_notes">Описание выпуска не указано.</string>
+    <string name="update_dialog_download">Скачать</string>
+    <string name="update_dialog_download_size">Скачать (%1$s)</string>
+    <string name="update_dialog_later">Позже</string>
+    <string name="update_dialog_skip">Пропустить эту версию</string>
+    <string name="update_dialog_icon_description">Значок App Lock Revived</string>
+    <string name="update_dialog_no_browser">Не найдено приложение для открытия ссылки на загрузку</string>
+
+    <!-- Settings sections -->
+    <string name="settings_section_appearance">Оформление</string>
+    <string name="settings_section_lock_screen">Экран блокировки</string>
+    <string name="settings_section_protection">Защита</string>
+    <string name="settings_section_privacy">Конфиденциальность</string>
+    <string name="settings_section_backup">Резервная копия и восстановление</string>
+    <string name="settings_section_updates">Обновления</string>
+
+    <!-- Appearance -->
+    <string name="settings_theme_title">Тема</string>
+    <string name="settings_theme_system">Как в системе</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_dynamic_color_title">Динамические цвета</string>
+    <string name="settings_dynamic_color_desc">Использовать цвета из обоев</string>
+    <string name="settings_amoled_title">Чисто чёрная тема</string>
+    <string name="settings_amoled_desc">Использовать чисто чёрный фон в тёмной теме</string>
+    <string name="settings_amoled_desc_needs_dark">Доступно, когда включена тёмная тема</string>
+
+    <!-- Lock screen -->
+    <string name="settings_biometric_desc_available">Использовать отпечаток пальца или разблокировку по лицу</string>
+    <string name="settings_biometric_desc_unavailable">Биометрия не настроена на этом устройстве</string>
+    <string name="settings_biometric_auto_prompt_title">Показывать запрос биометрии автоматически</string>
+    <string name="settings_biometric_auto_prompt_desc">Открывать запрос отпечатка пальца или лица сразу при появлении экрана блокировки</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Включите биометрическую разблокировку, чтобы использовать это</string>
+    <string name="settings_scramble_keypad_title">Перемешивать цифры PIN-клавиатуры</string>
+    <string name="settings_scramble_keypad_desc">Менять расположение цифр при каждом вводе, чтобы никто не смог узнать PIN-код по движениям пальца</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Доступно только с PIN-кодом</string>
+    <string name="settings_auto_unlock_desc">Разблокировать сразу после ввода правильного PIN-кода, без нажатия «Подтвердить»</string>
+    <string name="settings_disable_haptics_title">Отключить тактильную отдачу</string>
+
+    <!-- Security -->
+    <string name="settings_change_pattern_title">Сменить графический ключ</string>
+    <string name="settings_change_pattern_desc">Нарисовать новый графический ключ</string>
+    <string name="settings_change_password_title">Сменить пароль</string>
+    <string name="settings_change_password_desc">Установить новый пароль</string>
+    <string name="settings_unlock_duration_until_screen_off">До выключения экрана</string>
+    <string name="settings_unlock_duration_sheet_desc">Как долго приложение остаётся разблокированным после разблокировки</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="one">%1$d минута</item>
+        <item quantity="few">%1$d минуты</item>
+        <item quantity="many">%1$d минут</item>
+        <item quantity="other">%1$d минуты</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Неудачных попыток до блокировки</string>
+    <string name="settings_failed_attempts_desc">Временно блокировать ввод после нескольких неверных попыток</string>
+    <string name="settings_failed_attempts_off">Выкл.</string>
+    <string name="settings_lockout_duration_title">Длительность блокировки</string>
+    <string name="settings_lockout_duration_desc">Удваивается при каждом повторении блокировки</string>
+    <string name="settings_lockout_duration_desc_disabled">Включите блокировку после неудачных попыток, чтобы использовать это</string>
+    <string name="settings_lockout_seconds_short">%1$d с</string>
+    <string name="settings_lockout_minutes_short">%1$d мин</string>
+
+    <!-- Protection -->
+    <string name="settings_auto_lock_new_apps_title">Блокировать новые приложения</string>
+    <string name="settings_auto_lock_new_apps_desc">Автоматически блокировать приложения сразу после установки</string>
+
+    <!-- Privacy -->
+    <string name="settings_unlock_history_title">История разблокировок</string>
+    <string name="settings_unlock_history_desc">Вести журнал попыток разблокировки на устройстве. Если выключить, журнал будет удалён.</string>
+    <string name="settings_view_unlock_history_title">Открыть историю разблокировок</string>
+    <string name="settings_view_unlock_history_desc">Последние разблокировки и неудачные попытки</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_export_title">Экспорт резервной копии</string>
+    <string name="settings_backup_export_desc">Сохранить заблокированные приложения и настройки в файл</string>
+    <string name="settings_backup_import_title">Восстановить из резервной копии</string>
+    <string name="settings_backup_import_desc">Заменить заблокированные приложения и настройки файлом резервной копии</string>
+    <string name="settings_backup_footer">PIN-код, графический ключ или пароль никогда не включаются в резервную копию.</string>
+    <string name="settings_backup_export_success">Резервная копия сохранена</string>
+    <string name="settings_backup_export_failed">Не удалось сохранить резервную копию: %1$s</string>
+    <string name="settings_backup_import_invalid">Это не резервная копия App Lock Revived</string>
+    <string name="settings_backup_import_newer_version">Эта резервная копия создана более новой версией App Lock Revived. Обновите приложение и попробуйте снова.</string>
+    <string name="settings_backup_import_failed">Не удалось прочитать резервную копию: %1$s</string>
+    <string name="settings_backup_no_file_picker">Нет приложения для выбора файлов</string>
+    <string name="settings_backup_restore_complete_title">Резервная копия восстановлена</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="one">Восстановлено: %1$d заблокированное приложение</item>
+        <item quantity="few">Восстановлено: %1$d заблокированных приложения</item>
+        <item quantity="many">Восстановлено: %1$d заблокированных приложений</item>
+        <item quantity="other">Восстановлено: %1$d заблокированных приложения</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="one">Восстановлено: %1$d настройка</item>
+        <item quantity="few">Восстановлено: %1$d настройки</item>
+        <item quantity="many">Восстановлено: %1$d настроек</item>
+        <item quantity="other">Восстановлено: %1$d настройки</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">Ваши текущие PIN-код, графический ключ или пароль остались без изменений.</string>
+    <string name="settings_ok_button">ОК</string>
+
+    <!-- Updates -->
+    <string name="settings_update_check_title">Проверять обновления автоматически</string>
+    <string name="settings_update_check_desc">Искать новые версии на GitHub</string>
+    <string name="settings_update_check_now_title">Проверить обновления</string>
+    <string name="settings_update_checking">Проверка…</string>
+    <string name="settings_update_current_version">Установлена версия %1$s</string>
+    <string name="settings_update_latest">У вас последняя версия</string>
+    <string name="settings_update_check_failed">Не удалось проверить обновления. Проверьте подключение и попробуйте снова.</string>
+    <string name="settings_update_check_footer">Это единственный случай, когда приложение подключается к интернету. Данные о вас и ваших приложениях не отправляются.</string>
+
+    <!-- Backend -->
+    <string name="settings_backend_accessibility_title">Служба специальных возможностей</string>
+    <string name="settings_backend_accessibility_desc">Стандартный способ, который работает на большинстве устройств</string>
+    <string name="settings_backend_usage_stats_title">Статистика использования</string>
+    <string name="settings_backend_usage_stats_desc">Экспериментальный способ с использованием статистики приложений</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Продвинутый способ с использованием Shizuku и внутренних API</string>
+
+    <!-- Advanced -->
+    <string name="settings_logging_title">Журнал отладки</string>
+    <string name="settings_logging_desc">Вести подробный журнал для поиска неполадок</string>
+    <string name="settings_share_logs">Поделиться журналами</string>
+    <string name="settings_share_audit_logs">Поделиться журналами безопасности</string>
+
+    <!-- About -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Версия %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Бесплатно, с открытым исходным кодом и без рекламы</string>
+    <string name="settings_about_developed_by">Разработчик: Riyad M</string>
+    <string name="settings_about_source_title">Исходный код</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Релизы</string>
+    <string name="settings_about_releases_desc">Список изменений и загрузки</string>
+    <string name="settings_about_issue_title">Сообщить о проблеме</string>
+    <string name="settings_about_issue_desc">Нашли ошибку или есть идея? Напишите нам</string>
+    <string name="settings_about_credits_title">Благодарности</string>
+    <string name="settings_about_credits_desc">Основано на AppLock от Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">Лицензия</string>
+    <string name="settings_about_license_desc">Лицензия MIT</string>
+    <string name="settings_no_browser">Нет приложения для открытия ссылок</string>
+
+    <!-- Support sheet -->
+    <string name="settings_support_sheet_title">Нравится App Lock Revived?</string>
+    <string name="settings_support_sheet_message">App Lock Revived бесплатен, открыт и без рекламы. Поддержать проект можно, поставив звезду на GitHub, сообщив об ошибках или рассказав о нём друзьям.</string>
+    <string name="settings_support_sheet_star">Поставить звезду на GitHub</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">История разблокировок</string>
+    <plurals name="history_entry_count">
+        <item quantity="one">%1$d запись</item>
+        <item quantity="few">%1$d записи</item>
+        <item quantity="many">%1$d записей</item>
+        <item quantity="other">%1$d записи</item>
+    </plurals>
+    <string name="history_clear_cd">Очистить историю</string>
+    <string name="history_clear_dialog_title">Очистить историю разблокировок?</string>
+    <string name="history_clear_dialog_text">Все записи о разблокировках и неудачных попытках будут удалены. Это нельзя отменить.</string>
+    <string name="history_clear_confirm">Очистить</string>
+    <string name="history_cleared">История очищена</string>
+    <plurals name="history_summary_failed" tools:ignore="ImpliedQuantity">
+        <item quantity="one">неудачная попытка за последние 24 часа</item>
+        <item quantity="few">неудачные попытки за последние 24 часа</item>
+        <item quantity="many">неудачных попыток за последние 24 часа</item>
+        <item quantity="other">неудачные попытки за последние 24 часа</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="one">%1$d успешная разблокировка за тот же период</item>
+        <item quantity="few">%1$d успешные разблокировки за тот же период</item>
+        <item quantity="many">%1$d успешных разблокировок за тот же период</item>
+        <item quantity="other">%1$d успешные разблокировки за тот же период</item>
+    </plurals>
+    <string name="history_entry_success">Разблокировано · %1$s · %2$s</string>
+    <string name="history_entry_failed">Неудачная попытка · %1$s · %2$s</string>
+    <string name="history_status_success_cd">Разблокировано</string>
+    <string name="history_status_failed_cd">Неудачная попытка</string>
+    <string name="history_method_pin">PIN-код</string>
+    <string name="history_method_pattern">графический ключ</string>
+    <string name="history_method_password">пароль</string>
+    <string name="history_method_biometric">биометрия</string>
+    <string name="history_today">Сегодня</string>
+    <string name="history_yesterday">Вчера</string>
+    <string name="history_disabled_banner">История разблокировок выключена. Новые попытки не записываются.</string>
+    <string name="history_turn_on">Включить</string>
+    <string name="history_empty_title">Попыток разблокировки пока нет</string>
+    <string name="history_empty_desc">Когда кто-то разблокирует или попытается разблокировать заблокированное приложение, это появится здесь. История никогда не покидает устройство.</string>
+</resources>

@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">Verhindert, dass Unbefugte die App deinstallieren.</string>
+    <string name="accessibility_service_description">Ermöglicht App Lock, zu erkennen, wann geschützte Apps geöffnet werden, und die Passwortabfrage anzuzeigen.</string>
+
+    <string name="unlock_to_disable_admin">Gib dein Passwort ein, um die Berechtigung als Geräteadministrator zu deaktivieren.</string>
+    <string name="incorrect_pin_try_again">Falsche PIN. Bitte versuche es erneut.</string>
+    <string name="incorrect_pass_try_again">Falsches Passwort. Bitte versuche es erneut.</string>
+    <string name="password_verified_admin">Passwort bestätigt. Du kannst die Berechtigung als Geräteadministrator jetzt deaktivieren</string>
+    <string name="choose_app_detection">Erkennungsmethode auswählen</string>
+    <string name="app_detection_desc">Wähle, wie App Lock Revived erkennen soll, wann geschützte Apps gestartet werden.</string>
+    <string name="notif_perm">Benachrichtigungsberechtigung</string>
+    <string name="notif_perm_desc">App Lock Revived benötigt die Berechtigung, Benachrichtigungen anzuzeigen, damit du informiert bleibst und die App im Hintergrund zuverlässig läuft. Tippe auf „Weiter“, um die Berechtigung zu erteilen.</string>
+    <string name="notif_perm_granted">Die Benachrichtigungsberechtigung wird auf deiner Android-Version automatisch erteilt.</string>
+    <string name="welc_applock">Willkommen bei App Lock Revived</string>
+    <string name="welcome_desc">Schütze deine Apps und deine Privatsphäre mit App Lock Revived. Wir führen dich durch eine kurze Einrichtung.</string>
+    <string name="secure_apps">Sichere deine Apps</string>
+    <string name="secure_apps_desc">Schütze deine privaten Apps mit erweiterten Sperrmethoden</string>
+    <string name="display_over_apps">Über anderen Apps anzeigen</string>
+    <string name="display_over_apps_desc">App Lock Revived benötigt die Berechtigung, über anderen Apps anzuzeigen, um den Sperrbildschirm einzublenden. Tippe auf „Weiter“ und aktiviere die Berechtigung.</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">Die Benachrichtigungsberechtigung wird benötigt, damit App Lock Revived ordnungsgemäß funktioniert.</string>
+    <string name="shizuku_permission_granted">Shizuku-Berechtigung erteilt</string>
+    <string name="shizuku_permission_required_desc">Für erweiterte Funktionen wird die Shizuku-Berechtigung benötigt.</string>
+    <string name="allow_display_over_other_apps">Bitte erlaube App Lock Revived, über anderen Apps anzuzeigen.</string>
+    <string name="disable_battery_optimization_title">Akkuoptimierung deaktivieren</string>
+    <string name="disable_battery_optimization_desc">Damit App Lock Revived im Hintergrund zuverlässig läuft, deaktiviere bitte die Akkuoptimierung für die App. Tippe auf „Weiter“, um die Einstellungen zu öffnen.</string>
+    <string name="accessibility_service_title">Bedienungshilfen</string>
+    <string name="accessibility_service_card_desc">Standardmethode, die auf den meisten Geräten funktioniert. Erfordert die Berechtigung für Bedienungshilfen. Kann auf manchen Herstellern leicht verzögert sein.</string>
+    <string name="usage_stats_title">Nutzungsstatistiken</string>
+    <string name="usage_stats_card_desc">Experimentelle Methode mit den Nutzungsstatistiken des Systems. Funktioniert auf manchen Geräten besser.</string>
+    <string name="shizuku_service_title">Shizuku-Dienst</string>
+    <string name="shizuku_service_card_desc">Erweiterte Methode mit besserer Leistung und Bedienung. Erfordert, dass die Shizuku-App installiert und per ADB aktiviert ist.</string>
+    <string name="can_change_later_in_settings">Du kannst das später in den Einstellungen ändern</string>
+    <string name="app_intro_accessibility_desc">
+Die Bedienungshilfen werden benötigt, damit App Lock Revived ordnungsgemäß funktioniert.
+
+Wenn du die Meldung „Eingeschränkte Einstellung“ siehst, öffne bitte manuell Einstellungen > Apps > App Lock > Menü oben rechts und tippe auf „Eingeschränkte Einstellungen zulassen“.
+
+Tippe auf „Weiter“, um sie zu aktivieren.
+    </string>
+    <string name="app_intro_usage_stats_title">Berechtigung für Nutzungsstatistiken</string>
+    <string name="app_intro_usage_stats_desc">
+Diese Berechtigung wird benötigt, um zu erkennen, wann gesperrte Apps geöffnet werden.
+
+Wenn du die Meldung „Eingeschränkte Einstellung“ siehst, öffne bitte manuell Einstellungen > Apps > App Lock > Menü oben rechts und tippe auf „Eingeschränkte Einstellungen zulassen“.
+
+Tippe auf „Weiter“, um sie zu aktivieren.</string>
+    <string name="app_intro_shizuku_desc">
+Shizuku bietet erweiterte Funktionen, etwa das Sperren von System-Apps und mehr.
+
+Stelle sicher, dass Shizuku installiert und per ADB aktiviert ist. Tippe auf „Weiter“, um die Berechtigung zu erteilen.
+    </string>
+    <string name="app_intro_complete_privacy_title">Vollständiger Datenschutz</string>
+    <string name="app_intro_complete_privacy_desc">Deine Daten verlassen niemals dein Gerät. App Lock Revived schützt deine Privatsphäre jederzeit.</string>
+    <string name="all_permissions_required">Um fortzufahren, müssen alle Berechtigungen erteilt werden.</string>
+    <string name="next_button">Weiter</string>
+    <string name="get_started_button">Los geht’s</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">App</string>
+    <string name="this_app">diese App</string>
+    <string name="unlock_app_title">%1$s entsperren</string>
+    <string name="confirm_biometric_subtitle">Bestätige die Biometrie, um fortzufahren</string>
+    <string name="use_pin_button">PIN verwenden</string>
+    <string name="enter_password_to_continue">Gib das Passwort ein, um fortzufahren</string>
+    <string name="biometric_authentication_cd">Biometrische Authentifizierung</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">Lege eine PIN fest, um fortzufahren</string>
+    <string name="authenticate_to_reset_pin_title">Authentifizieren, um die PIN zurückzusetzen</string>
+    <string name="use_device_pin_pattern_password_subtitle">Verwende die PIN, das Muster oder das Passwort deines Geräts</string>
+    <string name="enter_current_pin_title">Aktuelle PIN eingeben</string>
+    <string name="confirm_pin_title">PIN bestätigen</string>
+    <string name="set_new_pin_title">Neue PIN festlegen</string>
+    <string name="create_pin_explanation">Lege eine PIN fest, um deine gesperrten Apps zu schützen. Diese PIN wird jedes Mal verlangt, wenn du auf eine gesperrte App zugreifen möchtest.</string>
+    <string name="enter_current_pin_label">Gib deine aktuelle PIN ein</string>
+    <string name="confirm_new_pin_label">Bestätige deine neue PIN</string>
+    <string name="create_new_pin_label">Neue PIN erstellen</string>
+    <string name="tooltip_enter_current_pin">Gib deine aktuelle PIN ein, um fortzufahren</string>
+    <string name="tooltip_confirm_pin">Bitte gib dieselbe PIN zur Bestätigung noch einmal ein</string>
+    <string name="tooltip_create_pin_min_length">Lege eine PIN mit mindestens 4 Ziffern fest</string>
+    <string name="information_cd">Informationen</string>
+    <string name="pins_dont_match_error">Die PINs stimmen nicht überein. Versuche es erneut.</string>
+    <string name="pin_min_length_error">Die PIN muss mindestens 4 Ziffern lang sein</string>
+    <string name="re_enter_new_pin_confirm_label">Gib deine neue PIN zur Bestätigung erneut ein</string>
+    <string name="reset_using_device_password_button">Mit dem Gerätepasswort zurücksetzen</string>
+    <string name="cancel_button">Abbrechen</string>
+    <string name="start_over_button">Neu beginnen</string>
+    <string name="password_set_successfully_toast">Passwort erfolgreich festgelegt</string>
+    <string name="use_pattern_button">Muster verwenden</string>
+    <string name="use_password_button">Passwort verwenden</string>
+    <string name="use_pin_instead">PIN verwenden</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">Passwort festlegen</string>
+    <string name="create_alphanumeric_password_label">Passwort erstellen</string>
+    <string name="confirm_alphanumeric_password_label">Bestätige dein Passwort</string>
+    <string name="enter_current_password_label">Aktuelles Passwort eingeben</string>
+    <string name="password_hint">Passwort eingeben</string>
+    <string name="password_too_short_error">Das Passwort muss mindestens 4 Zeichen lang sein</string>
+    <string name="password_too_long_error">Das Passwort darf höchstens 64 Zeichen lang sein</string>
+    <string name="passwords_dont_match_error">Die Passwörter stimmen nicht überein</string>
+    <string name="incorrect_password_try_again">Falsches Passwort. Bitte versuche es erneut.</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">Deinstallationsschutz ist aktiviert</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku ist nicht verfügbar. Bitte installiere Shizuku und richte es ein.</string>
+    <string name="main_screen_overlay_permission_dialog_title">Berechtigung zum Anzeigen über anderen Apps erforderlich</string>
+    <string name="main_screen_overlay_permission_dialog_text">Bitte erteile der App in den Einstellungen die Berechtigung, Overlays anzuzeigen. Das ist nötig, damit die App den Sperrbildschirm anzeigen kann.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">Einstellungen öffnen</string>
+    <string name="main_screen_shizuku_manual_permission_toast">Bitte erteile die Shizuku-Berechtigung manuell</string>
+    <string name="main_screen_device_admin_explanation">App Lock benötigt die Berechtigung als Geräteadministrator, um die Deinstallation zu verhindern. Die Funktionen deines Geräts werden dadurch nicht beeinträchtigt.</string>
+    <string name="main_screen_join_community_dialog_title">Tritt der Community bei</string>
+    <string name="main_screen_join_community_dialog_text">Tritt unserer Discord-Community bei, um Updates und Support zu erhalten.</string>
+    <string name="main_screen_join_community_join_discord_button">Discord beitreten</string>
+    <string name="main_screen_join_community_dismiss_button">Schließen</string>
+    <string name="main_screen_support_development_dialog_title">Entwicklung unterstützen</string>
+    <string name="main_screen_support_development_donate_button">Spenden</string>
+    <string name="main_screen_app_protection_cd">App-Schutz</string>
+    <string name="main_screen_settings_cd">Einstellungen</string>
+    <string name="main_screen_loading_applications_text">Apps werden geladen…</string>
+    <string name="main_screen_search_apps_placeholder">Apps suchen</string>
+    <string name="main_screen_search_cd">Suchen</string>
+    <string name="main_screen_empty_search_title">Keine Apps gefunden</string>
+    <string name="main_screen_empty_search_subtitle">Passe deine Suche an</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">Einstellungen</string>
+    <string name="settings_screen_back_cd">Zurück</string>
+    <string name="settings_screen_support_development_dialog_title">Entwicklung unterstützen</string>
+    <string name="settings_screen_support_development_donate_button">Spenden</string>
+    <string name="settings_screen_permission_required_dialog_title">Berechtigung erforderlich</string>
+    <string name="settings_screen_permission_required_dialog_text">Um den Deinstallationsschutz zu aktivieren, benötigt App Lock zwei Berechtigungen: Geräteadministrator und Bedienungshilfen. Diese sind nötig, um unbefugte Deinstallation zu verhindern und einen zuverlässigen Schutz zu gewährleisten. Möchtest du fortfahren und diese Berechtigungen erteilen?</string>
+    <string name="settings_screen_permission_required_proceed_button">Fortfahren</string>
+    <string name="settings_screen_device_admin_dialog_title">Berechtigung als Geräteadministrator</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock benötigt die Berechtigung als Geräteadministrator, um unbefugte Deinstallation zu verhindern. Bitte erteile diese Berechtigung auf dem nächsten Bildschirm. Die normalen Funktionen deines Geräts bleiben unverändert.</string>
+    <string name="settings_screen_device_admin_grant_button">Berechtigung erteilen</string>
+    <string name="settings_screen_accessibility_dialog_title">Berechtigung für Bedienungshilfen</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock benötigt außerdem die Berechtigung für Bedienungshilfen, um Deinstallationsversuche zu überwachen und die Geräteadministration bei Deaktivierung wieder zu aktivieren. So bleibt der Deinstallationsschutz wirksam. Bitte aktiviere die Bedienungshilfen für App Lock in den Einstellungen.</string>
+    <string name="settings_screen_accessibility_open_settings_button">Einstellungen öffnen</string>
+    <string name="settings_screen_lock_screen_customization_title">Anpassung des Sperrbildschirms</string>
+    <string name="settings_screen_max_brightness_title">Maximale Helligkeit</string>
+    <string name="settings_screen_max_brightness_desc">Sperrbildschirm mit maximaler Helligkeit anzeigen, damit er gut lesbar ist</string>
+    <string name="settings_screen_biometric_auth_title">Biometrische Authentifizierung</string>
+    <string name="settings_screen_biometric_auth_desc">Fingerabdruck oder Gesichtsentsperrung verwenden, falls verfügbar</string>
+    <string name="settings_screen_biometric_auth_unavailable">Biometrische Authentifizierung ist auf diesem Gerät nicht verfügbar.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">Biometrie automatisch abfragen</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">Biometrische Abfrage automatisch auf dem Sperrbildschirm anzeigen</string>
+    <string name="settings_screen_app_locking_behavior_title">Verhalten beim Sperren von Apps</string>
+    <string name="settings_screen_unlock_behavior_title">Verhalten beim Entsperren</string>
+    <string name="settings_screen_unlock_behavior_desc">Deaktiviere dies, wenn die App beim Entsperren neu gestartet wird</string>
+    <string name="settings_screen_unlock_behavior_option_close">Sperrbildschirm schließen</string>
+    <string name="settings_screen_unlock_behavior_option_launch">Sperrbildschirm schließen und App starten</string>
+    <string name="settings_screen_auto_unlock_title">Automatisch entsperren</string>
+    <string name="settings_screen_auto_unlock_desc">Apps entsperren, sobald die richtige PIN eingegeben wurde</string>
+    <string name="settings_screen_unlock_duration_title">Entsperrdauer</string>
+    <string name="settings_screen_unlock_duration_desc">Apps nach dem ersten Entsperren für eine festgelegte Dauer entsperrt lassen</string>
+    <string name="settings_screen_unlock_duration_dialog_title">Entsperrdauer festlegen</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">Apps bleiben nach dem ersten Entsperren für diese Dauer entsperrt. Wähle 0 Sekunden, um dies zu deaktivieren.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">Sekunden</string>
+    <string name="settings_screen_security_title">Sicherheit</string>
+    <string name="settings_screen_change_pin_title">PIN ändern</string>
+    <string name="settings_screen_change_pin_desc">Deine aktuelle PIN aktualisieren</string>
+    <string name="settings_screen_anti_uninstall_title">Deinstallationsschutz</string>
+    <string name="settings_screen_anti_uninstall_desc">Unbefugtes Deinstallieren von App Lock Revived verhindern</string>
+    <string name="settings_screen_haptic_feedback_title">Haptisches Feedback</string>
+    <string name="settings_screen_haptic_feedback_desc">Haptisches Feedback bei Tastendrücken deaktivieren</string>
+    <string name="settings_screen_backend_implementation_title">Erkennungsmethode</string>
+    <string name="settings_screen_backend_implementation_desc">Wähle, mit welcher Methode App Lock Revived Apps im Vordergrund erkennt</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">Bedienungshilfen</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">Standardmethode, kann auf manchen Herstellern leicht verzögert sein.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">Nutzungsstatistiken</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">Experimentelle Methode, funktioniert auf manchen Geräten besser.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">Erweiterte Methode, erfordert die Einrichtung von Shizuku über ADB.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku ist nicht verfügbar oder die Berechtigung wurde verweigert.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Experimentelle Shizuku-Funktionen</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">Experimentelle Funktionen für das Shizuku-Backend aktivieren (z. B. das Sperren bestimmter Aktivitäten). Kann zu Instabilität führen.</string>
+    <string name="settings_screen_about_title">Info</string>
+    <string name="settings_screen_developer_title">Entwickler</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">Quellcode</string>
+    <string name="settings_screen_source_code_desc">Quellcode auf GitHub ansehen</string>
+    <string name="settings_screen_support_development_title">Entwicklung unterstützen</string>
+    <string name="settings_screen_support_development_desc">Hilf dabei, die Entwicklung dieser App zu unterstützen</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">Bitte erlaube unserer App, Akkuoptimierungen zu ignorieren.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">Die passenden Einstellungen wurden nicht gefunden. Bitte entferne die App aus den Akkubeschränkungen.</string>
+    <string name="utils_battery_settings_not_found_toast">Es konnten keine Akkueinstellungen geöffnet werden.</string>
+    <string name="utils_usage_permission_error_log">Fehler beim Prüfen der Berechtigung für Nutzungszugriff: </string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">Shizuku-Berechtigung erteilen</string>
+    <string name="shizuku_permission_dialog_text_1">Du hast den Shizuku-Modus aktiviert, aber die App benötigt zusätzliche Berechtigungen, um richtig zu funktionieren.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">Tippe auf „Berechtigung erteilen“, um die Einstellungen zu öffnen und die nötigen Berechtigungen zu erteilen.</string>
+    <string name="grant_permission_button">Berechtigung erteilen</string>
+    <string name="open_settings_button">Einstellungen öffnen</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">Berechtigung als Geräteadministrator erforderlich</string>
+    <string name="device_admin_permission_dialog_text">Du hast den Modus für Deinstallationsschutz aktiviert. Dafür benötigt die App die Berechtigung als Geräteadministrator, um sich selbst zu schützen.</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">Berechtigung für Bedienungshilfen erforderlich</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">Du hast den Modus für Deinstallationsschutz aktiviert, aber die App benötigt die Berechtigung für Bedienungshilfen, um ihn durchzusetzen.</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">Passwortbestätigung erforderlich</string>
+    <string name="admin_password_verification_dialog_text">Bitte gib dein Passwort für die App-Sperre ein, um die Administratorberechtigungen zu deaktivieren</string>
+    <string name="password_label">Passwort</string>
+    <string name="password_empty_error">Das Passwort darf nicht leer sein</string>
+    <string name="incorrect_password_error">Falsches Passwort</string>
+    <string name="verify_button">Bestätigen</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">Bedienungshilfen aktivieren</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock benötigt die Berechtigung für Bedienungshilfen, um zu erkennen, wann geschützte Apps geöffnet werden.</string>
+    <string name="accessibility_guide_dialog_text_2">Bitte gehe so vor:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. Tippe unten auf „Einstellungen öffnen“\n
+2. Schalte den Schalter auf EIN\n
+3. Tippe im Bestätigungsdialog auf „Zulassen“.
+    </string>
+    <string name="accessibility_guide_open_settings_button">Einstellungen öffnen</string>
+    <string name="settings_screen_about_and_support_title">Info &amp; Support</string>
+    <string name="settings_screen_join_community_title">Community beitreten</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d Minuten</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">Sofort sperren</string>
+    <string name="settings_screen_biometric_auth_desc_available">Fingerabdruck oder Gesichtsentsperrung verwenden, um Apps zu entsperren</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">Biometrische Authentifizierung nicht eingerichtet oder nicht verfügbar.
+    </string>
+    <string name="settings_screen_shizuku_permission_granted">Shizuku-Berechtigung erteilt</string>
+    <string name="settings_screen_shizuku_permission_required_desc">Für erweiterte Funktionen wird die Shizuku-Berechtigung benötigt.
+    </string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku läuft nicht</string>
+    <string name="settings_screen_usage_permission_toast">Bitte erteile die Berechtigung für Nutzungszugriff.
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">Wähle, wie lange Apps nach Eingabe der PIN entsperrt bleiben sollen:
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">Sofort sperren</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d Minute</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 Stunde</string>
+    <string name="settings_screen_permission_required_dialog_text_1">Um den Deinstallationsschutz zu aktivieren, benötigt App Lock zwei Berechtigungen:
+    </string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. Geräteadministrator – verhindert das Deinstallieren\n2. Bedienungshilfen – überwacht die App-Nutzung\n\nDiese Berechtigungen helfen, die App davor zu schützen, ohne dein Wissen entfernt zu werden.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock benötigt die Berechtigung als Geräteadministrator, um die Deinstallation zu verhindern.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_2">Diese Berechtigung erlaubt der App:\n• Sich selbst vor dem Deinstallieren zu schützen\n• Deine App-Sperreinstellungen zu schützen\n\nDie Berechtigung beeinträchtigt die normalen Funktionen deines Geräts nicht.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock benötigt die Berechtigung für Bedienungshilfen, um die App-Nutzung zu überwachen.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_2">Diese Berechtigung erlaubt der App:\n• Zu erkennen, wann Apps geöffnet werden\n• Den Sperrbildschirm bei Bedarf anzuzeigen\n• Einen nahtlosen App-Schutz zu bieten
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_3">Deine Privatsphäre bleibt geschützt – es werden keine Daten erfasst oder weitergegeben.
+    </string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">Erweitert</string>
+    <string name="settings_screen_fallback_selection_dialog_title">Ausweichmethode auswählen</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">Wähle eine Ausweichmethode, die verwendet wird, wenn die primäre Methode fehlschlägt:
+    </string>
+    <string name="confirm_button">Bestätigen</string>
+    <string name="enable_button">Aktivieren</string>
+    <string name="settings_screen_advanced_title">Erweitert</string>
+    <string name="settings_screen_export_logs_title">Protokolle exportieren</string>
+    <string name="settings_screen_export_logs_desc">Exportiere die App-Protokolle zur Fehlersuche.</string>
+    <string name="settings_Screen_export_audit">Sicherheitsprotokolle exportieren</string>
+    <string name="settings_screen_export_audit_desc">Exportiere Sicherheitsprotokolle zur Überprüfung.</string>
+    <string name="settings_screen_export_logs_success">Protokolle exportiert</string>
+    <string name="settings_screen_export_logs_error">Protokolle konnten nicht exportiert werden</string>
+    <string name="settings_screen_version_template">Version %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">Zeichne das Muster, um fortzufahren</string>
+    <string name="incorrect_pattern_try_again">Falsches Muster. Bitte versuche es erneut.</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">Über anderen Apps anzeigen</string>
+    <string name="permission_warning_overlay_desc">Zeigt den Sperrbildschirm über geschützten Apps an.</string>
+    <string name="permission_warning_accessibility_title">Bedienungshilfen</string>
+    <string name="permission_warning_accessibility_desc">Erkennt, wenn geschützte Apps geöffnet werden.</string>
+    <string name="permission_warning_usage_stats_title">Nutzungszugriff</string>
+    <string name="permission_warning_usage_stats_desc">Erkennt, wenn geschützte Apps geöffnet werden.</string>
+    <string name="permission_warning_shizuku_title">Shizuku-Berechtigung</string>
+    <string name="permission_warning_shizuku_desc">Erkennt sicher, wenn geschützte Apps geöffnet werden.</string>
+    <string name="permission_warning_device_admin_title">Geräteadministrator</string>
+    <string name="permission_warning_device_admin_desc">Verhindert, dass App Lock Revived deinstalliert wird.</string>
+
+    <string name="join_community">Community beitreten</string>
+    <string name="join_community_desc">Tritt unserer Discord-Community bei, um dich mit anderen Nutzern zu vernetzen, Feedback zu teilen und über die neuesten Neuigkeiten und Funktionen informiert zu bleiben.</string>
+    <string name="join_discord">Discord beitreten</string>
+    <string name="maybe_later">Vielleicht später</string>
+
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">Schutz ist aktiv</string>
+    <string name="applist_status_paused_title">Schutz ist pausiert</string>
+    <string name="applist_status_paused_desc">Gesperrte Apps öffnen sich ohne Abfrage. Tippe zum Fortsetzen.</string>
+    <string name="applist_status_setup_title">Schutz benötigt Aufmerksamkeit</string>
+    <string name="applist_status_setup_desc">%1$s ist erforderlich. Tippe zum Beheben.</string>
+    <string name="applist_status_stopped_title">Sperrdienst läuft nicht</string>
+    <string name="applist_status_stopped_desc">Tippe, um den Dienst %1$s neu zu starten.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Deinstallationsschutz: %1$s erforderlich</string>
+    <string name="applist_status_fix">Beheben</string>
+    <string name="applist_status_switch_cd">Schutz</string>
+    <string name="applist_backend_accessibility">Bedienungshilfen</string>
+    <string name="applist_backend_usage_stats">Nutzungszugriff</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="one">%d App gesperrt</item>
+        <item quantity="other">%d Apps gesperrt</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">Weitere Optionen</string>
+    <string name="applist_menu_lock_all_now">Alle jetzt sperren</string>
+    <string name="applist_locked_all_now">Alle Apps fordern die Authentifizierung erneut an</string>
+    <string name="applist_menu_trigger_exclusions">Auslöser-Ausnahmen</string>
+    <string name="applist_menu_prevent_uninstall">Deinstallation verhindern</string>
+    <string name="applist_menu_show_system_apps">System-Apps anzeigen</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">Apps oder Paketnamen suchen</string>
+    <string name="applist_search_clear_cd">Suche löschen</string>
+    <string name="applist_filter_all">Alle</string>
+    <string name="applist_filter_locked">Gesperrt</string>
+    <string name="applist_filter_unlocked">Entsperrt</string>
+    <string name="applist_filter_system">System</string>
+    <string name="applist_sort_cd">Sortierung</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">Zuletzt installiert</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">Gesperrt</string>
+    <string name="applist_section_other">Andere Apps</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Auswählen</string>
+    <string name="applist_system_supporting">System · %1$s</string>
+    <string name="applist_remove_package_cd">%1$s entfernen</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">Apps werden geladen…</string>
+    <string name="applist_empty_search_title">Keine Apps für „%1$s“</string>
+    <string name="applist_empty_search_desc">Versuche einen anderen Namen oder Paketnamen.</string>
+    <string name="applist_empty_locked_title">Noch keine gesperrten Apps</string>
+    <string name="applist_empty_locked_desc">Schalte den Schalter neben einer App ein, um sie zu sperren.</string>
+    <string name="applist_empty_generic_title">Nichts anzuzeigen</string>
+    <string name="applist_empty_generic_desc">Versuche einen anderen Filter.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="one">%d ausgewählt</item>
+        <item quantity="other">%d ausgewählt</item>
+    </plurals>
+    <string name="applist_action_lock">Auswahl sperren</string>
+    <string name="applist_action_unlock">Auswahl entsperren</string>
+    <string name="applist_action_select_all">Alle auswählen</string>
+    <string name="applist_action_close_selection">Auswahl abbrechen</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="one">%d App gesperrt</item>
+        <item quantity="other">%d Apps gesperrt</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="one">%d App entsperrt</item>
+        <item quantity="other">%d Apps entsperrt</item>
+    </plurals>
+    <string name="applist_undo">Rückgängig</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">Zurück</string>
+    <string name="applist_show_system_apps">System-Apps</string>
+    <string name="applist_add_package_cd">Paket manuell hinzufügen</string>
+    <string name="applist_add_package_title">Paket manuell hinzufügen</string>
+    <string name="applist_package_name_label">Paketname</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">Gib einen gültigen Paketnamen ein</string>
+    <string name="applist_add">Hinzufügen</string>
+    <string name="applist_cancel">Abbrechen</string>
+    <string name="applist_manual_package_desc">Nicht installiert · manuell hinzugefügt</string>
+    <string name="applist_section_manual">Manuell hinzugefügt</string>
+    <string name="applist_section_installed">Installierte Apps</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">Auslöser-Ausnahmen</string>
+    <string name="trigger_exclusions_hero_title">Apps, die nie eine Sperre auslösen</string>
+    <string name="trigger_exclusions_hero_desc">Wenn du von diesen Apps zu einer gesperrten App wechselst, wird der Sperrbildschirm nicht angezeigt. Nützlich für Tastaturen, Launcher und schwebende Overlays.</string>
+    <string name="trigger_exclusions_section_excluded">Ausgeschlossen</string>
+    <string name="trigger_exclusions_add_desc">Gib den Paketnamen der App ein, die du ausschließen möchtest.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="one">%d App ausgeschlossen</item>
+        <item quantity="other">%d Apps ausgeschlossen</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">Deinstallation verhindern</string>
+    <string name="anti_uninstall_section_protected">Geschützt</string>
+    <string name="anti_uninstall_add_desc">Gib den Paketnamen der App ein, die vor dem Deinstallieren geschützt werden soll.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="one">%d App geschützt</item>
+        <item quantity="other">%d Apps geschützt</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku muss aktualisiert werden</string>
+    <string name="anti_uninstall_ready_title">Shizuku ist verbunden</string>
+    <string name="anti_uninstall_ready_desc">Geschützte Apps können nicht deinstalliert werden, bis du hier ihren Schalter ausschaltest. Shizuku wird nur benötigt, während du den Schutz änderst.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku ist nicht installiert</string>
+    <string name="anti_uninstall_not_installed_desc">Shizuku (oder Sui auf gerooteten Geräten) wird benötigt, um Deinstallationen ohne Root zu blockieren. Installiere es, um den Schutz zu ändern.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku läuft nicht</string>
+    <string name="anti_uninstall_not_running_desc">Öffne Shizuku und starte es über drahtloses Debugging oder Root, und komm dann zurück. Dein aktueller Schutz bleibt bestehen.</string>
+    <string name="anti_uninstall_permission_title">Shizuku-Berechtigung erforderlich</string>
+    <string name="anti_uninstall_permission_desc">Erlaube App Lock Revived, Shizuku zu verwenden, damit die App ändern kann, welche Apps deinstalliert werden können.</string>
+    <string name="anti_uninstall_action_install">Shizuku installieren</string>
+    <string name="anti_uninstall_action_open">Shizuku öffnen</string>
+    <string name="anti_uninstall_action_grant">Berechtigung erteilen</string>
+    <string name="anti_uninstall_action_retry">Erneut prüfen</string>
+    <string name="anti_uninstall_needs_shizuku">Starte zuerst Shizuku, um den Deinstallationsschutz zu ändern</string>
+    <string name="anti_uninstall_toggle_failed">Der Deinstallationsschutz für %1$s konnte nicht geändert werden</string>
+    <string name="anti_uninstall_shizuku_old">Diese Shizuku-Version ist zu alt. Bitte aktualisiere Shizuku.</string>
+    <string name="anti_uninstall_remove_all">Schutz für alle Apps entfernen</string>
+    <string name="anti_uninstall_remove_all_title">Gesamten Schutz entfernen?</string>
+    <string name="anti_uninstall_remove_all_desc">Jede App auf diesem Gerät, deren Deinstallation blockiert ist, kann wieder deinstalliert werden, auch Apps, die außerhalb dieser Liste geschützt sind.</string>
+    <string name="anti_uninstall_remove_all_confirm">Entfernen</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="one">Schutz von %d App entfernt</item>
+        <item quantity="other">Schutz von %d Apps entfernt</item>
+    </plurals>
+
+    <!-- Lock screen -->
+    <string name="lock_enter_pin">Gib deine PIN ein</string>
+    <string name="lock_draw_pattern">Zeichne dein Muster</string>
+    <string name="lock_enter_password">Gib dein Passwort ein</string>
+    <string name="lock_wrong_pin">Falsche PIN</string>
+    <string name="lock_wrong_pattern">Falsches Muster</string>
+    <string name="lock_wrong_password">Falsches Passwort</string>
+    <string name="lock_lockout_message">Zu viele Versuche. Versuche es in %1$s erneut</string>
+    <string name="lock_close_cd">Schließen und zum Startbildschirm gehen</string>
+    <string name="lock_backspace_cd">Löschen</string>
+    <string name="lock_confirm_cd">Entsperren</string>
+    <string name="lock_unlock_button">Entsperren</string>
+    <string name="lock_use_biometrics">Biometrie verwenden</string>
+    <string name="lock_biometric_subtitle">Verwende deinen Fingerabdruck oder dein Gesicht, um fortzufahren</string>
+    <string name="lock_biometric_waiting">Warte auf Bestätigung per Biometrie</string>
+    <string name="lock_app_icon_cd">Symbol von %1$s</string>
+    <string name="lock_pin_progress_cd">%1$d Ziffern eingegeben</string>
+    <string name="lock_pattern_pad_cd">Mustertastatur</string>
+    <string name="lock_show_password_cd">Passwort anzeigen</string>
+    <string name="lock_hide_password_cd">Passwort ausblenden</string>
+    <string name="lock_admin_title">Deinstallationsschutz deaktivieren</string>
+    <string name="lock_admin_cancel_cd">Abbrechen</string>
+
+    <!-- Quick Settings tile and services -->
+    <string name="tile_lock_now_label">Alle jetzt sperren</string>
+    <string name="tile_lock_now_subtitle_active">Schutz ein</string>
+    <string name="tile_lock_now_subtitle_inactive">Schutz aus</string>
+    <string name="tile_lock_now_done">Alle Apps gesperrt</string>
+    <string name="auto_lock_channel_name">Automatisch gesperrte Apps</string>
+    <string name="auto_lock_channel_description">Wird angezeigt, wenn eine neu installierte App automatisch gesperrt wird</string>
+    <string name="auto_lock_notification_title">%1$s wurde automatisch gesperrt</string>
+    <string name="auto_lock_notification_text">Tippe, um gesperrte Apps zu verwalten</string>
+    <string name="service_channel_name_usage">Schutzdienst (Nutzungsstatistiken)</string>
+    <string name="service_channel_name_shizuku">Schutzdienst (Shizuku)</string>
+    <string name="service_notification_text">Deine Apps werden geschützt</string>
+    <string name="service_notification_text_shizuku">Deine Apps werden mit Shizuku geschützt</string>
+    <string name="service_notification_waiting_shizuku">Warte, bis Shizuku startet…</string>
+    <string name="anti_uninstall_blocked_toast">Deaktiviere den Deinstallationsschutz in App Lock Revived, um diese Einschränkung aufzuheben.</string>
+
+    <!-- App intro -->
+    <string name="intro_welcome_title">Willkommen bei App Lock Revived</string>
+    <string name="intro_welcome_desc">Schütze deine Apps und deine Privatsphäre. Wir führen dich durch eine kurze Einrichtung. Die Einrichtung dauert nur eine Minute.</string>
+    <string name="intro_page_indicator">Schritt %1$d von %2$d</string>
+    <string name="intro_back">Zurück</string>
+    <string name="intro_allow_button">Zulassen</string>
+    <string name="intro_status_granted">Erlaubt</string>
+    <string name="intro_status_not_granted">Noch nicht erlaubt</string>
+    <string name="intro_open_app_info">App-Info öffnen</string>
+    <string name="intro_battery_title">App Lock im Betrieb halten</string>
+    <string name="intro_battery_desc">Android kann App Lock Revived im Hintergrund beenden, um Akku zu sparen. Dann werden Apps nach einem Neustart oder nach einigen Minuten nicht mehr gesperrt. Erlaube der App, ohne Akkubeschränkungen zu laufen.</string>
+    <string name="intro_battery_oem_hint">Öffne auf manchen Geräten (Xiaomi, Samsung, OnePlus, Huawei, Oppo, Vivo…) außerdem die App-Info, stelle die Akkunutzung auf „Uneingeschränkt“ ein und aktiviere den Autostart, falls verfügbar.</string>
+    <string name="intro_accessibility_desc">App Lock Revived verwendet die Bedienungshilfen nur, um zu erkennen, wann eine geschützte App geöffnet wird. Tippe auf „Zulassen“, suche App Lock Revived in der Liste und aktiviere sie.</string>
+    <string name="intro_shizuku_not_running">Shizuku läuft nicht. Starte es in der Shizuku-App und tippe dann erneut auf „Zulassen“.</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">Siehst du „Eingeschränkte Einstellung“?</string>
+    <string name="ob_restricted_settings_desc">Android blockiert die Bedienungshilfen für Apps, die nicht aus einem App-Store stammen, bis du sie erlaubst.</string>
+    <string name="ob_restricted_settings_steps">1. Tippe unten auf „App-Info öffnen“\n2. Tippe oben in der Ecke auf ⋮\n3. Wähle „Eingeschränkte Einstellungen zulassen“ und bestätige\n4. Komm zurück und aktiviere den Dienst</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. Tippe auf „Einstellungen öffnen“\n2. Suche App Lock Revived (sie kann unter „Heruntergeladene Apps“ oder „Installierte Apps“ stehen)\n3. Aktiviere sie und tippe auf „Zulassen“</string>
+    <string name="ob_usage_stats_dialog_title">Nutzungszugriff erteilen</string>
+    <string name="ob_usage_stats_dialog_text">Du hast den Modus „Nutzungsstatistiken“ gewählt, aber App Lock Revived benötigt Nutzungszugriff, um zu erkennen, wann geschützte Apps geöffnet werden.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">Sperre einrichten</string>
+    <string name="setup_title_change">Sperre ändern</string>
+    <string name="setup_type_pin">PIN</string>
+    <string name="setup_type_pattern">Muster</string>
+    <string name="setup_type_password">Passwort</string>
+    <string name="setup_create_pin">PIN erstellen</string>
+    <string name="setup_confirm_pin">Bestätige deine PIN</string>
+    <string name="setup_verify_pin">Gib deine aktuelle PIN ein</string>
+    <string name="setup_create_pattern">Zeichne ein Muster</string>
+    <string name="setup_confirm_pattern">Zeichne es noch einmal</string>
+    <string name="setup_verify_pattern">Zeichne dein aktuelles Muster</string>
+    <string name="setup_create_password">Passwort erstellen</string>
+    <string name="setup_confirm_password">Bestätige dein Passwort</string>
+    <string name="setup_verify_password">Gib dein aktuelles Passwort ein</string>
+    <string name="setup_hint_pin">Verwende mindestens 4 Ziffern</string>
+    <string name="setup_hint_pattern">Verbinde mindestens 4 Punkte</string>
+    <string name="setup_hint_password">Verwende mindestens 4 Zeichen</string>
+    <string name="setup_hint_confirm">Gib es zur Bestätigung noch einmal ein</string>
+    <string name="setup_hint_verify">Bestätige, dass du es bist, bevor du deine Sperre änderst</string>
+    <string name="setup_pattern_too_short">Verbinde mindestens 4 Punkte</string>
+    <string name="setup_patterns_dont_match">Die Muster stimmen nicht überein. Versuche es erneut.</string>
+    <string name="setup_continue">Weiter</string>
+    <string name="setup_confirm">Bestätigen</string>
+    <string name="setup_delete">Löschen</string>
+    <string name="setup_show_password">Passwort anzeigen</string>
+    <string name="setup_hide_password">Passwort ausblenden</string>
+    <string name="setup_use_keyboard">Stattdessen Tastatur verwenden</string>
+    <string name="setup_use_keypad">Zifferntastatur verwenden</string>
+    <string name="setup_digits_entered">%1$d Ziffern eingegeben</string>
+
+    <!-- Settings: sections and appearance -->
+    <string name="settings_section_appearance">Darstellung</string>
+    <string name="settings_section_lock_screen">Sperrbildschirm</string>
+    <string name="settings_section_protection">Schutz</string>
+    <string name="settings_section_privacy">Datenschutz</string>
+    <string name="settings_section_backup">Sicherung &amp; Wiederherstellung</string>
+    <string name="settings_section_updates">Updates</string>
+    <string name="settings_theme_title">Design</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_dynamic_color_title">Dynamische Farbe</string>
+    <string name="settings_dynamic_color_desc">Farben aus deinem Hintergrundbild verwenden</string>
+    <string name="settings_amoled_title">Reines Schwarz</string>
+    <string name="settings_amoled_desc">Im dunklen Design einen echten schwarzen Hintergrund verwenden</string>
+    <string name="settings_amoled_desc_needs_dark">Verfügbar, wenn das dunkle Design aktiv ist</string>
+
+    <!-- Settings: lock screen -->
+    <string name="settings_biometric_desc_available">Fingerabdruck oder Gesichtsentsperrung verwenden</string>
+    <string name="settings_biometric_desc_unavailable">Auf diesem Gerät sind keine Biometrie-Daten eingerichtet</string>
+    <string name="settings_biometric_auto_prompt_title">Biometrische Abfrage automatisch anzeigen</string>
+    <string name="settings_biometric_auto_prompt_desc">Fingerabdruck- oder Gesichtsabfrage öffnen, sobald der Sperrbildschirm erscheint</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">Aktiviere die biometrische Entsperrung, um dies zu nutzen</string>
+    <string name="settings_scramble_keypad_title">PIN-Tastatur mischen</string>
+    <string name="settings_scramble_keypad_desc">Die Ziffern jedes Mal mischen, damit andere deine PIN nicht an deinen Fingerbewegungen erkennen können</string>
+    <string name="settings_scramble_keypad_desc_pin_only">Nur mit PIN-Sperre verfügbar</string>
+    <string name="settings_auto_unlock_desc">Ohne Bestätigung entsperren, sobald die richtige PIN eingegeben wurde</string>
+    <string name="settings_disable_haptics_title">Haptisches Feedback ausschalten</string>
+
+    <!-- Settings: security -->
+    <string name="settings_change_pattern_title">Muster ändern</string>
+    <string name="settings_change_pattern_desc">Ein neues Entsperrmuster zeichnen</string>
+    <string name="settings_change_password_title">Passwort ändern</string>
+    <string name="settings_change_password_desc">Ein neues Passwort festlegen</string>
+    <string name="settings_unlock_duration_until_screen_off">Bis der Bildschirm ausgeschaltet wird</string>
+    <string name="settings_unlock_duration_sheet_desc">Wie lange eine App nach dem Entsperren entsperrt bleibt</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="one">%1$d Minute</item>
+        <item quantity="other">%1$d Minuten</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">Fehlversuche bis zur Sperre</string>
+    <string name="settings_failed_attempts_desc">Eingaben nach zu vielen Fehlversuchen für eine Weile blockieren</string>
+    <string name="settings_failed_attempts_off">Aus</string>
+    <string name="settings_lockout_duration_title">Dauer der Sperre</string>
+    <string name="settings_lockout_duration_desc">Verdoppelt sich bei jeder Wiederholung der Sperre</string>
+    <string name="settings_lockout_duration_desc_disabled">Aktiviere die Sperre nach Fehlversuchen, um dies zu nutzen</string>
+    <string name="settings_lockout_seconds_short">%1$d s</string>
+    <string name="settings_lockout_minutes_short">%1$d min</string>
+
+    <!-- Settings: protection -->
+    <string name="settings_auto_lock_new_apps_title">Neu installierte Apps sperren</string>
+    <string name="settings_auto_lock_new_apps_desc">Apps direkt nach der Installation automatisch sperren</string>
+
+    <!-- Settings: privacy -->
+    <string name="settings_unlock_history_title">Entsperrverlauf</string>
+    <string name="settings_unlock_history_desc">Ein Protokoll der Entsperrversuche auf dem Gerät speichern. Wenn du dies ausschaltest, wird das Protokoll gelöscht.</string>
+    <string name="settings_view_unlock_history_title">Entsperrverlauf anzeigen</string>
+    <string name="settings_view_unlock_history_desc">Letzte Entsperrungen und Fehlversuche ansehen</string>
+
+    <!-- Settings: backup -->
+    <string name="settings_backup_export_title">Sicherung exportieren</string>
+    <string name="settings_backup_export_desc">Gesperrte Apps und Einstellungen in einer Datei speichern</string>
+    <string name="settings_backup_import_title">Aus Sicherung wiederherstellen</string>
+    <string name="settings_backup_import_desc">Gesperrte Apps und Einstellungen durch eine Sicherungsdatei ersetzen</string>
+    <string name="settings_backup_footer">Deine PIN, dein Muster oder dein Passwort wird nie in einer Sicherung gespeichert.</string>
+    <string name="settings_backup_export_success">Sicherung gespeichert</string>
+    <string name="settings_backup_export_failed">Die Sicherung konnte nicht gespeichert werden: %1$s</string>
+    <string name="settings_backup_import_invalid">Diese Datei ist keine Sicherung von App Lock Revived</string>
+    <string name="settings_backup_import_newer_version">Diese Sicherung wurde mit einer neueren Version von App Lock Revived erstellt. Aktualisiere die App und versuche es erneut.</string>
+    <string name="settings_backup_import_failed">Die Sicherung konnte nicht gelesen werden: %1$s</string>
+    <string name="settings_backup_no_file_picker">Keine App zum Auswählen von Dateien verfügbar</string>
+    <string name="settings_backup_restore_complete_title">Sicherung wiederhergestellt</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="one">%1$d gesperrte App wiederhergestellt.</item>
+        <item quantity="other">%1$d gesperrte Apps wiederhergestellt.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="one">%1$d Einstellung wiederhergestellt.</item>
+        <item quantity="other">%1$d Einstellungen wiederhergestellt.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">Deine aktuelle PIN, dein Muster oder dein Passwort wurde beibehalten.</string>
+    <string name="settings_ok_button">OK</string>
+
+    <!-- Settings: updates -->
+    <string name="settings_update_check_title">Automatisch nach Updates suchen</string>
+    <string name="settings_update_check_desc">Nach neuen Versionen auf GitHub suchen</string>
+    <string name="settings_update_check_now_title">Nach Updates suchen</string>
+    <string name="settings_update_checking">Wird geprüft…</string>
+    <string name="settings_update_current_version">Du hast Version %1$s</string>
+    <string name="settings_update_latest">Du verwendest die neueste Version</string>
+    <string name="settings_update_check_failed">Updates konnten nicht geprüft werden. Prüfe deine Verbindung und versuche es erneut.</string>
+    <string name="settings_update_check_footer">Dies ist das einzige Mal, dass die App eine Internetverbindung herstellt. Es werden keine Informationen über dich oder deine Apps gesendet.</string>
+
+    <!-- Settings: detection backend -->
+    <string name="settings_backend_accessibility_title">Bedienungshilfen</string>
+    <string name="settings_backend_accessibility_desc">Standardmethode, die auf den meisten Geräten funktioniert</string>
+    <string name="settings_backend_usage_stats_title">Nutzungsstatistiken</string>
+    <string name="settings_backend_usage_stats_desc">Experimentelle Methode mit Nutzungsstatistiken der App</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">Erweiterte Methode mit Shizuku und internen APIs</string>
+
+    <!-- Settings: advanced -->
+    <string name="settings_logging_title">Debug-Protokollierung</string>
+    <string name="settings_logging_desc">Ausführliche Protokolle zur Fehlersuche aufzeichnen</string>
+    <string name="settings_share_logs">Protokolle teilen</string>
+    <string name="settings_share_audit_logs">Sicherheitsprotokolle teilen</string>
+
+    <!-- Settings: about -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">Version %1$s (%2$d)</string>
+    <string name="settings_about_tagline">Kostenlos, Open Source und werbefrei</string>
+    <string name="settings_about_developed_by">Entwickelt von Riyad M</string>
+    <string name="settings_about_source_title">Quellcode</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">Releases</string>
+    <string name="settings_about_releases_desc">Änderungsprotokoll und Downloads</string>
+    <string name="settings_about_issue_title">Problem melden</string>
+    <string name="settings_about_issue_desc">Einen Fehler gefunden oder eine Idee? Lass es uns wissen</string>
+    <string name="settings_about_credits_title">Danksagungen</string>
+    <string name="settings_about_credits_desc">Basiert auf AppLock von Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">Lizenz</string>
+    <string name="settings_about_license_desc">MIT-Lizenz</string>
+    <string name="settings_no_browser">Keine App zum Öffnen von Links verfügbar</string>
+
+    <!-- Settings: support sheet -->
+    <string name="settings_support_sheet_title">Gefällt dir App Lock Revived?</string>
+    <string name="settings_support_sheet_message">App Lock Revived ist kostenlos, Open Source und werbefrei. Du kannst das Projekt unterstützen, indem du es auf GitHub mit einem Stern markierst, Fehler meldest oder es mit Freunden teilst.</string>
+    <string name="settings_support_sheet_star">Auf GitHub mit Stern markieren</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">Entsperrverlauf</string>
+    <plurals name="history_entry_count">
+        <item quantity="one">%1$d Eintrag</item>
+        <item quantity="other">%1$d Einträge</item>
+    </plurals>
+    <string name="history_clear_cd">Verlauf löschen</string>
+    <string name="history_clear_dialog_title">Entsperrverlauf löschen?</string>
+    <string name="history_clear_dialog_text">Alle aufgezeichneten Entsperrungen und Fehlversuche werden gelöscht. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="history_clear_confirm">Löschen</string>
+    <string name="history_cleared">Verlauf gelöscht</string>
+    <plurals name="history_summary_failed">
+        <item quantity="one">Fehlversuch in den letzten 24 Stunden</item>
+        <item quantity="other">Fehlversuche in den letzten 24 Stunden</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="one">%1$d erfolgreiche Entsperrung im selben Zeitraum</item>
+        <item quantity="other">%1$d erfolgreiche Entsperrungen im selben Zeitraum</item>
+    </plurals>
+    <string name="history_entry_success">Entsperrt mit %1$s · %2$s</string>
+    <string name="history_entry_failed">Fehlgeschlagener Versuch mit %1$s · %2$s</string>
+    <string name="history_status_success_cd">Entsperrt</string>
+    <string name="history_status_failed_cd">Fehlversuch</string>
+    <string name="history_method_pin">PIN</string>
+    <string name="history_method_pattern">Muster</string>
+    <string name="history_method_password">Passwort</string>
+    <string name="history_method_biometric">Biometrie</string>
+    <string name="history_today">Heute</string>
+    <string name="history_yesterday">Gestern</string>
+    <string name="history_disabled_banner">Der Entsperrverlauf ist aus. Neue Versuche werden nicht aufgezeichnet.</string>
+    <string name="history_turn_on">Einschalten</string>
+    <string name="history_empty_title">Noch keine Entsperrversuche</string>
+    <string name="history_empty_desc">Wenn jemand eine gesperrte App entsperrt oder entsperren möchte, wird das hier angezeigt. Der Verlauf verlässt niemals dein Gerät.</string>
+
+    <!-- Update dialog -->
+    <string name="update_dialog_title">Update verfügbar</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">Neuerungen</string>
+    <string name="update_dialog_no_notes">Keine Versionshinweise verfügbar.</string>
+    <string name="update_dialog_download">Herunterladen</string>
+    <string name="update_dialog_download_size">Herunterladen (%1$s)</string>
+    <string name="update_dialog_later">Später</string>
+    <string name="update_dialog_skip">Diese Version überspringen</string>
+    <string name="update_dialog_icon_description">Symbol von App Lock Revived</string>
+    <string name="update_dialog_no_browser">Keine App zum Öffnen des Download-Links gefunden</string>
+
+</resources>
+

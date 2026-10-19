@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.hasUsagePermission
@@ -95,6 +96,7 @@ class UsageLockService : Service() {
             AppLockManager.isLockScreenShown.set(false)
         }
         NewAppAutoLocker.register(this, this)
+        TrustedNetworkMonitor.register(this, this)
 
         if (timer == null) startMonitoringTimer()
 
@@ -121,6 +123,7 @@ class UsageLockService : Service() {
             receiverRegistered = false
         }
         NewAppAutoLocker.unregister(this, this)
+        TrustedNetworkMonitor.unregister(this)
 
         AppLockManager.isLockScreenShown.set(false)
         ServiceForeground.stop(this)
@@ -244,6 +247,7 @@ class UsageLockService : Service() {
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long) {
         if (packageName !in appLockRepository.getLockedApps()) return
+        if (TrustedNetworkMonitor.isTrusted()) return
 
         if (AppLockManager.isWithinUnlockDuration(
                 packageName,

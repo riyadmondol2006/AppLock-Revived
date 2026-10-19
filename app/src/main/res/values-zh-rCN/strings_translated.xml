@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Lock Revived</string>
+
+    <string name="device_admin_description">防止未经授权的人卸载本应用。</string>
+    <string name="accessibility_service_description">允许 App Lock Revived 检测受保护的应用何时被打开，并显示密码验证界面。</string>
+
+    <string name="unlock_to_disable_admin">输入密码以停用设备管理员权限。</string>
+    <string name="incorrect_pin_try_again">PIN 码错误，请重试。</string>
+    <string name="incorrect_pass_try_again">密码错误，请重试。</string>
+    <string name="password_verified_admin">密码验证成功，现在可以停用设备管理员权限</string>
+    <string name="choose_app_detection">选择应用检测方式</string>
+    <string name="app_detection_desc">选择 App Lock Revived 检测受保护应用启动的方式。</string>
+    <string name="notif_perm">通知权限</string>
+    <string name="notif_perm_desc">App Lock Revived 需要通知权限，以便向你发送提醒并确保在后台正常运行。点按“下一步”即可授予权限。</string>
+    <string name="notif_perm_granted">在你的 Android 版本上，通知权限已自动授予。</string>
+    <string name="welc_applock">欢迎使用 App Lock Revived</string>
+    <string name="welcome_desc">使用 App Lock Revived 保护你的应用和隐私。我们将引导你快速完成设置。</string>
+    <string name="secure_apps">保护你的应用</string>
+    <string name="secure_apps_desc">通过多种高级锁定方式，保护你的私密应用</string>
+    <string name="display_over_apps">显示在其他应用上层</string>
+    <string name="display_over_apps_desc">App Lock Revived 需要显示在其他应用上层的权限，以便显示锁屏界面。点按“下一步”并开启该权限。</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">App Lock Revived 需要通知权限才能正常工作。</string>
+    <string name="shizuku_permission_granted">已授予 Shizuku 权限</string>
+    <string name="shizuku_permission_required_desc">高级功能需要 Shizuku 权限。</string>
+    <string name="allow_display_over_other_apps">请允许 App Lock Revived 显示在其他应用上层。</string>
+    <string name="disable_battery_optimization_title">停用电池优化</string>
+    <string name="disable_battery_optimization_desc">为确保 App Lock Revived 在后台可靠运行，请为本应用停用电池优化。点按“下一步”打开设置。</string>
+    <string name="accessibility_service_title">无障碍服务</string>
+    <string name="accessibility_service_card_desc">适用于大多数设备的标准方式，需要无障碍权限。部分厂商的系统可能会有轻微延迟。</string>
+    <string name="usage_stats_title">使用情况访问</string>
+    <string name="usage_stats_card_desc">利用系统使用情况统计的实验性方式，在部分设备上效果更好。</string>
+    <string name="shizuku_service_title">Shizuku 服务</string>
+    <string name="shizuku_service_card_desc">性能更好、体验更优的高级方式。需要安装 Shizuku 应用并通过 ADB 启用。</string>
+    <string name="can_change_later_in_settings">你之后可以在设置中更改此项</string>
+    <string name="app_intro_accessibility_desc">App Lock Revived 需要无障碍服务才能正常工作。\n\n如果你看到“受限设置”提示，请手动前往“设置 > 应用 > App Lock Revived > 右上角菜单”，然后点按“允许受限设置”。\n\n点按“下一步”以开启该服务。</string>
+    <string name="app_intro_usage_stats_title">使用情况访问权限</string>
+    <string name="app_intro_usage_stats_desc">检测锁定应用何时被打开需要此权限。\n\n如果你看到“受限设置”提示，请手动前往“设置 > 应用 > App Lock Revived > 右上角菜单”，然后点按“允许受限设置”。\n\n点按“下一步”以开启该权限。</string>
+    <string name="app_intro_shizuku_desc">Shizuku 可提供锁定系统应用等高级功能。\n\n请确保已安装 Shizuku 并通过 ADB 启用。点按“下一步”以授予权限。</string>
+    <string name="app_intro_complete_privacy_title">完全隐私</string>
+    <string name="app_intro_complete_privacy_desc">你的数据绝不会离开你的设备。App Lock Revived 始终保护你的隐私。</string>
+    <string name="all_permissions_required">需要授予所有权限才能继续。</string>
+    <string name="next_button">下一步</string>
+    <string name="get_started_button">开始使用</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">应用</string>
+    <string name="this_app">此应用</string>
+    <string name="unlock_app_title">解锁 %1$s</string>
+    <string name="confirm_biometric_subtitle">验证生物识别以继续</string>
+    <string name="use_pin_button">使用 PIN 码</string>
+    <string name="enter_password_to_continue">输入密码以继续</string>
+    <string name="biometric_authentication_cd">生物识别验证</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">请设置 PIN 码以继续</string>
+    <string name="authenticate_to_reset_pin_title">验证身份以重置 PIN 码</string>
+    <string name="use_device_pin_pattern_password_subtitle">使用设备的 PIN 码、图案或密码</string>
+    <string name="enter_current_pin_title">输入当前 PIN 码</string>
+    <string name="confirm_pin_title">确认 PIN 码</string>
+    <string name="set_new_pin_title">设置新 PIN 码</string>
+    <string name="create_pin_explanation">请创建一个 PIN 码来保护你锁定的应用。每次尝试访问锁定的应用时都需要输入此 PIN 码。</string>
+    <string name="enter_current_pin_label">输入当前 PIN 码</string>
+    <string name="confirm_new_pin_label">确认新 PIN 码</string>
+    <string name="create_new_pin_label">创建新 PIN 码</string>
+    <string name="tooltip_enter_current_pin">输入当前 PIN 码以继续</string>
+    <string name="tooltip_confirm_pin">请再次输入相同的 PIN 码以确认</string>
+    <string name="tooltip_create_pin_min_length">请创建至少 4 位的 PIN 码</string>
+    <string name="information_cd">信息</string>
+    <string name="pins_dont_match_error">PIN 码不一致，请重试。</string>
+    <string name="pin_min_length_error">PIN 码至少为 4 位</string>
+    <string name="re_enter_new_pin_confirm_label">再次输入新 PIN 码以确认</string>
+    <string name="reset_using_device_password_button">使用设备密码重置</string>
+    <string name="cancel_button">取消</string>
+    <string name="start_over_button">重新开始</string>
+    <string name="password_set_successfully_toast">密码设置成功</string>
+    <string name="use_pattern_button">使用图案</string>
+    <string name="use_password_button">使用密码</string>
+    <string name="use_pin_instead">使用 PIN 码</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">设置密码</string>
+    <string name="create_alphanumeric_password_label">创建密码</string>
+    <string name="confirm_alphanumeric_password_label">确认密码</string>
+    <string name="enter_current_password_label">输入当前密码</string>
+    <string name="password_hint">输入密码</string>
+    <string name="password_too_short_error">密码至少为 4 个字符</string>
+    <string name="password_too_long_error">密码最多为 64 个字符</string>
+    <string name="passwords_dont_match_error">两次输入的密码不一致</string>
+    <string name="incorrect_password_try_again">密码错误，请重试。</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">已启用防卸载</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku 不可用，请安装并配置 Shizuku。</string>
+    <string name="main_screen_overlay_permission_dialog_title">需要显示在其他应用上层的权限</string>
+    <string name="main_screen_overlay_permission_dialog_text">请在设置中授予本应用显示在其他应用上层的权限。这是显示锁屏界面所必需的。</string>
+    <string name="main_screen_overlay_permission_open_settings_button">打开设置</string>
+    <string name="main_screen_shizuku_manual_permission_toast">请手动授予 Shizuku 权限</string>
+    <string name="main_screen_device_admin_explanation">App Lock 需要设备管理员权限来防止被卸载。这不会影响你设备的正常功能。</string>
+    <string name="main_screen_join_community_dialog_title">加入社区</string>
+    <string name="main_screen_join_community_dialog_text">加入我们的 Discord 社区，获取更新与支持。</string>
+    <string name="main_screen_join_community_join_discord_button">加入 Discord</string>
+    <string name="main_screen_join_community_dismiss_button">关闭</string>
+    <string name="main_screen_support_development_dialog_title">支持开发</string>
+    <string name="main_screen_support_development_donate_button">捐赠</string>
+    <string name="main_screen_app_protection_cd">应用保护</string>
+    <string name="main_screen_settings_cd">设置</string>
+    <string name="main_screen_loading_applications_text">正在加载应用…</string>
+    <string name="main_screen_search_apps_placeholder">搜索应用</string>
+    <string name="main_screen_search_cd">搜索</string>
+    <string name="main_screen_empty_search_title">未找到应用</string>
+    <string name="main_screen_empty_search_subtitle">请尝试调整搜索内容</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">设置</string>
+    <string name="settings_screen_back_cd">返回</string>
+    <string name="settings_screen_support_development_dialog_title">支持开发</string>
+    <string name="settings_screen_support_development_donate_button">捐赠</string>
+    <string name="settings_screen_permission_required_dialog_title">需要权限</string>
+    <string name="settings_screen_permission_required_dialog_text">要开启防卸载，App Lock 需要两项权限：设备管理员和无障碍服务。这些权限可防止未经授权的卸载，确保可靠的保护。是否继续授予这些权限？</string>
+    <string name="settings_screen_permission_required_proceed_button">继续</string>
+    <string name="settings_screen_device_admin_dialog_title">设备管理员权限</string>
+    <string name="settings_screen_device_admin_dialog_text">App Lock 需要设备管理员权限来防止未经授权的卸载。请在下一屏幕中授予此权限。这不会影响你设备的正常功能。</string>
+    <string name="settings_screen_device_admin_grant_button">授予权限</string>
+    <string name="settings_screen_accessibility_dialog_title">无障碍服务权限</string>
+    <string name="settings_screen_accessibility_dialog_text">App Lock 还需要无障碍服务权限，以监控应用的卸载尝试，并在设备管理员被停用时重新激活。这可确保防卸载功能保持有效。请在设置中为 App Lock 开启无障碍服务。</string>
+    <string name="settings_screen_accessibility_open_settings_button">打开设置</string>
+    <string name="settings_screen_lock_screen_customization_title">锁屏自定义</string>
+    <string name="settings_screen_max_brightness_title">最大亮度</string>
+    <string name="settings_screen_max_brightness_desc">以最大亮度显示锁屏，以便看清</string>
+    <string name="settings_screen_biometric_auth_title">生物识别验证</string>
+    <string name="settings_screen_biometric_auth_desc">如可用，使用指纹或人脸解锁</string>
+    <string name="settings_screen_biometric_auth_unavailable">此设备不支持生物识别验证。</string>
+    <string name="settings_screen_auto_prompt_biometric_title">自动显示生物识别提示</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">锁屏出现时自动显示生物识别提示</string>
+    <string name="settings_screen_app_locking_behavior_title">应用锁定行为</string>
+    <string name="settings_screen_unlock_behavior_title">解锁行为</string>
+    <string name="settings_screen_unlock_behavior_desc">如果解锁后应用会重新启动，请关闭此项</string>
+    <string name="settings_screen_unlock_behavior_option_close">关闭锁屏</string>
+    <string name="settings_screen_unlock_behavior_option_launch">关闭锁屏并启动应用</string>
+    <string name="settings_screen_auto_unlock_title">自动解锁</string>
+    <string name="settings_screen_auto_unlock_desc">输入正确的 PIN 码后立即解锁应用</string>
+    <string name="settings_screen_unlock_duration_title">解锁时长</string>
+    <string name="settings_screen_unlock_duration_desc">首次解锁后，在设定的时长内保持应用解锁</string>
+    <string name="settings_screen_unlock_duration_dialog_title">设置解锁时长</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">首次解锁后，应用将在此时长内保持解锁。选择 0 秒即可关闭。</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">秒</string>
+    <string name="settings_screen_security_title">安全</string>
+    <string name="settings_screen_change_pin_title">更改 PIN 码</string>
+    <string name="settings_screen_change_pin_desc">更新当前 PIN 码</string>
+    <string name="settings_screen_anti_uninstall_title">防卸载保护</string>
+    <string name="settings_screen_anti_uninstall_desc">防止未经授权卸载 App Lock Revived</string>
+    <string name="settings_screen_haptic_feedback_title">触感反馈</string>
+    <string name="settings_screen_haptic_feedback_desc">按键时关闭触感反馈</string>
+    <string name="settings_screen_backend_implementation_title">后台实现方式</string>
+    <string name="settings_screen_backend_implementation_desc">选择 App Lock Revived 用于检测前台应用的方式</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">无障碍服务</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">标准方式，部分厂商的系统可能会有轻微延迟。</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">使用情况访问</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">实验性方式，在部分设备上效果更好。</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">高级方式，需要通过 ADB 设置 Shizuku。</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku 不可用或权限被拒绝。</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">Shizuku 实验性功能</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">为 Shizuku 后端启用实验性功能（例如锁定特定活动）。可能导致不稳定。</string>
+    <string name="settings_screen_about_title">关于</string>
+    <string name="settings_screen_developer_title">开发者</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">源代码</string>
+    <string name="settings_screen_source_code_desc">在 GitHub 上查看源代码</string>
+    <string name="settings_screen_support_development_title">支持开发</string>
+    <string name="settings_screen_support_development_desc">帮助支持本应用的开发</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">请允许本应用忽略电池优化。</string>
+    <string name="utils_battery_specific_settings_not_found_toast">找不到对应的设置。请将本应用从电池限制中移除。</string>
+    <string name="utils_battery_settings_not_found_toast">无法打开任何电池设置。</string>
+    <string name="utils_usage_permission_error_log">检查使用情况权限时出错：</string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">授予 Shizuku 权限</string>
+    <string name="shizuku_permission_dialog_text_1">你已开启 Shizuku 模式，但本应用需要额外的权限才能正常工作。</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">点按“授予权限”以打开设置并授予所需的权限。</string>
+    <string name="grant_permission_button">授予权限</string>
+    <string name="open_settings_button">打开设置</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">需要设备管理员权限</string>
+    <string name="device_admin_permission_dialog_text">你已开启防卸载模式，需要设备管理员权限来保护本应用。</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">需要无障碍权限</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">你已开启防卸载模式，但本应用需要无障碍权限来执行该功能。</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">需要验证密码</string>
+    <string name="admin_password_verification_dialog_text">请输入应用锁密码以停用管理员权限</string>
+    <string name="password_label">密码</string>
+    <string name="password_empty_error">密码不能为空</string>
+    <string name="incorrect_password_error">密码错误</string>
+    <string name="verify_button">验证</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">开启无障碍服务</string>
+    <string name="accessibility_guide_dialog_text_1">App Lock 需要无障碍权限来检测受保护的应用何时被打开。</string>
+    <string name="accessibility_guide_dialog_text_2">请按以下步骤操作：</string>
+    <string name="accessibility_guide_dialog_text_3">1. 点按下方的“打开设置”\n2. 将开关切换为开启\n3. 在确认对话框中点按“允许”。</string>
+    <string name="accessibility_guide_open_settings_button">打开设置</string>
+    <string name="settings_screen_about_and_support_title">关于与支持</string>
+    <string name="settings_screen_join_community_title">加入社区</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d 分钟</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">立即锁定</string>
+    <string name="settings_screen_biometric_auth_desc_available">使用指纹或人脸解锁应用</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">未设置或不支持生物识别验证。</string>
+    <string name="settings_screen_shizuku_permission_granted">已授予 Shizuku 权限</string>
+    <string name="settings_screen_shizuku_permission_required_desc">高级功能需要 Shizuku 权限。</string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku 未运行</string>
+    <string name="settings_screen_usage_permission_toast">请授予使用情况访问权限。</string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">选择输入 PIN 码后应用保持解锁的时长：</string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">立即锁定</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d 分钟</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">1 小时</string>
+    <string name="settings_screen_permission_required_dialog_text_1">要开启防卸载保护，App Lock 需要两项权限：</string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. 设备管理员 - 防止被卸载\n2. 无障碍服务 - 监控应用使用情况\n\n这些权限有助于防止本应用在你不知情的情况下被移除。</string>
+    <string name="settings_screen_device_admin_dialog_text_1">App Lock 需要设备管理员权限来防止被卸载。</string>
+    <string name="settings_screen_device_admin_dialog_text_2">此权限允许本应用：\n• 防止自身被卸载\n• 保护你的应用锁设置\n\n这不会影响你设备的正常功能。</string>
+    <string name="settings_screen_accessibility_dialog_text_1">App Lock 需要无障碍服务权限来监控应用使用情况。</string>
+    <string name="settings_screen_accessibility_dialog_text_2">此权限允许本应用：\n• 检测应用何时被打开\n• 在需要时显示锁屏\n• 提供无缝的应用保护</string>
+    <string name="settings_screen_accessibility_dialog_text_3">你的隐私受到保护，不会收集或分享任何数据。</string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">高级</string>
+    <string name="settings_screen_fallback_selection_dialog_title">选择备用方式</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">当主要方式失败时，请选择要使用的备用方式：</string>
+    <string name="confirm_button">确认</string>
+    <string name="enable_button">启用</string>
+    <string name="settings_screen_advanced_title">高级</string>
+    <string name="settings_screen_export_logs_title">导出日志</string>
+    <string name="settings_screen_export_logs_desc">导出应用日志以便调试。</string>
+    <string name="settings_Screen_export_audit">导出安全日志</string>
+    <string name="settings_screen_export_audit_desc">导出安全日志以供查看。</string>
+    <string name="settings_screen_export_logs_success">日志已导出</string>
+    <string name="settings_screen_export_logs_error">导出日志失败</string>
+    <string name="settings_screen_version_template">版本 %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">绘制图案以继续</string>
+    <string name="incorrect_pattern_try_again">图案错误，请重试。</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">显示在其他应用上层</string>
+    <string name="permission_warning_overlay_desc">在受保护的应用上层显示锁屏。</string>
+    <string name="permission_warning_accessibility_title">无障碍服务</string>
+    <string name="permission_warning_accessibility_desc">检测受保护的应用何时被打开。</string>
+    <string name="permission_warning_usage_stats_title">使用情况访问</string>
+    <string name="permission_warning_usage_stats_desc">检测受保护的应用何时被打开。</string>
+    <string name="permission_warning_shizuku_title">Shizuku 权限</string>
+    <string name="permission_warning_shizuku_desc">安全地检测受保护的应用何时被打开。</string>
+    <string name="permission_warning_device_admin_title">设备管理员</string>
+    <string name="permission_warning_device_admin_desc">防止 App Lock Revived 被卸载。</string>
+
+    <string name="join_community">加入社区</string>
+    <string name="join_community_desc">加入我们的 Discord 社区，与其他用户交流、分享反馈，并及时了解最新动态和功能。</string>
+    <string name="join_discord">加入 Discord</string>
+    <string name="maybe_later">以后再说</string>
+
+    <!-- strings_applist.xml -->
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">保护已开启</string>
+    <string name="applist_status_paused_title">保护已暂停</string>
+    <string name="applist_status_paused_desc">锁定的应用无需验证即可打开。点按即可恢复。</string>
+    <string name="applist_status_setup_title">保护需要处理</string>
+    <string name="applist_status_setup_desc">需要%1$s。点按即可修复。</string>
+    <string name="applist_status_stopped_title">锁定服务未运行</string>
+    <string name="applist_status_stopped_desc">点按以重新启动%1$s服务。</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">防卸载：需要%1$s</string>
+    <string name="applist_status_fix">修复</string>
+    <string name="applist_status_switch_cd">保护</string>
+    <string name="applist_backend_accessibility">无障碍</string>
+    <string name="applist_backend_usage_stats">使用情况访问</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="other">已锁定 %d 个应用</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">更多选项</string>
+    <string name="applist_menu_lock_all_now">立即锁定全部</string>
+    <string name="applist_locked_all_now">所有应用将再次要求验证身份</string>
+    <string name="applist_menu_trigger_exclusions">触发排除项</string>
+    <string name="applist_menu_prevent_uninstall">防止卸载</string>
+    <string name="applist_menu_show_system_apps">显示系统应用</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">搜索应用或包名</string>
+    <string name="applist_search_clear_cd">清除搜索</string>
+    <string name="applist_filter_all">全部</string>
+    <string name="applist_filter_locked">已锁定</string>
+    <string name="applist_filter_unlocked">未锁定</string>
+    <string name="applist_filter_system">系统</string>
+    <string name="applist_sort_cd">排序方式</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">最近安装</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">已锁定</string>
+    <string name="applist_section_other">其他应用</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">选择</string>
+    <string name="applist_system_supporting">系统 · %1$s</string>
+    <string name="applist_remove_package_cd">移除 %1$s</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">正在加载应用…</string>
+    <string name="applist_empty_search_title">没有与“%1$s”匹配的应用</string>
+    <string name="applist_empty_search_desc">请尝试其他名称或包名。</string>
+    <string name="applist_empty_locked_title">还没有锁定的应用</string>
+    <string name="applist_empty_locked_desc">打开应用旁边的开关即可锁定该应用。</string>
+    <string name="applist_empty_generic_title">没有可显示的内容</string>
+    <string name="applist_empty_generic_desc">请尝试其他筛选条件。</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="other">已选择 %d 项</item>
+    </plurals>
+    <string name="applist_action_lock">锁定所选</string>
+    <string name="applist_action_unlock">解锁所选</string>
+    <string name="applist_action_select_all">全选</string>
+    <string name="applist_action_close_selection">取消选择</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="other">已锁定 %d 个应用</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="other">已解锁 %d 个应用</item>
+    </plurals>
+    <string name="applist_undo">撤销</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">返回</string>
+    <string name="applist_show_system_apps">系统应用</string>
+    <string name="applist_add_package_cd">手动添加包</string>
+    <string name="applist_add_package_title">手动添加包</string>
+    <string name="applist_package_name_label">包名</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">请输入有效的包名</string>
+    <string name="applist_add">添加</string>
+    <string name="applist_cancel">取消</string>
+    <string name="applist_manual_package_desc">未安装 · 手动添加</string>
+    <string name="applist_section_manual">手动添加</string>
+    <string name="applist_section_installed">已安装的应用</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">触发排除项</string>
+    <string name="trigger_exclusions_hero_title">从不触发锁定的应用</string>
+    <string name="trigger_exclusions_hero_desc">从这些应用切换到已锁定的应用时，不会显示锁屏。适用于键盘、桌面启动器和悬浮窗应用。</string>
+    <string name="trigger_exclusions_section_excluded">已排除</string>
+    <string name="trigger_exclusions_add_desc">请输入要排除的应用的包名。</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="other">已排除 %d 个应用</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">防止卸载</string>
+    <string name="anti_uninstall_section_protected">受保护</string>
+    <string name="anti_uninstall_add_desc">请输入要防止卸载的应用的包名。</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="other">已保护 %d 个应用</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku 需要更新</string>
+    <string name="anti_uninstall_ready_title">Shizuku 已连接</string>
+    <string name="anti_uninstall_ready_desc">受保护的应用在你于此处关闭其开关之前无法被卸载。仅在更改保护设置时需要 Shizuku。</string>
+    <string name="anti_uninstall_not_installed_title">未安装 Shizuku</string>
+    <string name="anti_uninstall_not_installed_desc">无需 root 即可阻止卸载需要 Shizuku（已 root 的设备也可使用 Sui）。请先安装，再更改保护设置。</string>
+    <string name="anti_uninstall_not_running_title">Shizuku 未运行</string>
+    <string name="anti_uninstall_not_running_desc">请打开 Shizuku，并通过无线调试或 root 启动它，然后返回此处。当前的保护设置将保持不变。</string>
+    <string name="anti_uninstall_permission_title">需要 Shizuku 权限</string>
+    <string name="anti_uninstall_permission_desc">允许 App Lock Revived 使用 Shizuku，以便更改哪些应用可以被卸载。</string>
+    <string name="anti_uninstall_action_install">安装 Shizuku</string>
+    <string name="anti_uninstall_action_open">打开 Shizuku</string>
+    <string name="anti_uninstall_action_grant">授予权限</string>
+    <string name="anti_uninstall_action_retry">重新检查</string>
+    <string name="anti_uninstall_needs_shizuku">请先启动 Shizuku，再更改卸载保护设置</string>
+    <string name="anti_uninstall_toggle_failed">无法更改 %1$s 的卸载保护设置</string>
+    <string name="anti_uninstall_shizuku_old">此 Shizuku 版本过旧，请更新 Shizuku。</string>
+    <string name="anti_uninstall_remove_all">移除所有应用的保护</string>
+    <string name="anti_uninstall_remove_all_title">移除所有保护？</string>
+    <string name="anti_uninstall_remove_all_desc">本设备上所有被禁止卸载的应用都将重新允许卸载，包括本列表之外受保护的应用。</string>
+    <string name="anti_uninstall_remove_all_confirm">移除</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="other">已移除 %d 个应用的保护</item>
+    </plurals>
+
+    <!-- strings_lock.xml -->
+    <string name="lock_enter_pin">输入 PIN 码</string>
+    <string name="lock_draw_pattern">绘制图案</string>
+    <string name="lock_enter_password">输入密码</string>
+    <string name="lock_wrong_pin">PIN 码错误</string>
+    <string name="lock_wrong_pattern">图案错误</string>
+    <string name="lock_wrong_password">密码错误</string>
+    <string name="lock_lockout_message">尝试次数过多，请在 %1$s 后重试</string>
+    <string name="lock_close_cd">关闭并返回主屏幕</string>
+    <string name="lock_backspace_cd">删除</string>
+    <string name="lock_confirm_cd">解锁</string>
+    <string name="lock_unlock_button">解锁</string>
+    <string name="lock_use_biometrics">使用生物识别</string>
+    <string name="lock_biometric_subtitle">使用指纹或人脸继续</string>
+    <string name="lock_biometric_waiting">等待生物识别验证</string>
+    <string name="lock_app_icon_cd">%1$s 图标</string>
+    <string name="lock_pin_progress_cd">已输入 %1$d 位数字</string>
+    <string name="lock_pattern_pad_cd">图案区域</string>
+    <string name="lock_show_password_cd">显示密码</string>
+    <string name="lock_hide_password_cd">隐藏密码</string>
+    <string name="lock_admin_title">停用防卸载</string>
+    <string name="lock_admin_cancel_cd">取消</string>
+
+    <!-- strings_onboarding.xml -->
+    <!-- App intro -->
+    <string name="intro_welcome_title">欢迎使用 App Lock Revived</string>
+    <string name="intro_welcome_desc">保护你的应用和隐私。我们将引导你快速完成设置，只需一分钟。</string>
+    <string name="intro_page_indicator">第 %1$d 步，共 %2$d 步</string>
+    <string name="intro_back">返回</string>
+    <string name="intro_allow_button">允许</string>
+    <string name="intro_status_granted">已允许</string>
+    <string name="intro_status_not_granted">尚未允许</string>
+    <string name="intro_open_app_info">打开应用信息</string>
+    <string name="intro_battery_title">保持 App Lock 运行</string>
+    <string name="intro_battery_desc">为省电，Android 可能会在后台停止 App Lock Revived。发生这种情况时，应用会在重启后或数分钟后停止锁定。请允许其在无电池限制的情况下运行。</string>
+    <string name="intro_battery_oem_hint">在部分手机（小米、三星、一加、华为、OPPO、vivo 等）上，还请打开应用信息，将电池用量设为“无限制”，并在可用时开启自启动。</string>
+    <string name="intro_accessibility_desc">App Lock Revived 仅使用无障碍服务来检测受保护的应用何时被打开。点按“允许”，在列表中找到 App Lock Revived 并将其开启。</string>
+    <string name="intro_shizuku_not_running">Shizuku 未运行。请在 Shizuku 应用中启动它，然后再次点按“允许”。</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">看到“受限设置”提示？</string>
+    <string name="ob_restricted_settings_desc">在你允许之前，Android 会阻止从应用商店以外渠道安装的应用使用无障碍服务。</string>
+    <string name="ob_restricted_settings_steps">1. 点按下方的“打开应用信息”\n2. 点按右上角的 ⋮\n3. 选择“允许受限设置”并确认\n4. 返回并开启该服务</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. 点按“打开设置”\n2. 找到 App Lock Revived（可能位于“已下载的应用”或“已安装的应用”中）\n3. 将其开启并点按“允许”</string>
+    <string name="ob_usage_stats_dialog_title">授予使用情况访问权限</string>
+    <string name="ob_usage_stats_dialog_text">你已选择使用情况统计模式，但 App Lock Revived 需要使用情况访问权限来检测受保护的应用何时被打开。</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">设置锁</string>
+    <string name="setup_title_change">更改锁</string>
+    <string name="setup_type_pin">PIN 码</string>
+    <string name="setup_type_pattern">图案</string>
+    <string name="setup_type_password">密码</string>
+    <string name="setup_create_pin">创建 PIN 码</string>
+    <string name="setup_confirm_pin">确认 PIN 码</string>
+    <string name="setup_verify_pin">输入当前 PIN 码</string>
+    <string name="setup_create_pattern">绘制图案</string>
+    <string name="setup_confirm_pattern">再绘制一次</string>
+    <string name="setup_verify_pattern">绘制当前图案</string>
+    <string name="setup_create_password">创建密码</string>
+    <string name="setup_confirm_password">确认密码</string>
+    <string name="setup_verify_password">输入当前密码</string>
+    <string name="setup_hint_pin">请使用至少 4 位数字</string>
+    <string name="setup_hint_pattern">请连接至少 4 个点</string>
+    <string name="setup_hint_password">请使用至少 4 个字符</string>
+    <string name="setup_hint_confirm">再输入一次以确认</string>
+    <string name="setup_hint_verify">更改锁之前，请先确认是你本人</string>
+    <string name="setup_pattern_too_short">请连接至少 4 个点</string>
+    <string name="setup_patterns_dont_match">两次绘制的图案不一致，请重试。</string>
+    <string name="setup_continue">继续</string>
+    <string name="setup_confirm">确认</string>
+    <string name="setup_delete">删除</string>
+    <string name="setup_show_password">显示密码</string>
+    <string name="setup_hide_password">隐藏密码</string>
+    <string name="setup_use_keyboard">改用键盘</string>
+    <string name="setup_use_keypad">改用数字键盘</string>
+    <string name="setup_digits_entered">已输入 %1$d 位数字</string>
+
+    <!-- strings_services.xml -->
+    <!-- Quick Settings tile -->
+    <string name="tile_lock_now_label">立即锁定全部</string>
+    <string name="tile_lock_now_subtitle_active">保护已开启</string>
+    <string name="tile_lock_now_subtitle_inactive">保护已关闭</string>
+    <string name="tile_lock_now_done">所有应用已锁定</string>
+
+    <!-- Auto-lock newly installed apps -->
+    <string name="auto_lock_channel_name">自动锁定的应用</string>
+    <string name="auto_lock_channel_description">新安装的应用被自动锁定时显示</string>
+    <string name="auto_lock_notification_title">已自动锁定 %1$s</string>
+    <string name="auto_lock_notification_text">点按以管理已锁定的应用</string>
+
+    <!-- Protection services -->
+    <string name="service_channel_name_usage">保护服务（使用情况统计）</string>
+    <string name="service_channel_name_shizuku">保护服务（Shizuku）</string>
+    <string name="service_notification_text">正在保护你的应用</string>
+    <string name="service_notification_text_shizuku">正在通过 Shizuku 保护你的应用</string>
+    <string name="service_notification_waiting_shizuku">正在等待 Shizuku 启动…</string>
+    <string name="anti_uninstall_blocked_toast">请关闭 App Lock Revived 中的防卸载保护，以移除此限制。</string>
+
+    <!-- strings_settings.xml -->
+    <!-- Sections -->
+    <string name="settings_section_appearance">外观</string>
+    <string name="settings_section_lock_screen">锁屏</string>
+    <string name="settings_section_protection">保护</string>
+    <string name="settings_section_privacy">隐私</string>
+    <string name="settings_section_backup">备份与恢复</string>
+    <string name="settings_section_updates">更新</string>
+
+    <!-- Appearance -->
+    <string name="settings_theme_title">主题</string>
+    <string name="settings_theme_system">跟随系统</string>
+    <string name="settings_theme_light">浅色</string>
+    <string name="settings_theme_dark">深色</string>
+    <string name="settings_dynamic_color_title">动态取色</string>
+    <string name="settings_dynamic_color_desc">使用壁纸中的颜色</string>
+    <string name="settings_amoled_title">纯黑色</string>
+    <string name="settings_amoled_desc">在深色主题中使用纯黑背景</string>
+    <string name="settings_amoled_desc_needs_dark">开启深色主题后可用</string>
+
+    <!-- Lock screen -->
+    <string name="settings_biometric_desc_available">使用指纹或人脸解锁</string>
+    <string name="settings_biometric_desc_unavailable">此设备未设置生物识别</string>
+    <string name="settings_biometric_auto_prompt_title">自动显示生物识别提示</string>
+    <string name="settings_biometric_auto_prompt_desc">锁屏出现后立即打开指纹或人脸提示</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">请先开启生物识别解锁，再使用此项</string>
+    <string name="settings_scramble_keypad_title">打乱 PIN 码键盘</string>
+    <string name="settings_scramble_keypad_desc">每次打乱数字顺序，防止他人通过手指动作猜出你的 PIN 码</string>
+    <string name="settings_scramble_keypad_desc_pin_only">仅在使用 PIN 码锁时可用</string>
+    <string name="settings_auto_unlock_desc">输入正确的 PIN 码后立即解锁，无需按确认</string>
+    <string name="settings_disable_haptics_title">关闭触感反馈</string>
+
+    <!-- Security -->
+    <string name="settings_change_pattern_title">更改图案</string>
+    <string name="settings_change_pattern_desc">绘制新的解锁图案</string>
+    <string name="settings_change_password_title">更改密码</string>
+    <string name="settings_change_password_desc">设置新密码</string>
+    <string name="settings_unlock_duration_until_screen_off">直到屏幕关闭</string>
+    <string name="settings_unlock_duration_sheet_desc">解锁后，应用保持解锁的时长</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="other">%1$d 分钟</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">锁定前的失败尝试次数</string>
+    <string name="settings_failed_attempts_desc">多次输错后，暂时禁止输入</string>
+    <string name="settings_failed_attempts_off">关闭</string>
+    <string name="settings_lockout_duration_title">锁定时长</string>
+    <string name="settings_lockout_duration_desc">每次重复锁定时，时长翻倍</string>
+    <string name="settings_lockout_duration_desc_disabled">请先开启失败尝试锁定，再使用此项</string>
+    <string name="settings_lockout_seconds_short">%1$d 秒</string>
+    <string name="settings_lockout_minutes_short">%1$d 分钟</string>
+
+    <!-- Protection -->
+    <string name="settings_auto_lock_new_apps_title">锁定新安装的应用</string>
+    <string name="settings_auto_lock_new_apps_desc">应用安装后立即自动锁定</string>
+
+    <!-- Privacy -->
+    <string name="settings_unlock_history_title">解锁记录</string>
+    <string name="settings_unlock_history_desc">在设备上保存解锁尝试的记录。关闭此项将删除记录。</string>
+    <string name="settings_view_unlock_history_title">查看解锁记录</string>
+    <string name="settings_view_unlock_history_desc">查看最近的解锁和失败尝试</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_export_title">导出备份</string>
+    <string name="settings_backup_export_desc">将已锁定的应用和设置保存到文件</string>
+    <string name="settings_backup_import_title">从备份恢复</string>
+    <string name="settings_backup_import_desc">用备份文件替换已锁定的应用和设置</string>
+    <string name="settings_backup_footer">备份中绝不包含你的 PIN 码、图案或密码。</string>
+    <string name="settings_backup_export_success">备份已保存</string>
+    <string name="settings_backup_export_failed">无法保存备份：%1$s</string>
+    <string name="settings_backup_import_invalid">此文件不是 App Lock Revived 的备份</string>
+    <string name="settings_backup_import_newer_version">此备份由更高版本的 App Lock Revived 创建。请更新应用后重试。</string>
+    <string name="settings_backup_import_failed">无法读取备份：%1$s</string>
+    <string name="settings_backup_no_file_picker">没有可用于选择文件的应用</string>
+    <string name="settings_backup_restore_complete_title">备份已恢复</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="other">已恢复 %1$d 个已锁定的应用。</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="other">已恢复 %1$d 项设置。</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">你当前的 PIN 码、图案或密码保持不变。</string>
+    <string name="settings_ok_button">确定</string>
+
+    <!-- Updates -->
+    <string name="settings_update_check_title">自动检查更新</string>
+    <string name="settings_update_check_desc">在 GitHub 上查找新版本</string>
+    <string name="settings_update_check_now_title">检查更新</string>
+    <string name="settings_update_checking">正在检查…</string>
+    <string name="settings_update_current_version">当前版本：%1$s</string>
+    <string name="settings_update_latest">已是最新版本</string>
+    <string name="settings_update_check_failed">无法检查更新。请检查网络连接后重试。</string>
+    <string name="settings_update_check_footer">这是本应用唯一一次连接互联网。不会发送任何关于你或你的应用的信息。</string>
+
+    <!-- Backend -->
+    <string name="settings_backend_accessibility_title">无障碍服务</string>
+    <string name="settings_backend_accessibility_desc">适用于大多数设备的标准方式</string>
+    <string name="settings_backend_usage_stats_title">使用情况统计</string>
+    <string name="settings_backend_usage_stats_desc">利用应用使用情况统计的实验性方式</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">使用 Shizuku 和内部 API 的高级方式</string>
+
+    <!-- Advanced -->
+    <string name="settings_logging_title">调试日志</string>
+    <string name="settings_logging_desc">记录详细日志以便排查问题</string>
+    <string name="settings_share_logs">分享日志</string>
+    <string name="settings_share_audit_logs">分享安全日志</string>
+
+    <!-- About -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">版本 %1$s（%2$d）</string>
+    <string name="settings_about_tagline">免费、开源且无广告</string>
+    <string name="settings_about_developed_by">开发者：Riyad M</string>
+    <string name="settings_about_source_title">源代码</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">版本发布</string>
+    <string name="settings_about_releases_desc">更新日志与下载</string>
+    <string name="settings_about_issue_title">报告问题</string>
+    <string name="settings_about_issue_desc">发现了 bug 或有想法？欢迎告诉我们</string>
+    <string name="settings_about_credits_title">致谢</string>
+    <string name="settings_about_credits_desc">基于 Pranav Purwar (aload0) 的 AppLock</string>
+    <string name="settings_about_license_title">许可证</string>
+    <string name="settings_about_license_desc">MIT 许可证</string>
+    <string name="settings_no_browser">没有可用于打开链接的应用</string>
+
+    <!-- Support sheet -->
+    <string name="settings_support_sheet_title">喜欢 App Lock Revived 吗？</string>
+    <string name="settings_support_sheet_message">App Lock Revived 免费、开源且无广告。你可以通过在 GitHub 上为项目点星、报告 bug 或将它分享给朋友来支持我们。</string>
+    <string name="settings_support_sheet_star">在 GitHub 上点星</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">解锁记录</string>
+    <plurals name="history_entry_count">
+        <item quantity="other">%1$d 条记录</item>
+    </plurals>
+    <string name="history_clear_cd">清除记录</string>
+    <string name="history_clear_dialog_title">清除解锁记录？</string>
+    <string name="history_clear_dialog_text">所有已记录的解锁和失败尝试都将被删除，且无法撤销。</string>
+    <string name="history_clear_confirm">清除</string>
+    <string name="history_cleared">记录已清除</string>
+    <plurals name="history_summary_failed">
+        <item quantity="other">过去 24 小时内的失败尝试</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="other">同一时段内成功解锁 %1$d 次</item>
+    </plurals>
+    <string name="history_entry_success">已通过%1$s解锁 · %2$s</string>
+    <string name="history_entry_failed">%1$s尝试失败 · %2$s</string>
+    <string name="history_status_success_cd">已解锁</string>
+    <string name="history_status_failed_cd">失败的尝试</string>
+    <string name="history_method_pin">PIN 码</string>
+    <string name="history_method_pattern">图案</string>
+    <string name="history_method_password">密码</string>
+    <string name="history_method_biometric">生物识别</string>
+    <string name="history_today">今天</string>
+    <string name="history_yesterday">昨天</string>
+    <string name="history_disabled_banner">解锁记录已关闭，新的尝试不会被记录。</string>
+    <string name="history_turn_on">开启</string>
+    <string name="history_empty_title">还没有解锁尝试</string>
+    <string name="history_empty_desc">当有人解锁或尝试解锁已锁定的应用时，记录会显示在这里。解锁记录永远不会离开你的设备。</string>
+
+    <!-- strings_update.xml -->
+    <string name="update_dialog_title">有可用更新</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">更新内容</string>
+    <string name="update_dialog_no_notes">没有提供版本说明。</string>
+    <string name="update_dialog_download">下载</string>
+    <string name="update_dialog_download_size">下载（%1$s）</string>
+    <string name="update_dialog_later">稍后</string>
+    <string name="update_dialog_skip">跳过此版本</string>
+    <string name="update_dialog_icon_description">App Lock Revived 图标</string>
+    <string name="update_dialog_no_browser">没有可用于打开下载链接的应用</string>
+</resources>

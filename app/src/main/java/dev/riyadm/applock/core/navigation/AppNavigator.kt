@@ -31,6 +31,7 @@ import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
 import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.profiles.ui.ProfilesScreen
+import dev.riyadm.applock.features.intruder.ui.IntruderPhotosScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreen
 import dev.riyadm.applock.features.lockscreen.ui.LockScreenSpec
 import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
@@ -39,6 +40,7 @@ import dev.riyadm.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
+import dev.riyadm.applock.features.settings.ui.TrustedNetworksScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
 import dev.riyadm.applock.ui.components.SecureWindowEffect
 import dev.riyadm.applock.ui.motion.ExpressiveMotion
@@ -112,6 +114,14 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.Profiles.route) {
             ProfilesScreen(navController)
+        }
+
+        composable(Screen.TrustedNetworks.route) {
+            TrustedNetworksScreen(navController)
+        }
+
+        composable(Screen.IntruderPhotos.route) {
+            IntruderPhotosScreen(navController)
         }
     }
 }

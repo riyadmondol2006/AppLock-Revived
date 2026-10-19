@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.broadcast.DeviceAdmin
+import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.enableAccessibilityServiceWithShizuku
@@ -192,6 +193,7 @@ class AppLockAccessibilityService : AccessibilityService() {
             refreshKeyboardPackages()
             registerImeObserver()
             NewAppAutoLocker.register(this, this)
+            TrustedNetworkMonitor.register(this, this)
 
             Log.d(TAG, "Accessibility service connected")
             appLockRepository.setActiveBackend(BackendImplementation.ACCESSIBILITY)
@@ -332,6 +334,7 @@ class AppLockAccessibilityService : AccessibilityService() {
     /** Shows the lock overlay for [packageName] if it is locked and not currently unlocked. */
     private fun maybeLock(packageName: String): Boolean {
         if (packageName !in appLockRepository.getLockedApps()) return false
+        if (TrustedNetworkMonitor.isTrusted()) return false
         if (AppLockManager.isBiometricAuthInProgress()) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
@@ -748,6 +751,7 @@ class AppLockAccessibilityService : AccessibilityService() {
                 observerRegistered = false
             }
             NewAppAutoLocker.unregister(this, this)
+            TrustedNetworkMonitor.unregister(this)
 
             AppLockManager.isLockScreenShown.set(false)
         } catch (e: Exception) {

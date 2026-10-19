@@ -266,11 +266,17 @@ fun SettingsScreen(navController: NavController) {
                 item(key = "protection", contentType = "section") {
                     ProtectionSection(state = state, onAntiUninstallChanged = ::onAntiUninstallChanged)
                 }
+                item(key = "trusted", contentType = "section") {
+                    TrustedNetworksSection(onOpenTrustedNetworks = { navController.navigate(Screen.TrustedNetworks.route) })
+                }
                 item(key = "privacy", contentType = "section") {
                     PrivacySection(
                         state = state,
                         onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
                     )
+                }
+                item(key = "intruder", contentType = "section") {
+                    IntruderSection(onViewPhotos = { navController.navigate(Screen.IntruderPhotos.route) })
                 }
                 item(key = "backup", contentType = "section") {
                     BackupSection(

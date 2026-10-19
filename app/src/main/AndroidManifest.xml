@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
 
+    <!-- Lets the user grant automation apps (Tasker, MacroDroid, ...) control over App Lock Revived -->
+    <permission
+        android:name="dev.riyadm.applock.permission.AUTOMATION"
+        android:description="@string/automation_permission_description"
+        android:label="@string/automation_permission_label"
+        android:protectionLevel="dangerous" />
+
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="PackageVisibilityPolicy,QueryAllPackagesPermission" />
@@ -15,6 +22,21 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.HIDE_OVERLAY_WINDOWS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <!-- Trusted Wi-Fi: reading the connected network's name requires location access -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -140,6 +162,18 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".core.automation.AutomationReceiver"
+            android:enabled="false"
+            android:exported="true"
+            android:permission="dev.riyadm.applock.permission.AUTOMATION">
+            <intent-filter>
+                <action android:name="dev.riyadm.applock.action.LOCK_ALL_NOW" />
+                <action android:name="dev.riyadm.applock.action.ENABLE_PROTECTION" />
+                <action android:name="dev.riyadm.applock.action.DISABLE_PROTECTION" />
             </intent-filter>
         </receiver>
 

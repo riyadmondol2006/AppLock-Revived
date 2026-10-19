@@ -299,7 +299,6 @@ Make sure you have Shizuku installed and enabled via ADB. Tap \'Next\' to grant 
     <string name="permission_warning_shizuku_desc">Securely detects when protected apps are launched.</string>
     <string name="permission_warning_device_admin_title">Device Admin</string>
     <string name="permission_warning_device_admin_desc">Prevents App Lock Revived from being uninstalled.</string>
-    <string name="permission_warning_title_suffix"> Required</string>
 
     <string name="join_community">Join Community</string>
     <string name="join_community_desc">Join our Discord community to connect with other users, share feedback, and stay updated on the latest news and features.</string>
