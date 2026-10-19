@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unlock_to_disable_admin">أدخل كلمة المرور لإيقاف إذن المسؤول.</string>
+    <string name="incorrect_pin_try_again">رقم PIN غير صحيح. يرجى المحاولة مرة أخرى.</string>
+    <string name="incorrect_pass_try_again">كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.</string>
+    <string name="password_verified_admin">تم التحقق من كلمة المرور، يمكنك الآن إيقاف إذن المسؤول</string>
+    <string name="choose_app_detection">اختر طريقة اكتشاف التطبيقات</string>
+    <string name="app_detection_desc">اختر الطريقة التي يكتشف بها App Lock Revived فتح التطبيقات المحمية.</string>
+    <string name="notif_perm">إذن الإشعارات</string>
+    <string name="notif_perm_desc">يحتاج App Lock Revived إلى إذن لعرض الإشعارات حتى يبقيك على اطلاع ويعمل في الخلفية بشكل صحيح. اضغط على “التالي” لمنح الإذن.</string>
+    <string name="notif_perm_granted">يتم منح إذن الإشعارات تلقائيًا في إصدار Android لديك.</string>
+    <string name="welc_applock">مرحبًا بك في App Lock Revived</string>
+    <string name="welcome_desc">احمِ تطبيقاتك وخصوصيتك باستخدام App Lock Revived. سنرشدك خلال إعداد سريع.</string>
+    <string name="secure_apps">أمّن تطبيقاتك</string>
+    <string name="secure_apps_desc">أبقِ تطبيقاتك الخاصة محمية بآليات قفل متقدمة</string>
+    <string name="display_over_apps">العرض فوق التطبيقات الأخرى</string>
+    <string name="display_over_apps_desc">يحتاج App Lock Revived إلى إذن للعرض فوق التطبيقات الأخرى لإظهار شاشة القفل. اضغط على “التالي” وفعّل الإذن.</string>
+
+    <!-- AppIntroScreen -->
+    <string name="notification_permission_required_desc">إذن الإشعارات مطلوب ليعمل App Lock Revived بشكل صحيح.</string>
+    <string name="shizuku_permission_granted">تم منح إذن Shizuku</string>
+    <string name="shizuku_permission_required_desc">إذن Shizuku مطلوب للميزات المتقدمة.</string>
+    <string name="allow_display_over_other_apps">يرجى السماح لـ App Lock Revived بالعرض فوق التطبيقات الأخرى.</string>
+    <string name="disable_battery_optimization_title">إيقاف تحسين البطارية</string>
+    <string name="disable_battery_optimization_desc">لضمان عمل App Lock Revived في الخلفية بشكل موثوق، يرجى إيقاف تحسينات البطارية للتطبيق. اضغط على “التالي” لفتح الإعدادات.</string>
+    <string name="accessibility_service_title">خدمة إمكانية الوصول</string>
+    <string name="accessibility_service_card_desc">طريقة قياسية تعمل على معظم الأجهزة. تتطلب إذن إمكانية الوصول. قد تحدث تأخيرات بسيطة على بعض الشركات المصنّعة.</string>
+    <string name="usage_stats_title">إحصاءات الاستخدام</string>
+    <string name="usage_stats_card_desc">طريقة تجريبية تستخدم إحصاءات استخدام النظام. تعمل بشكل أفضل على بعض الأجهزة.</string>
+    <string name="shizuku_service_title">خدمة Shizuku</string>
+    <string name="shizuku_service_card_desc">طريقة متقدمة بأداء أفضل وتجربة أفضل. تتطلب تثبيت تطبيق Shizuku وتفعيله عبر ADB.</string>
+    <string name="can_change_later_in_settings">يمكنك تغيير هذا لاحقًا من الإعدادات</string>
+    <string name="app_intro_accessibility_desc">
+خدمة إمكانية الوصول مطلوبة ليعمل App Lock Revived بشكل صحيح.
+
+إذا ظهرت لك رسالة “إعداد مقيّد”، فيرجى الانتقال يدويًا إلى الإعدادات > التطبيقات > App Lock > القائمة العلوية اليمنى، ثم الضغط على “السماح بالإعدادات المقيّدة”.
+
+اضغط على “التالي” لتفعيلها.
+    </string>
+    <string name="app_intro_usage_stats_title">إذن إحصاءات الاستخدام</string>
+    <string name="app_intro_usage_stats_desc">
+هذا الإذن مطلوب لاكتشاف فتح التطبيقات المقفلة.
+
+إذا ظهرت لك رسالة “إعداد مقيّد”، فيرجى الانتقال يدويًا إلى الإعدادات > التطبيقات > App Lock > القائمة العلوية اليمنى، ثم الضغط على “السماح بالإعدادات المقيّدة”.
+
+اضغط على “التالي” لتفعيله.</string>
+    <string name="app_intro_shizuku_desc">
+يوفر Shizuku ميزات متقدمة مثل قفل تطبيقات النظام وغيرها.
+
+تأكد من تثبيت Shizuku وتفعيله عبر ADB. اضغط على “التالي” لمنح الإذن.
+    </string>
+    <string name="app_intro_complete_privacy_title">خصوصية كاملة</string>
+    <string name="app_intro_complete_privacy_desc">لا تغادر بياناتك جهازك أبدًا. يحمي App Lock Revived خصوصيتك في كل الأوقات.</string>
+    <string name="all_permissions_required">جميع الأذونات مطلوبة للمتابعة.</string>
+    <string name="next_button">التالي</string>
+    <string name="get_started_button">ابدأ</string>
+
+    <!-- PasswordOverlayScreen -->
+    <string name="default_app_name">التطبيق</string>
+    <string name="this_app">هذا التطبيق</string>
+    <string name="unlock_app_title">فتح %1$s</string>
+    <string name="confirm_biometric_subtitle">أكّد المصادقة البيومترية للمتابعة</string>
+    <string name="use_pin_button">استخدام رقم PIN</string>
+    <string name="enter_password_to_continue">أدخل كلمة المرور للمتابعة</string>
+    <string name="biometric_authentication_cd">المصادقة البيومترية</string>
+
+    <!-- SetPasswordScreen -->
+    <string name="set_pin_to_continue_toast">يرجى تعيين رقم PIN للمتابعة</string>
+    <string name="authenticate_to_reset_pin_title">تحقّق من هويتك لإعادة تعيين رقم PIN</string>
+    <string name="use_device_pin_pattern_password_subtitle">استخدم رقم PIN أو النقش أو كلمة المرور الخاصة بجهازك</string>
+    <string name="enter_current_pin_title">أدخل رقم PIN الحالي</string>
+    <string name="confirm_pin_title">تأكيد رقم PIN</string>
+    <string name="set_new_pin_title">تعيين رقم PIN جديد</string>
+    <string name="create_pin_explanation">يرجى إنشاء رقم PIN لحماية تطبيقاتك المقفلة. سيُطلب هذا الرقم كلما حاولت فتح تطبيق مقفل.</string>
+    <string name="enter_current_pin_label">أدخل رقم PIN الحالي</string>
+    <string name="confirm_new_pin_label">أكّد رقم PIN الجديد</string>
+    <string name="create_new_pin_label">أنشئ رقم PIN جديدًا</string>
+    <string name="tooltip_enter_current_pin">أدخل رقم PIN الحالي للمتابعة</string>
+    <string name="tooltip_confirm_pin">يرجى إدخال رقم PIN نفسه مرة أخرى للتأكيد</string>
+    <string name="tooltip_create_pin_min_length">أنشئ رقم PIN من 4 أرقام على الأقل</string>
+    <string name="information_cd">معلومات</string>
+    <string name="pins_dont_match_error">أرقام PIN غير متطابقة. حاول مرة أخرى.</string>
+    <string name="pin_min_length_error">يجب أن يتكون رقم PIN من 4 أرقام على الأقل</string>
+    <string name="re_enter_new_pin_confirm_label">أعد إدخال رقم PIN الجديد للتأكيد</string>
+    <string name="reset_using_device_password_button">إعادة التعيين باستخدام كلمة مرور الجهاز</string>
+    <string name="cancel_button">إلغاء</string>
+    <string name="start_over_button">البدء من جديد</string>
+    <string name="password_set_successfully_toast">تم تعيين كلمة المرور بنجاح</string>
+    <string name="use_pattern_button">استخدام النقش</string>
+    <string name="use_password_button">استخدام كلمة المرور</string>
+    <string name="use_pin_instead">استخدام رقم PIN</string>
+
+    <!-- Alphanumeric Password Strings -->
+    <string name="set_alphanumeric_password_title">تعيين كلمة المرور</string>
+    <string name="create_alphanumeric_password_label">أنشئ كلمة مرور</string>
+    <string name="confirm_alphanumeric_password_label">أكّد كلمة المرور</string>
+    <string name="enter_current_password_label">أدخل كلمة المرور الحالية</string>
+    <string name="password_hint">أدخل كلمة المرور</string>
+    <string name="password_too_short_error">يجب أن تتكون كلمة المرور من 4 أحرف على الأقل</string>
+    <string name="password_too_long_error">يجب ألا تتجاوز كلمة المرور 64 حرفًا</string>
+    <string name="passwords_dont_match_error">كلمتا المرور غير متطابقتين</string>
+    <string name="incorrect_password_try_again">كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.</string>
+
+    <!-- MainScreen -->
+    <string name="main_screen_anti_uninstall_log">تم تفعيل منع إلغاء التثبيت</string>
+    <string name="main_screen_shizuku_not_available_toast">Shizuku غير متاح. يرجى تثبيت Shizuku وإعداده.</string>
+    <string name="main_screen_overlay_permission_dialog_title">مطلوب إذن العرض فوق التطبيقات</string>
+    <string name="main_screen_overlay_permission_dialog_text">يرجى منح التطبيق إذن رسم العناصر فوق الشاشة من الإعدادات. هذا ضروري ليتمكن التطبيق من عرض شاشة القفل.</string>
+    <string name="main_screen_overlay_permission_open_settings_button">فتح الإعدادات</string>
+    <string name="main_screen_shizuku_manual_permission_toast">يرجى منح إذن Shizuku يدويًا</string>
+    <string name="main_screen_device_admin_explanation">يحتاج App Lock إلى إذن مسؤول الجهاز لمنع الإلغاء. لن يؤثر ذلك في وظائف جهازك.</string>
+    <string name="main_screen_join_community_dialog_title">انضم إلى المجتمع</string>
+    <string name="main_screen_join_community_dialog_text">انضم إلى مجتمع Discord الخاص بنا للحصول على التحديثات والدعم.</string>
+    <string name="main_screen_join_community_join_discord_button">الانضمام إلى Discord</string>
+    <string name="main_screen_join_community_dismiss_button">تجاهل</string>
+    <string name="main_screen_support_development_dialog_title">دعم التطوير</string>
+    <string name="main_screen_support_development_donate_button">تبرّع</string>
+    <string name="main_screen_app_protection_cd">حماية التطبيقات</string>
+    <string name="main_screen_settings_cd">الإعدادات</string>
+    <string name="main_screen_loading_applications_text">جارٍ تحميل التطبيقات…</string>
+    <string name="main_screen_search_apps_placeholder">بحث في التطبيقات</string>
+    <string name="main_screen_search_cd">بحث</string>
+    <string name="main_screen_empty_search_title">لا توجد تطبيقات مطابقة</string>
+    <string name="main_screen_empty_search_subtitle">جرّب تعديل عبارة البحث</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_screen_title">الإعدادات</string>
+    <string name="settings_screen_back_cd">رجوع</string>
+    <string name="settings_screen_support_development_dialog_title">دعم التطوير</string>
+    <string name="settings_screen_support_development_donate_button">تبرّع</string>
+    <string name="settings_screen_permission_required_dialog_title">إذن مطلوب</string>
+    <string name="settings_screen_permission_required_dialog_text">لتفعيل منع إلغاء التثبيت، يحتاج App Lock إلى إذنين: مسؤول الجهاز وخدمة إمكانية الوصول. هذان الإذنان ضروريان لمنع الإلغاء غير المصرح به وضمان حماية قوية. هل تريد المتابعة لمنح هذين الإذنين؟</string>
+    <string name="settings_screen_permission_required_proceed_button">متابعة</string>
+    <string name="settings_screen_device_admin_dialog_title">إذن مسؤول الجهاز</string>
+    <string name="settings_screen_device_admin_dialog_text">يحتاج App Lock إلى إذن مسؤول الجهاز لمنع الإلغاء غير المصرح به. يرجى منح هذا الإذن في الشاشة التالية. لن يؤثر ذلك في وظائف جهازك المعتادة.</string>
+    <string name="settings_screen_device_admin_grant_button">منح الإذن</string>
+    <string name="settings_screen_accessibility_dialog_title">إذن خدمة إمكانية الوصول</string>
+    <string name="settings_screen_accessibility_dialog_text">يحتاج App Lock أيضًا إلى إذن خدمة إمكانية الوصول لمراقبة محاولات إلغاء تثبيت التطبيق وإعادة تفعيل مسؤول الجهاز إذا تم إيقافه. هذا يضمن استمرار فعالية ميزة منع الإلغاء. يرجى تفعيل خدمة إمكانية الوصول لـ App Lock من الإعدادات.</string>
+    <string name="settings_screen_accessibility_open_settings_button">فتح الإعدادات</string>
+    <string name="settings_screen_lock_screen_customization_title">تخصيص شاشة القفل</string>
+    <string name="settings_screen_max_brightness_title">أقصى سطوع</string>
+    <string name="settings_screen_max_brightness_desc">عرض شاشة القفل بأقصى سطوع لتكون أوضح</string>
+    <string name="settings_screen_biometric_auth_title">المصادقة البيومترية</string>
+    <string name="settings_screen_biometric_auth_desc">استخدم بصمة الإصبع أو فتح الوجه إن كان متاحًا</string>
+    <string name="settings_screen_biometric_auth_unavailable">المصادقة البيومترية غير متاحة على هذا الجهاز.</string>
+    <string name="settings_screen_auto_prompt_biometric_title">عرض المصادقة البيومترية تلقائيًا</string>
+    <string name="settings_screen_auto_prompt_biometric_desc">عرض نافذة المصادقة البيومترية تلقائيًا على شاشة القفل</string>
+    <string name="settings_screen_app_locking_behavior_title">سلوك قفل التطبيقات</string>
+    <string name="settings_screen_unlock_behavior_title">سلوك الفتح</string>
+    <string name="settings_screen_unlock_behavior_desc">أوقفه إذا كان الفتح يتسبب في إعادة تشغيل التطبيق</string>
+    <string name="settings_screen_unlock_behavior_option_close">إغلاق شاشة القفل</string>
+    <string name="settings_screen_unlock_behavior_option_launch">إغلاق شاشة القفل وتشغيل التطبيق</string>
+    <string name="settings_screen_auto_unlock_title">الفتح التلقائي</string>
+    <string name="settings_screen_auto_unlock_desc">فتح التطبيق فور إدخال رقم PIN الصحيح</string>
+    <string name="settings_screen_unlock_duration_title">مدة بقاء التطبيق مفتوحًا</string>
+    <string name="settings_screen_unlock_duration_desc">إبقاء التطبيقات مفتوحة لمدة محددة بعد أول فتح</string>
+    <string name="settings_screen_unlock_duration_dialog_title">تحديد مدة الفتح</string>
+    <string name="settings_screen_unlock_duration_dialog_desc">ستبقى التطبيقات مفتوحة لهذه المدة بعد أول فتح. اختر 0 ثانية للتعطيل.</string>
+    <string name="settings_screen_unlock_duration_dialog_seconds_suffix">ثانية</string>
+    <string name="settings_screen_security_title">الأمان</string>
+    <string name="settings_screen_change_pin_title">تغيير رقم PIN</string>
+    <string name="settings_screen_change_pin_desc">تحديث رقم PIN الحالي</string>
+    <string name="settings_screen_anti_uninstall_title">حماية منع الإلغاء</string>
+    <string name="settings_screen_anti_uninstall_desc">منع إلغاء تثبيت App Lock Revived بدون إذن</string>
+    <string name="settings_screen_haptic_feedback_title">الاستجابة اللمسية</string>
+    <string name="settings_screen_haptic_feedback_desc">إيقاف الاستجابة اللمسية عند الضغط على المفاتيح</string>
+    <string name="settings_screen_backend_implementation_title">تقنية الاكتشاف</string>
+    <string name="settings_screen_backend_implementation_desc">اختر الطريقة التي يستخدمها App Lock Revived لاكتشاف التطبيقات في المقدمة</string>
+    <string name="settings_screen_backend_implementation_accessibility_title">خدمة إمكانية الوصول</string>
+    <string name="settings_screen_backend_implementation_accessibility_desc">طريقة قياسية، قد تحدث تأخيرات بسيطة على بعض الشركات المصنّعة.</string>
+    <string name="settings_screen_backend_implementation_usage_stats_title">إحصاءات الاستخدام</string>
+    <string name="settings_screen_backend_implementation_usage_stats_desc">طريقة تجريبية، تعمل بشكل أفضل على بعض الأجهزة.</string>
+    <string name="settings_screen_backend_implementation_shizuku_title">Shizuku</string>
+    <string name="settings_screen_backend_implementation_shizuku_desc">طريقة متقدمة، تتطلب إعداد Shizuku عبر ADB.</string>
+    <string name="settings_screen_backend_implementation_shizuku_unavailable">Shizuku غير متاح أو تم رفض الإذن.</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_title">ميزات Shizuku التجريبية</string>
+    <string name="settings_screen_backend_implementation_shizuku_experimental_desc">تفعيل الميزات التجريبية لخلفية Shizuku (مثل قفل أنشطة محددة). قد يسبب عدم استقرار.</string>
+    <string name="settings_screen_about_title">حول</string>
+    <string name="settings_screen_developer_title">المطوّر</string>
+    <string name="settings_screen_developer_name">Riyad M</string>
+    <string name="settings_screen_source_code_title">الشيفرة المصدرية</string>
+    <string name="settings_screen_source_code_desc">عرض الشيفرة المصدرية على GitHub</string>
+    <string name="settings_screen_support_development_title">دعم التطوير</string>
+    <string name="settings_screen_support_development_desc">ساعد في دعم تطوير هذا التطبيق</string>
+
+    <!-- AppLockUtils.kt -->
+    <string name="utils_battery_ignore_toast">يرجى السماح لتطبيقنا بتجاهل تحسينات البطارية.</string>
+    <string name="utils_battery_specific_settings_not_found_toast">تعذّر العثور على الإعدادات المحددة. يرجى إزالة التطبيق من قيود البطارية.</string>
+    <string name="utils_battery_settings_not_found_toast">تعذّر فتح أي إعدادات للبطارية.</string>
+    <string name="utils_usage_permission_error_log">خطأ أثناء التحقق من إذن الاستخدام: </string>
+
+    <!-- ShizukuPermissionDialog.kt -->
+    <string name="shizuku_permission_dialog_title">منح إذن Shizuku</string>
+    <string name="shizuku_permission_dialog_text_1">لقد فعّلت وضع Shizuku، لكن التطبيق يحتاج إلى أذونات إضافية ليعمل بشكل صحيح.</string>
+    <string name="dialog_text_press_grant_permission_to_open_settings">اضغط على “منح الإذن” لفتح الإعدادات ومنح الأذونات اللازمة.</string>
+    <string name="grant_permission_button">منح الإذن</string>
+    <string name="open_settings_button">فتح الإعدادات</string>
+
+    <!-- DeviceAdminPermissionDialog.kt -->
+    <string name="device_admin_permission_dialog_title">مطلوب إذن مسؤول الجهاز</string>
+    <string name="device_admin_permission_dialog_text">لقد فعّلت وضع منع الإلغاء، وهو يتطلب إذن مسؤول الجهاز لحماية التطبيق.</string>
+
+    <!-- AntiUninstallAccessibilityPermissionDialog.kt -->
+    <string name="anti_uninstall_accessibility_permission_dialog_title">مطلوب إذن إمكانية الوصول</string>
+    <string name="anti_uninstall_accessibility_permission_dialog_text">لقد فعّلت وضع منع الإلغاء، لكن التطبيق يحتاج إلى أذونات إمكانية الوصول لتطبيقه.</string>
+
+    <!-- AdminPasswordVerificationDialog.kt -->
+    <string name="admin_password_verification_dialog_title">مطلوب التحقق من كلمة المرور</string>
+    <string name="admin_password_verification_dialog_text">أدخل كلمة مرور App Lock لإيقاف أذونات المسؤول</string>
+    <string name="password_label">كلمة المرور</string>
+    <string name="password_empty_error">لا يمكن أن تكون كلمة المرور فارغة</string>
+    <string name="incorrect_password_error">كلمة المرور غير صحيحة</string>
+    <string name="verify_button">تحقّق</string>
+
+    <!-- AccessibilityServiceGuideDialog.kt -->
+    <string name="accessibility_guide_dialog_title">تفعيل خدمة إمكانية الوصول</string>
+    <string name="accessibility_guide_dialog_text_1">يحتاج App Lock إلى إذن إمكانية الوصول لاكتشاف فتح التطبيقات المحمية.</string>
+    <string name="accessibility_guide_dialog_text_2">يرجى اتباع الخطوات التالية:</string>
+    <string name="accessibility_guide_dialog_text_3">
+1. اضغط على “فتح الإعدادات” أدناه\n
+2. فعّل المفتاح\n
+3. اضغط على “السماح” في نافذة التأكيد.
+    </string>
+    <string name="accessibility_guide_open_settings_button">فتح الإعدادات</string>
+    <string name="settings_screen_about_and_support_title">حول والدعم</string>
+    <string name="settings_screen_join_community_title">انضم إلى المجتمع</string>
+    <string name="settings_screen_unlock_duration_summary_minutes">%1$d دقيقة</string>
+    <string name="settings_screen_unlock_duration_summary_immediate">القفل فورًا</string>
+    <string name="settings_screen_biometric_auth_desc_available">استخدم بصمة الإصبع أو فتح الوجه لفتح التطبيقات</string>
+    <string name="settings_screen_biometric_auth_desc_unavailable">المصادقة البيومترية غير مُعدّة أو غير متاحة.
+    </string>
+    <string name="settings_screen_shizuku_permission_granted">تم منح إذن Shizuku</string>
+    <string name="settings_screen_shizuku_permission_required_desc">إذن Shizuku مطلوب للميزات المتقدمة.
+    </string>
+    <string name="settings_screen_shizuku_not_running_toast">Shizuku لا يعمل</string>
+    <string name="settings_screen_usage_permission_toast">يرجى منح إذن الوصول إلى الاستخدام.
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_description_new">اختر المدة التي يجب أن تبقى فيها التطبيقات مفتوحة بعد إدخال رقم PIN:
+    </string>
+    <string name="settings_screen_unlock_duration_dialog_option_immediate">القفل فورًا</string>
+    <string name="settings_screen_unlock_duration_dialog_option_minute">%1$d دقيقة</string>
+    <string name="settings_screen_unlock_duration_dialog_option_hour">ساعة واحدة</string>
+    <string name="settings_screen_permission_required_dialog_text_1">لتفعيل حماية منع الإلغاء، يحتاج App Lock إلى إذنين:
+    </string>
+    <string name="settings_screen_permission_required_dialog_text_2">1. مسؤول الجهاز - يمنع الإلغاء\n2. خدمة إمكانية الوصول - تراقب استخدام التطبيقات\n\nتساعد هذه الأذونات في حماية التطبيق من الإزالة دون علمك.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_1">يحتاج App Lock إلى إذن مسؤول الجهاز لمنع الإلغاء.
+    </string>
+    <string name="settings_screen_device_admin_dialog_text_2">يسمح هذا الإذن للتطبيق بـ:\n• منع إلغاء تثبيته نفسه\n• حماية إعدادات قفل التطبيقات\n\nلن يؤثر ذلك في وظائف جهازك المعتادة.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_1">يحتاج App Lock إلى إذن خدمة إمكانية الوصول لمراقبة استخدام التطبيقات.
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_2">يسمح هذا الإذن للتطبيق بـ:\n• اكتشاف فتح التطبيقات\n• عرض شاشة القفل عند الحاجة\n• توفير حماية سلسة للتطبيقات
+    </string>
+    <string name="settings_screen_accessibility_dialog_text_3">خصوصيتك محمية، ولا تُجمع أي بيانات أو تُشارك.
+    </string>
+    <string name="settings_screen_backend_implementation_shizuku_advanced">متقدم</string>
+    <string name="settings_screen_fallback_selection_dialog_title">اختر الطريقة البديلة</string>
+    <string name="settings_screen_fallback_selection_dialog_desc">اختر طريقة بديلة لاستخدامها عند فشل الطريقة الأساسية:
+    </string>
+    <string name="confirm_button">تأكيد</string>
+    <string name="enable_button">تفعيل</string>
+    <string name="settings_screen_advanced_title">متقدم</string>
+    <string name="settings_screen_export_logs_title">تصدير السجلات</string>
+    <string name="settings_screen_export_logs_desc">تصدير سجلات التطبيق لأغراض تصحيح الأخطاء.</string>
+    <string name="settings_Screen_export_audit">تصدير سجلات الأمان</string>
+    <string name="settings_screen_export_audit_desc">تصدير سجلات الأمان للمراجعة.</string>
+    <string name="settings_screen_export_logs_success">تم تصدير السجلات</string>
+    <string name="settings_screen_export_logs_error">تعذّر تصدير السجلات</string>
+    <string name="settings_screen_version_template">الإصدار %1$s</string>
+
+    <!-- Pattern Lock Strings -->
+    <string name="enter_pattern_to_continue">ارسم النقش للمتابعة</string>
+    <string name="incorrect_pattern_try_again">النقش غير صحيح. يرجى المحاولة مرة أخرى.</string>
+    <!-- Permission Warning Banner Strings -->
+    <string name="permission_warning_overlay_title">العرض فوق التطبيقات الأخرى</string>
+    <string name="permission_warning_overlay_desc">يعرض شاشة القفل فوق التطبيقات المحمية.</string>
+    <string name="permission_warning_accessibility_title">خدمة إمكانية الوصول</string>
+    <string name="permission_warning_accessibility_desc">يكتشف فتح التطبيقات المحمية.</string>
+    <string name="permission_warning_usage_stats_title">وصول بيانات الاستخدام</string>
+    <string name="permission_warning_usage_stats_desc">يكتشف فتح التطبيقات المحمية.</string>
+    <string name="permission_warning_shizuku_title">إذن Shizuku</string>
+    <string name="permission_warning_shizuku_desc">يكتشف فتح التطبيقات المحمية بأمان.</string>
+    <string name="permission_warning_device_admin_title">مسؤول الجهاز</string>
+    <string name="permission_warning_device_admin_desc">يمنع إلغاء تثبيت App Lock Revived.</string>
+    <string name="permission_warning_title_suffix"> مطلوب</string>
+
+    <string name="join_community">انضم إلى المجتمع</string>
+    <string name="join_community_desc">انضم إلى مجتمع Discord الخاص بنا للتواصل مع المستخدمين الآخرين، ومشاركة الملاحظات، والبقاء على اطلاع بأحدث الأخبار والميزات.</string>
+    <string name="join_discord">الانضمام إلى Discord</string>
+    <string name="maybe_later">ربما لاحقًا</string>
+
+    <!-- Lock screen -->
+    <string name="lock_enter_pin">أدخل رقم PIN</string>
+    <string name="lock_draw_pattern">ارسم النقش</string>
+    <string name="lock_enter_password">أدخل كلمة المرور</string>
+    <string name="lock_wrong_pin">رقم PIN غير صحيح</string>
+    <string name="lock_wrong_pattern">النقش غير صحيح</string>
+    <string name="lock_wrong_password">كلمة المرور غير صحيحة</string>
+    <string name="lock_lockout_message">محاولات كثيرة جدًا. حاول مرة أخرى بعد %1$s</string>
+    <string name="lock_close_cd">إغلاق والانتقال إلى الشاشة الرئيسية</string>
+    <string name="lock_backspace_cd">حذف</string>
+    <string name="lock_confirm_cd">فتح</string>
+    <string name="lock_unlock_button">فتح</string>
+    <string name="lock_use_biometrics">استخدام المصادقة البيومترية</string>
+    <string name="lock_biometric_subtitle">استخدم بصمة الإصبع أو الوجه للمتابعة</string>
+    <string name="lock_biometric_waiting">في انتظار تأكيد المصادقة البيومترية</string>
+    <string name="lock_app_icon_cd">أيقونة %1$s</string>
+    <string name="lock_pin_progress_cd">تم إدخال %1$d رقم</string>
+    <string name="lock_pattern_pad_cd">لوحة النقش</string>
+    <string name="lock_show_password_cd">إظهار كلمة المرور</string>
+    <string name="lock_hide_password_cd">إخفاء كلمة المرور</string>
+    <string name="lock_admin_title">إيقاف منع الإلغاء</string>
+    <string name="lock_admin_cancel_cd">إلغاء</string>
+
+    <!-- App intro -->
+    <string name="intro_welcome_title">مرحبًا بك في App Lock Revived</string>
+    <string name="intro_welcome_desc">احمِ تطبيقاتك وخصوصيتك. سنرشدك خلال إعداد سريع، ولن يستغرق الأمر أكثر من دقيقة.</string>
+    <string name="intro_page_indicator">الخطوة %1$d من %2$d</string>
+    <string name="intro_back">رجوع</string>
+    <string name="intro_allow_button">سماح</string>
+    <string name="intro_status_granted">مسموح</string>
+    <string name="intro_status_not_granted">غير مسموح بعد</string>
+    <string name="intro_open_app_info">فتح معلومات التطبيق</string>
+    <string name="intro_battery_title">أبقِ App Lock يعمل</string>
+    <string name="intro_battery_desc">قد يوقف Android تشغيل App Lock Revived في الخلفية لتوفير البطارية. عندما يحدث ذلك، تتوقف التطبيقات عن القفل بعد إعادة التشغيل أو بعد بضع دقائق. اسمح له بالعمل دون قيود البطارية.</string>
+    <string name="intro_battery_oem_hint">في بعض الهواتف (Xiaomi وSamsung وOnePlus وHuawei وOppo وVivo…) افتح أيضًا معلومات التطبيق، واضبط استخدام البطارية على “غير مقيّد”، وفعّل التشغيل التلقائي إن كان متاحًا.</string>
+    <string name="intro_accessibility_desc">يستخدم App Lock Revived خدمة إمكانية الوصول فقط لملاحظة فتح تطبيق محمي. اضغط على “سماح” وابحث عن App Lock Revived في القائمة وفعّله.</string>
+    <string name="intro_shizuku_not_running">Shizuku لا يعمل. شغّله من تطبيق Shizuku، ثم اضغط على “سماح” مرة أخرى.</string>
+
+    <!-- Android 13+ restricted settings -->
+    <string name="ob_restricted_settings_title">تظهر لك رسالة “إعداد مقيّد”؟</string>
+    <string name="ob_restricted_settings_desc">يمنع Android خدمة إمكانية الوصول للتطبيقات المثبتة من خارج متجر التطبيقات حتى تسمح بها.</string>
+    <string name="ob_restricted_settings_steps">1. اضغط على “فتح معلومات التطبيق” أدناه\n2. اضغط على ⋮ في الزاوية العلوية\n3. اختر “السماح بالإعدادات المقيّدة” وأكّد\n4. عُد وفعّل الخدمة</string>
+
+    <!-- Permission dialogs -->
+    <string name="ob_accessibility_guide_steps">1. اضغط على “فتح الإعدادات”\n2. ابحث عن App Lock Revived (قد يكون ضمن التطبيقات المنزّلة أو المثبّتة)\n3. فعّله واضغط على “سماح”</string>
+    <string name="ob_usage_stats_dialog_title">منح وصول بيانات الاستخدام</string>
+    <string name="ob_usage_stats_dialog_text">لقد اخترت وضع إحصاءات الاستخدام، لكن App Lock Revived يحتاج إلى وصول بيانات الاستخدام لاكتشاف فتح التطبيقات المحمية.</string>
+
+    <!-- Set / change lock -->
+    <string name="setup_title_new">إعداد القفل</string>
+    <string name="setup_title_change">تغيير القفل</string>
+    <string name="setup_type_pin">رقم PIN</string>
+    <string name="setup_type_pattern">النقش</string>
+    <string name="setup_type_password">كلمة المرور</string>
+    <string name="setup_create_pin">أنشئ رقم PIN</string>
+    <string name="setup_confirm_pin">أكّد رقم PIN</string>
+    <string name="setup_verify_pin">أدخل رقم PIN الحالي</string>
+    <string name="setup_create_pattern">ارسم نقشًا</string>
+    <string name="setup_confirm_pattern">ارسمه مرة أخرى</string>
+    <string name="setup_verify_pattern">ارسم النقش الحالي</string>
+    <string name="setup_create_password">أنشئ كلمة مرور</string>
+    <string name="setup_confirm_password">أكّد كلمة المرور</string>
+    <string name="setup_verify_password">أدخل كلمة المرور الحالية</string>
+    <string name="setup_hint_pin">استخدم 4 أرقام على الأقل</string>
+    <string name="setup_hint_pattern">صِل 4 نقاط على الأقل</string>
+    <string name="setup_hint_password">استخدم 4 أحرف على الأقل</string>
+    <string name="setup_hint_confirm">أدخله مرة أخرى للتأكيد</string>
+    <string name="setup_hint_verify">تأكّد من هويتك قبل تغيير القفل</string>
+    <string name="setup_pattern_too_short">صِل 4 نقاط على الأقل</string>
+    <string name="setup_patterns_dont_match">النقوش غير متطابقة. حاول مرة أخرى.</string>
+    <string name="setup_continue">متابعة</string>
+    <string name="setup_confirm">تأكيد</string>
+    <string name="setup_delete">حذف</string>
+    <string name="setup_show_password">إظهار كلمة المرور</string>
+    <string name="setup_hide_password">إخفاء كلمة المرور</string>
+    <string name="setup_use_keyboard">استخدام لوحة المفاتيح</string>
+    <string name="setup_use_keypad">استخدام لوحة الأرقام</string>
+    <string name="setup_digits_entered">تم إدخال %1$d رقم</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_lock_now_label">قفل الكل الآن</string>
+    <string name="tile_lock_now_subtitle_active">الحماية مفعّلة</string>
+    <string name="tile_lock_now_subtitle_inactive">الحماية متوقفة</string>
+    <string name="tile_lock_now_done">تم قفل جميع التطبيقات</string>
+
+    <!-- Auto-lock newly installed apps -->
+    <string name="auto_lock_channel_name">التطبيقات المقفلة تلقائيًا</string>
+    <string name="auto_lock_channel_description">يظهر عند قفل تطبيق تم تثبيته حديثًا تلقائيًا</string>
+    <string name="auto_lock_notification_title">تم قفل %1$s تلقائيًا</string>
+    <string name="auto_lock_notification_text">اضغط لإدارة التطبيقات المقفلة</string>
+
+    <!-- Protection services -->
+    <string name="service_channel_name_usage">خدمة الحماية (إحصاءات الاستخدام)</string>
+    <string name="service_channel_name_shizuku">خدمة الحماية (Shizuku)</string>
+    <string name="service_notification_text">جارٍ حماية تطبيقاتك</string>
+    <string name="service_notification_text_shizuku">جارٍ حماية تطبيقاتك باستخدام Shizuku</string>
+    <string name="service_notification_waiting_shizuku">في انتظار بدء تشغيل Shizuku…</string>
+    <string name="anti_uninstall_blocked_toast">أوقف منع الإلغاء في App Lock Revived لإزالة هذا القيد.</string>
+
+    <!-- Updates dialog -->
+    <string name="update_dialog_title">تحديث متوفر</string>
+    <string name="update_dialog_version_change">v%1$s → v%2$s</string>
+    <string name="update_dialog_whats_new">ما الجديد</string>
+    <string name="update_dialog_no_notes">لا توجد ملاحظات حول الإصدار.</string>
+    <string name="update_dialog_download">تنزيل</string>
+    <string name="update_dialog_download_size">تنزيل (%1$s)</string>
+    <string name="update_dialog_later">لاحقًا</string>
+    <string name="update_dialog_skip">تخطي هذا الإصدار</string>
+    <string name="update_dialog_icon_description">أيقونة App Lock Revived</string>
+    <string name="update_dialog_no_browser">لا يوجد تطبيق لفتح رابط التنزيل</string>
+
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">الحماية مفعّلة</string>
+    <string name="applist_status_paused_title">الحماية متوقفة مؤقتًا</string>
+    <string name="applist_status_paused_desc">تُفتح التطبيقات المقفلة دون طلب. اضغط للاستئناف.</string>
+    <string name="applist_status_setup_title">الحماية تحتاج إلى انتباهك</string>
+    <string name="applist_status_setup_desc">%1$s مطلوب. اضغط للإصلاح.</string>
+    <string name="applist_status_stopped_title">خدمة القفل لا تعمل</string>
+    <string name="applist_status_stopped_desc">اضغط لإعادة تشغيل خدمة %1$s.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">منع الإلغاء: %1$s مطلوب</string>
+    <string name="applist_status_fix">إصلاح</string>
+    <string name="applist_status_switch_cd">الحماية</string>
+    <string name="applist_backend_accessibility">إمكانية الوصول</string>
+    <string name="applist_backend_usage_stats">وصول بيانات الاستخدام</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="zero">%d تطبيق مقفل</item>
+        <item quantity="one">%d تطبيق مقفل</item>
+        <item quantity="two">%d تطبيقان مقفلان</item>
+        <item quantity="few">%d تطبيقات مقفلة</item>
+        <item quantity="many">%d تطبيقًا مقفلًا</item>
+        <item quantity="other">%d تطبيق مقفل</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">خيارات إضافية</string>
+    <string name="applist_menu_lock_all_now">قفل الكل الآن</string>
+    <string name="applist_locked_all_now">ستطلب جميع التطبيقات المصادقة مرة أخرى</string>
+    <string name="applist_menu_trigger_exclusions">استثناءات التشغيل</string>
+    <string name="applist_menu_prevent_uninstall">منع الإلغاء</string>
+    <string name="applist_menu_show_system_apps">إظهار تطبيقات النظام</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">ابحث عن التطبيقات أو أسماء الحزم</string>
+    <string name="applist_search_clear_cd">مسح البحث</string>
+    <string name="applist_filter_all">الكل</string>
+    <string name="applist_filter_locked">مقفلة</string>
+    <string name="applist_filter_unlocked">غير مقفلة</string>
+    <string name="applist_filter_system">النظام</string>
+    <string name="applist_sort_cd">ترتيب العرض</string>
+    <string name="applist_sort_name">أ–ي</string>
+    <string name="applist_sort_recent">المثبتة مؤخرًا</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">مقفلة</string>
+    <string name="applist_section_other">تطبيقات أخرى</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">تحديد</string>
+    <string name="applist_system_supporting">النظام · %1$s</string>
+    <string name="applist_remove_package_cd">إزالة %1$s</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">جارٍ تحميل التطبيقات…</string>
+    <string name="applist_empty_search_title">لا توجد تطبيقات تطابق “%1$s”</string>
+    <string name="applist_empty_search_desc">جرّب اسمًا أو حزمة مختلفة.</string>
+    <string name="applist_empty_locked_title">لا توجد تطبيقات مقفلة بعد</string>
+    <string name="applist_empty_locked_desc">فعّل المفتاح بجوار أي تطبيق لقفله.</string>
+    <string name="applist_empty_generic_title">لا يوجد شيء للعرض</string>
+    <string name="applist_empty_generic_desc">جرّب فلترًا آخر.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="zero">تم تحديد %d</item>
+        <item quantity="one">تم تحديد %d</item>
+        <item quantity="two">تم تحديد %d</item>
+        <item quantity="few">تم تحديد %d</item>
+        <item quantity="many">تم تحديد %d</item>
+        <item quantity="other">تم تحديد %d</item>
+    </plurals>
+    <string name="applist_action_lock">قفل المحدد</string>
+    <string name="applist_action_unlock">فتح المحدد</string>
+    <string name="applist_action_select_all">تحديد الكل</string>
+    <string name="applist_action_close_selection">إلغاء التحديد</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="zero">تم قفل %d تطبيق</item>
+        <item quantity="one">تم قفل %d تطبيق</item>
+        <item quantity="two">تم قفل %d تطبيقان</item>
+        <item quantity="few">تم قفل %d تطبيقات</item>
+        <item quantity="many">تم قفل %d تطبيقًا</item>
+        <item quantity="other">تم قفل %d تطبيق</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="zero">تم فتح %d تطبيق</item>
+        <item quantity="one">تم فتح %d تطبيق</item>
+        <item quantity="two">تم فتح %d تطبيقان</item>
+        <item quantity="few">تم فتح %d تطبيقات</item>
+        <item quantity="many">تم فتح %d تطبيقًا</item>
+        <item quantity="other">تم فتح %d تطبيق</item>
+    </plurals>
+    <string name="applist_undo">تراجع</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">رجوع</string>
+    <string name="applist_show_system_apps">تطبيقات النظام</string>
+    <string name="applist_add_package_cd">إضافة حزمة يدويًا</string>
+    <string name="applist_add_package_title">إضافة حزمة يدويًا</string>
+    <string name="applist_package_name_label">اسم الحزمة</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">أدخل اسم حزمة صالحًا</string>
+    <string name="applist_add">إضافة</string>
+    <string name="applist_cancel">إلغاء</string>
+    <string name="applist_manual_package_desc">غير مثبت · أُضيف يدويًا</string>
+    <string name="applist_section_manual">أُضيفت يدويًا</string>
+    <string name="applist_section_installed">التطبيقات المثبتة</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">استثناءات التشغيل</string>
+    <string name="trigger_exclusions_hero_title">تطبيقات لا تُشغّل القفل أبدًا</string>
+    <string name="trigger_exclusions_hero_desc">لن تظهر شاشة القفل عند التبديل من هذه التطبيقات إلى تطبيق مقفل. مفيد للوحات المفاتيح وقاذفات التطبيقات والنوافذ العائمة.</string>
+    <string name="trigger_exclusions_section_excluded">مستثناة</string>
+    <string name="trigger_exclusions_add_desc">أدخل اسم حزمة التطبيق الذي تريد استثناءه.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="zero">%d تطبيق مستثنى</item>
+        <item quantity="one">%d تطبيق مستثنى</item>
+        <item quantity="two">%d تطبيقان مستثنيان</item>
+        <item quantity="few">%d تطبيقات مستثناة</item>
+        <item quantity="many">%d تطبيقًا مستثنى</item>
+        <item quantity="other">%d تطبيق مستثنى</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">منع الإلغاء</string>
+    <string name="anti_uninstall_section_protected">محمية</string>
+    <string name="anti_uninstall_add_desc">أدخل اسم حزمة التطبيق الذي تريد حمايته من الإلغاء.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="zero">%d تطبيق محمي</item>
+        <item quantity="one">%d تطبيق محمي</item>
+        <item quantity="two">%d تطبيقان محميان</item>
+        <item quantity="few">%d تطبيقات محمية</item>
+        <item quantity="many">%d تطبيقًا محميًا</item>
+        <item quantity="other">%d تطبيق محمي</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">يحتاج Shizuku إلى تحديث</string>
+    <string name="anti_uninstall_ready_title">Shizuku متصل</string>
+    <string name="anti_uninstall_ready_desc">لا يمكن إلغاء تثبيت التطبيقات المحمية حتى تُوقف مفتاحها هنا. Shizuku مطلوب فقط أثناء تغيير الحماية.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku غير مثبت</string>
+    <string name="anti_uninstall_not_installed_desc">يلزم Shizuku (أو Sui على الأجهزة المجذّرة) لمنع الإلغاء دون صلاحيات الجذر. ثبّته لتغيير الحماية.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku لا يعمل</string>
+    <string name="anti_uninstall_not_running_desc">افتح Shizuku وشغّله عبر تصحيح الأخطاء اللاسلكي أو الجذر، ثم عُد. تبقى حمايتك الحالية كما هي.</string>
+    <string name="anti_uninstall_permission_title">مطلوب إذن Shizuku</string>
+    <string name="anti_uninstall_permission_desc">اسمح لـ App Lock Revived باستخدام Shizuku ليتمكن من تغيير التطبيقات القابلة للإلغاء.</string>
+    <string name="anti_uninstall_action_install">تثبيت Shizuku</string>
+    <string name="anti_uninstall_action_open">فتح Shizuku</string>
+    <string name="anti_uninstall_action_grant">منح الإذن</string>
+    <string name="anti_uninstall_action_retry">تحقّق مرة أخرى</string>
+    <string name="anti_uninstall_needs_shizuku">شغّل Shizuku أولًا لتغيير حماية منع الإلغاء</string>
+    <string name="anti_uninstall_toggle_failed">تعذّر تغيير حماية منع الإلغاء لـ %1$s</string>
+    <string name="anti_uninstall_shizuku_old">إصدار Shizuku هذا قديم جدًا. يرجى تحديث Shizuku.</string>
+    <string name="anti_uninstall_remove_all">إزالة الحماية من جميع التطبيقات</string>
+    <string name="anti_uninstall_remove_all_title">إزالة كل الحماية؟</string>
+    <string name="anti_uninstall_remove_all_desc">سيُسمح لكل تطبيق على هذا الجهاز ممنوع من الإلغاء بالإلغاء مجددًا، بما في ذلك التطبيقات المحمية خارج هذه القائمة.</string>
+    <string name="anti_uninstall_remove_all_confirm">إزالة</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="zero">أُزيلت الحماية عن %d تطبيق</item>
+        <item quantity="one">أُزيلت الحماية عن %d تطبيق</item>
+        <item quantity="two">أُزيلت الحماية عن %d تطبيقين</item>
+        <item quantity="few">أُزيلت الحماية عن %d تطبيقات</item>
+        <item quantity="many">أُزيلت الحماية عن %d تطبيقًا</item>
+        <item quantity="other">أُزيلت الحماية عن %d تطبيق</item>
+    </plurals>
+
+    <!-- Settings: sections -->
+    <string name="settings_section_appearance">المظهر</string>
+    <string name="settings_section_lock_screen">شاشة القفل</string>
+    <string name="settings_section_protection">الحماية</string>
+    <string name="settings_section_privacy">الخصوصية</string>
+    <string name="settings_section_backup">النسخ الاحتياطي والاستعادة</string>
+    <string name="settings_section_updates">التحديثات</string>
+
+    <!-- Appearance -->
+    <string name="settings_theme_title">السمة</string>
+    <string name="settings_theme_system">النظام</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_dynamic_color_title">الألوان الديناميكية</string>
+    <string name="settings_dynamic_color_desc">استخدام الألوان من خلفية الشاشة</string>
+    <string name="settings_amoled_title">أسود نقي</string>
+    <string name="settings_amoled_desc">استخدام خلفية سوداء حقيقية في السمة الداكنة</string>
+    <string name="settings_amoled_desc_needs_dark">متاح عند تفعيل السمة الداكنة</string>
+
+    <!-- Lock screen -->
+    <string name="settings_biometric_desc_available">استخدم بصمة الإصبع أو فتح الوجه</string>
+    <string name="settings_biometric_desc_unavailable">لا توجد مقاييس بيومترية مُعدّة على هذا الجهاز</string>
+    <string name="settings_biometric_auto_prompt_title">عرض نافذة المصادقة تلقائيًا</string>
+    <string name="settings_biometric_auto_prompt_desc">فتح نافذة بصمة الإصبع أو الوجه فور ظهور شاشة القفل</string>
+    <string name="settings_biometric_auto_prompt_desc_disabled">فعّل الفتح بالمصادقة البيومترية لاستخدام هذا</string>
+    <string name="settings_scramble_keypad_title">خلط لوحة رقم PIN</string>
+    <string name="settings_scramble_keypad_desc">خلط الأرقام في كل مرة حتى لا يتمكن الآخرون من معرفة رقم PIN من حركة أصابعك</string>
+    <string name="settings_scramble_keypad_desc_pin_only">متاح فقط مع قفل برقم PIN</string>
+    <string name="settings_auto_unlock_desc">الفتح فور إدخال رقم PIN الصحيح دون الضغط على تأكيد</string>
+    <string name="settings_disable_haptics_title">إيقاف الاستجابة اللمسية</string>
+
+    <!-- Security -->
+    <string name="settings_change_pattern_title">تغيير النقش</string>
+    <string name="settings_change_pattern_desc">ارسم نقش فتح جديدًا</string>
+    <string name="settings_change_password_title">تغيير كلمة المرور</string>
+    <string name="settings_change_password_desc">تعيين كلمة مرور جديدة</string>
+    <string name="settings_unlock_duration_until_screen_off">حتى إطفاء الشاشة</string>
+    <string name="settings_unlock_duration_sheet_desc">المدة التي يبقى فيها التطبيق مفتوحًا بعد فتحه</string>
+    <plurals name="settings_unlock_duration_minutes">
+        <item quantity="zero">%1$d دقيقة</item>
+        <item quantity="one">%1$d دقيقة</item>
+        <item quantity="two">%1$d دقيقتان</item>
+        <item quantity="few">%1$d دقائق</item>
+        <item quantity="many">%1$d دقيقة</item>
+        <item quantity="other">%1$d دقيقة</item>
+    </plurals>
+    <string name="settings_failed_attempts_title">المحاولات الفاشلة قبل الحظر</string>
+    <string name="settings_failed_attempts_desc">حظر الإدخال لفترة بعد محاولات خاطئة كثيرة</string>
+    <string name="settings_failed_attempts_off">إيقاف</string>
+    <string name="settings_lockout_duration_title">مدة الحظر</string>
+    <string name="settings_lockout_duration_desc">تتضاعف في كل مرة يتكرر فيها الحظر</string>
+    <string name="settings_lockout_duration_desc_disabled">فعّل الحظر بعد المحاولات الفاشلة لاستخدام هذا</string>
+    <string name="settings_lockout_seconds_short">%1$d ث</string>
+    <string name="settings_lockout_minutes_short">%1$d د</string>
+
+    <!-- Protection -->
+    <string name="settings_auto_lock_new_apps_title">قفل التطبيقات المثبتة حديثًا</string>
+    <string name="settings_auto_lock_new_apps_desc">قفل التطبيقات تلقائيًا فور تثبيتها</string>
+
+    <!-- Privacy -->
+    <string name="settings_unlock_history_title">سجل الفتح</string>
+    <string name="settings_unlock_history_desc">الاحتفاظ بسجل محلي لمحاولات الفتح. إيقاف هذا الخيار يحذف السجل.</string>
+    <string name="settings_view_unlock_history_title">عرض سجل الفتح</string>
+    <string name="settings_view_unlock_history_desc">عرض عمليات الفتح الأخيرة والمحاولات الفاشلة</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_export_title">تصدير نسخة احتياطية</string>
+    <string name="settings_backup_export_desc">حفظ التطبيقات المقفلة والإعدادات في ملف</string>
+    <string name="settings_backup_import_title">الاستعادة من نسخة احتياطية</string>
+    <string name="settings_backup_import_desc">استبدال التطبيقات المقفلة والإعدادات بملف نسخة احتياطية</string>
+    <string name="settings_backup_footer">لا تتضمن النسخة الاحتياطية أبدًا رقم PIN أو النقش أو كلمة المرور.</string>
+    <string name="settings_backup_export_success">تم حفظ النسخة الاحتياطية</string>
+    <string name="settings_backup_export_failed">تعذّر حفظ النسخة الاحتياطية: %1$s</string>
+    <string name="settings_backup_import_invalid">هذا الملف ليس نسخة احتياطية من App Lock Revived</string>
+    <string name="settings_backup_import_newer_version">أُنشئت هذه النسخة الاحتياطية بإصدار أحدث من App Lock Revived. حدّث التطبيق وحاول مرة أخرى.</string>
+    <string name="settings_backup_import_failed">تعذّر قراءة النسخة الاحتياطية: %1$s</string>
+    <string name="settings_backup_no_file_picker">لا يوجد تطبيق متاح لاختيار الملفات</string>
+    <string name="settings_backup_restore_complete_title">تمت استعادة النسخة الاحتياطية</string>
+    <plurals name="settings_backup_restored_apps">
+        <item quantity="zero">تمت استعادة %1$d تطبيق مقفل.</item>
+        <item quantity="one">تمت استعادة %1$d تطبيق مقفل.</item>
+        <item quantity="two">تمت استعادة %1$d تطبيقين مقفلين.</item>
+        <item quantity="few">تمت استعادة %1$d تطبيقات مقفلة.</item>
+        <item quantity="many">تمت استعادة %1$d تطبيقًا مقفلًا.</item>
+        <item quantity="other">تمت استعادة %1$d تطبيق مقفل.</item>
+    </plurals>
+    <plurals name="settings_backup_restored_settings">
+        <item quantity="zero">تمت استعادة %1$d إعداد.</item>
+        <item quantity="one">تمت استعادة %1$d إعداد.</item>
+        <item quantity="two">تمت استعادة %1$d إعدادين.</item>
+        <item quantity="few">تمت استعادة %1$d إعدادات.</item>
+        <item quantity="many">تمت استعادة %1$d إعدادًا.</item>
+        <item quantity="other">تمت استعادة %1$d إعداد.</item>
+    </plurals>
+    <string name="settings_backup_restore_credentials_note">بقي رقم PIN أو النقش أو كلمة المرور الحالية كما هو.</string>
+    <string name="settings_ok_button">حسنًا</string>
+
+    <!-- Updates -->
+    <string name="settings_update_check_title">التحقق من التحديثات تلقائيًا</string>
+    <string name="settings_update_check_desc">البحث عن الإصدارات الجديدة على GitHub</string>
+    <string name="settings_update_check_now_title">التحقق من التحديثات</string>
+    <string name="settings_update_checking">جارٍ التحقق…</string>
+    <string name="settings_update_current_version">أنت تستخدم الإصدار %1$s</string>
+    <string name="settings_update_latest">أنت تستخدم أحدث إصدار</string>
+    <string name="settings_update_check_failed">تعذّر التحقق من التحديثات. تحقّق من اتصالك وحاول مرة أخرى.</string>
+    <string name="settings_update_check_footer">هذه هي المرة الوحيدة التي يتصل فيها التطبيق بالإنترنت. لا يُرسَل أي شيء عنك أو عن تطبيقاتك.</string>
+
+    <!-- Backend -->
+    <string name="settings_backend_accessibility_title">خدمة إمكانية الوصول</string>
+    <string name="settings_backend_accessibility_desc">طريقة قياسية تعمل على معظم الأجهزة</string>
+    <string name="settings_backend_usage_stats_title">إحصاءات الاستخدام</string>
+    <string name="settings_backend_usage_stats_desc">طريقة تجريبية تستخدم إحصاءات استخدام التطبيقات</string>
+    <string name="settings_backend_shizuku_title">Shizuku</string>
+    <string name="settings_backend_shizuku_desc">طريقة متقدمة تستخدم Shizuku والواجهات الداخلية</string>
+
+    <!-- Advanced -->
+    <string name="settings_logging_title">سجلات التصحيح</string>
+    <string name="settings_logging_desc">تسجيل سجلات مفصلة لاستكشاف الأخطاء وإصلاحها</string>
+    <string name="settings_share_logs">مشاركة السجلات</string>
+    <string name="settings_share_audit_logs">مشاركة سجلات الأمان</string>
+
+    <!-- About -->
+    <string name="settings_about_app_name">App Lock Revived</string>
+    <string name="settings_about_version">الإصدار %1$s (%2$d)</string>
+    <string name="settings_about_tagline">مجاني ومفتوح المصدر وخالٍ من الإعلانات</string>
+    <string name="settings_about_developed_by">تم التطوير بواسطة Riyad M</string>
+    <string name="settings_about_source_title">الشيفرة المصدرية</string>
+    <string name="settings_about_source_desc">github.com/riyadmondol2006/AppLock-Revived</string>
+    <string name="settings_about_releases_title">الإصدارات</string>
+    <string name="settings_about_releases_desc">سجل التغييرات والتنزيلات</string>
+    <string name="settings_about_issue_title">الإبلاغ عن مشكلة</string>
+    <string name="settings_about_issue_desc">وجدت خطأ أو لديك فكرة؟ أخبرنا بها</string>
+    <string name="settings_about_credits_title">الشكر والتقدير</string>
+    <string name="settings_about_credits_desc">مبني على AppLock من تطوير Pranav Purwar (aload0)</string>
+    <string name="settings_about_license_title">الترخيص</string>
+    <string name="settings_about_license_desc">ترخيص MIT</string>
+    <string name="settings_no_browser">لا يوجد تطبيق لفتح الروابط</string>
+
+    <!-- Support sheet -->
+    <string name="settings_support_sheet_title">هل تستمتع بـ App Lock Revived؟</string>
+    <string name="settings_support_sheet_message">App Lock Revived مجاني ومفتوح المصدر وخالٍ من الإعلانات. يمكنك دعمه بوضع نجمة للمشروع على GitHub، أو الإبلاغ عن الأخطاء، أو مشاركته مع أصدقائك.</string>
+    <string name="settings_support_sheet_star">ضع نجمة على GitHub</string>
+
+    <!-- Unlock history -->
+    <string name="history_title">سجل الفتح</string>
+    <plurals name="history_entry_count">
+        <item quantity="zero">%1$d إدخال</item>
+        <item quantity="one">%1$d إدخال</item>
+        <item quantity="two">%1$d إدخالان</item>
+        <item quantity="few">%1$d إدخالات</item>
+        <item quantity="many">%1$d إدخالًا</item>
+        <item quantity="other">%1$d إدخال</item>
+    </plurals>
+    <string name="history_clear_cd">مسح السجل</string>
+    <string name="history_clear_dialog_title">مسح سجل الفتح؟</string>
+    <string name="history_clear_dialog_text">سيتم حذف كل عمليات الفتح والمحاولات الفاشلة المسجلة. لا يمكن التراجع عن هذا.</string>
+    <string name="history_clear_confirm">مسح</string>
+    <string name="history_cleared">تم مسح السجل</string>
+    <plurals name="history_summary_failed">
+        <item quantity="zero">لا توجد محاولات فاشلة خلال آخر 24 ساعة</item>
+        <item quantity="one">محاولة فاشلة خلال آخر 24 ساعة</item>
+        <item quantity="two">محاولتان فاشلتان خلال آخر 24 ساعة</item>
+        <item quantity="few">محاولات فاشلة خلال آخر 24 ساعة</item>
+        <item quantity="many">محاولة فاشلة خلال آخر 24 ساعة</item>
+        <item quantity="other">محاولة فاشلة خلال آخر 24 ساعة</item>
+    </plurals>
+    <plurals name="history_summary_success">
+        <item quantity="zero">%1$d عملية فتح ناجحة خلال الفترة نفسها</item>
+        <item quantity="one">%1$d عملية فتح ناجحة خلال الفترة نفسها</item>
+        <item quantity="two">%1$d عمليتا فتح ناجحتان خلال الفترة نفسها</item>
+        <item quantity="few">%1$d عمليات فتح ناجحة خلال الفترة نفسها</item>
+        <item quantity="many">%1$d عملية فتح ناجحة خلال الفترة نفسها</item>
+        <item quantity="other">%1$d عملية فتح ناجحة خلال الفترة نفسها</item>
+    </plurals>
+    <string name="history_entry_success">تم الفتح باستخدام %1$s · %2$s</string>
+    <string name="history_entry_failed">محاولة فاشلة باستخدام %1$s · %2$s</string>
+    <string name="history_status_success_cd">تم الفتح</string>
+    <string name="history_status_failed_cd">محاولة فاشلة</string>
+    <string name="history_method_pin">رقم PIN</string>
+    <string name="history_method_pattern">النقش</string>
+    <string name="history_method_password">كلمة المرور</string>
+    <string name="history_method_biometric">المصادقة البيومترية</string>
+    <string name="history_today">اليوم</string>
+    <string name="history_yesterday">أمس</string>
+    <string name="history_disabled_banner">سجل الفتح متوقف. لا تُسجَّل المحاولات الجديدة.</string>
+    <string name="history_turn_on">تفعيل</string>
+    <string name="history_empty_title">لا توجد محاولات فتح بعد</string>
+    <string name="history_empty_desc">عندما يفتح شخص ما تطبيقًا مقفلًا أو يحاول فتحه، يظهر ذلك هنا. لا يغادر السجل جهازك أبدًا.</string>
+</resources>
+
