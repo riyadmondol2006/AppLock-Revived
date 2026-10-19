@@ -85,6 +85,21 @@ android {
         warning += setOf("MissingTranslation", "LocalContextGetResourceValueCall")
     }
 
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+        // Robolectric downloads its Android jars through java.io.tmpdir; keep that off a small /tmp
+        unitTests.all { test ->
+            val tmp = layout.buildDirectory.dir("tmp/unitTest").get().asFile
+            test.doFirst { tmp.mkdirs() }
+            test.systemProperty("java.io.tmpdir", tmp.absolutePath)
+            // Robolectric's Android 16 runtime reaches into FileDescriptor internals
+            test.jvmArgs(
+                "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED",
+                "--enable-native-access=ALL-UNNAMED"
+            )
+        }
+    }
+
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
@@ -113,8 +128,37 @@ dependencies {
     compileOnly(project(":hidden-api"))
     implementation(libs.hiddenapibypass)
 
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.truth)
+
 
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+// The Refine plugin instruments every dependency of every component, unit tests included.
+// That rewrites the signed BouncyCastle jar Robolectric loads, so its classes no longer match
+// the jar signature. Swap in the original jar on the unit test classpath.
+val unitTestSignedJars: Configuration by configurations.creating {
+    isCanBeConsumed = false
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+        attribute(
+            TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE,
+            objects.named(TargetJvmEnvironment.STANDARD_JVM)
+        )
+    }
+}
+
+dependencies {
+    unitTestSignedJars(libs.robolectric)
+}
+
+tasks.withType<Test>().configureEach {
+    val signedJars = unitTestSignedJars.filter { it.name.startsWith("bcprov") }
+    doFirst {
+        classpath = signedJars + classpath.filter { !it.name.startsWith("bcprov") }
+    }
 }

@@ -10,6 +10,7 @@ import javax.crypto.spec.PBEKeySpec
 object SecurityUtils {
 
     private const val HASH_ALGORITHM = "SHA-256"
+    private const val SHA256_LENGTH = 32
     private const val KDF_ALGORITHM = "PBKDF2WithHmacSHA256"
     private const val KDF_PREFIX = "pbkdf2"
     private const val KDF_ITERATIONS = 60_000
@@ -96,10 +97,11 @@ object SecurityUtils {
         val parts = value.split(":")
         if (parts.size != 2) return false
 
+        // Check the decoded sizes too, so a legacy plaintext password with one colon
+        // (e.g. "1234:5678", valid Base64 on both sides) is not mistaken for a hash
         return try {
-            Base64.decode(parts[0], Base64.NO_WRAP)
-            Base64.decode(parts[1], Base64.NO_WRAP)
-            true
+            Base64.decode(parts[0], Base64.NO_WRAP).isNotEmpty() &&
+                Base64.decode(parts[1], Base64.NO_WRAP).size == SHA256_LENGTH
         } catch (_: Exception) {
             false
         }

@@ -15,6 +15,9 @@ material3 = "1.5.0-beta01"
 materialIconsCore = "1.7.8"
 navigationCompose = "2.10.2"
 profileinstaller = "1.4.1"
+junit = "4.13.2"
+robolectric = "4.17"
+truth = "1.4.5"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
@@ -41,6 +44,9 @@ hiddenapibypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", vers
 refine-runtime = { module = "dev.rikka.tools.refine:runtime", version.ref = "refine" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
+junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
