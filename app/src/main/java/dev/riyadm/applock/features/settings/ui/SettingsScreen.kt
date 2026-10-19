@@ -278,6 +278,7 @@ fun SettingsScreen(navController: NavController) {
                 item(key = "intruder", contentType = "section") {
                     IntruderSection(onViewPhotos = { navController.navigate(Screen.IntruderPhotos.route) })
                 }
+                item(key = "hardening", contentType = "section") { HardeningSection(state.unlockLog) }
                 item(key = "backup", contentType = "section") {
                     BackupSection(
                         repository = repository,

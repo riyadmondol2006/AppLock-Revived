@@ -24,6 +24,7 @@ class AppLockApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeComponents()
+        dev.riyadm.applock.features.hardening.Hardening.onAppCreate(this)
 
         LogUtils.initialize(this)
         LogUtils.setLoggingEnabled(appLockRepository.isLoggingEnabled())

@@ -216,7 +216,7 @@ class PreferencesRepository(context: Context) {
     fun setAutoLockNewAppsEnabled(enabled: Boolean) =
         settingsPrefs.edit { putBoolean(KEY_AUTO_LOCK_NEW_APPS, enabled) }
 
-    fun isUnlockLogEnabled(): Boolean = settingsPrefs.getBoolean(KEY_UNLOCK_LOG, true)
+    fun isUnlockLogEnabled(): Boolean = settingsPrefs.getBoolean(KEY_UNLOCK_LOG, false)
     fun setUnlockLogEnabled(enabled: Boolean) =
         settingsPrefs.edit { putBoolean(KEY_UNLOCK_LOG, enabled) }
 

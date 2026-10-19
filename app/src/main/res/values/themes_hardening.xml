@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        Lock screen activity: opaque from the very first (starting window) frame so the locked
+        app never shows through, and no open animation that could reveal it.
+    -->
+    <style name="Theme.AppLock.LockShield" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/lock_shield_background</item>
+        <item name="android:colorBackground">@color/lock_shield_background</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppLock.LockShield</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Animation.AppLock.LockShield" parent="android:Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+        <item name="android:taskToFrontEnterAnimation">@null</item>
+        <item name="android:taskToFrontExitAnimation">@null</item>
+    </style>
+</resources>

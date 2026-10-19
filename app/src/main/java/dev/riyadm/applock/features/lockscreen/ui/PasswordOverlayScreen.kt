@@ -3,6 +3,7 @@ package dev.riyadm.applock.features.lockscreen.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
@@ -39,6 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import dev.riyadm.applock.R
@@ -73,6 +76,7 @@ class PasswordOverlayActivity : FragmentActivity() {
     private var autoPromptPending = false
     private var isBiometricShowing = false
     private var isUnlocking = false
+    private var lockUiShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,8 +88,12 @@ class PasswordOverlayActivity : FragmentActivity() {
             return
         }
 
+        val createdAt = SystemClock.uptimeMillis()
+        disableOpenTransition()
         enableEdgeToEdge()
         setupWindow()
+        // Opaque shield in the lock screen colour; the theme gives the starting window the same.
+        window.setBackgroundDrawable(LockShield.surfaceColor(this).toDrawable())
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() = goHome()
@@ -99,6 +107,23 @@ class PasswordOverlayActivity : FragmentActivity() {
         biometricUsable = isBiometricUsable()
         autoPromptPending = savedInstanceState == null && shouldAutoPrompt()
 
+        // First frame: just the shield, so the window covers the app as early as possible.
+        // The Compose lock screen is composed in the frame after that.
+        LockShield.afterFirstFrame(window.decorView, ACTIVITY_ATTACH_FALLBACK_MS) { committed ->
+            Log.d(
+                TAG, "Shield frame ${if (committed) "committed" else "timed out"} after " +
+                        "${SystemClock.uptimeMillis() - createdAt} ms"
+            )
+            if (!isFinishing && !isDestroyed) showLockUi(createdAt)
+        }
+    }
+
+    private fun showLockUi(createdAt: Long) {
+        if (lockUiShown) return
+        lockUiShown = true
+        window.decorView.doOnPreDraw {
+            Log.d(TAG, "Lock UI first frame after ${SystemClock.uptimeMillis() - createdAt} ms")
+        }
         setContent {
             AppLockTheme {
                 key(session) {
@@ -135,6 +160,16 @@ class PasswordOverlayActivity : FragmentActivity() {
             if (lockedPackage == pkg) appName = label
         }
         return true
+    }
+
+    /** An open animation would scale or fade the lock screen in over the locked app. */
+    private fun disableOpenTransition() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0)
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
+        }
     }
 
     private fun setupWindow() {
@@ -251,6 +286,9 @@ class PasswordOverlayActivity : FragmentActivity() {
     companion object {
         private const val TAG = "PasswordOverlayActivity"
         const val EXTRA_LOCKED_PACKAGE = "locked_package"
+
+        // The activity window is only added after onResume, so allow more time than the overlay.
+        private const val ACTIVITY_ATTACH_FALLBACK_MS = 250L
     }
 }
 
