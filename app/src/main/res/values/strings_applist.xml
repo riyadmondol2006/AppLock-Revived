@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home: protection status -->
+    <string name="applist_status_active_title">Protection is on</string>
+    <string name="applist_status_paused_title">Protection is paused</string>
+    <string name="applist_status_paused_desc">Locked apps open without asking. Tap to resume.</string>
+    <string name="applist_status_setup_title">Protection needs attention</string>
+    <string name="applist_status_setup_desc">%1$s is required. Tap to fix.</string>
+    <string name="applist_status_stopped_title">Lock service isn\'t running</string>
+    <string name="applist_status_stopped_desc">Tap to restart the %1$s service.</string>
+    <string name="applist_status_active_desc">%1$s · %2$s</string>
+    <string name="applist_status_secondary_issue">Anti-uninstall: %1$s required</string>
+    <string name="applist_status_fix">Fix</string>
+    <string name="applist_status_switch_cd">Protection</string>
+    <string name="applist_backend_accessibility">Accessibility</string>
+    <string name="applist_backend_usage_stats">Usage access</string>
+    <string name="applist_backend_shizuku">Shizuku</string>
+    <plurals name="applist_locked_count">
+        <item quantity="one">%d app locked</item>
+        <item quantity="other">%d apps locked</item>
+    </plurals>
+
+    <!-- Home: top bar -->
+    <string name="applist_more_options_cd">More options</string>
+    <string name="applist_menu_lock_all_now">Lock all now</string>
+    <string name="applist_locked_all_now">All apps will ask for authentication again</string>
+    <string name="applist_menu_trigger_exclusions">Trigger exclusions</string>
+    <string name="applist_menu_prevent_uninstall">Prevent uninstall</string>
+
+    <!-- Search, filters and sorting -->
+    <string name="applist_search_placeholder">Search apps or package names</string>
+    <string name="applist_search_clear_cd">Clear search</string>
+    <string name="applist_filter_all">All</string>
+    <string name="applist_filter_locked">Locked</string>
+    <string name="applist_filter_unlocked">Unlocked</string>
+    <string name="applist_filter_system">System</string>
+    <string name="applist_sort_cd">Sort order</string>
+    <string name="applist_sort_name">A–Z</string>
+    <string name="applist_sort_recent">Recently installed</string>
+
+    <!-- Sections and rows -->
+    <string name="applist_section_locked">Locked</string>
+    <string name="applist_section_other">Other apps</string>
+    <string name="applist_section_count">%1$s · %2$d</string>
+    <string name="applist_select_action_label">Select</string>
+    <string name="applist_system_supporting">System · %1$s</string>
+    <string name="applist_remove_package_cd">Remove %1$s</string>
+
+    <!-- Empty and loading -->
+    <string name="applist_loading">Loading apps…</string>
+    <string name="applist_empty_search_title">No apps match “%1$s”</string>
+    <string name="applist_empty_search_desc">Try a different name or package.</string>
+    <string name="applist_empty_locked_title">No locked apps yet</string>
+    <string name="applist_empty_locked_desc">Turn on the switch next to an app to lock it.</string>
+    <string name="applist_empty_generic_title">Nothing to show</string>
+    <string name="applist_empty_generic_desc">Try another filter.</string>
+
+    <!-- Multi-select -->
+    <plurals name="applist_selected_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+    <string name="applist_action_lock">Lock selected</string>
+    <string name="applist_action_unlock">Unlock selected</string>
+    <string name="applist_action_select_all">Select all</string>
+    <string name="applist_action_close_selection">Cancel selection</string>
+    <plurals name="applist_bulk_locked">
+        <item quantity="one">Locked %d app</item>
+        <item quantity="other">Locked %d apps</item>
+    </plurals>
+    <plurals name="applist_bulk_unlocked">
+        <item quantity="one">Unlocked %d app</item>
+        <item quantity="other">Unlocked %d apps</item>
+    </plurals>
+    <string name="applist_undo">Undo</string>
+
+    <!-- Shared: package lists -->
+    <string name="applist_navigate_back_cd">Navigate back</string>
+    <string name="applist_show_system_apps">System apps</string>
+    <string name="applist_add_package_cd">Add package manually</string>
+    <string name="applist_add_package_title">Add package manually</string>
+    <string name="applist_package_name_label">Package name</string>
+    <string name="applist_package_name_placeholder">com.example.app</string>
+    <string name="applist_package_name_invalid">Enter a valid package name</string>
+    <string name="applist_add">Add</string>
+    <string name="applist_cancel">Cancel</string>
+    <string name="applist_manual_package_desc">Not installed · added manually</string>
+    <string name="applist_section_manual">Added manually</string>
+    <string name="applist_section_installed">Installed apps</string>
+
+    <!-- Trigger exclusions -->
+    <string name="trigger_exclusions_title">Trigger exclusions</string>
+    <string name="trigger_exclusions_hero_title">Apps that never trigger a lock</string>
+    <string name="trigger_exclusions_hero_desc">Switching from these apps to a locked app won\'t show the lock screen. Useful for keyboards, launchers and floating overlays.</string>
+    <string name="trigger_exclusions_section_excluded">Excluded</string>
+    <string name="trigger_exclusions_add_desc">Enter the package name of the app you want to exclude.</string>
+    <plurals name="trigger_exclusions_count">
+        <item quantity="one">%d app excluded</item>
+        <item quantity="other">%d apps excluded</item>
+    </plurals>
+
+    <!-- Prevent uninstall -->
+    <string name="anti_uninstall_title">Prevent uninstall</string>
+    <string name="anti_uninstall_section_protected">Protected</string>
+    <string name="anti_uninstall_add_desc">Enter the package name of the app you want to protect from uninstalling.</string>
+    <plurals name="anti_uninstall_count">
+        <item quantity="one">%d app protected</item>
+        <item quantity="other">%d apps protected</item>
+    </plurals>
+    <string name="anti_uninstall_outdated_title">Shizuku needs an update</string>
+    <string name="anti_uninstall_ready_title">Shizuku is connected</string>
+    <string name="anti_uninstall_ready_desc">Protected apps can\'t be uninstalled until you turn their switch off here. Shizuku is only needed while changing protection.</string>
+    <string name="anti_uninstall_not_installed_title">Shizuku isn\'t installed</string>
+    <string name="anti_uninstall_not_installed_desc">Shizuku (or Sui on rooted devices) is needed to block uninstalls without root. Install it to change protection.</string>
+    <string name="anti_uninstall_not_running_title">Shizuku isn\'t running</string>
+    <string name="anti_uninstall_not_running_desc">Open Shizuku and start it with wireless debugging or root, then come back. Your current protection stays in place.</string>
+    <string name="anti_uninstall_permission_title">Shizuku permission needed</string>
+    <string name="anti_uninstall_permission_desc">Allow App Lock Revived to use Shizuku so it can change which apps can be uninstalled.</string>
+    <string name="anti_uninstall_action_install">Install Shizuku</string>
+    <string name="anti_uninstall_action_open">Open Shizuku</string>
+    <string name="anti_uninstall_action_grant">Grant permission</string>
+    <string name="anti_uninstall_action_retry">Check again</string>
+    <string name="anti_uninstall_needs_shizuku">Start Shizuku first to change uninstall protection</string>
+    <string name="anti_uninstall_toggle_failed">Couldn\'t change uninstall protection for %1$s</string>
+    <string name="anti_uninstall_shizuku_old">This Shizuku version is too old. Please update Shizuku.</string>
+    <string name="anti_uninstall_remove_all">Remove protection from all apps</string>
+    <string name="anti_uninstall_remove_all_title">Remove all protection?</string>
+    <string name="anti_uninstall_remove_all_desc">Every app on this device that is blocked from uninstalling will be allowed to uninstall again, including apps protected outside this list.</string>
+    <string name="anti_uninstall_remove_all_confirm">Remove</string>
+    <plurals name="anti_uninstall_removed_count">
+        <item quantity="one">Removed protection from %d app</item>
+        <item quantity="other">Removed protection from %d apps</item>
+    </plurals>
+</resources>

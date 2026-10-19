@@ -1,70 +1,109 @@
 package dev.riyadm.applock.features.applist.domain
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherApps
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Process
+import android.os.SystemClock
+import android.util.Log
+import dev.riyadm.applock.features.applist.ui.AppIconCache
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
-class AppSearchManager(private val context: Context) {
+/**
+ * Loads every installed package (except this app) together with its label and launcher
+ * visibility. Results are shared between screens for a short time so that opening the
+ * exclusion / anti-uninstall lists right after the home screen is instant.
+ */
+class AppSearchManager(context: Context) {
 
-    private var allApps: List<ApplicationInfo> = emptyList()
-    private var appNameCache: HashMap<ApplicationInfo, String> = HashMap()
-    private var prefixIndexCache: HashMap<String, List<ApplicationInfo>> = HashMap()
+    private val appContext = context.applicationContext
 
-    suspend fun loadApps(includeSystemApps: Boolean = false): Set<ApplicationInfo> {
-        return withContext(Dispatchers.IO) {
-            val launcherApps =
-                context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-
-            val apps = if (includeSystemApps) {
-                // Load all apps including system apps
-                val pm = context.packageManager
-                pm.getInstalledApplications(0)
-                    .filter { it.packageName != context.packageName }
-            } else {
-                // Load only user-installed apps with launcher activities
-                launcherApps.getActivityList(null, Process.myUserHandle())
-                    .mapNotNull { it.applicationInfo }
-                    .filter { it.enabled && it.packageName != context.packageName }
-            }
-
-            val nameCache =
-                apps.associateWithTo(HashMap()) { app ->
-                    app.loadLabel(context.packageManager).toString().lowercase()
+    suspend fun loadInstalledApps(useCache: Boolean = true): List<InstalledApp> =
+        withContext(Dispatchers.IO) {
+            mutex.withLock {
+                val cached = cache
+                if (useCache && cached != null &&
+                    SystemClock.elapsedRealtime() - cachedAt < CACHE_TTL_MS
+                ) {
+                    return@withLock cached
                 }
+                val apps = queryApps()
+                cache = apps
+                cachedAt = SystemClock.elapsedRealtime()
+                apps
+            }
+        }
 
-            val prefixCache = HashMap<String, MutableList<ApplicationInfo>>()
+    private fun queryApps(): List<InstalledApp> {
+        val pm = appContext.packageManager
+        val launcherPackages = launcherPackages(pm)
 
-            nameCache.forEach { (app, appName) ->
-                if (appName.isNotEmpty()) {
-                    val firstChar = appName.take(1)
-                    prefixCache.getOrPut(firstChar) { mutableListOf() }.add(app)
-
-                    if (appName.length >= 2) {
-                        val firstTwoChars = appName.take(2)
-                        prefixCache.getOrPut(firstTwoChars) { mutableListOf() }.add(app)
-
-                        if (appName.length >= 3) {
-                            val firstThreeChars = appName.take(3)
-                            prefixCache.getOrPut(firstThreeChars) { mutableListOf() }.add(app)
-                        }
-                    }
-                }
+        @Suppress("DEPRECATION")
+        val packages: List<PackageInfo> = runCatching { pm.getInstalledPackages(0) }
+            .getOrElse {
+                Log.e(TAG, "Failed to query installed packages", it)
+                emptyList()
             }
 
-            val sortedApps = apps.sortedBy { nameCache[it] }
-
-            allApps = sortedApps
-            appNameCache = nameCache
-            val finalPrefixCache = HashMap<String, List<ApplicationInfo>>(prefixCache.size)
-            prefixCache.forEach { (prefix, appList) ->
-                finalPrefixCache[prefix] = appList
+        return packages.asSequence()
+            .filter { it.packageName != appContext.packageName }
+            .mapNotNull { pkg ->
+                val info = pkg.applicationInfo ?: return@mapNotNull null
+                val label = runCatching { info.loadLabel(pm).toString() }
+                    .getOrNull()
+                    ?.takeIf { it.isNotBlank() }
+                    ?: pkg.packageName
+                AppIconCache.putLabel(pkg.packageName, label)
+                InstalledApp(
+                    packageName = pkg.packageName,
+                    label = label,
+                    isSystem = info.flags and
+                            (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0,
+                    hasLauncher = pkg.packageName in launcherPackages,
+                    isEnabled = info.enabled,
+                    firstInstallTime = pkg.firstInstallTime,
+                    applicationInfo = info
+                )
             }
-            prefixIndexCache = finalPrefixCache
+            .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.label })
+            .toList()
+    }
 
-            sortedApps.distinctBy { it.packageName }.toSet()
+    private fun launcherPackages(pm: PackageManager): Set<String> {
+        val fromLauncherApps = runCatching {
+            appContext.getSystemService(LauncherApps::class.java)
+                ?.getActivityList(null, Process.myUserHandle())
+                ?.mapTo(HashSet()) { it.applicationInfo.packageName }
+        }.getOrNull()
+        if (!fromLauncherApps.isNullOrEmpty()) return fromLauncherApps
+
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+        return runCatching {
+            pm.queryIntentActivities(intent, 0).mapTo(HashSet()) { it.activityInfo.packageName }
+        }.getOrDefault(emptySet())
+    }
+
+    companion object {
+        private const val TAG = "AppSearchManager"
+        private const val CACHE_TTL_MS = 60_000L
+
+        private val mutex = Mutex()
+
+        @Volatile
+        private var cache: List<InstalledApp>? = null
+
+        @Volatile
+        private var cachedAt = 0L
+
+        /** Drops the shared app list, e.g. after a package was installed or removed. */
+        fun invalidate() {
+            cache = null
         }
     }
 }
