@@ -192,8 +192,10 @@ class UnlockController internal constructor(
     // A silently checked (auto-unlock) candidate that turned out wrong; it counts as a
     // failed attempt once the user abandons it, so auto-unlock can't be used to brute force.
     private var pendingSilentFailure: String? = null
+    private var lastCountedSilentFailure: String? = null
 
-    val isLockedOut: Boolean get() = remainingLockoutMs > 0
+    private val lockedOutState = derivedStateOf { remainingLockoutMs > 0 }
+    val isLockedOut: Boolean get() = lockedOutState.value
     val canInput: Boolean get() = !isVerifying && !isUnlocked && !isLockedOut
 
     fun refreshLockout() {
@@ -212,6 +214,7 @@ class UnlockController internal constructor(
     fun submit(input: String) {
         if (!canInput || input.isEmpty()) return
         pendingSilentFailure = null
+        lastCountedSilentFailure = null
         isVerifying = true
         scope.launch {
             val valid = try {
@@ -246,6 +249,9 @@ class UnlockController internal constructor(
         val pending = pendingSilentFailure ?: return
         if (newInput.startsWith(pending)) return
         pendingSilentFailure = null
+        // Deleting back through one wrong entry counts once, not once per digit.
+        if (lastCountedSilentFailure?.startsWith(pending) == true) return
+        lastCountedSilentFailure = pending
         scope.launch {
             withContext(Dispatchers.Default) {
                 repository.recordUnlockAttempt(packageName(), false, method)
@@ -723,6 +729,7 @@ internal fun PinDots(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun PinDot(visible: Boolean, index: Int, size: Dp, spacing: Dp, color: () -> Color) {
     val presence = remember { Animatable(0f) }
@@ -741,7 +748,6 @@ private fun PinDot(visible: Boolean, index: Int, size: Dp, spacing: Dp, color: (
         }
     }
     val morph = remember(index) {
-        @OptIn(ExperimentalMaterial3ExpressiveApi::class)
         Morph(DotShapes[index % DotShapes.size], MaterialShapes.Circle)
     }
     val path = remember { Path() }
