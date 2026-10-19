@@ -20,6 +20,7 @@ import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.data.repository.PreferencesRepository
 import dev.riyadm.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.riyadm.applock.features.appintro.ui.AppIntroScreen
+import dev.riyadm.applock.features.history.ui.UnlockHistoryScreen
 import dev.riyadm.applock.features.applist.ui.MainScreen
 import dev.riyadm.applock.features.lockscreen.ui.AlphanumericPasswordOverlayScreen
 import dev.riyadm.applock.features.lockscreen.ui.PatternLockScreen
@@ -139,6 +140,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.AntiUninstall.route) {
             AntiUninstallScreen(navController)
+        }
+
+        composable(Screen.UnlockHistory.route) {
+            UnlockHistoryScreen(navController)
         }
     }
 }
