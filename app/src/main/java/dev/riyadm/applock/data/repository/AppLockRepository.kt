@@ -162,6 +162,15 @@ class AppLockRepository(private val context: Context) {
         }
     }
 
+    // Update checks
+    fun isUpdateCheckEnabled(): Boolean = preferencesRepository.isUpdateCheckEnabled()
+    fun setUpdateCheckEnabled(enabled: Boolean) = preferencesRepository.setUpdateCheckEnabled(enabled)
+    fun getLastUpdateCheck(): Long = preferencesRepository.getLastUpdateCheck()
+    fun setLastUpdateCheck(timestamp: Long) = preferencesRepository.setLastUpdateCheck(timestamp)
+    fun getSkippedUpdateVersion(): String? = preferencesRepository.getSkippedUpdateVersion()
+    fun setSkippedUpdateVersion(version: String?) =
+        preferencesRepository.setSkippedUpdateVersion(version)
+
     // Backup
     internal fun exportSettings(): Map<String, Any?> = preferencesRepository.exportSettings()
     internal fun importSettings(values: Map<String, Any?>) =

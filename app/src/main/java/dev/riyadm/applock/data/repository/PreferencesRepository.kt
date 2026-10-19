@@ -272,6 +272,19 @@ class PreferencesRepository(context: Context) {
         return remaining.coerceIn(0L, cap)
     }
 
+    // Update checks (the only network access the app makes)
+    fun isUpdateCheckEnabled(): Boolean = settingsPrefs.getBoolean(KEY_UPDATE_CHECK, true)
+    fun setUpdateCheckEnabled(enabled: Boolean) =
+        settingsPrefs.edit { putBoolean(KEY_UPDATE_CHECK, enabled) }
+
+    fun getLastUpdateCheck(): Long = settingsPrefs.getLong(KEY_LAST_UPDATE_CHECK, 0L)
+    fun setLastUpdateCheck(timestamp: Long) =
+        settingsPrefs.edit { putLong(KEY_LAST_UPDATE_CHECK, timestamp) }
+
+    fun getSkippedUpdateVersion(): String? = settingsPrefs.getString(KEY_SKIPPED_UPDATE, null)
+    fun setSkippedUpdateVersion(version: String?) =
+        settingsPrefs.edit { putString(KEY_SKIPPED_UPDATE, version) }
+
     /** Raw access used by settings backup/restore. Credentials are never exported. */
     internal fun exportSettings(): Map<String, Any?> = settingsPrefs.all.filterKeys {
         it in EXPORTABLE_SETTINGS_KEYS
@@ -323,6 +336,9 @@ class PreferencesRepository(context: Context) {
         private const val KEY_FAILED_ATTEMPTS = "failed_attempts"
         private const val KEY_LOCKOUT_STREAK = "lockout_streak"
         private const val KEY_LOCKOUT_UNTIL = "lockout_until"
+        private const val KEY_UPDATE_CHECK = "update_check_enabled"
+        private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
+        private const val KEY_SKIPPED_UPDATE = "skipped_update_version"
 
         // Settings that are safe to export. Lock type is excluded because the
         // credential itself is never exported, so restoring it could lock the user out.
@@ -332,7 +348,7 @@ class PreferencesRepository(context: Context) {
             KEY_AUTO_UNLOCK, KEY_SHOW_SYSTEM_APPS, KEY_THEME_MODE, KEY_DYNAMIC_COLOR,
             KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
             KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_MAX_FAILED_ATTEMPTS,
-            KEY_LOCKOUT_DURATION
+            KEY_LOCKOUT_DURATION, KEY_UPDATE_CHECK
         )
 
         private const val DEFAULT_PROTECT_ENABLED = true
