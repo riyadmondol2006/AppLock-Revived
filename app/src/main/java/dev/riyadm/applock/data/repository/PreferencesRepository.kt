@@ -216,6 +216,20 @@ class PreferencesRepository(context: Context) {
     fun setAutoLockNewAppsEnabled(enabled: Boolean) =
         settingsPrefs.edit { putBoolean(KEY_AUTO_LOCK_NEW_APPS, enabled) }
 
+    /** Opt-in: hide notifications posted by locked apps (needs notification access). */
+    fun isHideLockedNotificationsEnabled(): Boolean =
+        settingsPrefs.getBoolean(KEY_HIDE_LOCKED_NOTIFICATIONS, false)
+
+    fun setHideLockedNotificationsEnabled(enabled: Boolean) =
+        settingsPrefs.edit { putBoolean(KEY_HIDE_LOCKED_NOTIFICATIONS, enabled) }
+
+    /** True to drop locked apps' notifications entirely instead of leaving a redacted placeholder. */
+    fun isHideLockedNotificationsMute(): Boolean =
+        settingsPrefs.getBoolean(KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE, false)
+
+    fun setHideLockedNotificationsMute(mute: Boolean) =
+        settingsPrefs.edit { putBoolean(KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE, mute) }
+
     fun isUnlockLogEnabled(): Boolean = settingsPrefs.getBoolean(KEY_UNLOCK_LOG, false)
     fun setUnlockLogEnabled(enabled: Boolean) =
         settingsPrefs.edit { putBoolean(KEY_UNLOCK_LOG, enabled) }
@@ -362,6 +376,8 @@ class PreferencesRepository(context: Context) {
         private const val KEY_BIOMETRIC_AUTO_PROMPT = "biometric_auto_prompt"
         private const val KEY_AUTO_LOCK_NEW_APPS = "auto_lock_new_apps"
         private const val KEY_UNLOCK_LOG = "unlock_log_enabled"
+        private const val KEY_HIDE_LOCKED_NOTIFICATIONS = "hide_locked_notifications"
+        private const val KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE = "hide_locked_notifications_mute"
         private const val KEY_MAX_FAILED_ATTEMPTS = "max_failed_attempts"
         private const val KEY_LOCKOUT_DURATION = "lockout_duration_seconds"
         private const val KEY_FAILED_ATTEMPTS = "failed_attempts"
@@ -376,7 +392,8 @@ class PreferencesRepository(context: Context) {
             KEY_BIOMETRIC_AUTH_ENABLED, KEY_DISABLE_HAPTICS, KEY_USE_MAX_BRIGHTNESS,
             KEY_APPLOCK_ENABLED, KEY_AUTO_UNLOCK, KEY_SHOW_SYSTEM_APPS, KEY_DYNAMIC_COLOR,
             KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
-            KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_UPDATE_CHECK
+            KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_UPDATE_CHECK,
+            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE
         )
 
         // Settings that are safe to export. Lock type is excluded because the
@@ -387,7 +404,8 @@ class PreferencesRepository(context: Context) {
             KEY_AUTO_UNLOCK, KEY_SHOW_SYSTEM_APPS, KEY_THEME_MODE, KEY_DYNAMIC_COLOR,
             KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
             KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_MAX_FAILED_ATTEMPTS,
-            KEY_LOCKOUT_DURATION, KEY_UPDATE_CHECK
+            KEY_LOCKOUT_DURATION, KEY_UPDATE_CHECK,
+            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE
         )
 
         private const val DEFAULT_PROTECT_ENABLED = true

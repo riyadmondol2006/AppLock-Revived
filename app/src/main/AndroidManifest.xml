@@ -140,6 +140,17 @@
                 android:value="accessibility" />
         </service>
 
+        <!-- Hides notifications of locked apps; only bound once the user grants notification access -->
+        <service
+            android:name=".features.notifications.LockedAppNotificationListener"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
         <service
             android:name=".core.update.UpdateCheckJobService"
             android:exported="false"

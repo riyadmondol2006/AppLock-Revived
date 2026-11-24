@@ -289,6 +289,7 @@ fun SettingsScreen(navController: NavController) {
                         onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
                     )
                 }
+                item(key = "hide_notifications", contentType = "section") { HideNotificationsSection() }
                 item(key = "intruder", contentType = "section") {
                     IntruderSection(onViewPhotos = { navController.navigate(Screen.IntruderPhotos.route) })
                 }

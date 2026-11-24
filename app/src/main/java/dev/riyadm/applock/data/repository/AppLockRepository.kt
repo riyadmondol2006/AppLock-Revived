@@ -124,6 +124,19 @@ class AppLockRepository(private val context: Context) {
     fun setAmoledBlackEnabled(enabled: Boolean) =
         preferencesRepository.setAmoledBlackEnabled(enabled)
 
+    // Hide notifications of locked apps
+    fun isHideLockedNotificationsEnabled(): Boolean =
+        preferencesRepository.isHideLockedNotificationsEnabled()
+
+    fun setHideLockedNotificationsEnabled(enabled: Boolean) =
+        preferencesRepository.setHideLockedNotificationsEnabled(enabled)
+
+    fun isHideLockedNotificationsMute(): Boolean =
+        preferencesRepository.isHideLockedNotificationsMute()
+
+    fun setHideLockedNotificationsMute(mute: Boolean) =
+        preferencesRepository.setHideLockedNotificationsMute(mute)
+
     // Lock screen behaviour
     fun isScrambleKeypadEnabled(): Boolean = preferencesRepository.isScrambleKeypadEnabled()
     fun setScrambleKeypadEnabled(enabled: Boolean) =
