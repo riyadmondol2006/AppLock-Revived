@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_notifications_section_title">Notifications</string>
+    <string name="hide_notifications_footer">Needs notification access. Hidden notifications can\'t be brought back, and calls, media, navigation and alarms are never touched. Apps stay readable while their unlock duration is running.</string>
+    <string name="hide_notifications_switch_title">Hide notifications of locked apps</string>
+    <string name="hide_notifications_switch_desc">Keeps what locked apps send out of the notification shade and off the lock screen</string>
+    <string name="hide_notifications_switch_desc_no_access">Notification access is off. Tap to grant it again.</string>
+    <string name="hide_notifications_switch_desc_no_notifications">App Lock Revived\'s own notifications are turned off, so hidden notifications are removed without a placeholder</string>
+
+    <string name="hide_notifications_mode_title">How to hide them</string>
+    <string name="hide_notifications_mode_desc">Content leaves a \"Notification hidden\" placeholder that opens the app. Completely drops the notification.</string>
+    <string name="hide_notifications_mode_content">Hide content</string>
+    <string name="hide_notifications_mode_mute">Hide completely</string>
+
+    <string name="hide_notifications_dialog_title">Allow notification access</string>
+    <string name="hide_notifications_dialog_text">To hide notifications of locked apps, App Lock Revived has to see them when they arrive. In the next screen, turn on \"%1$s\".</string>
+    <string name="hide_notifications_dialog_privacy">Notifications are only checked on this device. Their text is never stored, logged or sent anywhere.</string>
+    <string name="hide_notifications_dialog_restricted">If the switch is greyed out or Android says \"Restricted setting\": open App info for %1$s, tap the three dots (top right), choose \"Allow restricted settings\" and try again.</string>
+    <string name="hide_notifications_dialog_continue">Open settings</string>
+    <string name="hide_notifications_dialog_not_now">Not now</string>
+
+    <string name="hide_notifications_channel_name">Hidden notifications</string>
+    <string name="hide_notifications_channel_description">Shown in place of notifications from locked apps</string>
+    <string name="hide_notifications_placeholder_title">Notification hidden — %1$s</string>
+    <string name="hide_notifications_placeholder_title_public">Notification hidden</string>
+    <string name="hide_notifications_placeholder_text">Tap to open the app and unlock it</string>
+</resources>

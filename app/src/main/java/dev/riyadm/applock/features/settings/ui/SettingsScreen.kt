@@ -220,6 +220,7 @@ private fun LazyListScope.settingsCategoryItems(category: SettingsCategory, c: S
                     onViewHistory = { c.navController.navigate(Screen.UnlockHistory.route) }
                 )
             }
+            item(key = "hide_notifications", contentType = "section") { HideNotificationsSection() }
             item(key = "intruder", contentType = "section") {
                 IntruderSection(onViewPhotos = { c.navController.navigate(Screen.IntruderPhotos.route) })
             }
