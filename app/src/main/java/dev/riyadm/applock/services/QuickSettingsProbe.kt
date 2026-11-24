@@ -78,23 +78,33 @@ internal class QuickSettingsProbe(private val context: Context) {
         return false
     }
 
+    /**
+     * Walks the SystemUI window by hand. On Android 16+ the shade is a Compose scene and
+     * findAccessibilityNodeInfosByViewId / ByText come back empty for it even though the nodes
+     * are there, so the search is a bounded depth-first walk over the visible nodes.
+     */
     private fun systemUiShowsTiles(root: AccessibilityNodeInfo): Boolean {
-        for (id in SystemComponents.QS_PANEL_FULL_VIEW_IDS) {
-            if (root.findAccessibilityNodeInfosByViewId(id).any { it.isVisibleToUser }) {
+        var budget = MAX_NODES
+        val stack = ArrayDeque<AccessibilityNodeInfo>()
+        stack.add(root)
+        while (stack.isNotEmpty() && budget-- > 0) {
+            val node = stack.removeLast()
+            if (!node.isVisibleToUser) continue
+            val id = node.viewIdResourceName
+            if (id != null && id in SystemComponents.QS_PANEL_FULL_VIEW_IDS) {
                 LogUtils.d(TAG, "Quick settings tiles visible (view id $id)")
                 return true
             }
-        }
-        for (label in labels) {
-            val match = root.findAccessibilityNodeInfosByText(label).firstOrNull { node ->
-                node.isVisibleToUser && node.isClickable &&
-                        (SystemComponents.startsWithLabel(node.contentDescription, labels) ||
-                                SystemComponents.startsWithLabel(node.text, labels))
+            if (SystemComponents.startsWithLabel(node.contentDescription, labels) ||
+                SystemComponents.startsWithLabel(node.text, labels)
+            ) {
+                // A bare label also appears in the status bar and notifications; only a tile counts.
+                if (node.isClickable || node.parent?.isClickable == true) {
+                    LogUtils.d(TAG, "Quick settings tile visible ('${node.contentDescription ?: node.text}')")
+                    return true
+                }
             }
-            if (match != null) {
-                LogUtils.d(TAG, "Quick settings tile visible ('$label')")
-                return true
-            }
+            for (i in node.childCount - 1 downTo 0) node.getChild(i)?.let(stack::add)
         }
         return false
     }
@@ -127,6 +137,7 @@ internal class QuickSettingsProbe(private val context: Context) {
     private companion object {
         const val TAG = "QuickSettingsProbe"
         const val CACHE_MS = 80L
+        const val MAX_NODES = 600
         const val LABEL_CACHE_MS = 10 * 60_000L
     }
 }

@@ -15,7 +15,7 @@
     <!-- Profiles screen -->
     <string name="profiles_title">Lock profiles</string>
     <string name="profiles_subtitle">Active: %1$s</string>
-    <string name="profiles_intro">Each profile is its own list of locked apps. Only the active profile is enforced, and switching always asks for your credential first.</string>
+    <string name="profiles_intro">Each profile is its own list of locked apps. Only the active profile is enforced, and switching by hand asks for your credential first (automatic switching by network, if you turn it on, does not).</string>
     <string name="profiles_section_profiles">Profiles</string>
     <string name="profiles_active_badge">Active</string>
     <plurals name="profiles_app_count">

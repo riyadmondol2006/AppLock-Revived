@@ -17,6 +17,8 @@ class SystemComponentsTest {
         listOf(
             "com.google.android.providers.media.module",
             "com.android.providers.media.module",
+            "com.google.android.photopicker",
+            "com.android.photopicker",
             "com.google.android.documentsui",
             "com.android.documentsui",
             "com.sec.android.app.myfiles",

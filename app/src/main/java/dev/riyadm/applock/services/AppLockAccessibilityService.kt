@@ -203,7 +203,8 @@ class AppLockAccessibilityService : AccessibilityService() {
                         AccessibilityEvent.TYPE_WINDOWS_CHANGED
                 feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
                 packageNames = null
-                flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+                flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
+                        AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
             }
 
             instance = this
@@ -548,7 +549,17 @@ class AppLockAccessibilityService : AccessibilityService() {
                 }
             }
 
-            if (!snapshot.complete) return
+            if (!snapshot.complete) {
+                // With the shade fully open SystemUI can be the only window listed, which never
+                // counts as complete. The quick settings guard still has to come up then.
+                val qs = SystemComponents.QUICK_SETTINGS_KEY
+                if (qs in snapshot.floatingPackages && qs !in exitedPackages &&
+                    overlayPackage == null && !AppLockManager.isBiometricAuthInProgress()
+                ) {
+                    maybeLock(qs)
+                }
+                return
+            }
 
             // Once the tiles are gone, closing the quick settings lock must not keep suppressing the next one.
             if (SystemComponents.QUICK_SETTINGS_KEY !in snapshot.floatingPackages) {

@@ -37,6 +37,9 @@ object SystemComponents {
     val PICKER_PACKAGES: Set<String> = setOf(
         "com.google.android.providers.media.module",
         "com.android.providers.media.module",
+        // Android 16+/17 moved the Photo Picker out of MediaProvider into its own package.
+        "com.google.android.photopicker",
+        "com.android.photopicker",
         "com.google.android.documentsui",
         "com.android.documentsui",
         "com.sec.android.app.myfiles",
