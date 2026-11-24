@@ -4,6 +4,8 @@ import android.app.ActivityManager
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import dev.riyadm.applock.core.systemlock.HostedPickerTracker
+import dev.riyadm.applock.core.systemlock.SystemComponents
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.services.AppLockAccessibilityService.BiometricState
 import java.util.concurrent.ConcurrentHashMap
@@ -125,6 +127,19 @@ object AppLockManager {
         if (packageName.isEmpty()) return
         unlockedApps.add(packageName)
         temporarilyUnlockedApp = packageName
+    }
+
+    /**
+     * True when [packageName] is a system picker that AppLock itself just opened (backup import /
+     * export). It is let through and counted as unlocked for as long as it stays on screen, so a
+     * file pick started inside AppLock is never interrupted by AppLock's own lock screen.
+     */
+    fun allowHostedPicker(packageName: String): Boolean {
+        if (!SystemComponents.isPickerPackage(packageName)) return false
+        if (!HostedPickerTracker.isHosted(System.currentTimeMillis())) return false
+        markUnlocked(packageName)
+        LogUtils.d(TAG, "Not locking $packageName: it was opened by AppLock itself")
+        return true
     }
 
     fun temporarilyUnlockAppWithBiometrics(packageName: String) {

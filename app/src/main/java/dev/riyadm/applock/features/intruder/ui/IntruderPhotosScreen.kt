@@ -113,6 +113,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.systemlock.systemComponentLabel
 import dev.riyadm.applock.features.applist.ui.AppIconCache
 import dev.riyadm.applock.features.intruder.data.IntruderPhoto
 import dev.riyadm.applock.features.intruder.data.IntruderPhotoStore
@@ -785,7 +786,7 @@ private fun resolveApp(context: Context, packageName: String): AppDisplay = try 
     val info = context.packageManager.getApplicationInfo(packageName, 0)
     AppDisplay(AppIconCache.getLabel(context, info), AppIconCache.getIcon(context, info))
 } catch (_: PackageManager.NameNotFoundException) {
-    AppDisplay(packageName, null)
+    AppDisplay(context.systemComponentLabel(packageName) ?: packageName, null)
 } catch (_: Exception) {
     AppDisplay(packageName, null)
 }

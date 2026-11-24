@@ -12,6 +12,7 @@ import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.database.ContentObserver
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -25,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.broadcast.DeviceAdmin
+import dev.riyadm.applock.core.systemlock.SystemComponents
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.utils.LogUtils
 import dev.riyadm.applock.core.utils.appLockRepository
@@ -64,6 +66,20 @@ class AppLockAccessibilityService : AccessibilityService() {
     private var receiversRegistered = false
     private var observerRegistered = false
 
+    /** Spots the quick settings tiles / connectivity panel for "lock system components". */
+    private val quickSettingsProbe by lazy { QuickSettingsProbe(this) }
+    private var quickSettingsScanPending = false
+    private val quickSettingsScanRunnable = Runnable {
+        quickSettingsScanPending = false
+        scanVisibleWindows()
+    }
+
+    /** Lock settings changed (e.g. the quick settings guard was switched): reconcile what is on screen. */
+    private val configListener: () -> Unit = {
+        quickSettingsProbe.invalidate()
+        scheduleWindowScan()
+    }
+
     enum class BiometricState {
         IDLE, AUTH_STARTED
     }
@@ -79,6 +95,7 @@ class AppLockAccessibilityService : AccessibilityService() {
         private const val EXIT_SUPPRESSION_MS = 1_000L
         private const val EXIT_VERIFY_DELAY_MS = 1_200L
         private const val LAUNCHER_CACHE_MS = 60_000L
+        private const val QUICK_SETTINGS_SCAN_DELAY_MS = 120L
 
         @Volatile
         var isServiceRunning = false
@@ -195,6 +212,7 @@ class AppLockAccessibilityService : AccessibilityService() {
             registerImeObserver()
             NewAppAutoLocker.register(this, this)
             TrustedNetworkMonitor.register(this, this)
+            config.addListener(configListener)
 
             Log.d(TAG, "Accessibility service connected")
             appLockRepository.setActiveBackend(BackendImplementation.ACCESSIBILITY)
@@ -234,6 +252,26 @@ class AppLockAccessibilityService : AccessibilityService() {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> onWindowStateChanged(event, packageName)
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> onWindowContentChanged(event, packageName)
         }
+
+        if (config.lockQuickSettings) onQuickSettingsCandidateEvent(event, packageName)
+    }
+
+    /**
+     * The quick settings tiles live in SystemUI's shade, and the connectivity panels in a Settings
+     * activity, so only their events can mean the panel appeared or went away. Settings is busy,
+     * so it is only watched for new windows. Scans are throttled, not debounced: a shade being
+     * pulled down streams events, and the lock has to come up while it is still moving.
+     */
+    private fun onQuickSettingsCandidateEvent(event: AccessibilityEvent, packageName: String) {
+        val relevant = when (packageName) {
+            SystemComponents.SYSTEMUI_PACKAGE -> true
+            SystemComponents.SETTINGS_PACKAGE ->
+                event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            else -> false
+        }
+        if (!relevant || quickSettingsScanPending) return
+        quickSettingsScanPending = true
+        mainHandler.postDelayed(quickSettingsScanRunnable, QUICK_SETTINGS_SCAN_DELAY_MS)
     }
 
     private fun onWindowStateChanged(event: AccessibilityEvent, packageName: String) {
@@ -328,10 +366,12 @@ class AppLockAccessibilityService : AccessibilityService() {
             val snapshot = visibleWindows()
             if (snapshot.complete) {
                 if (packageName !in triggerExcluded) {
-                    unlocked.filter { it !in snapshot.appPackages }
+                    unlocked.filter { it !in snapshot.appPackages && !isQuickSettingsOnScreen(it, snapshot) }
                         .forEach(AppLockManager::revokeTemporaryUnlock)
                 }
-                if (overlay != null && overlay != packageName && overlay !in snapshot.appPackages) {
+                if (overlay != null && overlay != packageName && overlay !in snapshot.appPackages &&
+                    !isQuickSettingsOnScreen(overlay, snapshot)
+                ) {
                     dismissOverlay()
                 }
             }
@@ -347,6 +387,7 @@ class AppLockAccessibilityService : AccessibilityService() {
     /** Shows the lock overlay for [packageName] if it is locked and not currently unlocked. */
     private fun maybeLock(packageName: String): Boolean {
         if (!config.isLocked(packageName)) return false
+        if (AppLockManager.allowHostedPicker(packageName)) return false
         if (AppLockManager.isBiometricAuthInProgress()) return false
         if (AppLockManager.isAppTemporarilyUnlocked(packageName)) return false
         if (AppLockManager.isWithinUnlockDuration(
@@ -412,7 +453,11 @@ class AppLockAccessibilityService : AccessibilityService() {
                 if (overlayPackage == packageName) overlayPackage = null
                 exitedPackages.add(packageName)
                 exitSuppressedUntil = SystemClock.uptimeMillis() + EXIT_SUPPRESSION_MS
-                performGlobalAction(GLOBAL_ACTION_HOME)
+                if (packageName == SystemComponents.QUICK_SETTINGS_KEY) {
+                    leaveQuickSettings()
+                } else {
+                    performGlobalAction(GLOBAL_ACTION_HOME)
+                }
                 mainHandler.postDelayed({
                     AppLockManager.isLockScreenShown.set(false)
                     verifyLeftAfterExit(packageName)
@@ -424,6 +469,14 @@ class AppLockAccessibilityService : AccessibilityService() {
     /** If going home after "close" didn't work, the app is still focused: lock it again. */
     private fun verifyLeftAfterExit(packageName: String) {
         try {
+            if (packageName == SystemComponents.QUICK_SETTINGS_KEY) {
+                quickSettingsProbe.invalidate()
+                if (SystemComponents.QUICK_SETTINGS_KEY in visibleWindows().floatingPackages) {
+                    exitedPackages.remove(packageName)
+                    maybeLock(packageName)
+                }
+                return
+            }
             val activePackage = rootInActiveWindow?.packageName?.toString()
             if (activePackage == packageName) {
                 exitedPackages.remove(packageName)
@@ -433,6 +486,24 @@ class AppLockAccessibilityService : AccessibilityService() {
             logError("Error verifying exit", e)
         }
     }
+
+    /**
+     * "Close" on the quick settings lock: collapse the shade (API 31+ can do that without a key
+     * event, which the overlay would swallow) or, for a Settings connectivity panel and older
+     * releases, go home, which closes both.
+     */
+    @SuppressLint("InlinedApi")
+    private fun leaveQuickSettings() {
+        if (!quickSettingsProbe.settingsPanelShown && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            performGlobalAction(GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
+        } else {
+            performGlobalAction(GLOBAL_ACTION_HOME)
+        }
+    }
+
+    private fun isQuickSettingsOnScreen(packageName: String, snapshot: WindowSnapshot): Boolean =
+        packageName == SystemComponents.QUICK_SETTINGS_KEY &&
+                packageName in snapshot.floatingPackages
 
     private fun dismissOverlay() {
         if (overlayPackage == null) return
@@ -479,6 +550,11 @@ class AppLockAccessibilityService : AccessibilityService() {
 
             if (!snapshot.complete) return
 
+            // Once the tiles are gone, closing the quick settings lock must not keep suppressing the next one.
+            if (SystemComponents.QUICK_SETTINGS_KEY !in snapshot.floatingPackages) {
+                exitedPackages.remove(SystemComponents.QUICK_SETTINGS_KEY)
+            }
+
             val foreground = lastForegroundPackage
             val inExcludedApp = foreground in appLockRepository.getTriggerExcludedApps() &&
                     foreground in snapshot.appPackages
@@ -498,9 +574,18 @@ class AppLockAccessibilityService : AccessibilityService() {
             }
 
             if (overlayPackage == null && !AppLockManager.isBiometricAuthInProgress()) {
+                var locked = false
                 for (pkg in snapshot.appPackages) {
                     if (pkg == packageName || isIgnoredPackage(pkg) || pkg in exitedPackages) continue
-                    if (maybeLock(pkg)) break
+                    if (maybeLock(pkg)) {
+                        locked = true
+                        break
+                    }
+                }
+                // Nothing else to protect on screen: guard the quick settings tiles, if they are up.
+                val qsKey = SystemComponents.QUICK_SETTINGS_KEY
+                if (!locked && qsKey in snapshot.floatingPackages && qsKey !in exitedPackages) {
+                    maybeLock(qsKey)
                 }
             } else if (overlayPackage != null) {
                 // Re-show after a cancelled biometric prompt; no-op while it is already visible.
@@ -523,7 +608,8 @@ class AppLockAccessibilityService : AccessibilityService() {
             val floating = mutableSetOf<String>()
             var complete = true
             var sawApplication = false
-            for (window in windows) {
+            val windowList = windows
+            for (window in windowList) {
                 when (window.type) {
                     AccessibilityWindowInfo.TYPE_APPLICATION -> {
                         sawApplication = true
@@ -539,6 +625,13 @@ class AppLockAccessibilityService : AccessibilityService() {
                         window.root?.packageName?.toString()?.let(floating::add)
                     }
                 }
+            }
+            if (config.isSystemComponentLocked(SystemComponents.QUICK_SETTINGS_KEY)) {
+                // The quick settings guard is not a package: a pseudo package stands in for it
+                // so that the unlock and overlay bookkeeping works the same way as for apps.
+                if (quickSettingsProbe.isShown(windowList)) floating.add(SystemComponents.QUICK_SETTINGS_KEY)
+            } else {
+                quickSettingsProbe.invalidate()
             }
             WindowSnapshot(appPackages, floating, complete && sawApplication)
         } catch (e: Exception) {
@@ -765,6 +858,7 @@ class AppLockAccessibilityService : AccessibilityService() {
             }
             NewAppAutoLocker.unregister(this, this)
             TrustedNetworkMonitor.unregister(this)
+            config.removeListener(configListener)
 
             AppLockManager.isLockScreenShown.set(false)
         } catch (e: Exception) {

@@ -280,6 +280,7 @@ fun SettingsScreen(navController: NavController) {
                 item(key = "protection", contentType = "section") {
                     ProtectionSection(state = state, onAntiUninstallChanged = ::onAntiUninstallChanged)
                 }
+                item(key = "system_components", contentType = "section") { SystemComponentsSection(repository) }
                 item(key = "trusted", contentType = "section") {
                     TrustedNetworksSection(onOpenTrustedNetworks = { navController.navigate(Screen.TrustedNetworks.route) })
                 }

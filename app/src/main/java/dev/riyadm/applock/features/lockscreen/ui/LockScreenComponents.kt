@@ -93,6 +93,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.graphics.shapes.Morph
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.systemlock.systemComponentLabel
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.PreferencesRepository
@@ -705,7 +706,8 @@ internal fun homeIntent(): Intent = Intent(Intent.ACTION_MAIN)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
 internal fun Context.loadAppLabel(packageName: String): String = try {
-    packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0)).toString()
+    systemComponentLabel(packageName)
+        ?: packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0)).toString()
 } catch (_: Exception) {
     getString(R.string.default_app_name)
 }

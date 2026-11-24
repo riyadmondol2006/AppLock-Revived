@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Lock system components -->
+    <string name="system_lock_section_title">Lock system components</string>
+
+    <string name="system_lock_pickers_title">Photo and file picker</string>
+    <string name="system_lock_pickers_desc">Ask for authentication when any app opens the system photo picker or file picker. This stops someone from reaching your photos and files by attaching a picture or document in another app.</string>
+
+    <string name="system_lock_quick_settings_title">Quick settings toggles</string>
+    <string name="system_lock_quick_settings_desc">Ask for authentication while the Wi-Fi / Internet, Bluetooth, mobile data, airplane mode, hotspot, NFC and location tiles are shown in Quick Settings, so they can\'t be switched without unlocking.</string>
+    <string name="system_lock_quick_settings_desc_unavailable">Needs the Accessibility detection method: the other methods can\'t see the Quick Settings panel. Change it under Detection method below.</string>
+
+    <string name="system_lock_footer">Photo and file picker: locks the system pickers (Photo Picker, Files / DocumentsUI, Samsung My Files). After you unlock, the picker is still there and the app that opened it carries on. Backup import and export inside App Lock are never locked. A picker built into an app, such as a gallery app\'s own picker or the embedded photo picker on Android 14+, is not a system component: lock that app in the app list instead.\n\nQuick settings: Android doesn\'t let an app block a tap on another app\'s tile. While the tiles are on screen, a lock screen covers the whole panel, notifications included, until you unlock. It also covers the Settings Internet and Wi-Fi pop-up panels. Opening the full Settings app is not covered; lock the Settings app for that. It doesn\'t apply on the device lock screen, and there is no Sync tile on most devices.</string>
+
+    <!-- Name shown on the lock screen and in the unlock history for the quick settings guard -->
+    <string name="system_lock_quick_settings_label">Quick settings</string>
+</resources>
