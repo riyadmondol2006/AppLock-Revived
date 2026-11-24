@@ -81,6 +81,7 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.systemlock.systemComponentLabel
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.UnlockLogRepository
 import dev.riyadm.applock.features.applist.ui.AppIconCache
@@ -536,7 +537,7 @@ private fun resolveApp(context: Context, packageName: String): AppDisplay = try 
     val info = context.packageManager.getApplicationInfo(packageName, 0)
     AppDisplay(AppIconCache.getLabel(context, info), AppIconCache.getIcon(context, info))
 } catch (_: PackageManager.NameNotFoundException) {
-    AppDisplay(packageName, null)
+    AppDisplay(context.systemComponentLabel(packageName) ?: packageName, null)
 } catch (_: Exception) {
     AppDisplay(packageName, null)
 }

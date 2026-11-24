@@ -204,6 +204,7 @@ private fun LazyListScope.settingsCategoryItems(category: SettingsCategory, c: S
             item(key = "protection", contentType = "section") {
                 ProtectionSection(state = c.state, onAntiUninstallChanged = c.onAntiUninstallChanged)
             }
+            item(key = "system_components", contentType = "section") { SystemComponentsSection(c.repository) }
             item(key = "hardening", contentType = "section") { HardeningSection(c.state.unlockLog) }
         }
 

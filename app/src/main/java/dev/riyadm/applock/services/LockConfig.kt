@@ -2,6 +2,7 @@ package dev.riyadm.applock.services
 
 import android.content.Context
 import android.content.SharedPreferences
+import dev.riyadm.applock.core.systemlock.SystemComponents
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.AppLockRepository
 import dev.riyadm.applock.data.repository.BackendImplementation
@@ -17,6 +18,9 @@ import java.util.concurrent.CopyOnWriteArraySet
  * and allocation-free; callers must not modify it. Protection, backend and anti-uninstall are
  * cached and refreshed by a change listener, which also tells the polling backends to resume or
  * pause. All writes happen in this process, so the listener sees every change.
+ *
+ * "Locked" also covers the system components the user opted into (photo / file pickers and the
+ * quick settings panel, see [SystemComponents]); they are global, not part of any lock profile.
  */
 internal class LockConfig(context: Context, private val repository: AppLockRepository) {
 
@@ -37,6 +41,14 @@ internal class LockConfig(context: Context, private val repository: AppLockRepos
     var antiUninstallEnabled: Boolean = false
         private set
 
+    @Volatile
+    var lockSystemPickers: Boolean = false
+        private set
+
+    @Volatile
+    var lockQuickSettings: Boolean = false
+        private set
+
     private val listeners = CopyOnWriteArraySet<() -> Unit>()
 
     // Held as a field: SharedPreferences only keeps weak references to its listeners.
@@ -55,9 +67,22 @@ internal class LockConfig(context: Context, private val repository: AppLockRepos
     fun lockedApps(): Set<String> =
         lockedAppsPrefs.getStringSet(LockedAppsRepository.KEY_LOCKED_APPS, null) ?: emptySet()
 
-    fun isLocked(packageName: String): Boolean = packageName in lockedApps()
+    fun isLocked(packageName: String): Boolean =
+        packageName in lockedApps() || isSystemComponentLocked(packageName)
 
-    fun hasLockedApps(): Boolean = lockedApps().isNotEmpty()
+    /** True when [packageName] is a system component the user chose to lock (see [SystemComponents]). */
+    fun isSystemComponentLocked(packageName: String): Boolean = SystemComponents.isGuarded(
+        packageName,
+        lockPickers = lockSystemPickers,
+        lockQuickSettings = lockQuickSettings,
+        accessibilityBackend = backend == BackendImplementation.ACCESSIBILITY
+    )
+
+    /**
+     * Whether polling backends have anything to watch for. The quick settings guard is not
+     * counted: only the accessibility backend can see it, and that one doesn't poll.
+     */
+    fun hasLockedApps(): Boolean = lockSystemPickers || lockedApps().isNotEmpty()
 
     /** [listener] runs on the main thread after any lock setting changed. */
     fun addListener(listener: () -> Unit) {
@@ -72,6 +97,8 @@ internal class LockConfig(context: Context, private val repository: AppLockRepos
         protectEnabled = repository.isProtectEnabled()
         backend = repository.getBackendImplementation()
         antiUninstallEnabled = repository.isAntiUninstallEnabled()
+        lockSystemPickers = repository.isLockSystemPickersEnabled()
+        lockQuickSettings = repository.isLockQuickSettingsEnabled()
     }
 
     companion object {

@@ -307,7 +307,6 @@ class UsageLockService : Service() {
         val time = System.currentTimeMillis()
         val events = usageStatsManager.queryEvents(time - QUERY_WINDOW_MS, time)
         val event = usageEvent
-        val lockedApps = config.lockedApps()
         var recentPackage: String? = null
         var recentTime = 0L
 
@@ -328,7 +327,7 @@ class UsageLockService : Service() {
                 continue
             }
 
-            if (recentTime == event.timeStamp && recentPackage != null && recentPackage in lockedApps) {
+            if (recentTime == event.timeStamp && recentPackage != null && config.isLocked(recentPackage)) {
                 continue
             }
 
@@ -340,6 +339,7 @@ class UsageLockService : Service() {
 
     private fun checkAndLockApp(packageName: String, triggeringPackage: String, currentTime: Long) {
         if (!config.isLocked(packageName)) return
+        if (AppLockManager.allowHostedPicker(packageName)) return
         if (TrustedNetworkMonitor.isTrusted() && !appLockRepository.policyFor(packageName).requireBoth) return
 
         if (AppLockManager.isWithinUnlockDuration(

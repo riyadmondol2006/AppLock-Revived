@@ -21,6 +21,8 @@ import androidx.navigation.compose.rememberNavController
 import dev.riyadm.applock.core.navigation.AppNavHost
 import dev.riyadm.applock.core.navigation.NavigationManager
 import dev.riyadm.applock.core.navigation.Screen
+import dev.riyadm.applock.core.systemlock.HostedPickerTracker
+import dev.riyadm.applock.core.systemlock.SystemComponents
 import dev.riyadm.applock.core.update.UpdateChecker
 import dev.riyadm.applock.core.update.UpdateInfo
 import dev.riyadm.applock.core.update.UpdateNotifier
@@ -63,6 +65,19 @@ class MainActivity : FragmentActivity() {
                 OpenProfilesHost(navController)
             }
         }
+    }
+
+    /**
+     * Every file / photo pick AppLock starts (backup import and export) goes through here. The
+     * system picker that opens is hosted by AppLock, so "lock system components" must let it
+     * through instead of asking for the PIN in the middle of the user's own backup.
+     */
+    @Suppress("DEPRECATION")
+    override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) {
+        if (SystemComponents.isPickerAction(intent.action)) {
+            HostedPickerTracker.markLaunched(System.currentTimeMillis())
+        }
+        super.startActivityForResult(intent, requestCode, options)
     }
 
     override fun onNewIntent(intent: Intent) {

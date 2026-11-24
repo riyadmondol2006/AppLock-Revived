@@ -1,6 +1,7 @@
 package dev.riyadm.applock.data.repository
 
 import android.content.Context
+import dev.riyadm.applock.core.systemlock.SystemComponents
 import dev.riyadm.applock.core.tile.ProfileTileService
 import dev.riyadm.applock.core.update.UpdateCheckJobService
 import dev.riyadm.applock.data.manager.BackendServiceManager
@@ -151,6 +152,20 @@ class AppLockRepository(private val context: Context) {
     fun isAutoLockNewAppsEnabled(): Boolean = preferencesRepository.isAutoLockNewAppsEnabled()
     fun setAutoLockNewAppsEnabled(enabled: Boolean) =
         preferencesRepository.setAutoLockNewAppsEnabled(enabled)
+
+    // System components (photo / file pickers, quick settings)
+    fun isLockSystemPickersEnabled(): Boolean = preferencesRepository.isLockSystemPickersEnabled()
+    fun setLockSystemPickersEnabled(enabled: Boolean) {
+        preferencesRepository.setLockSystemPickersEnabled(enabled)
+        // A picker unlocked earlier must not stay unlocked for a policy that just got stricter.
+        if (enabled) SystemComponents.PICKER_PACKAGES.forEach(AppLockManager::clearAppUnlockState)
+    }
+
+    fun isLockQuickSettingsEnabled(): Boolean = preferencesRepository.isLockQuickSettingsEnabled()
+    fun setLockQuickSettingsEnabled(enabled: Boolean) {
+        preferencesRepository.setLockQuickSettingsEnabled(enabled)
+        AppLockManager.clearAppUnlockState(SystemComponents.QUICK_SETTINGS_KEY)
+    }
 
     fun isUnlockLogEnabled(): Boolean = preferencesRepository.isUnlockLogEnabled()
     fun setUnlockLogEnabled(enabled: Boolean) {

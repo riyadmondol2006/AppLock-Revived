@@ -229,6 +229,14 @@ class PreferencesRepository(context: Context) {
 
     fun setHideLockedNotificationsMute(mute: Boolean) =
         settingsPrefs.edit { putBoolean(KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE, mute) }
+    // System components: locked on their own, without being picked in the app list
+    fun isLockSystemPickersEnabled(): Boolean = settingsPrefs.getBoolean(KEY_LOCK_SYSTEM_PICKERS, false)
+    fun setLockSystemPickersEnabled(enabled: Boolean) =
+        settingsPrefs.edit { putBoolean(KEY_LOCK_SYSTEM_PICKERS, enabled) }
+
+    fun isLockQuickSettingsEnabled(): Boolean = settingsPrefs.getBoolean(KEY_LOCK_QUICK_SETTINGS, false)
+    fun setLockQuickSettingsEnabled(enabled: Boolean) =
+        settingsPrefs.edit { putBoolean(KEY_LOCK_QUICK_SETTINGS, enabled) }
 
     fun isUnlockLogEnabled(): Boolean = settingsPrefs.getBoolean(KEY_UNLOCK_LOG, false)
     fun setUnlockLogEnabled(enabled: Boolean) =
@@ -378,6 +386,10 @@ class PreferencesRepository(context: Context) {
         private const val KEY_UNLOCK_LOG = "unlock_log_enabled"
         private const val KEY_HIDE_LOCKED_NOTIFICATIONS = "hide_locked_notifications"
         private const val KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE = "hide_locked_notifications_mute"
+
+        /** Keys also read directly by [dev.riyadm.applock.services.LockConfig]. */
+        internal const val KEY_LOCK_SYSTEM_PICKERS = "lock_system_pickers"
+        internal const val KEY_LOCK_QUICK_SETTINGS = "lock_quick_settings"
         private const val KEY_MAX_FAILED_ATTEMPTS = "max_failed_attempts"
         private const val KEY_LOCKOUT_DURATION = "lockout_duration_seconds"
         private const val KEY_FAILED_ATTEMPTS = "failed_attempts"
@@ -393,7 +405,8 @@ class PreferencesRepository(context: Context) {
             KEY_APPLOCK_ENABLED, KEY_AUTO_UNLOCK, KEY_SHOW_SYSTEM_APPS, KEY_DYNAMIC_COLOR,
             KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
             KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_UPDATE_CHECK,
-            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE
+            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE,
+            KEY_LOCK_SYSTEM_PICKERS, KEY_LOCK_QUICK_SETTINGS
         )
 
         // Settings that are safe to export. Lock type is excluded because the
@@ -405,7 +418,8 @@ class PreferencesRepository(context: Context) {
             KEY_AMOLED_BLACK, KEY_SCRAMBLE_KEYPAD, KEY_BIOMETRIC_AUTO_PROMPT,
             KEY_AUTO_LOCK_NEW_APPS, KEY_UNLOCK_LOG, KEY_MAX_FAILED_ATTEMPTS,
             KEY_LOCKOUT_DURATION, KEY_UPDATE_CHECK,
-            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE
+            KEY_HIDE_LOCKED_NOTIFICATIONS, KEY_HIDE_LOCKED_NOTIFICATIONS_MUTE,
+            KEY_LOCK_SYSTEM_PICKERS, KEY_LOCK_QUICK_SETTINGS
         )
 
         private const val DEFAULT_PROTECT_ENABLED = true
