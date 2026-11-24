@@ -1,6 +1,7 @@
 package dev.riyadm.applock.features.profiles.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Lightbulb
+import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.material3.AlertDialog
@@ -84,6 +86,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.navigation.Screen
+import dev.riyadm.applock.core.trusted.NetworkProfileSettings
 import dev.riyadm.applock.core.ui.MorphingIconBadge
 import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.data.repository.LockProfile
@@ -209,6 +213,13 @@ fun ProfilesScreen(navController: NavController) {
             }
             item(key = "hint", contentType = "hint") {
                 GuestHint(Modifier.padding(top = 20.dp))
+            }
+            item(key = "network_hint", contentType = "hint") {
+                NetworkProfilesHint(
+                    enabled = remember { NetworkProfileSettings(context).isEnabled() },
+                    onClick = { navController.navigate(Screen.TrustedNetworks.route) },
+                    modifier = Modifier.padding(top = 12.dp)
+                )
             }
         }
     }
@@ -396,6 +407,36 @@ private fun ActiveBadge() {
             style = MaterialTheme.typography.labelMediumEmphasized,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
+    }
+}
+
+@Composable
+private fun NetworkProfilesHint(enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = MaterialTheme.shapes.large,
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Icon(
+                Icons.Rounded.SwapHoriz,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+            Text(
+                text = stringResource(
+                    if (enabled) R.string.network_profiles_profiles_hint_on
+                    else R.string.network_profiles_profiles_hint_off
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
 

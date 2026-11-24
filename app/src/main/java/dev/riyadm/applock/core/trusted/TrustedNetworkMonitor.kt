@@ -77,6 +77,10 @@ object TrustedNetworkMonitor {
         /** The connected network, when its name can be read. */
         val wifi: CurrentWifi? = null,
         val problem: Problem? = null,
+        /** Every readable connected Wi-Fi network, for network profiles. */
+        val connections: List<CurrentWifi> = emptyList(),
+        /** True when on Wi-Fi but at least one connection's name couldn't be read. */
+        val wifiUnreadable: Boolean = false,
         /** The saved network the connection matches, if any. */
         val matchedNetwork: TrustedNetwork? = null,
         /** True while locking is actually relaxed (feature on, lock service running, match). */
@@ -97,6 +101,8 @@ object TrustedNetworkMonitor {
 
     @Volatile
     private var settings: TrustedNetworkSettings? = null
+
+    private var profileSettings: NetworkProfileSettings? = null
 
     private var callback: ConnectivityManager.NetworkCallback? = null
     private var locationReceiver: BroadcastReceiver? = null
@@ -130,7 +136,9 @@ object TrustedNetworkMonitor {
     private var keyguardSeenUnlocked = false
 
     private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (key == TrustedNetworkSettings.KEY_ENABLED || key == TrustedNetworkSettings.KEY_NETWORKS || key == null) {
+        if (key == TrustedNetworkSettings.KEY_ENABLED || key == TrustedNetworkSettings.KEY_NETWORKS ||
+            key == null || key in NetworkProfileSettings.WATCHED_KEYS
+        ) {
             runOnMain { update() }
         }
     }
@@ -242,19 +250,26 @@ object TrustedNetworkMonitor {
         if (appContext != null) return
         val app = context.applicationContext
         appContext = app
+        profileSettings = NetworkProfileSettings(app)
         settings = TrustedNetworkSettings(app).also { it.registerListener(prefsListener) }
     }
 
     private fun update() {
         val context = appContext ?: return
         val currentSettings = settings ?: return
+        val currentProfileSettings = profileSettings ?: return
+        var listening = false
         val newStatus = try {
             val enabled = currentSettings.isEnabled()
-            val active = viewers.isNotEmpty() || (enabled && serviceOwners.isNotEmpty())
+            val profilesEnabled = currentProfileSettings.isEnabled()
+            val active = viewers.isNotEmpty() ||
+                ((enabled || profilesEnabled) && serviceOwners.isNotEmpty())
             if (active) startListening(context) else stopListening(context)
+            listening = active
             if (active) computeStatus(context, enabled, currentSettings) else Status(enabled = enabled)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to evaluate trusted network", e)
+            listening = false
             Status(enabled = false)
         }
 
@@ -264,6 +279,11 @@ object TrustedNetworkMonitor {
         lastVerifiedAt = SystemClock.elapsedRealtime()
         trusted = nowTrusted
         _status.value = newStatus
+        try {
+            NetworkProfileSwitcher.onStatus(context, newStatus, listening, currentProfileSettings)
+        } catch (e: Exception) {
+            Log.e(TAG, "Network profile check failed", e)
+        }
 
         if (wasTrusted != nowTrusted) {
             LogUtils.d(TAG, if (nowTrusted) "On a trusted network" else "Left trusted network")
@@ -297,6 +317,8 @@ object TrustedNetworkMonitor {
             onWifi = onWifi,
             wifi = readable.firstOrNull(),
             problem = problem,
+            connections = readable,
+            wifiUnreadable = unreadable,
             matchedNetwork = if (problem == null || problem == Problem.BACKGROUND_LOCATION) matched else null,
             relaxed = relaxed
         )

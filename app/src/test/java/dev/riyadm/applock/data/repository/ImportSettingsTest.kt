@@ -192,4 +192,20 @@ class ImportSettingsTest {
         assertThat(repo.getMaxFailedAttempts()).isEqualTo(9)
         assertThat(repo.getLockoutDurationSeconds()).isEqualTo(45)
     }
+
+    @Test
+    fun networkProfileKeys_cannotBeRestored() {
+        val context: Context = RuntimeEnvironment.getApplication()
+        val applied = repo.importSettings(
+            mapOf(
+                "network_profiles_enabled" to true,
+                "network_profiles_rules" to "[]",
+                "network_profiles_default" to "guest"
+            )
+        )
+
+        assertThat(applied).isEqualTo(0)
+        assertThat(dev.riyadm.applock.core.trusted.NetworkProfileSettings(context).isEnabled()).isFalse()
+        assertThat(dev.riyadm.applock.core.trusted.NetworkProfileSettings(context).getDefaultProfileId()).isNull()
+    }
 }

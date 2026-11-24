@@ -49,6 +49,7 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.SnackbarDuration
@@ -56,13 +57,16 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -81,11 +85,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import dev.riyadm.applock.R
+import dev.riyadm.applock.core.trusted.NetworkProfileSettings
 import dev.riyadm.applock.core.trusted.TrustedNetwork
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor.Problem
 import dev.riyadm.applock.core.trusted.TrustedNetworkSettings
 import dev.riyadm.applock.core.trusted.WifiTrust
+import dev.riyadm.applock.core.utils.appLockRepository
 import dev.riyadm.applock.core.utils.openAppInfoSettings
 import dev.riyadm.applock.ui.components.ExpressivePermissionDialog
 import dev.riyadm.applock.ui.components.ExpressiveShapeIcon
@@ -104,6 +110,11 @@ fun TrustedNetworksScreen(navController: NavController) {
     var enabled by remember { mutableStateOf(settings.isEnabled()) }
     var networks by remember { mutableStateOf(settings.getNetworks()) }
     var showEnableDialog by remember { mutableStateOf(false) }
+    var showProfilesEnableDialog by remember { mutableStateOf(false) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
+    val profileState = rememberNetworkProfilesState(remember(context) { NetworkProfileSettings(context) })
+    val lockProfiles by remember(context) { context.appLockRepository().profiles.state }
+        .collectAsStateWithLifecycle()
     var showLocationDialog by remember { mutableStateOf(false) }
     var showBackgroundDialog by remember { mutableStateOf(false) }
     val viewer = remember { Any() }
@@ -115,6 +126,7 @@ fun TrustedNetworksScreen(navController: NavController) {
     LifecycleResumeEffect(viewer) {
         enabled = settings.isEnabled()
         networks = settings.getNetworks()
+        profileState.reload()
         TrustedNetworkMonitor.watch(context, viewer)
         // Permissions may have changed in system settings meanwhile.
         TrustedNetworkMonitor.refresh()
@@ -162,6 +174,16 @@ fun TrustedNetworksScreen(navController: NavController) {
                 enabled = true
             },
             onDismiss = { showEnableDialog = false }
+        )
+    }
+
+    if (showProfilesEnableDialog) {
+        NetworkProfilesEnableDialog(
+            onConfirm = {
+                showProfilesEnableDialog = false
+                profileState.turn(true)
+            },
+            onDismiss = { showProfilesEnableDialog = false }
         )
     }
 
@@ -286,6 +308,10 @@ fun TrustedNetworksScreen(navController: NavController) {
                 subtitle = {
                     Text(
                         when {
+                            tab == 1 -> stringResource(
+                                if (profileState.enabled) R.string.network_profiles_subtitle_on
+                                else R.string.network_profiles_subtitle_off
+                            )
                             !enabled -> stringResource(R.string.trusted_screen_subtitle_off)
                             relaxedSsid != null -> stringResource(R.string.trusted_screen_subtitle_relaxed, relaxedSsid)
                             else -> stringResource(R.string.trusted_screen_subtitle_on)
@@ -320,6 +346,26 @@ fun TrustedNetworksScreen(navController: NavController) {
                     bottom = innerPadding.calculateBottomPadding() + 32.dp
                 )
             ) {
+                item(key = "tabs", contentType = "tabs") {
+                    PrimaryTabRow(
+                        selectedTabIndex = tab,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    ) {
+                        Tab(
+                            selected = tab == 0,
+                            onClick = { tab = 0 },
+                            text = { Text(stringResource(R.string.network_profiles_tab_trusted)) }
+                        )
+                        Tab(
+                            selected = tab == 1,
+                            onClick = { tab = 1 },
+                            text = { Text(stringResource(R.string.network_profiles_tab_profiles)) }
+                        )
+                    }
+                }
+
+                if (tab == 0) {
                 item(key = "master", contentType = "master") {
                     SettingsGroup(title = null, modifier = Modifier.animateItem()) {
                         item { shapes ->
@@ -345,6 +391,7 @@ fun TrustedNetworksScreen(navController: NavController) {
                     }
                     Spacer(Modifier.height(12.dp))
                 }
+                }
 
                 val problem = status.problem
                 if (problem != null) {
@@ -359,66 +406,83 @@ fun TrustedNetworksScreen(navController: NavController) {
                     }
                 }
 
-                item(key = "current_header", contentType = "header") {
-                    SettingsSectionHeader(
-                        stringResource(R.string.trusted_current_header),
-                        modifier = Modifier.animateItem()
-                    )
-                }
-                item(key = "current", contentType = "current") {
-                    CurrentNetworkCard(
-                        status = status,
-                        enabled = enabled,
-                        networks = networks,
-                        onTrust = ::addCurrent,
-                        modifier = Modifier.animateItem()
-                    )
-                }
+                if (tab == 0) {
+                    item(key = "current_header", contentType = "header") {
+                        SettingsSectionHeader(
+                            stringResource(R.string.trusted_current_header),
+                            modifier = Modifier.animateItem()
+                        )
+                    }
+                    item(key = "current", contentType = "current") {
+                        CurrentNetworkCard(
+                            status = status,
+                            enabled = enabled,
+                            networks = networks,
+                            onTrust = ::addCurrent,
+                            modifier = Modifier.animateItem()
+                        )
+                    }
 
-                item(key = "saved_header", contentType = "header") {
-                    SettingsSectionHeader(
-                        stringResource(R.string.trusted_saved_header),
-                        modifier = Modifier.animateItem()
-                    )
-                }
-                if (networks.isEmpty()) {
-                    item(key = "saved_empty", contentType = "empty") {
+                    item(key = "saved_header", contentType = "header") {
+                        SettingsSectionHeader(
+                            stringResource(R.string.trusted_saved_header),
+                            modifier = Modifier.animateItem()
+                        )
+                    }
+                    if (networks.isEmpty()) {
+                        item(key = "saved_empty", contentType = "empty") {
+                            Text(
+                                text = stringResource(R.string.trusted_saved_empty),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier
+                                    .animateItem()
+                                    .padding(horizontal = 16.dp)
+                            )
+                        }
+                    } else {
+                        itemsIndexed(
+                            items = networks,
+                            key = { _, network -> "net_${network.ssid}_${network.bssid}" },
+                            contentType = { _, _ -> "network" }
+                        ) { index, network ->
+                            SavedNetworkItem(
+                                network = network,
+                                index = index,
+                                count = networks.size,
+                                connected = status.matchedNetwork?.sameNetwork(network) == true,
+                                onRemove = { remove(network) },
+                                modifier = Modifier
+                                    .animateItem()
+                                    .padding(top = if (index == 0) 0.dp else ListItemDefaults.SegmentedGap)
+                            )
+                        }
+                    }
+
+                    item(key = "footer", contentType = "footer") {
                         Text(
-                            text = stringResource(R.string.trusted_saved_empty),
-                            style = MaterialTheme.typography.bodyMedium,
+                            text = stringResource(R.string.trusted_screen_footer),
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .animateItem()
-                                .padding(horizontal = 16.dp)
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
                         )
                     }
                 } else {
-                    itemsIndexed(
-                        items = networks,
-                        key = { _, network -> "net_${network.ssid}_${network.bssid}" },
-                        contentType = { _, _ -> "network" }
-                    ) { index, network ->
-                        SavedNetworkItem(
-                            network = network,
-                            index = index,
-                            count = networks.size,
-                            connected = status.matchedNetwork?.sameNetwork(network) == true,
-                            onRemove = { remove(network) },
-                            modifier = Modifier
-                                .animateItem()
-                                .padding(top = if (index == 0) 0.dp else ListItemDefaults.SegmentedGap)
-                        )
-                    }
-                }
-
-                item(key = "footer", contentType = "footer") {
-                    Text(
-                        text = stringResource(R.string.trusted_screen_footer),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier
-                            .animateItem()
-                            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    networkProfilesItems(
+                        state = profileState,
+                        profiles = lockProfiles.profiles,
+                        status = status,
+                        onRequestEnable = { showProfilesEnableDialog = true },
+                        onLinked = { ssid, profileName ->
+                            scope.launch {
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                                snackbarHostState.showSnackbar(
+                                    resources.getString(R.string.network_profiles_added, ssid, profileName)
+                                )
+                            }
+                        }
                     )
                 }
             }

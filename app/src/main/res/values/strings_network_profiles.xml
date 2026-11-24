@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tabs on the trusted networks screen -->
+    <string name="network_profiles_tab_trusted">Trusted Wi-Fi</string>
+    <string name="network_profiles_tab_profiles">Network profiles</string>
+    <string name="network_profiles_subtitle_off">Network profiles are off</string>
+    <string name="network_profiles_subtitle_on">Switching profiles by network</string>
+
+    <!-- Master switch -->
+    <string name="network_profiles_master_switch">Switch profile by network</string>
+    <string name="network_profiles_desc_off">The lock profile stays as you set it</string>
+    <string name="network_profiles_desc_on">The profile changes by itself when the network changes</string>
+
+    <!-- Enable dialog -->
+    <string name="network_profiles_enable_title">Switch profiles automatically?</string>
+    <string name="network_profiles_enable_text">When you connect to a network below, its lock profile becomes active without asking for your credential. On any other network, the default profile takes over.</string>
+    <string name="network_profiles_enable_supporting">Anyone who can copy your Wi-Fi name and password can trigger a profile switch, so only link networks you trust, and don\'t link a network to a profile that locks fewer apps than you are comfortable with there.</string>
+    <string name="network_profiles_enable_confirm">Turn on</string>
+
+    <!-- Default profile -->
+    <string name="network_profiles_default_header">Other networks</string>
+    <string name="network_profiles_default_title">Default profile</string>
+    <string name="network_profiles_default_summary">Used on mobile data, with no connection, and on any network without its own profile</string>
+    <string name="network_profiles_default_none">Don\'t change</string>
+
+    <!-- Current network -->
+    <string name="network_profiles_current_mapped">Switches to %1$s</string>
+    <string name="network_profiles_current_open">Open network: it can\'t be linked to a profile, because anyone can create a network with the same name</string>
+    <string name="network_profiles_current_hint">Choose the profile to use on this network</string>
+    <string name="network_profiles_add">Link network</string>
+    <string name="network_profiles_added">“%1$s” now uses %2$s</string>
+
+    <!-- Linked networks -->
+    <string name="network_profiles_linked_header">Linked networks</string>
+    <string name="network_profiles_linked_empty">No networks linked yet. Connect to a Wi-Fi network and link it to a profile.</string>
+    <string name="network_profiles_deleted_profile">Deleted profile</string>
+    <string name="network_profiles_deleted_profile_note">This profile was deleted, so the default profile is used instead. Pick another one.</string>
+    <string name="network_profiles_profile_menu_cd">Profile for %1$s</string>
+    <string name="network_profiles_footer">The profile changes a few seconds after the network does, and only once per network: if you switch profile yourself, it stays until the network changes. When the network name can\'t be read, nothing changes. Only networks with a password can be linked.</string>
+
+    <!-- Profiles screen -->
+    <string name="network_profiles_profiles_hint_on">Profiles also switch by network (Trusted networks)</string>
+    <string name="network_profiles_profiles_hint_off">Switch profiles by Wi-Fi network</string>
+</resources>
