@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Appearance</string>
+    <string name="settings_cat_appearance_summary">Theme, colors and icon style</string>
+    <string name="settings_cat_lock_title">Lock screen &amp; security</string>
+    <string name="settings_cat_lock_summary">Biometrics, keypad, haptics, unlock duration, failed attempts</string>
+    <string name="settings_cat_protection_title">Protection</string>
+    <string name="settings_cat_protection_summary">Anti-uninstall, new apps and closing locked apps</string>
+    <string name="settings_cat_automation_title">Automation &amp; trusted networks</string>
+    <string name="settings_cat_automation_summary">Trusted Wi-Fi and automation triggers</string>
+    <string name="settings_cat_privacy_title">Privacy &amp; intruder</string>
+    <string name="settings_cat_privacy_summary">Unlock history and intruder selfies</string>
+    <string name="settings_cat_backup_title">Backup &amp; restore</string>
+    <string name="settings_cat_backup_summary">Export and import your locked apps and settings</string>
+    <string name="settings_cat_system_title">Backend &amp; advanced</string>
+    <string name="settings_cat_system_summary">Lock backend, logs and diagnostics</string>
+    <string name="settings_cat_about_title">Updates &amp; about</string>
+    <string name="settings_cat_about_summary">Update checks, version and project links</string>
+</resources>

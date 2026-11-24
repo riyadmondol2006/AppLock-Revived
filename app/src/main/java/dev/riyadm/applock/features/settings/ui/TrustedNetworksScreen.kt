@@ -60,7 +60,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -81,7 +80,6 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
-import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.trusted.TrustedNetwork
 import dev.riyadm.applock.core.trusted.TrustedNetworkMonitor
@@ -99,9 +97,6 @@ fun TrustedNetworksScreen(navController: NavController) {
     val context = LocalContext.current
     val activity = LocalActivity.current
     val settings = remember(context) { TrustedNetworkSettings(context) }
-    val hapticsEnabled = remember(context) {
-        (context.applicationContext as? AppLockApplication)?.appLockRepository?.shouldDisableHaptics() != true
-    }
     val status by TrustedNetworkMonitor.status.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -315,7 +310,7 @@ fun TrustedNetworksScreen(navController: NavController) {
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = MaterialTheme.colorScheme.surface
     ) { innerPadding ->
-        CompositionLocalProvider(LocalSettingsHapticsEnabled provides hapticsEnabled) {
+        run {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(

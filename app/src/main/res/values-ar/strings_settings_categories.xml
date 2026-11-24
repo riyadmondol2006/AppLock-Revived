@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">المظهر</string>
+    <string name="settings_cat_appearance_summary">السمة والألوان ونمط الأيقونات</string>
+    <string name="settings_cat_lock_title">شاشة القفل والأمان</string>
+    <string name="settings_cat_lock_summary">البصمة ولوحة الأرقام والاهتزاز ومدة فتح القفل والمحاولات الفاشلة</string>
+    <string name="settings_cat_protection_title">الحماية</string>
+    <string name="settings_cat_protection_summary">منع إلغاء التثبيت والتطبيقات الجديدة وإغلاق التطبيقات المقفلة</string>
+    <string name="settings_cat_automation_title">الأتمتة والشبكات الموثوقة</string>
+    <string name="settings_cat_automation_summary">Wi-Fi الموثوق ومشغّلات الأتمتة</string>
+    <string name="settings_cat_privacy_title">الخصوصية والمتطفلون</string>
+    <string name="settings_cat_privacy_summary">سجل فتح القفل وصور المتطفلين</string>
+    <string name="settings_cat_backup_title">النسخ الاحتياطي والاستعادة</string>
+    <string name="settings_cat_backup_summary">تصدير واستيراد التطبيقات المقفلة والإعدادات</string>
+    <string name="settings_cat_system_title">الواجهة الخلفية والمتقدم</string>
+    <string name="settings_cat_system_summary">الواجهة الخلفية للقفل والسجلات والتشخيص</string>
+    <string name="settings_cat_about_title">التحديثات وحول</string>
+    <string name="settings_cat_about_summary">التحقق من التحديثات والإصدار وروابط المشروع</string>
+</resources>

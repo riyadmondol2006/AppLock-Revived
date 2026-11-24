@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Wygląd</string>
+    <string name="settings_cat_appearance_summary">Motyw, kolory i styl ikon</string>
+    <string name="settings_cat_lock_title">Ekran blokady i bezpieczeństwo</string>
+    <string name="settings_cat_lock_summary">Biometria, klawiatura, wibracje, czas odblokowania, nieudane próby</string>
+    <string name="settings_cat_protection_title">Ochrona</string>
+    <string name="settings_cat_protection_summary">Ochrona przed odinstalowaniem, nowe aplikacje i zamykanie zablokowanych</string>
+    <string name="settings_cat_automation_title">Automatyzacja i zaufane sieci</string>
+    <string name="settings_cat_automation_summary">Zaufane Wi-Fi i wyzwalacze automatyzacji</string>
+    <string name="settings_cat_privacy_title">Prywatność i intruzi</string>
+    <string name="settings_cat_privacy_summary">Historia odblokowań i selfie intruzów</string>
+    <string name="settings_cat_backup_title">Kopia zapasowa i przywracanie</string>
+    <string name="settings_cat_backup_summary">Eksport i import zablokowanych aplikacji oraz ustawień</string>
+    <string name="settings_cat_system_title">Backend i zaawansowane</string>
+    <string name="settings_cat_system_summary">Backend blokady, dzienniki i diagnostyka</string>
+    <string name="settings_cat_about_title">Aktualizacje i informacje</string>
+    <string name="settings_cat_about_summary">Sprawdzanie aktualizacji, wersja i linki projektu</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Оформление</string>
+    <string name="settings_cat_appearance_summary">Тема, цвета и стиль значков</string>
+    <string name="settings_cat_lock_title">Экран блокировки и безопасность</string>
+    <string name="settings_cat_lock_summary">Биометрия, клавиатура, вибрация, время разблокировки, неудачные попытки</string>
+    <string name="settings_cat_protection_title">Защита</string>
+    <string name="settings_cat_protection_summary">Защита от удаления, новые приложения и закрытие заблокированных</string>
+    <string name="settings_cat_automation_title">Автоматизация и доверенные сети</string>
+    <string name="settings_cat_automation_summary">Доверенный Wi-Fi и триггеры автоматизации</string>
+    <string name="settings_cat_privacy_title">Конфиденциальность и злоумышленники</string>
+    <string name="settings_cat_privacy_summary">История разблокировок и снимки нарушителей</string>
+    <string name="settings_cat_backup_title">Резервное копирование</string>
+    <string name="settings_cat_backup_summary">Экспорт и импорт заблокированных приложений и настроек</string>
+    <string name="settings_cat_system_title">Бэкенд и дополнительно</string>
+    <string name="settings_cat_system_summary">Бэкенд блокировки, журналы и диагностика</string>
+    <string name="settings_cat_about_title">Обновления и о приложении</string>
+    <string name="settings_cat_about_summary">Проверка обновлений, версия и ссылки проекта</string>
+</resources>

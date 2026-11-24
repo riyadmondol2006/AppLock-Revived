@@ -18,7 +18,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import dev.riyadm.applock.AppLockApplication
 import dev.riyadm.applock.R
 import dev.riyadm.applock.core.utils.LogUtils
@@ -39,6 +41,8 @@ import dev.riyadm.applock.features.lockscreen.ui.buildBiometricPromptInfo
 import dev.riyadm.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.riyadm.applock.features.setpassword.ui.SetPasswordScreen
+import dev.riyadm.applock.features.settings.ui.SettingsCategory
+import dev.riyadm.applock.features.settings.ui.SettingsCategoryScreen
 import dev.riyadm.applock.features.settings.ui.SettingsScreen
 import dev.riyadm.applock.features.settings.ui.TrustedNetworksScreen
 import dev.riyadm.applock.features.triggerexclusions.ui.TriggerExclusionsScreen
@@ -97,6 +101,14 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.Settings.route) {
             SettingsScreen(navController)
+        }
+
+        composable(
+            Screen.SettingsCategory.route,
+            arguments = listOf(navArgument(Screen.SettingsCategory.ARG) { type = NavType.StringType })
+        ) { entry ->
+            val category = SettingsCategory.fromId(entry.arguments?.getString(Screen.SettingsCategory.ARG))
+            if (category != null) SettingsCategoryScreen(navController, category)
         }
 
         composable(Screen.TriggerExclusions.route) {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Darstellung</string>
+    <string name="settings_cat_appearance_summary">Design, Farben und Symbolstil</string>
+    <string name="settings_cat_lock_title">Sperrbildschirm &amp; Sicherheit</string>
+    <string name="settings_cat_lock_summary">Biometrie, Tastenfeld, Haptik, Entsperrdauer, Fehlversuche</string>
+    <string name="settings_cat_protection_title">Schutz</string>
+    <string name="settings_cat_protection_summary">Deinstallationsschutz, neue Apps und Schließen gesperrter Apps</string>
+    <string name="settings_cat_automation_title">Automatisierung &amp; vertrauenswürdige Netzwerke</string>
+    <string name="settings_cat_automation_summary">Vertrauenswürdiges WLAN und Automatisierungs-Auslöser</string>
+    <string name="settings_cat_privacy_title">Datenschutz &amp; Eindringlinge</string>
+    <string name="settings_cat_privacy_summary">Entsperrverlauf und Eindringlings-Selfies</string>
+    <string name="settings_cat_backup_title">Sicherung &amp; Wiederherstellung</string>
+    <string name="settings_cat_backup_summary">Gesperrte Apps und Einstellungen exportieren und importieren</string>
+    <string name="settings_cat_system_title">Backend &amp; erweitert</string>
+    <string name="settings_cat_system_summary">Sperr-Backend, Protokolle und Diagnose</string>
+    <string name="settings_cat_about_title">Updates &amp; Info</string>
+    <string name="settings_cat_about_summary">Update-Prüfung, Version und Projektlinks</string>
+</resources>

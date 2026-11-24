@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">दिखावट</string>
+    <string name="settings_cat_appearance_summary">थीम, रंग और आइकन शैली</string>
+    <string name="settings_cat_lock_title">लॉक स्क्रीन और सुरक्षा</string>
+    <string name="settings_cat_lock_summary">बायोमेट्रिक, कीपैड, हैप्टिक, अनलॉक अवधि, असफल प्रयास</string>
+    <string name="settings_cat_protection_title">सुरक्षा</string>
+    <string name="settings_cat_protection_summary">अनइंस्टॉल सुरक्षा, नए ऐप और लॉक किए गए ऐप बंद करना</string>
+    <string name="settings_cat_automation_title">ऑटोमेशन और विश्वसनीय नेटवर्क</string>
+    <string name="settings_cat_automation_summary">विश्वसनीय वाई-फ़ाई और ऑटोमेशन ट्रिगर</string>
+    <string name="settings_cat_privacy_title">गोपनीयता और घुसपैठिए</string>
+    <string name="settings_cat_privacy_summary">अनलॉक इतिहास और घुसपैठिए की सेल्फ़ी</string>
+    <string name="settings_cat_backup_title">बैकअप और पुनर्स्थापना</string>
+    <string name="settings_cat_backup_summary">लॉक किए गए ऐप और सेटिंग निर्यात व आयात करें</string>
+    <string name="settings_cat_system_title">बैकएंड और उन्नत</string>
+    <string name="settings_cat_system_summary">लॉक बैकएंड, लॉग और डायग्नोस्टिक</string>
+    <string name="settings_cat_about_title">अपडेट और जानकारी</string>
+    <string name="settings_cat_about_summary">अपडेट जाँच, संस्करण और प्रोजेक्ट लिंक</string>
+</resources>

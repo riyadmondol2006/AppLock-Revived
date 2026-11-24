@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Giao diện</string>
+    <string name="settings_cat_appearance_summary">Chủ đề, màu sắc và kiểu biểu tượng</string>
+    <string name="settings_cat_lock_title">Màn hình khóa &amp; bảo mật</string>
+    <string name="settings_cat_lock_summary">Sinh trắc học, bàn phím, rung, thời gian mở khóa, số lần thử sai</string>
+    <string name="settings_cat_protection_title">Bảo vệ</string>
+    <string name="settings_cat_protection_summary">Chống gỡ cài đặt, ứng dụng mới và đóng ứng dụng bị khóa</string>
+    <string name="settings_cat_automation_title">Tự động hóa &amp; mạng tin cậy</string>
+    <string name="settings_cat_automation_summary">Wi-Fi tin cậy và điều kiện kích hoạt tự động hóa</string>
+    <string name="settings_cat_privacy_title">Quyền riêng tư &amp; kẻ xâm nhập</string>
+    <string name="settings_cat_privacy_summary">Lịch sử mở khóa và ảnh selfie kẻ xâm nhập</string>
+    <string name="settings_cat_backup_title">Sao lưu &amp; khôi phục</string>
+    <string name="settings_cat_backup_summary">Xuất và nhập ứng dụng bị khóa cùng cài đặt</string>
+    <string name="settings_cat_system_title">Backend &amp; nâng cao</string>
+    <string name="settings_cat_system_summary">Backend khóa, nhật ký và chẩn đoán</string>
+    <string name="settings_cat_about_title">Cập nhật &amp; giới thiệu</string>
+    <string name="settings_cat_about_summary">Kiểm tra cập nhật, phiên bản và liên kết dự án</string>
+</resources>

@@ -10,6 +10,7 @@ import androidx.compose.material3.ButtonGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.remember
 import dev.riyadm.applock.ui.motion.AppHaptics
+import dev.riyadm.applock.ui.motion.rememberAppHaptics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,16 +49,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-
-/** False when the user disabled haptic feedback in settings. */
-val LocalSettingsHapticsEnabled = compositionLocalOf { true }
 
 enum class SettingsAccent { Primary, Secondary, Tertiary, Error }
 
@@ -183,13 +180,12 @@ private fun SettingsTitle(text: String) {
     Text(text = text, maxLines = 2, overflow = TextOverflow.Ellipsis)
 }
 
-/** App haptics that follow the live "disable haptics" toggle on the settings screen. */
+/**
+ * App haptics for settings screens. The "disable haptics" switch is read live from the repository
+ * (SettingsState writes straight through), so toggling it takes effect immediately.
+ */
 @Composable
-fun rememberSettingsHaptics(): AppHaptics {
-    val haptic = LocalHapticFeedback.current
-    val enabled = LocalSettingsHapticsEnabled.current
-    return remember(haptic, enabled) { AppHaptics(haptic::performHapticFeedback, enabled) }
-}
+fun rememberSettingsHaptics(): AppHaptics = rememberAppHaptics()
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable

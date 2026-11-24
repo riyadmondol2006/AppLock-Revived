@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Tampilan</string>
+    <string name="settings_cat_appearance_summary">Tema, warna, dan gaya ikon</string>
+    <string name="settings_cat_lock_title">Layar kunci &amp; keamanan</string>
+    <string name="settings_cat_lock_summary">Biometrik, keypad, getaran, durasi buka kunci, percobaan gagal</string>
+    <string name="settings_cat_protection_title">Perlindungan</string>
+    <string name="settings_cat_protection_summary">Anti-uninstall, aplikasi baru, dan penutupan aplikasi terkunci</string>
+    <string name="settings_cat_automation_title">Otomatisasi &amp; jaringan tepercaya</string>
+    <string name="settings_cat_automation_summary">Wi-Fi tepercaya dan pemicu otomatisasi</string>
+    <string name="settings_cat_privacy_title">Privasi &amp; penyusup</string>
+    <string name="settings_cat_privacy_summary">Riwayat buka kunci dan selfie penyusup</string>
+    <string name="settings_cat_backup_title">Cadangan &amp; pulihkan</string>
+    <string name="settings_cat_backup_summary">Ekspor dan impor aplikasi terkunci serta pengaturan</string>
+    <string name="settings_cat_system_title">Backend &amp; lanjutan</string>
+    <string name="settings_cat_system_summary">Backend kunci, log, dan diagnostik</string>
+    <string name="settings_cat_about_title">Pembaruan &amp; tentang</string>
+    <string name="settings_cat_about_summary">Pemeriksaan pembaruan, versi, dan tautan proyek</string>
+</resources>

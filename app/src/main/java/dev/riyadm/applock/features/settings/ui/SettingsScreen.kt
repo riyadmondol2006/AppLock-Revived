@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.BugReport
@@ -41,8 +42,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -84,9 +85,178 @@ import kotlinx.coroutines.withContext
 private val FAILED_ATTEMPT_OPTIONS = listOf(0, 3, 5, 10)
 private val LOCKOUT_DURATION_OPTIONS = listOf(30, 60, 300)
 
+/** Settings hub: one row per category, each opening its own page. */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SettingsScreen(navController: NavController) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val layoutDirection = LocalLayoutDirection.current
+    val onBack = dropUnlessResumed { navController.popBackStack() }
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            SettingsTopBar(
+                title = stringResource(R.string.settings_screen_title),
+                subtitle = stringResource(R.string.settings_about_app_name),
+                scrollBehavior = scrollBehavior,
+                onBack = onBack
+            )
+        },
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
+                end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
+                top = innerPadding.calculateTopPadding() + 8.dp,
+                bottom = innerPadding.calculateBottomPadding() + 32.dp
+            )
+        ) {
+            item(key = "categories", contentType = "section") {
+                SettingsGroup(title = null) {
+                    SettingsCategory.entries.forEach { category ->
+                        item { shapes ->
+                            ActionSettingItem(
+                                shapes = shapes,
+                                icon = category.icon,
+                                title = stringResource(category.title),
+                                summary = stringResource(category.summary),
+                                accent = category.accent,
+                                onClick = dropUnlessResumed {
+                                    navController.navigate(Screen.SettingsCategory.route(category.id))
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun SettingsTopBar(
+    title: String,
+    subtitle: String?,
+    scrollBehavior: TopAppBarScrollBehavior,
+    onBack: () -> Unit
+) {
+    LargeFlexibleTopAppBar(
+        title = { Text(title) },
+        subtitle = subtitle?.let { { Text(it) } },
+        navigationIcon = {
+            IconButton(onClick = onBack, shapes = IconButtonDefaults.shapes()) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.settings_screen_back_cd)
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer
+        )
+    )
+}
+
+/** Everything the section composables need; shared by all items of one category page. */
+private class SettingsItemsContext(
+    val navController: NavController,
+    val repository: AppLockRepository,
+    val state: SettingsState,
+    val snackbarHostState: SnackbarHostState,
+    val biometricAvailable: Boolean,
+    val overridingProfile: LockProfile?,
+    val onUnlockDurationClick: () -> Unit,
+    val onAntiUninstallChanged: (Boolean) -> Unit,
+    val onImported: (BackupRepository.ImportResult) -> Unit
+)
+
+/**
+ * The sections shown on each category page. To add a section to a category, add one `item(...)`
+ * line to its branch.
+ */
+private fun LazyListScope.settingsCategoryItems(category: SettingsCategory, c: SettingsItemsContext) {
+    when (category) {
+        SettingsCategory.Appearance -> {
+            item(key = "appearance", contentType = "section") { AppearanceSection(c.repository) }
+        }
+
+        SettingsCategory.LockScreen -> {
+            item(key = "lock_screen", contentType = "section") { LockScreenSection(c.state, c.biometricAvailable) }
+            item(key = "security", contentType = "section") {
+                SecuritySection(
+                    state = c.state,
+                    overridingProfile = c.overridingProfile,
+                    onChangeCredential = { c.navController.navigate(Screen.ChangePassword.route) },
+                    onUnlockDurationClick = c.onUnlockDurationClick
+                )
+            }
+        }
+
+        SettingsCategory.Protection -> {
+            item(key = "protection", contentType = "section") {
+                ProtectionSection(state = c.state, onAntiUninstallChanged = c.onAntiUninstallChanged)
+            }
+            item(key = "hardening", contentType = "section") { HardeningSection(c.state.unlockLog) }
+        }
+
+        SettingsCategory.Automation -> {
+            item(key = "trusted", contentType = "section") {
+                TrustedNetworksSection(onOpenTrustedNetworks = { c.navController.navigate(Screen.TrustedNetworks.route) })
+            }
+        }
+
+        SettingsCategory.Privacy -> {
+            item(key = "privacy", contentType = "section") {
+                PrivacySection(
+                    state = c.state,
+                    onViewHistory = { c.navController.navigate(Screen.UnlockHistory.route) }
+                )
+            }
+            item(key = "intruder", contentType = "section") {
+                IntruderSection(onViewPhotos = { c.navController.navigate(Screen.IntruderPhotos.route) })
+            }
+        }
+
+        SettingsCategory.Backup -> {
+            item(key = "backup", contentType = "section") {
+                BackupSection(
+                    repository = c.repository,
+                    snackbarHostState = c.snackbarHostState,
+                    onImported = c.onImported
+                )
+            }
+        }
+
+        SettingsCategory.System -> {
+            item(key = "backend", contentType = "section") {
+                BackendSection(
+                    repository = c.repository,
+                    selected = c.state.backend,
+                    onBackendChanged = c.state::onBackendChanged
+                )
+            }
+            item(key = "advanced", contentType = "section") { AdvancedSection(c.state) }
+        }
+
+        SettingsCategory.About -> {
+            item(key = "updates", contentType = "section") { UpdatesSection(c.state) }
+            item(key = "about", contentType = "about") { AboutSection(c.repository, c.snackbarHostState) }
+        }
+    }
+}
+
+/** One category page of the settings hub. */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun SettingsCategoryScreen(navController: NavController, category: SettingsCategory) {
     val context = LocalContext.current
     val repository = remember {
         (context.applicationContext as? AppLockApplication)?.appLockRepository
@@ -231,91 +401,48 @@ fun SettingsScreen(navController: NavController) {
     val layoutDirection = LocalLayoutDirection.current
     val onBack = dropUnlessResumed { navController.popBackStack() }
 
+    val itemsContext = SettingsItemsContext(
+        navController = navController,
+        repository = repository,
+        state = state,
+        snackbarHostState = snackbarHostState,
+        biometricAvailable = biometricAvailable,
+        overridingProfile = overridingProfile,
+        onUnlockDurationClick = { showUnlockDurationSheet = true },
+        onAntiUninstallChanged = ::onAntiUninstallChanged,
+        onImported = { result ->
+            AppearanceSettings.load(repository)
+            applyBackend(context, repository, repository.getBackendImplementation())
+            reloadKey++
+            restoreResult = result
+        }
+    )
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            LargeFlexibleTopAppBar(
-                title = { Text(stringResource(R.string.settings_screen_title)) },
-                subtitle = { Text(stringResource(R.string.settings_about_app_name)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack, shapes = IconButtonDefaults.shapes()) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.settings_screen_back_cd)
-                        )
-                    }
-                },
+            SettingsTopBar(
+                title = stringResource(category.title),
+                subtitle = null,
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
+                onBack = onBack
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = MaterialTheme.colorScheme.surface
     ) { innerPadding ->
-        CompositionLocalProvider(LocalSettingsHapticsEnabled provides !state.disableHaptics) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
-                    end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
-                    top = innerPadding.calculateTopPadding(),
-                    bottom = innerPadding.calculateBottomPadding() + 32.dp
-                )
-            ) {
-                item(key = "appearance", contentType = "section") { AppearanceSection(repository) }
-                item(key = "lock_screen", contentType = "section") { LockScreenSection(state, biometricAvailable) }
-                item(key = "security", contentType = "section") {
-                    SecuritySection(
-                        state = state,
-                        overridingProfile = overridingProfile,
-                        onChangeCredential = { navController.navigate(Screen.ChangePassword.route) },
-                        onUnlockDurationClick = { showUnlockDurationSheet = true }
-                    )
-                }
-                item(key = "protection", contentType = "section") {
-                    ProtectionSection(state = state, onAntiUninstallChanged = ::onAntiUninstallChanged)
-                }
-                item(key = "trusted", contentType = "section") {
-                    TrustedNetworksSection(onOpenTrustedNetworks = { navController.navigate(Screen.TrustedNetworks.route) })
-                }
-                item(key = "privacy", contentType = "section") {
-                    PrivacySection(
-                        state = state,
-                        onViewHistory = { navController.navigate(Screen.UnlockHistory.route) }
-                    )
-                }
-                item(key = "intruder", contentType = "section") {
-                    IntruderSection(onViewPhotos = { navController.navigate(Screen.IntruderPhotos.route) })
-                }
-                item(key = "hardening", contentType = "section") { HardeningSection(state.unlockLog) }
-                item(key = "backup", contentType = "section") {
-                    BackupSection(
-                        repository = repository,
-                        snackbarHostState = snackbarHostState,
-                        onImported = { result ->
-                            AppearanceSettings.load(repository)
-                            applyBackend(context, repository, repository.getBackendImplementation())
-                            reloadKey++
-                            restoreResult = result
-                        }
-                    )
-                }
-                item(key = "updates", contentType = "section") { UpdatesSection(state) }
-                item(key = "backend", contentType = "section") {
-                    BackendSection(
-                        repository = repository,
-                        selected = state.backend,
-                        onBackendChanged = state::onBackendChanged
-                    )
-                }
-                item(key = "advanced", contentType = "section") { AdvancedSection(state) }
-                item(key = "about", contentType = "about") { AboutSection(repository, snackbarHostState) }
-            }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
+                end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
+                top = innerPadding.calculateTopPadding(),
+                bottom = innerPadding.calculateBottomPadding() + 32.dp
+            )
+        ) {
+            settingsCategoryItems(category, itemsContext)
         }
     }
 }

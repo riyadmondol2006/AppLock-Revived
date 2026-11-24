@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Görünüm</string>
+    <string name="settings_cat_appearance_summary">Tema, renkler ve simge stili</string>
+    <string name="settings_cat_lock_title">Kilit ekranı ve güvenlik</string>
+    <string name="settings_cat_lock_summary">Biyometri, tuş takımı, titreşim, kilit açma süresi, başarısız denemeler</string>
+    <string name="settings_cat_protection_title">Koruma</string>
+    <string name="settings_cat_protection_summary">Kaldırma koruması, yeni uygulamalar ve kilitli uygulamaları kapatma</string>
+    <string name="settings_cat_automation_title">Otomasyon ve güvenilir ağlar</string>
+    <string name="settings_cat_automation_summary">Güvenilir Wi-Fi ve otomasyon tetikleyicileri</string>
+    <string name="settings_cat_privacy_title">Gizlilik ve davetsiz misafir</string>
+    <string name="settings_cat_privacy_summary">Kilit açma geçmişi ve davetsiz misafir selfie\'leri</string>
+    <string name="settings_cat_backup_title">Yedekleme ve geri yükleme</string>
+    <string name="settings_cat_backup_summary">Kilitli uygulamalarınızı ve ayarlarınızı dışa/içe aktarın</string>
+    <string name="settings_cat_system_title">Arka uç ve gelişmiş</string>
+    <string name="settings_cat_system_summary">Kilit arka ucu, günlükler ve tanılama</string>
+    <string name="settings_cat_about_title">Güncellemeler ve hakkında</string>
+    <string name="settings_cat_about_summary">Güncelleme denetimi, sürüm ve proje bağlantıları</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">চেহারা</string>
+    <string name="settings_cat_appearance_summary">থিম, রং ও আইকনের ধরন</string>
+    <string name="settings_cat_lock_title">লক স্ক্রিন ও নিরাপত্তা</string>
+    <string name="settings_cat_lock_summary">বায়োমেট্রিক, কীপ্যাড, ভাইব্রেশন, আনলকের সময়, ব্যর্থ প্রচেষ্টা</string>
+    <string name="settings_cat_protection_title">সুরক্ষা</string>
+    <string name="settings_cat_protection_summary">আনইনস্টল সুরক্ষা, নতুন অ্যাপ ও লক করা অ্যাপ বন্ধ করা</string>
+    <string name="settings_cat_automation_title">অটোমেশন ও বিশ্বস্ত নেটওয়ার্ক</string>
+    <string name="settings_cat_automation_summary">বিশ্বস্ত ওয়াই-ফাই ও অটোমেশন ট্রিগার</string>
+    <string name="settings_cat_privacy_title">গোপনীয়তা ও অনুপ্রবেশকারী</string>
+    <string name="settings_cat_privacy_summary">আনলকের ইতিহাস ও অনুপ্রবেশকারীর সেলফি</string>
+    <string name="settings_cat_backup_title">ব্যাকআপ ও রিস্টোর</string>
+    <string name="settings_cat_backup_summary">লক করা অ্যাপ ও সেটিংস এক্সপোর্ট ও ইমপোর্ট করুন</string>
+    <string name="settings_cat_system_title">ব্যাকএন্ড ও উন্নত</string>
+    <string name="settings_cat_system_summary">লক ব্যাকএন্ড, লগ ও ডায়াগনস্টিক</string>
+    <string name="settings_cat_about_title">আপডেট ও সম্পর্কে</string>
+    <string name="settings_cat_about_summary">আপডেট পরীক্ষা, সংস্করণ ও প্রকল্পের লিংক</string>
+</resources>

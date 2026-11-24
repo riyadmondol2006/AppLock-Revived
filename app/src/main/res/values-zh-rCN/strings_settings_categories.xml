@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">外观</string>
+    <string name="settings_cat_appearance_summary">主题、颜色和图标样式</string>
+    <string name="settings_cat_lock_title">锁屏与安全</string>
+    <string name="settings_cat_lock_summary">生物识别、键盘、触感反馈、解锁时长、失败次数</string>
+    <string name="settings_cat_protection_title">防护</string>
+    <string name="settings_cat_protection_summary">防卸载、新应用及关闭已锁定应用</string>
+    <string name="settings_cat_automation_title">自动化与可信网络</string>
+    <string name="settings_cat_automation_summary">可信 Wi-Fi 与自动化触发器</string>
+    <string name="settings_cat_privacy_title">隐私与入侵者</string>
+    <string name="settings_cat_privacy_summary">解锁记录与入侵者自拍</string>
+    <string name="settings_cat_backup_title">备份与恢复</string>
+    <string name="settings_cat_backup_summary">导出和导入已锁定应用及设置</string>
+    <string name="settings_cat_system_title">后端与高级</string>
+    <string name="settings_cat_system_summary">锁定后端、日志与诊断</string>
+    <string name="settings_cat_about_title">更新与关于</string>
+    <string name="settings_cat_about_summary">检查更新、版本和项目链接</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Apariencia</string>
+    <string name="settings_cat_appearance_summary">Tema, colores y estilo de iconos</string>
+    <string name="settings_cat_lock_title">Pantalla de bloqueo y seguridad</string>
+    <string name="settings_cat_lock_summary">Biometría, teclado, vibración, duración de desbloqueo, intentos fallidos</string>
+    <string name="settings_cat_protection_title">Protección</string>
+    <string name="settings_cat_protection_summary">Anti-desinstalación, apps nuevas y cierre de apps bloqueadas</string>
+    <string name="settings_cat_automation_title">Automatización y redes de confianza</string>
+    <string name="settings_cat_automation_summary">Wi-Fi de confianza y disparadores de automatización</string>
+    <string name="settings_cat_privacy_title">Privacidad e intrusos</string>
+    <string name="settings_cat_privacy_summary">Historial de desbloqueos y selfis de intrusos</string>
+    <string name="settings_cat_backup_title">Copia y restauración</string>
+    <string name="settings_cat_backup_summary">Exporta e importa tus apps bloqueadas y ajustes</string>
+    <string name="settings_cat_system_title">Backend y avanzado</string>
+    <string name="settings_cat_system_summary">Backend de bloqueo, registros y diagnóstico</string>
+    <string name="settings_cat_about_title">Actualizaciones y acerca de</string>
+    <string name="settings_cat_about_summary">Búsqueda de actualizaciones, versión y enlaces del proyecto</string>
+</resources>

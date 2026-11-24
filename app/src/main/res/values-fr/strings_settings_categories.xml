@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_cat_appearance_title">Apparence</string>
+    <string name="settings_cat_appearance_summary">Thème, couleurs et style des icônes</string>
+    <string name="settings_cat_lock_title">Écran de verrouillage et sécurité</string>
+    <string name="settings_cat_lock_summary">Biométrie, clavier, retour haptique, durée de déverrouillage, échecs</string>
+    <string name="settings_cat_protection_title">Protection</string>
+    <string name="settings_cat_protection_summary">Anti-désinstallation, nouvelles applis et fermeture des applis verrouillées</string>
+    <string name="settings_cat_automation_title">Automatisation et réseaux de confiance</string>
+    <string name="settings_cat_automation_summary">Wi-Fi de confiance et déclencheurs d\'automatisation</string>
+    <string name="settings_cat_privacy_title">Confidentialité et intrus</string>
+    <string name="settings_cat_privacy_summary">Historique de déverrouillage et selfies d\'intrus</string>
+    <string name="settings_cat_backup_title">Sauvegarde et restauration</string>
+    <string name="settings_cat_backup_summary">Exporter et importer vos applis verrouillées et réglages</string>
+    <string name="settings_cat_system_title">Backend et avancé</string>
+    <string name="settings_cat_system_summary">Backend de verrouillage, journaux et diagnostic</string>
+    <string name="settings_cat_about_title">Mises à jour et à propos</string>
+    <string name="settings_cat_about_summary">Vérification des mises à jour, version et liens du projet</string>
+</resources>

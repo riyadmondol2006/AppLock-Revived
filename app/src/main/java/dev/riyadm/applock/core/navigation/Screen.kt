@@ -9,6 +9,11 @@ sealed class Screen(val route: String) {
     object Main : Screen("main")
     object PasswordOverlay : Screen("password_overlay")
     object Settings : Screen("settings")
+    /** One settings category page; [category] is a SettingsCategory id. */
+    object SettingsCategory : Screen("settings_category/{category}") {
+        const val ARG = "category"
+        fun route(category: String) = "settings_category/$category"
+    }
     object TriggerExclusions : Screen("trigger_exclusions")
     object AntiUninstall: Screen("anti_uninstall")
     object UnlockHistory : Screen("unlock_history")
